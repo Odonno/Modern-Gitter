@@ -28,7 +28,8 @@
             </Hub.HeaderTemplate>
 
             <HubSection Header="rooms" 
-                        HeaderTemplate="{StaticResource HeaderTemplate}">
+                        HeaderTemplate="{StaticResource HeaderTemplate}"
+                        DataContext="{Binding Path=Rooms}">
 
                 <DataTemplate>
 
@@ -38,7 +39,7 @@
                                 <Button Style="{StaticResource TextBlockButtonStyle}"
                                         Command="{Binding Main.SelectRoomCommand, Source={StaticResource Locator}}"
                                         CommandParameter="{Binding}">
-                                    <StackPanel Margin="0 6">
+                                    <StackPanel Margin="0 6" DataContext="{Binding Path=Room}">
                                         <TextBlock Text="{Binding Path=Name}" FontSize="24" />
                                         <TextBlock Text="{Binding Path=Topic}" FontSize="10"
                                                    Visibility="{Binding Path=Topic, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
@@ -53,7 +54,8 @@
             </HubSection>
 
             <HubSection Header="chat" 
-                        HeaderTemplate="{StaticResource HeaderTemplate}">
+                        HeaderTemplate="{StaticResource HeaderTemplate}"
+                        DataContext="{Binding Path=SelectedRoom}">
 
                 <DataTemplate>
                     
@@ -65,7 +67,7 @@
                         
                         <TextBlock FontSize="26">
                             <Run Text="room" />
-                            <Run Text="{Binding Path=SelectedRoom.Name}" />
+                            <Run Text="{Binding Path=Room.Name}" />
                         </TextBlock>
 
                         <ListView Grid.Row="1" ItemsSource="{Binding Path=Messages}">

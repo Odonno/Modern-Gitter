@@ -21,10 +21,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\EmptyStringToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Abstract\ISessionService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Concrete\SessionService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Abstract\IRoomViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Abstract\ILoginViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Abstract\IMainViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Abstract\IRoomsViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Concrete\RoomViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Concrete\LoginViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Concrete\MainViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Concrete\RoomsViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\ViewModelLocator.cs" />
   </ItemGroup>
 </Project>

@@ -6,10 +6,9 @@ namespace Gitter.ViewModel.Abstract
 {
     public interface IMainViewModel
     {
-        ObservableCollection<Room> Rooms { get; }
-        Room SelectedRoom { get; set; }
-        ObservableCollection<Message> Messages { get; }
-
+        IRoomsViewModel Rooms { get; }
+        IRoomViewModel SelectedRoom { get; }
+        
         ICommand SelectRoomCommand { get; }
     }
 }
