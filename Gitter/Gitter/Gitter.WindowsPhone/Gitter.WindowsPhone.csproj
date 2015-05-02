@@ -153,6 +153,10 @@
       <Project>{b8339332-779b-48be-8342-f95386362db1}</Project>
       <Name>Gitter.API</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Gitter.Model\Gitter.Model.csproj">
+      <Project>{16d857a7-428a-4d1e-bbd8-95678de737e4}</Project>
+      <Name>Gitter.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>

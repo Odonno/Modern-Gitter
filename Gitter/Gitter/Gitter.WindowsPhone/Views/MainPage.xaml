@@ -6,10 +6,50 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     NavigationCacheMode="Required"
+    RequestedTheme="Light"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     DataContext="{Binding Source={StaticResource Locator}, Path=Main}">
 
-    <Grid>
+    <Hub>
+        <Hub.HeaderTemplate>
+            <DataTemplate>
+                <TextBlock Text="GITTER" FontSize="60" FontWeight="SemiBold"
+                           CharacterSpacing="10" />
+            </DataTemplate>
+        </Hub.HeaderTemplate>
         
-    </Grid>
+        <HubSection Header="rooms" 
+                    HeaderTemplate="{StaticResource HeaderTemplate}">
+            
+            <DataTemplate>
+                
+                <ListView ItemsSource="{Binding Path=Rooms}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Button Style="{StaticResource TextBlockButtonStyle}"
+                                    Command="{Binding Main.SelectRoomCommand, Source={StaticResource Locator}}"
+                                    CommandParameter="{Binding}">
+                                <StackPanel Margin="0 6">
+                                    <TextBlock Text="{Binding Path=Name}" FontSize="24" />
+                                    <TextBlock Text="{Binding Path=Topic}" FontSize="12"
+                                               Visibility="{Binding Path=Topic, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+                                </StackPanel>
+                            </Button>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                
+            </DataTemplate>
+            
+        </HubSection>
+
+        <HubSection Header="chat" 
+                    HeaderTemplate="{StaticResource HeaderTemplate}">
+
+            <DataTemplate>
+
+            </DataTemplate>
+
+        </HubSection>
+    </Hub>
 </Page>
