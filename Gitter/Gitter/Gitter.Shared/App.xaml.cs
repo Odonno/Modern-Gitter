@@ -17,6 +17,8 @@ using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 // Pour plus d'informations sur le modèle Application vide, consultez la page http://go.microsoft.com/fwlink/?LinkId=234227
+using Microsoft.ApplicationInsights;
+using Microsoft.ApplicationInsights.Extensibility;
 
 namespace Gitter
 {
@@ -25,6 +27,11 @@ namespace Gitter
     /// </summary>
     public sealed partial class App : Application
     {
+        /// <summary>
+        /// Allows tracking page views, exceptions and other telemetry through the Microsoft Application Insights service.
+        /// </summary>
+        public static TelemetryClient TelemetryClient;
+
 #if WINDOWS_PHONE_APP
         private TransitionCollection transitions;
 #endif
@@ -35,8 +42,14 @@ namespace Gitter
         /// </summary>
         public App()
         {
-            this.InitializeComponent();
-            this.Suspending += this.OnSuspending;
+#if DEBUG
+            TelemetryClient = new TelemetryClient(new TelemetryConfiguration { DisableTelemetry = true });
+#else
+            TelemetryClient = new TelemetryClient();
+#endif
+
+            InitializeComponent();
+            Suspending += OnSuspending;
         }
 
         /// <summary>
@@ -50,7 +63,7 @@ namespace Gitter
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
             {
-                this.DebugSettings.EnableFrameRateCounter = true;
+                DebugSettings.EnableFrameRateCounter = true;
             }
 #endif
 
