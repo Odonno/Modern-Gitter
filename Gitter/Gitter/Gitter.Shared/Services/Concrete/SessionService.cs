@@ -32,10 +32,11 @@ namespace Gitter.Services.Concrete
             try
             {
                 var startUri = new Uri(
-                    string.Format("https://gitter.im/login/oauth/authorize?client_id={0}&response_type={1}",
+                    string.Format("https://gitter.im/login/oauth/authorize?client_id={0}&response_type={1}&redirect_uri={2}",
                     Constants.OauthKey, 
-                    "code"));
-                var endUri = WebAuthenticationBroker.GetCurrentApplicationCallbackUri();
+                    "code",
+                    Constants.RedirectUrl));
+                var endUri = new Uri(Constants.RedirectUrl);
 
 #if WINDOWS_PHONE_APP
                 WebAuthenticationBroker.AuthenticateAndContinue(startUri, endUri, null, WebAuthenticationOptions.None);

@@ -20,5 +20,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\SuspensionManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Abstract\ISessionService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Concrete\SessionService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Abstract\ILoginViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Abstract\IMainViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Concrete\LoginViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Concrete\MainViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\ViewModelLocator.cs" />
   </ItemGroup>
 </Project>
