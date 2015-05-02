@@ -20,6 +20,7 @@
 
         <!-- Content -->
         <Hub Margin="0 24 0 0">
+            <!-- Header -->
             <Hub.HeaderTemplate>
                 <DataTemplate>
                     <TextBlock Text="GITTER" FontSize="60" FontWeight="SemiBold"
@@ -27,6 +28,7 @@
                 </DataTemplate>
             </Hub.HeaderTemplate>
 
+            <!-- List of rooms -->
             <HubSection Header="rooms" 
                         HeaderTemplate="{StaticResource HeaderTemplate}"
                         DataContext="{Binding Path=Rooms}">
@@ -53,35 +55,74 @@
 
             </HubSection>
 
+            <!-- Chat - List of messages -->
             <HubSection Header="chat" 
                         HeaderTemplate="{StaticResource HeaderTemplate}"
                         DataContext="{Binding Path=SelectedRoom}">
 
                 <DataTemplate>
-                    
+
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        
-                        <TextBlock FontSize="26">
-                            <Run Text="room" />
-                            <Run Text="{Binding Path=Room.Name}" />
-                        </TextBlock>
+
+                        <Grid Background="Black">
+                            <TextBlock FontSize="26" Margin="12 6"
+                                       Foreground="White" FontWeight="SemiBold"
+                                       Text="{Binding Path=Room.Name}" />
+                        </Grid>
 
                         <ListView Grid.Row="1" ItemsSource="{Binding Path=Messages}">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
+                                    <Grid Margin="0 6">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="60" />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
 
+                                        <Image Grid.Column="0"
+                                               Source="{Binding Path=User.MediumAvatarUrl}"
+                                               Width="60" Height="60"
+                                               HorizontalAlignment="Left" VerticalAlignment="Center" />
+
+                                        <StackPanel Grid.Column="1" Margin="6 0">
+                                            <TextBlock FontSize="16" TextWrapping="Wrap"
+                                                       Text="{Binding Path=Text}" />
+
+                                            <TextBlock FontSize="10" TextWrapping="Wrap">
+                                                <Run Text="by" />
+                                                <Run Text="{Binding Path=User.Username}" />
+                                            </TextBlock>
+                                        </StackPanel>
+
+                                    </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
 
+                        <TextBox Grid.Row="2" Text="{Binding Path=TextMessage}"
+                                 PlaceholderText="type your message here" />
+
                     </Grid>
-                    
+
                 </DataTemplate>
 
+            </HubSection>
+
+            <!-- Chat - List of messages -->
+            <HubSection Header="activities" 
+                        HeaderTemplate="{StaticResource HeaderTemplate}">
+
+                <DataTemplate>
+                    <TextBlock Text="currently not available"
+                               FontSize="30" Margin="0 0 0 60"
+                               VerticalAlignment="Center" HorizontalAlignment="Center" />
+                </DataTemplate>
+                
             </HubSection>
         </Hub>
     </Grid>

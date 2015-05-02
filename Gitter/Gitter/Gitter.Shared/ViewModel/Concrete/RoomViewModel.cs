@@ -16,6 +16,17 @@ namespace Gitter.ViewModel.Concrete
         private readonly ObservableCollection<Message> _messages = new ObservableCollection<Message>();
         public ObservableCollection<Message> Messages { get { return _messages; } }
 
+        private string _textMessage;
+        public string TextMessage
+        {
+            get { return _textMessage; }
+            set
+            {
+                _textMessage = value;
+                RaisePropertyChanged();
+            }
+        }
+
         #endregion
 
 

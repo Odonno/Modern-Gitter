@@ -7,5 +7,6 @@ namespace Gitter.ViewModel.Abstract
     {
         Room Room { get; set; }
         ObservableCollection<Message> Messages { get; }
+        string TextMessage { get; set; }
     }
 }
