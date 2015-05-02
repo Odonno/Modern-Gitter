@@ -10,46 +10,57 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     DataContext="{Binding Source={StaticResource Locator}, Path=Main}">
 
-    <Hub>
-        <Hub.HeaderTemplate>
-            <DataTemplate>
-                <TextBlock Text="GITTER" FontSize="60" FontWeight="SemiBold"
+    <Grid x:Name="LayoutRoot">
+
+        <Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition/>
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
+
+        <!-- Content -->
+        <Hub Margin="0 24 0 0">
+            <Hub.HeaderTemplate>
+                <DataTemplate>
+                    <TextBlock Text="GITTER" FontSize="60" FontWeight="SemiBold"
                            CharacterSpacing="10" />
-            </DataTemplate>
-        </Hub.HeaderTemplate>
-        
-        <HubSection Header="rooms" 
-                    HeaderTemplate="{StaticResource HeaderTemplate}">
-            
-            <DataTemplate>
-                
-                <ListView ItemsSource="{Binding Path=Rooms}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Button Style="{StaticResource TextBlockButtonStyle}"
+                </DataTemplate>
+            </Hub.HeaderTemplate>
+
+            <HubSection Header="rooms" 
+                        HeaderTemplate="{StaticResource HeaderTemplate}">
+
+                <DataTemplate>
+
+                    <ListView ItemsSource="{Binding Path=Rooms}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Button Style="{StaticResource TextBlockButtonStyle}"
                                     Command="{Binding Main.SelectRoomCommand, Source={StaticResource Locator}}"
                                     CommandParameter="{Binding}">
-                                <StackPanel Margin="0 6">
-                                    <TextBlock Text="{Binding Path=Name}" FontSize="24" />
-                                    <TextBlock Text="{Binding Path=Topic}" FontSize="12"
+                                    <StackPanel Margin="0 6">
+                                        <TextBlock Text="{Binding Path=Name}" FontSize="24" />
+                                        <TextBlock Text="{Binding Path=Topic}" FontSize="10"
                                                Visibility="{Binding Path=Topic, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
-                                </StackPanel>
-                            </Button>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-                
-            </DataTemplate>
-            
-        </HubSection>
+                                    </StackPanel>
+                                </Button>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
 
-        <HubSection Header="chat" 
-                    HeaderTemplate="{StaticResource HeaderTemplate}">
+                </DataTemplate>
 
-            <DataTemplate>
+            </HubSection>
 
-            </DataTemplate>
+            <HubSection Header="chat" 
+                        HeaderTemplate="{StaticResource HeaderTemplate}">
 
-        </HubSection>
-    </Hub>
+                <DataTemplate>
+
+                </DataTemplate>
+
+            </HubSection>
+        </Hub>
+    </Grid>
+
 </Page>

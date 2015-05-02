@@ -1,8 +1,10 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using Gitter.API.Services.Abstract;
 using Gitter.Model;
 using Gitter.ViewModel.Abstract;
 
@@ -10,6 +12,13 @@ namespace Gitter.ViewModel.Concrete
 {
     public class MainViewModel : ViewModelBase, IMainViewModel
     {
+        #region Services
+
+        private readonly IGitterApiService _gitterApiService;
+
+        #endregion
+
+
         #region Properties
 
         private readonly ObservableCollection<Room> _rooms = new ObservableCollection<Room>();
@@ -27,9 +36,14 @@ namespace Gitter.ViewModel.Concrete
 
         #region Constructor
 
-        public MainViewModel()
+        public MainViewModel(IGitterApiService gitterApiService)
         {
+            // Inject Seervices
+            _gitterApiService = gitterApiService;
+
+            // Commands
             SelectRoomCommand = new RelayCommand(SelectRoom);
+
 
             if (IsInDesignMode)
             {
@@ -110,6 +124,7 @@ namespace Gitter.ViewModel.Concrete
             {
                 // Code runs "for real"
 
+                Refresh();
             }
         }
 
@@ -121,6 +136,21 @@ namespace Gitter.ViewModel.Concrete
         private void SelectRoom()
         {
             throw new NotImplementedException();
+        }
+
+        #endregion
+
+
+        #region Methods
+
+        private async Task Refresh()
+        {
+            var rooms = await _gitterApiService.GetRoomsAsync();
+
+            foreach (var room in rooms)
+            {
+                Rooms.Add(room);
+            }
         }
 
         #endregion
