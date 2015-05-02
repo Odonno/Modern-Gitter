@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
@@ -24,6 +26,23 @@ namespace Gitter.ViewModel.Concrete
         private readonly ObservableCollection<Room> _rooms = new ObservableCollection<Room>();
         public ObservableCollection<Room> Rooms { get { return _rooms; } }
 
+        private Room _selectedRoom;
+        public Room SelectedRoom
+        {
+            get
+            {
+                return _selectedRoom;
+            }
+            set
+            {
+                _selectedRoom = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private readonly ObservableCollection<Message> _messages = new ObservableCollection<Message>();
+        public ObservableCollection<Message> Messages { get { return _messages; } }
+
         #endregion
 
 
@@ -42,7 +61,7 @@ namespace Gitter.ViewModel.Concrete
             _gitterApiService = gitterApiService;
 
             // Commands
-            SelectRoomCommand = new RelayCommand(SelectRoom);
+            SelectRoomCommand = new RelayCommand<Room>(SelectRoom);
 
 
             if (IsInDesignMode)
@@ -119,6 +138,64 @@ namespace Gitter.ViewModel.Concrete
                         Version = 1
                     }
                 };
+
+                SelectedRoom = Rooms.First();
+
+                var malditogeek = new User
+                {
+                    Id = "53307734c3599d1de448e192",
+                    Username = "malditogeek",
+                    DisplayName = "Mauro Pompilio",
+                    Url = "/malditogeek",
+                    SmallAvatarUrl = "https://avatars.githubusercontent.com/u/14751?",
+                    MediumAvatarUrl = "https://avatars.githubusercontent.com/u/14751?"
+                };
+
+                _messages = new ObservableCollection<Message>
+                {
+                    new Message
+                    {
+                        Id = "53316dc47bfc1a000000000f",
+                        Text = "Hi @suprememoocow !",
+                        Html =
+                            "Hi <span data-link-type=\"mention\" data-screen-name=\"suprememoocow\" class=\"mention\">@suprememoocow</span> !",
+                        SentDate = new DateTime(2014, 3, 25, 11, 51, 32),
+                        EditedDate = null,
+                        User = malditogeek,
+                        ReadByCurrent = false,
+                        ReadCount = 0,
+                        Urls = new List<string>(),
+                        Mentions = new List<Mention>
+                        {
+                            new Mention
+                            {
+                                ScreenName = "suprememoocow",
+                                UserId = "53307831c3599d1de448e19a"
+                            }
+                        },
+                        Issues = new List<Issue>(),
+                        Version = 1
+                    },
+                    new Message
+                    {
+                        Id = "53316ec37bfc1a0000000011",
+                        Text = "I've been working on #11, it'll be ready to ship soon",
+                        Html =
+                            "I&#39;ve been working on <span data-link-type=\"issue\" data-issue=\"11\" class=\"issue\">#11</span>, it&#39;ll be ready to ship soon",
+                        SentDate = new DateTime(2014, 3, 25, 11, 55, 47),
+                        EditedDate = null,
+                        User = malditogeek,
+                        ReadByCurrent = false,
+                        ReadCount = 0,
+                        Urls = new List<string>(),
+                        Mentions = new List<Mention>(),
+                        Issues = new List<Issue>
+                        {
+                            new Issue {Number = "11"}
+                        },
+                        Version = 1
+                    }
+                };
             }
             else
             {
@@ -133,9 +210,9 @@ namespace Gitter.ViewModel.Concrete
 
         #region Command Methods
 
-        private void SelectRoom()
+        private void SelectRoom(Room room)
         {
-            throw new NotImplementedException();
+            SelectedRoom = room;
         }
 
         #endregion

@@ -36,12 +36,12 @@
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <Button Style="{StaticResource TextBlockButtonStyle}"
-                                    Command="{Binding Main.SelectRoomCommand, Source={StaticResource Locator}}"
-                                    CommandParameter="{Binding}">
+                                        Command="{Binding Main.SelectRoomCommand, Source={StaticResource Locator}}"
+                                        CommandParameter="{Binding}">
                                     <StackPanel Margin="0 6">
                                         <TextBlock Text="{Binding Path=Name}" FontSize="24" />
                                         <TextBlock Text="{Binding Path=Topic}" FontSize="10"
-                                               Visibility="{Binding Path=Topic, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+                                                   Visibility="{Binding Path=Topic, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
                                     </StackPanel>
                                 </Button>
                             </DataTemplate>
@@ -56,7 +56,28 @@
                         HeaderTemplate="{StaticResource HeaderTemplate}">
 
                 <DataTemplate>
+                    
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        
+                        <TextBlock FontSize="26">
+                            <Run Text="room" />
+                            <Run Text="{Binding Path=SelectedRoom.Name}" />
+                        </TextBlock>
 
+                        <ListView Grid.Row="1" ItemsSource="{Binding Path=Messages}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+
+                    </Grid>
+                    
                 </DataTemplate>
 
             </HubSection>
