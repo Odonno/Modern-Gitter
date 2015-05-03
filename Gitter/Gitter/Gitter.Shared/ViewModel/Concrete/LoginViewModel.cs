@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Views;
+using Gitter.API.Services.Abstract;
 using Gitter.Services.Abstract;
 using Gitter.ViewModel.Abstract;
 
@@ -10,15 +11,24 @@ namespace Gitter.ViewModel.Concrete
 {
     public class LoginViewModel : ViewModelBase, ILoginViewModel
     {
+        #region Services
+
         private readonly INavigationService _navigationService;
         private readonly ISessionService _sessionService;
+        private readonly IGitterApiService _gitterApiService;
 
+        #endregion
+
+
+        #region Constructor
 
         public LoginViewModel(INavigationService navigationService,
             ISessionService sessionService)
         {
+            _gitterApiService = ViewModelLocator.GitterApi;
             _navigationService = navigationService;
             _sessionService = sessionService;
+
 
             if (IsInDesignMode)
             {
@@ -30,6 +40,10 @@ namespace Gitter.ViewModel.Concrete
             }
         }
 
+        #endregion
+
+
+        #region Methods
 
         public async Task LoginAsync()
         {
@@ -37,15 +51,22 @@ namespace Gitter.ViewModel.Concrete
 
             try
             {
-                var auth = await _sessionService.LoginAsync();
+                if (string.IsNullOrWhiteSpace(_gitterApiService.AccessToken))
+                {
+                    var auth = await _sessionService.LoginAsync();
 
 #if WINDOWS_APP
-                if (auth == null)
-                    isToShowMessage = true;
+                    if (auth == null)
+                        isToShowMessage = true;
 
-                if (auth != null && auth.Value)
-                    await FinalizeLoginAsync();
+                    if (auth != null && auth.Value)
+                        await FinalizeLoginAsync();
 #endif
+                }
+                else
+                {
+                    await FinalizeLoginAsync();
+                }
             }
             catch (Exception ex)
             {
@@ -73,5 +94,7 @@ namespace Gitter.ViewModel.Concrete
                 await FinalizeLoginAsync();
         }
 #endif
+
+        #endregion
     }
 }

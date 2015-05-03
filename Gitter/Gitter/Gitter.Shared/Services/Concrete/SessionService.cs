@@ -9,7 +9,7 @@ using Windows.Security.Authentication.Web;
 using Gitter.API.Configuration;
 using Gitter.API.Services.Abstract;
 using Gitter.Services.Abstract;
-
+using Gitter.ViewModel;
 #if WINDOWS_PHONE_APP
 using Windows.ApplicationModel.Activation;
 #endif
@@ -18,14 +18,24 @@ namespace Gitter.Services.Concrete
 {
     public class SessionService : ISessionService
     {
+        #region Services
+
         private readonly IGitterApiService _gitterApiService;
 
+        #endregion
 
-        public SessionService(IGitterApiService gitterApiService)
+
+        #region Constructor
+
+        public SessionService()
         {
-            _gitterApiService = gitterApiService;
+            _gitterApiService = ViewModelLocator.GitterApi;
         }
 
+        #endregion
+
+
+        #region Public Authentication Methods
 
         public async Task<bool?> LoginAsync()
         {
@@ -72,6 +82,10 @@ namespace Gitter.Services.Concrete
         }
 #endif
 
+        #endregion
+
+
+        #region Private Authentication Methods
 
         private async Task<bool> GetSession(WebAuthenticationResult result)
         {
@@ -127,5 +141,7 @@ namespace Gitter.Services.Concrete
                 return value.GetNamedString("access_token");
             }
         }
+
+        #endregion
     }
 }
