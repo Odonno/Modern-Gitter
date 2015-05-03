@@ -64,9 +64,10 @@ namespace Gitter.ViewModel.Concrete
 
         #region Command Methods
 
-        private void SelectRoom(IRoomViewModel room)
+        private async void SelectRoom(IRoomViewModel room)
         {
             SelectedRoom = room;
+            await SelectedRoom.RefreshAsync();
         }
 
         #endregion

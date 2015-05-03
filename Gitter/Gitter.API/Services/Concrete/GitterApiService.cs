@@ -70,6 +70,26 @@ namespace Gitter.API.Services.Concrete
             }
         }
 
+        public async Task<IEnumerable<Message>> GetRoomMessagesAsync(string roomId, int limit = 50, string beforeId = null)
+        {
+            using (var httpClient = HttpClient)
+            {
+                string url = string.Format("rooms/{0}/chatMessages?limit={1}", roomId, limit);
+                if (!string.IsNullOrWhiteSpace(beforeId))
+                    url += string.Format("&beforeId={0}", beforeId);
+
+                var response = await httpClient.GetAsync(url);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<IEnumerable<Message>>(content);
+                }
+
+                throw new HttpRequestException();
+            }
+        }
+
         #endregion
     }
 }

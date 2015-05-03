@@ -87,7 +87,7 @@
                                         <Image Grid.Column="0"
                                                Source="{Binding Path=User.MediumAvatarUrl}"
                                                Width="60" Height="60"
-                                               HorizontalAlignment="Left" VerticalAlignment="Center" />
+                                               HorizontalAlignment="Left" VerticalAlignment="Top" />
 
                                         <StackPanel Grid.Column="1" Margin="6 0">
                                             <TextBlock FontSize="16" TextWrapping="Wrap"

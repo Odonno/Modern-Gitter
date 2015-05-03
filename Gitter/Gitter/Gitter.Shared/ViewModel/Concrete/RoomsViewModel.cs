@@ -27,10 +27,10 @@ namespace Gitter.ViewModel.Concrete
 
         #region Constructor
 
-        public RoomsViewModel(IGitterApiService gitterApiService)
+        public RoomsViewModel()
         {
-            // Inject Seervices
-            _gitterApiService = gitterApiService;
+            // Inject Services
+            _gitterApiService = ViewModelLocator.GitterApi;
 
 
             if (IsInDesignMode)
@@ -61,7 +61,7 @@ namespace Gitter.ViewModel.Concrete
                             UnreadItems = 0,
                             UnreadMentions = 0,
                             DisabledNotifications = false,
-                            Type = RoomType.OneToOne
+                            Type = "ONETOONE"
                         }
                     }
                     ,
@@ -79,7 +79,7 @@ namespace Gitter.ViewModel.Concrete
                             UnreadMentions = 0,
                             LastAccessTime = new DateTime(2014, 3, 24, 18, 22, 28),
                             DisabledNotifications = false,
-                            Type = RoomType.Organization,
+                            Type = "ORG",
                             Version = 1
                         }
                     },
@@ -98,7 +98,7 @@ namespace Gitter.ViewModel.Concrete
                                 UnreadMentions = 0,
                                 LastAccessTime = new DateTime(2014, 3, 24, 18, 23, 10),
                                 DisabledNotifications = false,
-                                Type = RoomType.OrganizationChannel,
+                                Type = "ORG_CHANNEL",
                                 Version = 1
                             }
                     },
@@ -117,7 +117,7 @@ namespace Gitter.ViewModel.Concrete
                                 UnreadMentions = 0,
                                 LastAccessTime = new DateTime(2014, 3, 24, 18, 21, 08),
                                 DisabledNotifications = false,
-                                Type = RoomType.Repository,
+                                Type = "REPO",
                                 Version = 1
                             }
                     }

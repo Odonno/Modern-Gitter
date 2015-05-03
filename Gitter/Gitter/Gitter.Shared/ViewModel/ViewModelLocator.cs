@@ -87,6 +87,19 @@ namespace Gitter.ViewModel
         #endregion
 
 
+        #region Services
+
+        public static IGitterApiService GitterApi
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<IGitterApiService>();
+            }
+        }
+
+        #endregion
+
+
         #region ViewModels
 
         public static IMainViewModel Main

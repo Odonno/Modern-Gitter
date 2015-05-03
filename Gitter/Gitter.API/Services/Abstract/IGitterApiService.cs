@@ -16,6 +16,7 @@ namespace Gitter.API.Services.Abstract
         #region Rooms
 
         Task<IEnumerable<Room>> GetRoomsAsync();
+        Task<IEnumerable<Message>> GetRoomMessagesAsync(string roomId, int limit = 50, string beforeId = null);
 
         #endregion
     }

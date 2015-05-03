@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Gitter.Model;
 
 namespace Gitter.ViewModel.Abstract
@@ -8,5 +9,7 @@ namespace Gitter.ViewModel.Abstract
         Room Room { get; set; }
         ObservableCollection<Message> Messages { get; }
         string TextMessage { get; set; }
+
+        Task RefreshAsync();
     }
 }

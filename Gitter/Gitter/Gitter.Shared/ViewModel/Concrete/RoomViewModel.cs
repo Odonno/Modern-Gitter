@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
+using Gitter.API.Services.Abstract;
 using Gitter.Model;
 using Gitter.ViewModel.Abstract;
 
@@ -9,8 +11,15 @@ namespace Gitter.ViewModel.Concrete
 {
     public class RoomViewModel : ViewModelBase, IRoomViewModel
     {
+        #region Services
+
+        private readonly IGitterApiService _gitterApiService;
+
+        #endregion
+
+
         #region Properties
-        
+
         public Room Room { get; set; }
 
         private readonly ObservableCollection<Message> _messages = new ObservableCollection<Message>();
@@ -34,6 +43,10 @@ namespace Gitter.ViewModel.Concrete
 
         public RoomViewModel()
         {
+            // Inject Seervices
+            _gitterApiService = ViewModelLocator.GitterApi;
+
+
             if (IsInDesignMode)
             {
                 // Code runs in Blend --> create design time data.
@@ -61,7 +74,7 @@ namespace Gitter.ViewModel.Concrete
                         User = malditogeek,
                         ReadByCurrent = false,
                         ReadCount = 0,
-                        Urls = new List<string>(),
+                        Urls = new List<MessageUrl>(),
                         Mentions = new List<Mention>
                         {
                             new Mention
@@ -84,7 +97,7 @@ namespace Gitter.ViewModel.Concrete
                         User = malditogeek,
                         ReadByCurrent = false,
                         ReadCount = 0,
-                        Urls = new List<string>(),
+                        Urls = new List<MessageUrl>(),
                         Mentions = new List<Mention>(),
                         Issues = new List<Issue>
                         {
@@ -98,6 +111,20 @@ namespace Gitter.ViewModel.Concrete
             {
                 // Code runs "for real"
             }
+        }
+
+        #endregion
+
+
+        #region Methods
+
+        public async Task RefreshAsync()
+        {
+            var messages = await _gitterApiService.GetRoomMessagesAsync(Room.Id);
+
+            Messages.Clear();
+            foreach (var message in messages)
+                Messages.Add(message);
         }
 
         #endregion
