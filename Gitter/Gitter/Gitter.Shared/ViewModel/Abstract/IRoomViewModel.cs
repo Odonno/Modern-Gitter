@@ -1,13 +1,13 @@
-﻿using System.Collections.ObjectModel;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Gitter.DataObjects.Concrete;
 using Gitter.Model;
 
 namespace Gitter.ViewModel.Abstract
 {
     public interface IRoomViewModel
     {
-        Room Room { get; set; }
-        ObservableCollection<Message> Messages { get; }
+        Room Room { get; }
+        MessagesIncrementalLoadingCollection Messages { get; }
         string TextMessage { get; set; }
 
         Task RefreshAsync();

@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
-using Gitter.API.Services.Abstract;
+using Gitter.DataObjects.Concrete;
 using Gitter.Model;
 using Gitter.ViewModel.Abstract;
 
@@ -11,19 +10,12 @@ namespace Gitter.ViewModel.Concrete
 {
     public class RoomViewModel : ViewModelBase, IRoomViewModel
     {
-        #region Services
-
-        private readonly IGitterApiService _gitterApiService;
-
-        #endregion
-
-
         #region Properties
 
-        public Room Room { get; set; }
+        public Room Room { get; private set; }
 
-        private readonly ObservableCollection<Message> _messages = new ObservableCollection<Message>();
-        public ObservableCollection<Message> Messages { get { return _messages; } }
+        private readonly MessagesIncrementalLoadingCollection _messages;
+        public MessagesIncrementalLoadingCollection Messages { get { return _messages; } }
 
         private string _textMessage;
         public string TextMessage
@@ -41,10 +33,9 @@ namespace Gitter.ViewModel.Concrete
 
         #region Constructor
 
-        public RoomViewModel()
+        public RoomViewModel(Room room)
         {
-            // Inject Seervices
-            _gitterApiService = ViewModelLocator.GitterApi;
+            Room = room;
 
 
             if (IsInDesignMode)
@@ -61,7 +52,7 @@ namespace Gitter.ViewModel.Concrete
                     MediumAvatarUrl = "https://avatars.githubusercontent.com/u/14751?"
                 };
 
-                _messages = new ObservableCollection<Message>
+                _messages = new MessagesIncrementalLoadingCollection(string.Empty)
                 {
                     new Message
                     {
@@ -110,6 +101,8 @@ namespace Gitter.ViewModel.Concrete
             else
             {
                 // Code runs "for real"
+
+                _messages = new MessagesIncrementalLoadingCollection(Room.Id);
             }
         }
 
@@ -120,11 +113,8 @@ namespace Gitter.ViewModel.Concrete
 
         public async Task RefreshAsync()
         {
-            var messages = await _gitterApiService.GetRoomMessagesAsync(Room.Id);
-
-            Messages.Clear();
-            foreach (var message in messages)
-                Messages.Add(message);
+            Messages.Reset();
+            await Messages.LoadMoreItemsAsync((uint) Messages.ItemsPerPage);
         }
 
         #endregion

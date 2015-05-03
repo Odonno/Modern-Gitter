@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -16,7 +17,11 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 // Pour en savoir plus sur le modèle d'élément Page vierge, consultez la page http://go.microsoft.com/fwlink/?LinkId=234238
+using GalaSoft.MvvmLight.Messaging;
 using GitHub.Common;
+using Gitter.Messages;
+using Gitter.ViewModel;
+using WinRTXamlToolkit.Controls.Extensions;
 
 namespace Gitter
 {
@@ -38,6 +43,8 @@ namespace Gitter
             _navigationHelper = new NavigationHelper(this);
             _navigationHelper.LoadState += NavigationHelper_LoadState;
             _navigationHelper.SaveState += NavigationHelper_SaveState;
+
+            Messenger.Default.Register<RoomRefreshedMessage>(this, _ => ScrollToBottom());
         }
 
 
@@ -113,6 +120,64 @@ namespace Gitter
         }
 
         #endregion
+
+        #endregion
+
+
+        #region Scroll management (Message List)
+
+        private ListView _messagesListView;
+        private double _previousDiffOffset;
+        private bool _check;
+        private DateTime _lastRefresh = DateTime.Now;
+
+
+        private void MessagesListView_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            _messagesListView = sender as ListView;
+            MessagesListView_TopEdgeDetection();
+        }
+
+        private void ScrollToBottom()
+        {
+            if (_messagesListView.Items == null)
+                return;
+
+            var selectedIndex = _messagesListView.Items.Count - 1;
+            if (selectedIndex < 0)
+                return;
+
+            _messagesListView.SelectedIndex = selectedIndex;
+
+            _messagesListView.UpdateLayout();
+            _messagesListView.ScrollIntoView(_messagesListView.SelectedItem);
+        }
+
+        private void MessagesListView_TopEdgeDetection()
+        {
+            var scrollViewer = _messagesListView.GetFirstDescendantOfType<ScrollViewer>();
+
+            scrollViewer.ViewChanged += async (sender, e) =>
+            {
+                if (scrollViewer.VerticalOffset <= 0 && DateTime.Now.Subtract(_lastRefresh).TotalSeconds > 0.5)
+                {
+                    _previousDiffOffset = scrollViewer.ExtentHeight;
+
+                    await ViewModelLocator.Main.SelectedRoom.Messages.LoadMoreItemsAsync(
+                        (uint)ViewModelLocator.Main.SelectedRoom.Messages.ItemsPerPage);
+
+                    _lastRefresh = DateTime.Now;
+                    _check = true;
+                }
+
+                if (_check && Math.Abs(_previousDiffOffset - scrollViewer.ExtentHeight) > 10)
+                {
+                    _previousDiffOffset = scrollViewer.ExtentHeight - _previousDiffOffset;
+                    scrollViewer.ScrollToVerticalOffset(_previousDiffOffset);
+                    _check = false;
+                }
+            };
+        }
 
         #endregion
     }

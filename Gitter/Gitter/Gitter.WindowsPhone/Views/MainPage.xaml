@@ -75,7 +75,10 @@
                                        Text="{Binding Path=Room.Name}" />
                         </Grid>
 
-                        <ListView Grid.Row="1" ItemsSource="{Binding Path=Messages}">
+                        <ListView Grid.Row="1" 
+                                  ItemsSource="{Binding Path=Messages}"
+                                  IncrementalLoadingTrigger="None"
+                                  Loaded="MessagesListView_OnLoaded">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid Margin="0 6">
@@ -122,7 +125,7 @@
                                FontSize="30" Margin="0 0 0 60"
                                VerticalAlignment="Center" HorizontalAlignment="Center" />
                 </DataTemplate>
-                
+
             </HubSection>
         </Hub>
     </Grid>

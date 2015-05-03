@@ -49,78 +49,66 @@ namespace Gitter.ViewModel.Concrete
 
                 _rooms = new ObservableCollection<IRoomViewModel>
                 {
-                    new RoomViewModel
+                    new RoomViewModel(new Room
                     {
-                        Room = new Room
-                        {
-                            Id = "53307860c3599d1de448e19d",
-                            Name = "Andrew Newdigate",
-                            Topic = string.Empty,
-                            OneToOne = true,
-                            Users = new[] {suprememoocow},
-                            UnreadItems = 0,
-                            UnreadMentions = 0,
-                            DisabledNotifications = false,
-                            Type = "ONETOONE"
-                        }
-                    }
+                        Id = "53307860c3599d1de448e19d",
+                        Name = "Andrew Newdigate",
+                        Topic = string.Empty,
+                        OneToOne = true,
+                        Users = new[] {suprememoocow},
+                        UnreadItems = 0,
+                        UnreadMentions = 0,
+                        DisabledNotifications = false,
+                        Type = "ONETOONE"
+                    })
                     ,
-                    new RoomViewModel
+                    new RoomViewModel(new Room
                     {
-                        Room = new Room
-                        {
-                            Id = "5330777dc3599d1de448e194",
-                            Name = "gitterHQ",
-                            Topic = "Gitter",
-                            Url = "gitterHQ",
-                            OneToOne = false,
-                            UserCount = 2,
-                            UnreadItems = 0,
-                            UnreadMentions = 0,
-                            LastAccessTime = new DateTime(2014, 3, 24, 18, 22, 28),
-                            DisabledNotifications = false,
-                            Type = "ORG",
-                            Version = 1
-                        }
-                    },
-                    new RoomViewModel
+                        Id = "5330777dc3599d1de448e194",
+                        Name = "gitterHQ",
+                        Topic = "Gitter",
+                        Url = "gitterHQ",
+                        OneToOne = false,
+                        UserCount = 2,
+                        UnreadItems = 0,
+                        UnreadMentions = 0,
+                        LastAccessTime = new DateTime(2014, 3, 24, 18, 22, 28),
+                        DisabledNotifications = false,
+                        Type = "ORG",
+                        Version = 1
+                    })
+                    ,
+                    new RoomViewModel(new Room
                     {
-                        Room =
-                            new Room
-                            {
-                                Id = "5330780dc3599d1de448e198",
-                                Name = "gitterHQ/devops",
-                                Topic = string.Empty,
-                                Url = "gitterHQ/devops",
-                                OneToOne = false,
-                                UserCount = 2,
-                                UnreadItems = 0,
-                                UnreadMentions = 0,
-                                LastAccessTime = new DateTime(2014, 3, 24, 18, 23, 10),
-                                DisabledNotifications = false,
-                                Type = "ORG_CHANNEL",
-                                Version = 1
-                            }
-                    },
-                    new RoomViewModel
+                        Id = "5330780dc3599d1de448e198",
+                        Name = "gitterHQ/devops",
+                        Topic = string.Empty,
+                        Url = "gitterHQ/devops",
+                        OneToOne = false,
+                        UserCount = 2,
+                        UnreadItems = 0,
+                        UnreadMentions = 0,
+                        LastAccessTime = new DateTime(2014, 3, 24, 18, 23, 10),
+                        DisabledNotifications = false,
+                        Type = "ORG_CHANNEL",
+                        Version = 1
+                    })
+                    ,
+                    new RoomViewModel(new Room
                     {
-                        Room =
-                            new Room
-                            {
-                                Id = "53307793c3599d1de448e196",
-                                Name = "malditogeek/vmux",
-                                Topic = "VMUX - Plugin-free video calls in your browser using WebRTC",
-                                Url = "gitterHQ/devops",
-                                OneToOne = false,
-                                UserCount = 2,
-                                UnreadItems = 0,
-                                UnreadMentions = 0,
-                                LastAccessTime = new DateTime(2014, 3, 24, 18, 21, 08),
-                                DisabledNotifications = false,
-                                Type = "REPO",
-                                Version = 1
-                            }
-                    }
+                        Id = "53307793c3599d1de448e196",
+                        Name = "malditogeek/vmux",
+                        Topic = "VMUX - Plugin-free video calls in your browser using WebRTC",
+                        Url = "gitterHQ/devops",
+                        OneToOne = false,
+                        UserCount = 2,
+                        UnreadItems = 0,
+                        UnreadMentions = 0,
+                        LastAccessTime = new DateTime(2014, 3, 24, 18, 21, 08),
+                        DisabledNotifications = false,
+                        Type = "REPO",
+                        Version = 1
+                    })
                 };
             }
             else
@@ -142,10 +130,7 @@ namespace Gitter.ViewModel.Concrete
 
             foreach (var room in rooms)
             {
-                Rooms.Add(new RoomViewModel
-                {
-                    Room = room
-                });
+                Rooms.Add(new RoomViewModel(room));
             }
         }
 

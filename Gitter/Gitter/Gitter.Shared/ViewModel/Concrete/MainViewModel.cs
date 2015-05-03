@@ -2,6 +2,8 @@ using System.Linq;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
+using Gitter.Messages;
 using Gitter.ViewModel.Abstract;
 
 namespace Gitter.ViewModel.Concrete
@@ -68,6 +70,8 @@ namespace Gitter.ViewModel.Concrete
         {
             SelectedRoom = room;
             await SelectedRoom.RefreshAsync();
+
+            Messenger.Default.Send(new RoomRefreshedMessage());
         }
 
         #endregion
