@@ -107,7 +107,8 @@
                             </ListView.ItemTemplate>
                         </ListView>
 
-                        <TextBox Grid.Row="2" Text="{Binding Path=TextMessage}"
+                        <TextBox Grid.Row="2" 
+                                 Text="{Binding Path=TextMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                  PlaceholderText="type your message here" />
 
                     </Grid>
@@ -129,5 +130,14 @@
             </HubSection>
         </Hub>
     </Grid>
+
+    <Page.BottomAppBar>
+        <CommandBar>
+            <CommandBar.PrimaryCommands>
+                <AppBarButton Label="send" Icon="PostUpdate"
+                              Command="{Binding Path=SelectedRoom.SendMessageCommand}" />
+            </CommandBar.PrimaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
 
 </Page>

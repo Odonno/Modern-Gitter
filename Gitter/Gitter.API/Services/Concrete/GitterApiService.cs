@@ -36,6 +36,7 @@ namespace Gitter.API.Services.Concrete
 
         #endregion
 
+
         #region Authentication
 
         public string AccessToken
@@ -70,6 +71,10 @@ namespace Gitter.API.Services.Concrete
             }
         }
 
+        #endregion
+
+        #region Messages
+
         public async Task<IEnumerable<Message>> GetRoomMessagesAsync(string roomId, int limit = 50, string beforeId = null)
         {
             using (var httpClient = HttpClient)
@@ -84,6 +89,26 @@ namespace Gitter.API.Services.Concrete
                 {
                     var content = await response.Content.ReadAsStringAsync();
                     return JsonConvert.DeserializeObject<IEnumerable<Message>>(content);
+                }
+
+                throw new HttpRequestException();
+            }
+        }
+
+        public async Task<Message> SendMessage(string roomId, string message)
+        {
+            using (var httpClient = HttpClient)
+            {
+                var response = await httpClient.PostAsync(string.Format("rooms/{0}/chatMessages", roomId),
+                    new FormUrlEncodedContent(new Dictionary<string, string>
+                    {
+                        {"text", message}
+                    }));
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<Message>(content);
                 }
 
                 throw new HttpRequestException();

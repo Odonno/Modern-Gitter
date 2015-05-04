@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using System.Windows.Input;
 using Gitter.DataObjects.Concrete;
 using Gitter.Model;
 
@@ -9,6 +10,8 @@ namespace Gitter.ViewModel.Abstract
         Room Room { get; }
         MessagesIncrementalLoadingCollection Messages { get; }
         string TextMessage { get; set; }
+
+        ICommand SendMessageCommand { get; }
 
         Task RefreshAsync();
     }
