@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GalaSoft.MvvmLight;
 using Gitter.DataObjects.Abstract;
 using Gitter.Model;
 using Gitter.ViewModel;
@@ -22,6 +23,11 @@ namespace Gitter.DataObjects.Concrete
 
         protected override async Task<IEnumerable<Message>> LoadMoreItemsAsync()
         {
+#if DEBUG
+            if (ViewModelBase.IsInDesignModeStatic)
+                return new List<Message>();
+#endif
+
             string beforeId = Ascendant ? ((Page++ == 0) ? null : this.Last().Id) : ((Page++ == 0) ? null : this.First().Id);
 
             return await ViewModelLocator.GitterApi.GetRoomMessagesAsync(RoomId, ItemsPerPage, beforeId);

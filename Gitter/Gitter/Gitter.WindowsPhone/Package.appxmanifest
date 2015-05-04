@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest" xmlns:m3="http://schemas.microsoft.com/appx/2014/manifest" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
-  <Identity Name="49e119ed-d2f7-4f96-a638-a42674559246" Publisher="CN=David" Version="1.0.0.0" />
-  <mp:PhoneIdentity PhoneProductId="49e119ed-d2f7-4f96-a638-a42674559246" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Identity Name="49142DavidBOTTIAU.ModernGitter" Publisher="CN=519CD1E7-EAA2-4CE2-92D3-BDEE98B243DC" Version="0.1.0.0" />
+  <mp:PhoneIdentity PhoneProductId="adc6ea6c-99c8-4c5c-a4c5-3354f0fdebb2" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>Gitter.WindowsPhone</DisplayName>
-    <PublisherDisplayName>David</PublisherDisplayName>
+    <DisplayName>Modern Gitter</DisplayName>
+    <PublisherDisplayName>David BOTTIAU</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Prerequisites>
@@ -18,8 +18,14 @@
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Gitter.WindowsPhone.App">
       <m3:VisualElements DisplayName="Modern Gitter" Square150x150Logo="Assets\Logo.png" Square44x44Logo="Assets\SmallLogo.png" Description="A Gitter client application for Windows Phone 8" ForegroundText="light" BackgroundColor="transparent">
         <m3:DefaultTile Wide310x150Logo="Assets\WideLogo.png" Square71x71Logo="Assets\Square71x71Logo.png">
+          <m3:ShowNameOnTiles>
+            <m3:ShowOn Tile="wide310x150Logo" />
+          </m3:ShowNameOnTiles>
         </m3:DefaultTile>
         <m3:SplashScreen Image="Assets\SplashScreen.png" />
+        <m3:InitialRotationPreference>
+          <m3:Rotation Preference="portrait" />
+        </m3:InitialRotationPreference>
       </m3:VisualElements>
     </Application>
   </Applications>

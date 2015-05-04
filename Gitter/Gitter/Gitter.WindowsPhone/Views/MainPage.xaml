@@ -24,8 +24,13 @@
             <!-- Header -->
             <Hub.HeaderTemplate>
                 <DataTemplate>
-                    <TextBlock Text="GITTER" FontSize="60" FontWeight="SemiBold"
-                           CharacterSpacing="10" />
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="../Assets/Gitter.white.png"
+                               Height="80"/>
+                        
+                        <TextBlock Text="GITTER" Margin="6 0 0 0" FontSize="60" 
+                                   FontWeight="SemiBold" CharacterSpacing="10" />
+                    </StackPanel>
                 </DataTemplate>
             </Hub.HeaderTemplate>
 

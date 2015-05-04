@@ -5,10 +5,18 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    RequestedTheme="Light"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     DataContext="{Binding Source={StaticResource Locator}, Path=Login}">
 
     <Grid>
+        <!-- Content -->
+        <StackPanel x:Name="ContentRoot" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 0 0 120">
+            <Image Source="../Assets/Gitter.white.png" Height="200"/>
 
+            <ProgressRing IsActive="True" Background="Transparent"
+                          Foreground="Black"
+                          Width="100" Height="100" />
+        </StackPanel>
     </Grid>
 </Page>
