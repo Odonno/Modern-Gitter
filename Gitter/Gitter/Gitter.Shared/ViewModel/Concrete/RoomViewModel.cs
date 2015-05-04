@@ -153,10 +153,9 @@ namespace Gitter.ViewModel.Concrete
 
         #region Methods
 
-        public async Task RefreshAsync()
+        public void Refresh()
         {
             Messages.Reset();
-            await Messages.LoadMoreItemsAsync((uint) Messages.ItemsPerPage);
         }
 
         #endregion

@@ -13,6 +13,6 @@ namespace Gitter.ViewModel.Abstract
 
         ICommand SendMessageCommand { get; }
 
-        Task RefreshAsync();
+        void Refresh();
     }
 }

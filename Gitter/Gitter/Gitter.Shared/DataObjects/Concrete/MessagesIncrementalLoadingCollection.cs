@@ -22,7 +22,9 @@ namespace Gitter.DataObjects.Concrete
 
         protected override async Task<IEnumerable<Message>> LoadMoreItemsAsync()
         {
-            return await ViewModelLocator.GitterApi.GetRoomMessagesAsync(RoomId, ItemsPerPage, (Page++ == 0) ? null : this.First().Id);
+            string beforeId = Ascendant ? ((Page++ == 0) ? null : this.Last().Id) : ((Page++ == 0) ? null : this.First().Id);
+
+            return await ViewModelLocator.GitterApi.GetRoomMessagesAsync(RoomId, ItemsPerPage, beforeId);
         }
     }
 }

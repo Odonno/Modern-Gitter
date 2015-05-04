@@ -40,9 +40,9 @@ namespace Gitter.DataObjects.Abstract
                             {
                                 if (Ascendant)
                                 {
-                                    int i = 0;
+                                    int i = (Page - 1) * ItemsPerPage;
                                     foreach (var item in items)
-                                        Insert(i++, item);
+                                        Insert(i, item);
                                 }
                                 else
                                 {

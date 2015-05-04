@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:userControls="using:Gitter.UserControls"
     mc:Ignorable="d"
     NavigationCacheMode="Required"
     RequestedTheme="Light"
@@ -77,34 +78,54 @@
 
                         <ListView Grid.Row="1" 
                                   ItemsSource="{Binding Path=Messages}"
-                                  IncrementalLoadingTrigger="None"
-                                  Loaded="MessagesListView_OnLoaded">
+                                  IncrementalLoadingTrigger="Edge">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="ListViewItem">
+                                                <ContentPresenter />
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+
+                            <ListView.ItemContainerTransitions>
+                                <TransitionCollection />
+                            </ListView.ItemContainerTransitions>
+
+                            <ListView.Template>
+                                <ControlTemplate>
+                                    <Border BorderThickness="{TemplateBinding BorderThickness}"
+                                            Padding="{TemplateBinding Padding}"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            Background="{TemplateBinding Background}">
+                                        <ScrollViewer ZoomMode="Disabled" 
+                                                      x:Name="ScrollViewer" 
+                                                      RenderTransformOrigin="0.5,0.5">
+                                            <ScrollViewer.RenderTransform>
+                                                <CompositeTransform Rotation="180" ScaleX="-1" />
+                                            </ScrollViewer.RenderTransform>
+                                            <ItemsPresenter x:Name="ItemsPresenter" />
+                                        </ScrollViewer>
+                                    </Border>
+                                </ControlTemplate>
+                            </ListView.Template>
+
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid Margin="0 6">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="60" />
-                                            <ColumnDefinition />
-                                        </Grid.ColumnDefinitions>
+                                    
+                                    <userControls:ChatMessageControl RenderTransformOrigin="0.5,0.5">
+                                        <userControls:ChatMessageControl.RenderTransform>
+                                            <CompositeTransform Rotation="180" ScaleX="-1" />
+                                        </userControls:ChatMessageControl.RenderTransform>
+                                    </userControls:ChatMessageControl>
 
-                                        <Image Grid.Column="0"
-                                               Source="{Binding Path=User.MediumAvatarUrl}"
-                                               Width="60" Height="60"
-                                               HorizontalAlignment="Left" VerticalAlignment="Top" />
-
-                                        <StackPanel Grid.Column="1" Margin="6 0">
-                                            <TextBlock FontSize="16" TextWrapping="Wrap"
-                                                       Text="{Binding Path=Text}" />
-
-                                            <TextBlock FontSize="10" TextWrapping="Wrap">
-                                                <Run Text="by" />
-                                                <Run Text="{Binding Path=User.Username}" />
-                                            </TextBlock>
-                                        </StackPanel>
-
-                                    </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
+
                         </ListView>
 
                         <TextBox Grid.Row="2" 
@@ -135,7 +156,8 @@
         <CommandBar>
             <CommandBar.PrimaryCommands>
                 <AppBarButton Label="send" Icon="PostUpdate"
-                              Command="{Binding Path=SelectedRoom.SendMessageCommand}" />
+                              Command="{Binding Path=SelectedRoom.SendMessageCommand}"
+                              Visibility="{Binding Path=SelectedRoom, Converter={StaticResource NullToVisibilityConverter}}" />
             </CommandBar.PrimaryCommands>
         </CommandBar>
     </Page.BottomAppBar>

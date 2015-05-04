@@ -9,6 +9,7 @@
         
         <!-- Converters -->
         <converters:EmptyStringToVisibilityConverter x:Key="EmptyStringToVisibilityConverter" />
+        <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
 
         <!-- Styles -->
 
