@@ -12,6 +12,7 @@ namespace Gitter.ViewModel.Abstract
         string TextMessage { get; set; }
 
         ICommand SendMessageCommand { get; }
+        ICommand RefreshCommand { get; }
 
         void Refresh();
     }

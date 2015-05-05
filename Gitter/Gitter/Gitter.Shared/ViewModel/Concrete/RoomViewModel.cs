@@ -45,6 +45,7 @@ namespace Gitter.ViewModel.Concrete
         #region Commands
 
         public ICommand SendMessageCommand { get; private set; }
+        public ICommand RefreshCommand { get; private set; }
 
         #endregion
 
@@ -58,6 +59,7 @@ namespace Gitter.ViewModel.Concrete
 
             // Commands
             SendMessageCommand = new RelayCommand(SendMessage, CanSendMessage);
+            RefreshCommand = new RelayCommand(Refresh);
 
             // Inject Services
             _gitterApiService = ViewModelLocator.GitterApi;
@@ -77,7 +79,7 @@ namespace Gitter.ViewModel.Concrete
                     MediumAvatarUrl = "https://avatars.githubusercontent.com/u/14751?"
                 };
 
-                _messages = new MessagesIncrementalLoadingCollection(string.Empty)
+                _messages = new MessagesIncrementalLoadingCollection("123456")
                 {
                     new Message
                     {
