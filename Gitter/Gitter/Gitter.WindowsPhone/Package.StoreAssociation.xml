@@ -215,5 +215,11 @@
     <MainPackageIdentityName>49142DavidBOTTIAU.VisualLightStudio</MainPackageIdentityName>
     <MainPackageIdentityName>49142DavidBOTTIAU.WantApps</MainPackageIdentityName>
   </AccountPackageIdentityNames>
-  <PackageInfoList LandingUrl="https://dev.windowsphone.com/AppSubmission/AssociationLanding?windowsProductId=a143073f-38ff-4254-9369-e1a06756375c" />
+  <PackageInfoList LandingUrl="https://dev.windowsphone.com/AppSubmission/AssociationLanding?windowsProductId=a143073f-38ff-4254-9369-e1a06756375c">
+    <PackageInfo>
+      <OsMinVersion>6.3.0.0</OsMinVersion>
+      <PackageArchitecture>neutral</PackageArchitecture>
+      <PackageMaxArchitectureVersion>0.1.0.0</PackageMaxArchitectureVersion>
+    </PackageInfo>
+  </PackageInfoList>
 </StoreAssociation>

@@ -132,7 +132,7 @@ namespace Gitter.ViewModel.Concrete
                 _messages = new MessagesIncrementalLoadingCollection(Room.Id);
             }
         }
-        
+
         #endregion
 
 
@@ -147,6 +147,10 @@ namespace Gitter.ViewModel.Concrete
             var messageSent = await _gitterApiService.SendMessage(Room.Id, TextMessage);
 
             Messages.Add(messageSent);
+
+            App.TelemetryClient.TrackEvent("SendMessage",
+                new Dictionary<string, string> { { "Room", Room.Name } },
+                new Dictionary<string, double> { { "MessageLength", TextMessage.Length } });
             TextMessage = string.Empty;
         }
 
@@ -158,6 +162,9 @@ namespace Gitter.ViewModel.Concrete
         public void Refresh()
         {
             Messages.Reset();
+
+            App.TelemetryClient.TrackEvent("RefreshRoom",
+                new Dictionary<string, string> { { "Room", Room.Name } });
         }
 
         #endregion

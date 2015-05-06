@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest" xmlns:m3="http://schemas.microsoft.com/appx/2014/manifest" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
-  <Identity Name="49142DavidBOTTIAU.ModernGitter" Publisher="CN=519CD1E7-EAA2-4CE2-92D3-BDEE98B243DC" Version="0.1.0.0" />
+  <Identity Name="49142DavidBOTTIAU.ModernGitter" Publisher="CN=519CD1E7-EAA2-4CE2-92D3-BDEE98B243DC" Version="0.1.0.1" />
   <mp:PhoneIdentity PhoneProductId="adc6ea6c-99c8-4c5c-a4c5-3354f0fdebb2" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Modern Gitter</DisplayName>

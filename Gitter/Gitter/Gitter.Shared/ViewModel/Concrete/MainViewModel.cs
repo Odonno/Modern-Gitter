@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
@@ -67,7 +68,9 @@ namespace Gitter.ViewModel.Concrete
         private void SelectRoom(IRoomViewModel room)
         {
             SelectedRoom = room;
-            SelectedRoom.Refresh();
+
+            App.TelemetryClient.TrackEvent("SelectRoom",
+                new Dictionary<string, string> { { "Room", room.Room.Name } });
         }
 
         #endregion
