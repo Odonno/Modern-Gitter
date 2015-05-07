@@ -122,7 +122,8 @@
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     
-                                    <userControls:ChatMessageControl RenderTransformOrigin="0.5,0.5">
+                                    <userControls:ChatMessageControl RenderTransformOrigin="0.5,0.5"
+                                                                     Visibility="{Binding Path=Text, Converter={StaticResource EmptyStringToVisibilityConverter}}">
                                         <userControls:ChatMessageControl.RenderTransform>
                                             <CompositeTransform Rotation="180" ScaleX="-1" />
                                         </userControls:ChatMessageControl.RenderTransform>

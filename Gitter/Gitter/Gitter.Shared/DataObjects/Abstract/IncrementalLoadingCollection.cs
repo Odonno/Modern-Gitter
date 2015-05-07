@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -12,11 +13,17 @@ namespace Gitter.DataObjects.Abstract
 {
     public abstract class IncrementalLoadingCollection<T> : ObservableCollection<T>, ISupportIncrementalLoading
     {
-        public bool HasMoreItems { get { return true; } }
+        public bool HasMoreItems { get; private set; }
         public int Page { get; protected set; }
         public int ItemsPerPage { get; protected set; }
         public bool IsBusy { get; protected set; }
         public bool Ascendant { get; protected set; }
+
+
+        protected IncrementalLoadingCollection()
+        {
+            HasMoreItems = true;
+        }
 
 
         public IAsyncOperation<LoadMoreItemsResult> LoadMoreItemsAsync(uint count)
@@ -33,6 +40,10 @@ namespace Gitter.DataObjects.Abstract
                     async () =>
                     {
                         var items = await LoadMoreItemsAsync();
+                        var itemsCount = items.Count();
+
+                        if (itemsCount < ItemsPerPage)
+                            HasMoreItems = false;
 
                         dispatcher.RunAsync(
                             CoreDispatcherPriority.High,
@@ -40,7 +51,7 @@ namespace Gitter.DataObjects.Abstract
                             {
                                 if (Ascendant)
                                 {
-                                    int i = (Page - 1) * ItemsPerPage;
+                                    int i = Count;
                                     foreach (var item in items)
                                         Insert(i, item);
                                 }
@@ -51,7 +62,7 @@ namespace Gitter.DataObjects.Abstract
                                 }
                             });
 
-                        return new LoadMoreItemsResult { Count = (uint)items.Count() };
+                        return new LoadMoreItemsResult { Count = (uint)itemsCount };
                     }).AsAsyncOperation();
             }
             finally
@@ -59,11 +70,17 @@ namespace Gitter.DataObjects.Abstract
                 IsBusy = false;
             }
         }
+        public async Task AddItem(T item)
+        {
+            var dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
+            await dispatcher.RunAsync(CoreDispatcherPriority.High, () => Insert(0, item));
+        }
         protected abstract Task<IEnumerable<T>> LoadMoreItemsAsync();
         public void Reset()
         {
             Clear();
             Page = 0;
+            HasMoreItems = true;
         }
     }
 }

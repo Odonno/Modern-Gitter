@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.ApplicationModel.Core;
+using Windows.UI.Core;
+using Windows.UI.Xaml;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Gitter.API.Services.Abstract;
@@ -131,6 +134,12 @@ namespace Gitter.ViewModel.Concrete
 
                 _messages = new MessagesIncrementalLoadingCollection(Room.Id);
             }
+
+            // Use the stream API to add new messages when they comes
+            _gitterApiService.GetRealtimeMessages(Room.Id).Subscribe(async message =>
+            {
+                await Messages.AddItem(message);
+            });
         }
 
         #endregion
@@ -144,9 +153,7 @@ namespace Gitter.ViewModel.Concrete
         }
         private async void SendMessage()
         {
-            var messageSent = await _gitterApiService.SendMessage(Room.Id, TextMessage);
-
-            Messages.Add(messageSent);
+            await _gitterApiService.SendMessage(Room.Id, TextMessage);
 
             App.TelemetryClient.TrackEvent("SendMessage",
                 new Dictionary<string, string> { { "Room", Room.Name } },

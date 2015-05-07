@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Reactive.Linq;
+using System.Reactive.Threading.Tasks;
+using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Gitter.API.Services.Abstract;
 using Gitter.Model;
+using ModernHttpClient;
 using Newtonsoft.Json;
 
 namespace Gitter.API.Services.Concrete
@@ -15,16 +20,32 @@ namespace Gitter.API.Services.Concrete
         #region Fields
 
         private const string BaseUrl = "https://api.gitter.im/";
+        private const string StreamBaseUrl = "https://stream.gitter.im/";
         private const string Version = "v1/";
 
         private HttpClient HttpClient
         {
             get
             {
-                var httpClient = new HttpClient();
+                var httpClient = new HttpClient(new NativeMessageHandler());
 
                 httpClient.BaseAddress = new Uri(string.Format("{0}{1}", BaseUrl, Version));
+                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
+                if (!string.IsNullOrWhiteSpace(AccessToken))
+                    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", AccessToken);
+
+                return httpClient;
+            }
+        }
+
+        private HttpClient StreamHttpClient
+        {
+            get
+            {
+                var httpClient = new HttpClient(new NativeMessageHandler());
+
+                httpClient.BaseAddress = new Uri(string.Format("{0}{1}", StreamBaseUrl, Version));
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 if (!string.IsNullOrWhiteSpace(AccessToken))
@@ -74,6 +95,27 @@ namespace Gitter.API.Services.Concrete
         #endregion
 
         #region Messages
+
+        public IObservable<Message> GetRealtimeMessages(string roomId)
+        {
+            string url = string.Format("rooms/{0}/chatMessages", roomId);
+
+            return Observable.Using(() => StreamHttpClient,
+                client => client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead)
+                    .ToObservable()
+                    .SelectMany(x => x.Content.ReadAsStreamAsync())
+                    .Select(x => Observable.FromAsync(() => ReadStream(x)).Repeat())
+                    .Concat()
+                    .Where(x => !string.IsNullOrWhiteSpace(x))
+                    .Select(JsonConvert.DeserializeObject<Message>));
+        }
+        private async Task<string> ReadStream(Stream stream)
+        {
+            using (var reader = new StreamReader(stream, Encoding.UTF8, false, 1024, true))
+            {
+                return await reader.ReadLineAsync();
+            }
+        }
 
         public async Task<IEnumerable<Message>> GetRoomMessagesAsync(string roomId, int limit = 50, string beforeId = null)
         {
