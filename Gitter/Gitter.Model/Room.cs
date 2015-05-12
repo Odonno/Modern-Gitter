@@ -1,48 +1,101 @@
-﻿using System;
-using System.Collections.Generic;
-using Newtonsoft.Json;
+﻿/* Room schema
+ * https://developer.gitter.im/docs/rooms-resource
+ *  id: Room ID.
+ *  name: Room name.
+ *  topic: Room topic. (default: GitHub repo description)
+ *  uri: Room URI on Gitter.
+ *  oneToOne: Indicates if the room is a one-to-one chat.
+ *  users: List of users in the room.
+ *  userCount: Count of users in the room.
+ *  unreadItems: Number of unread messages for the current user.
+ *  mentions: Number of unread mentions for the current user.
+ *  lastAccessTime: Last time the current user accessed the room in ISO format.
+ *  lurk: Indicates if the current user has disabled notifications.
+ *  url: Path to the room on gitter.
+ *  githubType: Type of the room.
+ *  v: Room version. 
+*/
 
 namespace Gitter.Model
 {
+    /// <summary>
+    /// The room.
+    /// </summary>
     public class Room
     {
-        [JsonProperty("id")]
-        public string Id { get; set; }
+        /// <summary>
+        /// Gets or sets the github type.
+        /// </summary>
+        public string githubType { get; set; }
 
-        [JsonProperty("name")]
-        public string Name { get; set; }
+        /// <summary>
+        /// Gets or sets the id.
+        /// </summary>
+        public string id { get; set; }
 
-        [JsonProperty("topic")]
-        public string Topic { get; set; }
+        /// <summary>
+        /// Gets or sets the last access time.
+        /// </summary>
+        public string lastAccessTime { get; set; }
 
-        [JsonProperty("url")]
-        public string Url { get; set; }
+        /// <summary>
+        /// Gets or sets a value indicating whether lurk.
+        /// </summary>
+        public bool lurk { get; set; }
 
-        [JsonProperty("oneToOne")]
-        public bool OneToOne { get; set; }
+        /// <summary>
+        /// Gets or sets the mentions.
+        /// </summary>
+        public int mentions { get; set; }
 
-        [JsonProperty("users")]
-        public IList<User> Users { get; set; }
+        /// <summary>
+        /// Gets or sets the name.
+        /// </summary>
+        public string name { get; set; }
 
-        [JsonProperty("userCount")]
-        public int UserCount { get; set; }
+        /// <summary>
+        /// Gets or sets a value indicating whether one to one.
+        /// </summary>
+        public bool oneToOne { get; set; }
 
-        [JsonProperty("unreadItems")]
-        public int UnreadItems { get; set; }
+        /// <summary>
+        /// Gets or sets the security.
+        /// </summary>
+        public string security { get; set; }
 
-        [JsonProperty("mentions")]
-        public int UnreadMentions { get; set; }
+        /// <summary>
+        /// Gets or sets the topic.
+        /// </summary>
+        public string topic { get; set; }
 
-        [JsonProperty("lastAccessTime")]
-        public DateTime LastAccessTime { get; set; }
+        /// <summary>
+        /// Gets or sets the unread items.
+        /// </summary>
+        public int unreadItems { get; set; }
 
-        [JsonProperty("lurk")]
-        public bool DisabledNotifications { get; set; }
+        /// <summary>
+        /// Gets or sets the uri.
+        /// </summary>
+        public string uri { get; set; }
 
-        [JsonProperty("githubType")]
-        public string Type { get; set; }
+        /// <summary>
+        /// Gets or sets the url.
+        /// </summary>
+        public string url { get; set; }
 
-        [JsonProperty("v")]
-        public int Version { get; set; }
+        /// <summary>
+        /// Gets or sets the user.
+        /// </summary>
+        public User user { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user count.
+        /// </summary>
+        public int? userCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets the v.
+        /// </summary>
+        public int? v { get; set; }
     }
 }

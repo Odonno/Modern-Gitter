@@ -68,7 +68,7 @@ namespace Gitter.ViewModel.Concrete
             _gitterApiService = ViewModelLocator.GitterApi;
 
 
-            if (IsInDesignMode)
+            /*if (IsInDesignMode)
             {
                 // Code runs in Blend --> create design time data.
 
@@ -129,14 +129,14 @@ namespace Gitter.ViewModel.Concrete
                 };
             }
             else
-            {
+            {*/
                 // Code runs "for real"
 
-                _messages = new MessagesIncrementalLoadingCollection(Room.Id);
-            }
+                _messages = new MessagesIncrementalLoadingCollection(Room.id);
+            //}
 
             // Use the stream API to add new messages when they comes
-            _gitterApiService.GetRealtimeMessages(Room.Id).Subscribe(async message =>
+            _gitterApiService.GetRealtimeMessages(Room.id).Subscribe(async message =>
             {
                 await Messages.AddItem(message);
             });
@@ -153,10 +153,10 @@ namespace Gitter.ViewModel.Concrete
         }
         private async void SendMessage()
         {
-            await _gitterApiService.SendMessage(Room.Id, TextMessage);
+            await _gitterApiService.SendMessage(Room.id, TextMessage);
 
             App.TelemetryClient.TrackEvent("SendMessage",
-                new Dictionary<string, string> { { "Room", Room.Name } },
+                new Dictionary<string, string> { { "Room", Room.name } },
                 new Dictionary<string, double> { { "MessageLength", TextMessage.Length } });
             TextMessage = string.Empty;
         }
@@ -171,7 +171,7 @@ namespace Gitter.ViewModel.Concrete
             Messages.Reset();
 
             App.TelemetryClient.TrackEvent("RefreshRoom",
-                new Dictionary<string, string> { { "Room", Room.Name } });
+                new Dictionary<string, string> { { "Room", Room.name } });
         }
 
         #endregion

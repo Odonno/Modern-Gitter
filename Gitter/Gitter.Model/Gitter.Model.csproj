@@ -42,8 +42,9 @@
     <Compile Include="Mention.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Room.cs" />
     <Compile Include="MessageUrl.cs" />
+    <Compile Include="Room.cs" />
+    <Compile Include="SendMessage.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>

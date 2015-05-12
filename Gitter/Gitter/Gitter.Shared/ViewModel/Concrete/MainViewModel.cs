@@ -70,7 +70,7 @@ namespace Gitter.ViewModel.Concrete
             SelectedRoom = room;
 
             App.TelemetryClient.TrackEvent("SelectRoom",
-                new Dictionary<string, string> { { "Room", room.Room.Name } });
+                new Dictionary<string, string> { { "Room", room.Room.name } });
         }
 
         #endregion

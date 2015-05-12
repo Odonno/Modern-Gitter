@@ -8,6 +8,11 @@ using Gitter.ViewModel.Abstract;
 
 namespace Gitter.ViewModel.Concrete
 {
+    using Gitter.Services.Abstract;
+
+    using Refit;
+    using Gitter.API.Configuration;
+
     public class RoomsViewModel : ViewModelBase, IRoomsViewModel
     {
         #region Services
@@ -33,7 +38,7 @@ namespace Gitter.ViewModel.Concrete
             _gitterApiService = ViewModelLocator.GitterApi;
 
 
-            if (IsInDesignMode)
+            /*if (IsInDesignMode)
             {
                 // Code runs in Blend --> create design time data.
 
@@ -112,11 +117,11 @@ namespace Gitter.ViewModel.Concrete
                 };
             }
             else
-            {
+            {*/
                 // Code runs "for real"
 
                 RefreshAsync();
-            }
+            //}
         }
 
         #endregion
@@ -126,7 +131,9 @@ namespace Gitter.ViewModel.Concrete
 
         private async Task RefreshAsync()
         {
-            var rooms = await _gitterApiService.GetRoomsAsync();
+            // var rooms = await _gitterApiService.GetRoomsAsync();
+            var client = RestService.For<IGitterApi>(Constants.GitterApi);
+            var rooms = await client.GetRooms(_gitterApiService.AccessToken);
 
             foreach (var room in rooms)
             {

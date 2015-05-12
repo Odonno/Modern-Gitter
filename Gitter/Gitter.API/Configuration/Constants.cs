@@ -16,5 +16,10 @@
         /// Redirect URL when authenticate
         /// </summary>
         public static string RedirectUrl = "http://localhost";
+
+        /// <summary>
+        /// The gitter api.
+        /// </summary>
+        public const string GitterApi = "https://api.gitter.im/v1";
     }
 }

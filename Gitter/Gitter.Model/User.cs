@@ -1,25 +1,48 @@
-﻿using Newtonsoft.Json;
+﻿/* User schema
+ * https://developer.gitter.im/docs/user-resource
+ *  id: Gitter User ID.
+ *  username: Gitter/GitHub username.
+ *  displayName: Gitter/GitHub user real name.
+ *  url: Path to the user on Gitter.
+ *  avatarUrlSmall: User avatar URI (small).
+ *  avatarUrlMedium: User avatar URI (medium).
+*/
 
 namespace Gitter.Model
 {
+    /// <summary>
+    /// The user.
+    /// </summary>
     public class User
     {
-        [JsonProperty("id")]
-        public string Id { get; set; }
+        /// <summary>
+        /// Gets or sets the avatar url medium.
+        /// </summary>
+        public string avatarUrlMedium { get; set; }
 
-        [JsonProperty("username")]
-        public string Username { get; set; }
+        /// <summary>
+        /// Gets or sets the avatar url small.
+        /// </summary>
+        public string avatarUrlSmall { get; set; }
 
-        [JsonProperty("displayName")]
-        public string DisplayName { get; set; }
+        /// <summary>
+        /// Gets or sets the display name.
+        /// </summary>
+        public string displayName { get; set; }
 
-        [JsonProperty("url")]
-        public string Url { get; set; }
+        /// <summary>
+        /// Gets or sets the id.
+        /// </summary>
+        public string id { get; set; }
 
-        [JsonProperty("avatarUrlSmall")]
-        public string SmallAvatarUrl { get; set; }
+        /// <summary>
+        /// Gets or sets the url.
+        /// </summary>
+        public string url { get; set; }
 
-        [JsonProperty("avatarUrlMedium")]
-        public string MediumAvatarUrl { get; set; }
+        /// <summary>
+        /// Gets or sets the username.
+        /// </summary>
+        public string username { get; set; }
     }
 }

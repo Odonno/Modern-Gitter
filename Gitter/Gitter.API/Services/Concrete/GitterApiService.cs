@@ -57,7 +57,6 @@ namespace Gitter.API.Services.Concrete
 
         #endregion
 
-
         #region Authentication
 
         public string AccessToken

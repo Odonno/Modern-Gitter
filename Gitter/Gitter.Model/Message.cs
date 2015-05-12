@@ -1,45 +1,87 @@
-﻿using System;
-using System.Collections.Generic;
-using Newtonsoft.Json;
+﻿/* Message schema
+ * https://developer.gitter.im/docs/messages-resource
+ *  id: ID of the message.
+ *  text: Original message in plain-text/markdown.
+ *  html: HTML formatted message.
+ *  sent: ISO formated date of the message.
+ *  editedAt: ISO formated date of the message if edited.
+ *  fromUser: (User)[user-resource] that sent the message.
+ *  unread: Boolean that indicats if the current user has read the messsage.
+ *  readBy: Number of users that have read the message.
+ *  urls: List of URLs present in the message.
+ *  mentions: List of @Mentions in the message.
+ *  issues: List of #Issues referenced in the message.
+ *  meta: Metadata.
+ *  v: Version. 
+*/
 
 namespace Gitter.Model
 {
+    using System.Collections.Generic;
+
+    /// <summary>
+    /// The message.
+    /// </summary>
     public class Message
     {
-        [JsonProperty("id")]
-        public string Id { get; set; }
+        /// <summary>
+        /// Gets or sets the edited at.
+        /// </summary>
+        public object editedAt { get; set; }
 
-        [JsonProperty("text")]
-        public string Text { get; set; }
+        /// <summary>
+        /// Gets or sets the from user.
+        /// </summary>
+        public User fromUser { get; set; }
 
-        [JsonProperty("html")]
-        public string Html { get; set; }
+        /// <summary>
+        /// Gets or sets the html.
+        /// </summary>
+        public string html { get; set; }
 
-        [JsonProperty("sent")]
-        public DateTime SentDate { get; set; }
+        /// <summary>
+        /// Gets or sets the id.
+        /// </summary>
+        public string id { get; set; }
 
-        [JsonProperty("editedAt")]
-        public DateTime? EditedDate { get; set; }
+        /// <summary>
+        /// Gets or sets the issues.
+        /// </summary>
+        public List<object> issues { get; set; }
 
-        [JsonProperty("fromUser")]
-        public User User { get; set; }
+        /// <summary>
+        /// Gets or sets the mentions.
+        /// </summary>
+        public List<object> mentions { get; set; }
 
-        [JsonProperty("unread")]
-        public bool ReadByCurrent { get; set; }
+        /// <summary>
+        /// Gets or sets the read by.
+        /// </summary>
+        public int readBy { get; set; }
 
-        [JsonProperty("readBy")]
-        public int ReadCount { get; set; }
+        /// <summary>
+        /// Gets or sets the sent.
+        /// </summary>
+        public string sent { get; set; }
 
-        [JsonProperty("urls")]
-        public IEnumerable<MessageUrl> Urls { get; set; }
+        /// <summary>
+        /// Gets or sets the text.
+        /// </summary>
+        public string text { get; set; }
 
-        [JsonProperty("mentions")]
-        public IEnumerable<Mention> Mentions { get; set; }
+        /// <summary>
+        /// Gets or sets a value indicating whether unread.
+        /// </summary>
+        public bool unread { get; set; }
 
-        [JsonProperty("issues")]
-        public IEnumerable<Issue> Issues { get; set; }
+        /// <summary>
+        /// Gets or sets the urls.
+        /// </summary>
+        public List<object> urls { get; set; }
 
-        [JsonProperty("v")]
-        public int Version { get; set; }
+        /// <summary>
+        /// Gets or sets the v.
+        /// </summary>
+        public int v { get; set; }
     }
 }
