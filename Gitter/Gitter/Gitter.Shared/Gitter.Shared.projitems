@@ -18,9 +18,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\NavigationHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\RelayCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\SuspensionManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\DistinctPreviousAuthorConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\EmptyStringToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\MeToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\NullToVisibilityConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\SamePreviousAuthorConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\SamePreviousAuthorMarginConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\DistinctPreviousAuthorVisibilityConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\SamePreviousAuthorVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataObjects\Abstract\IncrementalLoadingCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataObjects\Concrete\MessagesIncrementalLoadingCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Abstract\ISessionService.cs" />

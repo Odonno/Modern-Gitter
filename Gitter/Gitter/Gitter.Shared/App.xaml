@@ -11,6 +11,9 @@
         <converters:EmptyStringToVisibilityConverter x:Key="EmptyStringToVisibilityConverter" />
         <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
         <converters:MeToVisibilityConverter x:Key="MeToVisibilityConverter" />
+        <converters:SamePreviousAuthorMarginConverter x:Key="SamePreviousAuthorMarginConverter" />
+        <converters:SamePreviousAuthorVisibilityConverter x:Key="SamePreviousAuthorVisibilityConverter" />
+        <converters:DistinctPreviousAuthorVisibilityConverter x:Key="DistinctPreviousAuthorVisibilityConverter" />
 
         <!-- Styles -->
         

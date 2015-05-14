@@ -81,7 +81,7 @@
                                        Text="{Binding Path=Room.Name}" />
                         </Grid>
 
-                        <ListView Grid.Row="1" 
+                        <ListView Grid.Row="1" Margin="0 12 0 0"
                                   ItemsSource="{Binding Path=Messages}"
                                   IncrementalLoadingTrigger="Edge">
                             <ListView.ItemContainerStyle>
