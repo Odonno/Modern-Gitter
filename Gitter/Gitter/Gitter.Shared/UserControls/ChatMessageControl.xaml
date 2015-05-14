@@ -11,24 +11,46 @@
     <Grid Margin="0 6">
         
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="60" />
+            <ColumnDefinition Width="48" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
         <Image Grid.Column="0"
+               Visibility="{Binding Path=User, Converter={StaticResource MeToVisibilityConverter}, ConverterParameter=inverse}"
                Source="{Binding Path=User.MediumAvatarUrl}"
-               Width="60" Height="60"
                HorizontalAlignment="Left" VerticalAlignment="Top" />
 
-        <StackPanel Grid.Column="1" Margin="6 0">
-            <TextBlock FontSize="16" TextWrapping="Wrap"
-                       Text="{Binding Path=Text}" />
+        <Grid x:Name="userGrid" Grid.Column="1" Margin="6 0 0 0"
+              Visibility="{Binding Path=User, Converter={StaticResource MeToVisibilityConverter}, ConverterParameter=inverse}">
 
-            <TextBlock FontSize="10" TextWrapping="Wrap">
-                <Run Text="by" />
-                <Run Text="{Binding Path=User.Username}" />
-            </TextBlock>
-        </StackPanel>
+            <Polygon Points="8,0 0,5, 8,10" Margin="0 6 0 0"
+                     Stroke="{StaticResource BlueGrey}"
+                     Fill="{StaticResource BlueGrey}" />
+
+            <StackPanel Margin="6 0" Background="{StaticResource BlueGrey}">
+                <TextBlock FontSize="14" TextWrapping="Wrap" Margin="6 3 6 0"
+                           Foreground="White" Text="{Binding Path=Text}" />
+
+                <TextBlock FontSize="8" TextWrapping="Wrap" Margin="6 0 6 6" Foreground="White">
+                    @<Run Text="{Binding Path=User.Username}" />
+                </TextBlock>
+            </StackPanel>
+
+        </Grid>
+
+        <Grid x:Name="meGrid" Grid.Column="1" Margin="6 0 0 0"
+              Visibility="{Binding Path=User, Converter={StaticResource MeToVisibilityConverter}}">
+
+            <Polygon Points="0,0 8,5, 0,10" Margin="0 6 0 0" HorizontalAlignment="Right"
+                     Stroke="{StaticResource WhiteGray}" 
+                     Fill="{StaticResource WhiteGray}" />
+
+            <StackPanel Margin="6 0" Background="{StaticResource WhiteGray}">
+                <TextBlock FontSize="14" TextWrapping="Wrap" Margin="6 3 6 6" 
+                           Foreground="White" Text="{Binding Path=Text}" />
+            </StackPanel>
+
+        </Grid>
 
     </Grid>
 </UserControl>

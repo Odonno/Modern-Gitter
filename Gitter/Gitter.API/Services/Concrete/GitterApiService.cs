@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reactive.Linq;
@@ -74,6 +75,26 @@ namespace Gitter.API.Services.Concrete
 
         #endregion
 
+        #region User
+
+        public async Task<User> GetCurrentUserAsync()
+        {
+            using (var httpClient = HttpClient)
+            {
+                var response = await httpClient.GetAsync("user");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<IEnumerable<User>>(content).FirstOrDefault();
+                }
+
+                throw new HttpRequestException();
+            }
+        }
+
+        #endregion
+
         #region Rooms
 
         public async Task<IEnumerable<Room>> GetRoomsAsync()
@@ -137,7 +158,7 @@ namespace Gitter.API.Services.Concrete
             }
         }
 
-        public async Task<Message> SendMessage(string roomId, string message)
+        public async Task<Message> SendMessageAsync(string roomId, string message)
         {
             using (var httpClient = HttpClient)
             {

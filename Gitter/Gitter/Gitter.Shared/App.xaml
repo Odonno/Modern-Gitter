@@ -10,8 +10,12 @@
         <!-- Converters -->
         <converters:EmptyStringToVisibilityConverter x:Key="EmptyStringToVisibilityConverter" />
         <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+        <converters:MeToVisibilityConverter x:Key="MeToVisibilityConverter" />
 
         <!-- Styles -->
+        
+        <SolidColorBrush x:Key="BlueGrey">#FF314050</SolidColorBrush>
+        <SolidColorBrush x:Key="WhiteGray">#FFBFBFBF</SolidColorBrush>
 
         <!-- Text Button style -->
         <Style x:Key="TextBlockButtonStyle" TargetType="ButtonBase">

@@ -1,16 +1,27 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using Gitter.API.Services.Abstract;
+using Gitter.Model;
 using Gitter.ViewModel.Abstract;
 
 namespace Gitter.ViewModel.Concrete
 {
     public class MainViewModel : ViewModelBase, IMainViewModel
     {
+        #region Services
+
+        private readonly IGitterApiService _gitterApiService;
+
+        #endregion
+
+
         #region Properties
 
+        public User CurrentUser { get; private set; }
         public IRoomsViewModel Rooms { get; private set; }
 
         private IRoomViewModel _selectedRoom;
@@ -39,8 +50,11 @@ namespace Gitter.ViewModel.Concrete
 
         #region Constructor
 
-        public MainViewModel()
+        public MainViewModel(IGitterApiService gitterApiService)
         {
+            // Services
+            _gitterApiService = gitterApiService;
+
             // Commands
             SelectRoomCommand = new RelayCommand<IRoomViewModel>(SelectRoom);
 
@@ -52,11 +66,23 @@ namespace Gitter.ViewModel.Concrete
             {
                 // Code runs in Blend --> create design time data.
 
+                CurrentUser = new User
+                {
+                    Id = "53307734c3599d1de448e192",
+                    Username = "malditogeek",
+                    DisplayName = "Mauro Pompilio",
+                    Url = "/malditogeek",
+                    SmallAvatarUrl = "https://avatars.githubusercontent.com/u/14751?",
+                    MediumAvatarUrl = "https://avatars.githubusercontent.com/u/14751?"
+                };
+
                 SelectedRoom = Rooms.Rooms.First();
             }
             else
             {
                 // Code runs "for real"
+
+                LaunchAsync();
             }
         }
 
@@ -71,6 +97,16 @@ namespace Gitter.ViewModel.Concrete
 
             App.TelemetryClient.TrackEvent("SelectRoom",
                 new Dictionary<string, string> { { "Room", room.Room.Name } });
+        }
+
+        #endregion
+
+
+        #region Methods
+
+        private async Task LaunchAsync()
+        {
+            CurrentUser = await _gitterApiService.GetCurrentUserAsync();
         }
 
         #endregion

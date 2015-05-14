@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using Windows.ApplicationModel.Core;
-using Windows.UI.Core;
-using Windows.UI.Xaml;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Gitter.API.Services.Abstract;
@@ -153,7 +149,7 @@ namespace Gitter.ViewModel.Concrete
         }
         private async void SendMessage()
         {
-            await _gitterApiService.SendMessage(Room.Id, TextMessage);
+            await _gitterApiService.SendMessageAsync(Room.Id, TextMessage);
 
             App.TelemetryClient.TrackEvent("SendMessage",
                 new Dictionary<string, string> { { "Room", Room.Name } },
