@@ -60,12 +60,6 @@ namespace Gitter
         /// </summary>
         public App()
         {
-#if DEBUG
-            TelemetryClient = new TelemetryClient(new TelemetryConfiguration { DisableTelemetry = true });
-#else
-            TelemetryClient = new TelemetryClient();
-#endif
-
             InitializeComponent();
             Suspending += OnSuspending;
         }
@@ -192,6 +186,19 @@ namespace Gitter
                 rootFrame.ContentTransitions = _transitions ?? new TransitionCollection { new NavigationThemeTransition() };
         }
 #endif
+
+        #endregion
+
+        #region Telemetry management
+
+        public static void StartTelemetry()
+        {
+#if DEBUG
+            TelemetryClient = new TelemetryClient(new TelemetryConfiguration { DisableTelemetry = true });
+#else
+            TelemetryClient = new TelemetryClient();
+#endif
+        }
 
         #endregion
     }

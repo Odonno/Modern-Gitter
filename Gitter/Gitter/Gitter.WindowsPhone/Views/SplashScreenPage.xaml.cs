@@ -34,7 +34,18 @@ namespace Gitter.Views
             _navigationHelper = new NavigationHelper(this);
             _navigationHelper.LoadState += NavigationHelper_LoadState;
             _navigationHelper.SaveState += NavigationHelper_SaveState;
+
+            // Login on Gitter API using Timer
+            var dispatcherTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(500) };
+
+            dispatcherTimer.Tick += async (sender, o) =>
+            {
+                dispatcherTimer.Stop();
+                await ViewModelLocator.Login.LoginAsync();
+            };
+            dispatcherTimer.Start();
         }
+
 
         #region Navigation Helper
 
@@ -91,22 +102,20 @@ namespace Gitter.Views
         /// </summary>
         /// <param name="e">Fournit des données pour les méthodes de navigation et
         /// les gestionnaires d'événements qui ne peuvent pas annuler la requête de navigation.</param>
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             _navigationHelper.OnNavigatedTo(e);
-
-            await Task.Delay(500);
-
-            // login on Gitter API
-            await ViewModelLocator.Login.LoginAsync();
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             _navigationHelper.OnNavigatedFrom(e);
 
-            // restore transitions
+            // Restore transitions
             App.FirstNavigate();
+
+            // Restore
+            App.StartTelemetry();
         }
 
         #endregion
@@ -114,9 +123,9 @@ namespace Gitter.Views
         #endregion
 
 
-        public void ContinueWebAuthentication(WebAuthenticationBrokerContinuationEventArgs args)
+        public async void ContinueWebAuthentication(WebAuthenticationBrokerContinuationEventArgs args)
         {
-            ViewModelLocator.Login.Finalize(args);
+            await ViewModelLocator.Login.FinalizeAsync(args);
         }
     }
 }

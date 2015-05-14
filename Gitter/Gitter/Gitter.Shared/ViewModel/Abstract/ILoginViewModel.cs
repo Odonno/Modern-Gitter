@@ -10,7 +10,7 @@ namespace Gitter.ViewModel.Abstract
         Task LoginAsync();
 
 #if WINDOWS_PHONE_APP
-        void Finalize(WebAuthenticationBrokerContinuationEventArgs args);
+        Task FinalizeAsync(WebAuthenticationBrokerContinuationEventArgs args);
 #endif
     }
 }

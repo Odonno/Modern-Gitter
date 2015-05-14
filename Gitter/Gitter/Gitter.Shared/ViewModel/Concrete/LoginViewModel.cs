@@ -87,7 +87,7 @@ namespace Gitter.ViewModel.Concrete
 
 
 #if WINDOWS_PHONE_APP
-        public async void Finalize(WebAuthenticationBrokerContinuationEventArgs args)
+        public async Task FinalizeAsync(WebAuthenticationBrokerContinuationEventArgs args)
         {
             var result = await _sessionService.Finalize(args);
             if (result)
