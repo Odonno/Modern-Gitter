@@ -28,7 +28,7 @@ namespace Gitter.DataObjects.Concrete
                 return new List<Message>();
 #endif
 
-            string beforeId = Ascendant ? ((Page++ == 0) ? null : this.Last().Id) : ((Page++ == 0) ? null : this.First().Id);
+            string beforeId = Ascendant ? ((Page++ == 0) ? null : this.Last().id) : ((Page++ == 0) ? null : this.First().id);
 
             return await ViewModelLocator.GitterApi.GetRoomMessagesAsync(RoomId, ItemsPerPage, beforeId);
         }
