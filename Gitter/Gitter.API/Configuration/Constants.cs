@@ -3,6 +3,21 @@
     public static class Constants
     {
         /// <summary>
+        /// Base URL of the Gitter API
+        /// </summary>
+        public static string ApiBaseUrl = "https://api.gitter.im/";
+
+        /// <summary>
+        /// Base URL of the streaming Gitter API
+        /// </summary>
+        public static string StreamApiBaseUrl = "https://stream.gitter.im/";
+
+        /// <summary>
+        /// Version of the current Gitter API
+        /// </summary>
+        public static string ApiVersion = "v1/";
+
+        /// <summary>
         /// OAuth key to authenticate user
         /// </summary>
         public static string OauthKey = "0f3fc414587a8d31a1514e005fa157168ad8efdb";

@@ -8,6 +8,7 @@ using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 using System.Text;
 using System.Threading.Tasks;
+using Gitter.API.Configuration;
 using Gitter.API.Services.Abstract;
 using Gitter.Model;
 using Gitter.Services.Abstract;
@@ -20,17 +21,17 @@ namespace Gitter.API.Services.Concrete
     {
         #region Fields
 
-        private const string BaseUrl = "https://api.gitter.im/";
-        private const string StreamBaseUrl = "https://stream.gitter.im/";
-        private const string Version = "v1/";
-
         private HttpClient HttpClient
         {
             get
             {
-                var httpClient = new HttpClient(new NativeMessageHandler());
+                var httpClient = new HttpClient(new NativeMessageHandler())
+                {
+                    BaseAddress = new Uri(string.Format("{0}{1}",
+                        Constants.ApiBaseUrl,
+                        Constants.ApiVersion))
+                };
 
-                httpClient.BaseAddress = new Uri(string.Format("{0}{1}", BaseUrl, Version));
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 if (!string.IsNullOrWhiteSpace(AccessToken))
@@ -44,9 +45,13 @@ namespace Gitter.API.Services.Concrete
         {
             get
             {
-                var httpClient = new HttpClient(new NativeMessageHandler());
+                var httpClient = new HttpClient(new NativeMessageHandler())
+                {
+                    BaseAddress = new Uri(string.Format("{0}{1}",
+                        Constants.StreamApiBaseUrl,
+                        Constants.ApiVersion))
+                };
 
-                httpClient.BaseAddress = new Uri(string.Format("{0}{1}", StreamBaseUrl, Version));
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 if (!string.IsNullOrWhiteSpace(AccessToken))
