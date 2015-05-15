@@ -195,6 +195,10 @@
       <Project>{16d857a7-428a-4d1e-bbd8-95678de737e4}</Project>
       <Name>Gitter.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Gitter.Services\Gitter.Services.csproj">
+      <Project>{132ab989-3150-4647-bb25-51ea4a253a0b}</Project>
+      <Name>Gitter.Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <SDKReference Include="BehaviorsXamlSDKManaged, Version=12.0">

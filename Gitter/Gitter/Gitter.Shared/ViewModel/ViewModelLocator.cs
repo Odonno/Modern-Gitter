@@ -60,6 +60,7 @@ namespace Gitter.ViewModel
             }
 
             SimpleIoc.Default.Register<ISessionService, SessionService>();
+            SimpleIoc.Default.Register<IApplicationStorageService, ApplicationStorageService>();
             SimpleIoc.Default.Register<IGitterApiService, GitterApiService>();
 
             // ViewModels

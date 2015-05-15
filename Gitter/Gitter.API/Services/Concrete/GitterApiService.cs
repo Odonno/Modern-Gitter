@@ -8,9 +8,9 @@ using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 using System.Text;
 using System.Threading.Tasks;
-using Windows.Storage;
 using Gitter.API.Services.Abstract;
 using Gitter.Model;
+using Gitter.Services.Abstract;
 using ModernHttpClient;
 using Newtonsoft.Json;
 
@@ -59,12 +59,29 @@ namespace Gitter.API.Services.Concrete
         #endregion
 
 
+        #region Services
+
+        private readonly IApplicationStorageService _applicationStorageService;
+
+        #endregion
+
+
+        #region Constructor
+
+        public GitterApiService(IApplicationStorageService applicationStorageService)
+        {
+            _applicationStorageService = applicationStorageService;
+        }
+
+        #endregion
+
+
         #region Authentication
 
         public string AccessToken
         {
-            get { return (string)(ApplicationData.Current.LocalSettings.Values["token"]); }
-            private set { ApplicationData.Current.LocalSettings.Values["token"] = value; }
+            get { return (string)_applicationStorageService.Retrieve("token"); }
+            private set { _applicationStorageService.Save("token", value); }
         }
 
         public void TryAuthenticate(string token = null)
