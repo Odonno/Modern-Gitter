@@ -5,10 +5,12 @@ using GalaSoft.MvvmLight;
 using Gitter.DataObjects.Abstract;
 using Gitter.Model;
 using Gitter.ViewModel;
+using Gitter.ViewModel.Abstract;
+using Gitter.ViewModel.Concrete;
 
 namespace Gitter.DataObjects.Concrete
 {
-    public class MessagesIncrementalLoadingCollection : IncrementalLoadingCollection<Message>
+    public class MessagesIncrementalLoadingCollection : IncrementalLoadingCollection<IMessageViewModel>
     {
         public string RoomId { get; private set; }
 
@@ -21,16 +23,17 @@ namespace Gitter.DataObjects.Concrete
         }
 
 
-        protected override async Task<IEnumerable<Message>> LoadMoreItemsAsync()
+        protected override async Task<IEnumerable<IMessageViewModel>> LoadMoreItemsAsync()
         {
 #if DEBUG
             if (ViewModelBase.IsInDesignModeStatic)
-                return new List<Message>();
+                return new List<IMessageViewModel>();
 #endif
 
             string beforeId = Ascendant ? ((Page++ == 0) ? null : this.Last().Id) : ((Page++ == 0) ? null : this.First().Id);
 
-            return await ViewModelLocator.GitterApi.GetRoomMessagesAsync(RoomId, ItemsPerPage, beforeId);
+            return (await ViewModelLocator.GitterApi.GetRoomMessagesAsync(RoomId, ItemsPerPage, beforeId))
+                .Select(message => new MessageViewModel(message));
         }
     }
 }

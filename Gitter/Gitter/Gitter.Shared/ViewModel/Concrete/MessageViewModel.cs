@@ -1,0 +1,98 @@
+﻿using System;
+using GalaSoft.MvvmLight;
+using Gitter.Model;
+using Gitter.ViewModel.Abstract;
+
+namespace Gitter.ViewModel.Concrete
+{
+    public class MessageViewModel : ViewModelBase, IMessageViewModel
+    {
+        #region Properties
+
+        public Message Message { get; private set; }
+
+        private string _id;
+        public string Id
+        {
+            get { return _id; }
+            set
+            {
+                _id = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private string _text;
+        public string Text
+        {
+            get { return _text; }
+            set
+            {
+                _text = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private DateTime _sentDate;
+        public DateTime SentDate
+        {
+            get { return _sentDate; }
+            set
+            {
+                _sentDate = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private User _user;
+        public User User
+        {
+            get { return _user; }
+            set
+            {
+                _user = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
+
+
+        #region Constructor
+
+        public MessageViewModel(Message message)
+        {
+            // Properties
+            Message = message;
+
+            Id = message.Id;
+            Text = message.Text;
+            SentDate = message.SentDate;
+            User = message.User;
+
+
+            if (IsInDesignMode)
+            {
+                // Code runs in Blend --> create design time data.
+
+            }
+            else
+            {
+                // Code runs "for real"
+
+            }
+        }
+
+        #endregion
+
+
+        #region Methods
+
+        public void UpdateMessage(string text)
+        {
+            Text = text;
+        }
+
+        #endregion
+    }
+}

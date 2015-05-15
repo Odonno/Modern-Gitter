@@ -59,7 +59,7 @@ namespace Gitter.ViewModel.Concrete
 
             // Commands
             SendMessageCommand = new RelayCommand(SendMessage, CanSendMessage);
-            RemoveMessageCommand = new RelayCommand<Message>(RemoveMessage, CanRemoveMessage);
+            RemoveMessageCommand = new RelayCommand<IMessageViewModel>(RemoveMessage, CanRemoveMessage);
             RefreshCommand = new RelayCommand(Refresh);
 
             // Inject Services
@@ -82,7 +82,7 @@ namespace Gitter.ViewModel.Concrete
 
                 _messages = new MessagesIncrementalLoadingCollection("123456")
                 {
-                    new Message
+                    new MessageViewModel(new Message
                     {
                         Id = "53316dc47bfc1a000000000f",
                         Text = "Hi @suprememoocow !",
@@ -104,8 +104,9 @@ namespace Gitter.ViewModel.Concrete
                         },
                         Issues = new List<Issue>(),
                         Version = 1
-                    },
-                    new Message
+                    })
+                    ,
+                    new MessageViewModel(new Message
                     {
                         Id = "53316ec37bfc1a0000000011",
                         Text = "I've been working on #11, it'll be ready to ship soon",
@@ -123,7 +124,7 @@ namespace Gitter.ViewModel.Concrete
                             new Issue {Number = "11"}
                         },
                         Version = 1
-                    }
+                    })
                 };
             }
             else
@@ -136,7 +137,7 @@ namespace Gitter.ViewModel.Concrete
             // Use the stream API to add new messages when they comes
             _gitterApiService.GetRealtimeMessages(Room.Id).Subscribe(async message =>
             {
-                await Messages.AddItem(message);
+                await Messages.AddItem(new MessageViewModel(message));
             });
         }
 
@@ -159,7 +160,7 @@ namespace Gitter.ViewModel.Concrete
             TextMessage = string.Empty;
         }
 
-        private bool CanRemoveMessage(Message message)
+        private bool CanRemoveMessage(IMessageViewModel message)
         {
             if (message == null)
                 return false;
@@ -169,9 +170,10 @@ namespace Gitter.ViewModel.Concrete
             return message.User.Id == ViewModelLocator.Main.CurrentUser.Id &&
                    currentDate.Subtract(message.SentDate).TotalMinutes < 10;
         }
-        private async void RemoveMessage(Message message)
+        private async void RemoveMessage(IMessageViewModel message)
         {
-            await _gitterApiService.UpdateMessageAsync(Room.Id, message.Id, string.Empty);
+            var updatedMessage = await _gitterApiService.UpdateMessageAsync(Room.Id, message.Id, string.Empty);
+            message.UpdateMessage(updatedMessage.Text);
 
             App.TelemetryClient.TrackEvent("RemoveMessage",
                 new Dictionary<string, string> { { "Room", Room.Name } },

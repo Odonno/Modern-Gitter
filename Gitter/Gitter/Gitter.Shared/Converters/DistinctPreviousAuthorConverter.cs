@@ -2,6 +2,7 @@
 using Windows.UI.Xaml.Data;
 using Gitter.Model;
 using Gitter.ViewModel;
+using Gitter.ViewModel.Abstract;
 
 namespace Gitter.Converters
 {
@@ -9,7 +10,7 @@ namespace Gitter.Converters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            var message = value as Message;
+            var message = value as IMessageViewModel;
 
             if (message == null)
                 throw new ArgumentNullException("value");
