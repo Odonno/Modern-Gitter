@@ -169,6 +169,10 @@
       <HintPath>..\..\packages\modernhttpclient.2.4.0\lib\Portable-Net45+WinRT45+WP8+WPA81\ModernHttpClient.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.8\lib\netcore45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Reactive.Core, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Rx-Core.2.2.5\lib\windows8\System.Reactive.Core.dll</HintPath>
       <Private>True</Private>
@@ -190,6 +194,10 @@
     <ProjectReference Include="..\..\Gitter.API\Gitter.API.csproj">
       <Project>{b8339332-779b-48be-8342-f95386362db1}</Project>
       <Name>Gitter.API</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Gitter.ConcreteAPI\Gitter.ConcreteAPI.csproj">
+      <Project>{9e7ff1cc-6b9c-48b7-ae4d-a32dc1f75753}</Project>
+      <Name>Gitter.ConcreteAPI</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Gitter.Model\Gitter.Model.csproj">
       <Project>{16d857a7-428a-4d1e-bbd8-95678de737e4}</Project>
