@@ -44,6 +44,7 @@ namespace Gitter.ViewModel.Concrete
         #region Commands
 
         public ICommand SendMessageCommand { get; private set; }
+        public ICommand RemoveMessageCommand { get; private set; }
         public ICommand RefreshCommand { get; private set; }
 
         #endregion
@@ -58,6 +59,7 @@ namespace Gitter.ViewModel.Concrete
 
             // Commands
             SendMessageCommand = new RelayCommand(SendMessage, CanSendMessage);
+            RemoveMessageCommand = new RelayCommand<Message>(RemoveMessage, CanRemoveMessage);
             RefreshCommand = new RelayCommand(Refresh);
 
             // Inject Services
@@ -157,10 +159,24 @@ namespace Gitter.ViewModel.Concrete
             TextMessage = string.Empty;
         }
 
-        #endregion
+        private bool CanRemoveMessage(Message message)
+        {
+            if (message == null)
+                return false;
 
+            var currentDate = new DateTimeOffset(ViewModelLocator.Main.CurrentDateTime);
 
-        #region Methods
+            return message.User.Id == ViewModelLocator.Main.CurrentUser.Id &&
+                   currentDate.Subtract(message.SentDate).TotalMinutes < 10;
+        }
+        private async void RemoveMessage(Message message)
+        {
+            await _gitterApiService.UpdateMessageAsync(Room.Id, message.Id, string.Empty);
+
+            App.TelemetryClient.TrackEvent("RemoveMessage",
+                new Dictionary<string, string> { { "Room", Room.Name } },
+                new Dictionary<string, double> { { "SecondsAgo", ViewModelLocator.Main.CurrentDateTime.Subtract(message.SentDate).TotalSeconds } });
+        }
 
         public void Refresh()
         {

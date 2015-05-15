@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using Gitter.DataObjects.Concrete;
 using Gitter.Model;
 
@@ -12,6 +11,7 @@ namespace Gitter.ViewModel.Abstract
         string TextMessage { get; set; }
 
         ICommand SendMessageCommand { get; }
+        ICommand RemoveMessageCommand { get; }
         ICommand RefreshCommand { get; }
 
         void Refresh();

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,6 +22,7 @@ namespace Gitter.ViewModel.Concrete
 
         #region Properties
 
+        public DateTime CurrentDateTime { get; private set; }
         public User CurrentUser { get; private set; }
         public IRoomsViewModel Rooms { get; private set; }
 
@@ -60,6 +62,7 @@ namespace Gitter.ViewModel.Concrete
 
             // ViewModels
             Rooms = ViewModelLocator.Rooms;
+            CurrentDateTime = DateTime.Now;
 
 
             if (IsInDesignMode)

@@ -178,6 +178,26 @@ namespace Gitter.API.Services.Concrete
             }
         }
 
+        public async Task<Message> UpdateMessageAsync(string roomId, string messageId, string message)
+        {
+            using (var httpClient = HttpClient)
+            {
+                var response = await httpClient.PutAsync(string.Format("rooms/{0}/chatMessages/{1}", roomId, messageId),
+                    new FormUrlEncodedContent(new Dictionary<string, string>
+                    {
+                        {"text", message}
+                    }));
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<Message>(content);
+                }
+
+                throw new HttpRequestException();
+            }
+        }
+
         #endregion
     }
 }

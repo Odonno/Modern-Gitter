@@ -35,7 +35,7 @@
             </Hub.HeaderTemplate>
 
             <!-- List of rooms -->
-            <HubSection Header="rooms" 
+            <HubSection x:Name="roomsSection" Header="rooms" 
                         HeaderTemplate="{StaticResource HeaderTemplate}"
                         DataContext="{Binding Path=Rooms}">
 
@@ -62,7 +62,7 @@
             </HubSection>
 
             <!-- Chat - List of messages -->
-            <HubSection Header="chat" 
+            <HubSection x:Name="chatSection" Header="chat" 
                         HeaderTemplate="{StaticResource HeaderTemplate}"
                         DataContext="{Binding Path=SelectedRoom}">
 
@@ -145,7 +145,7 @@
             </HubSection>
 
             <!-- Chat - List of messages -->
-            <HubSection Header="activities" 
+            <HubSection x:Name="activitiesSection" Header="activities" 
                         HeaderTemplate="{StaticResource HeaderTemplate}">
 
                 <DataTemplate>
