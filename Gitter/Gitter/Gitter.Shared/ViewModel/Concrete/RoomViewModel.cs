@@ -174,6 +174,7 @@ namespace Gitter.ViewModel.Concrete
         {
             var updatedMessage = await _gitterApiService.UpdateMessageAsync(Room.Id, message.Id, string.Empty);
             message.UpdateMessage(updatedMessage.Text);
+            Messages.Remove(message);
 
             App.TelemetryClient.TrackEvent("RemoveMessage",
                 new Dictionary<string, string> { { "Room", Room.Name } },

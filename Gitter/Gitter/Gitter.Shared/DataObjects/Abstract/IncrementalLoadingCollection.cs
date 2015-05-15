@@ -13,7 +13,7 @@ namespace Gitter.DataObjects.Abstract
 {
     public abstract class IncrementalLoadingCollection<T> : ObservableCollection<T>, ISupportIncrementalLoading
     {
-        public bool HasMoreItems { get; private set; }
+        public bool HasMoreItems { get; protected set; }
         public int Page { get; protected set; }
         public int ItemsPerPage { get; protected set; }
         public bool IsBusy { get; protected set; }
@@ -41,9 +41,6 @@ namespace Gitter.DataObjects.Abstract
                     {
                         var items = await LoadMoreItemsAsync();
                         var itemsCount = items.Count();
-
-                        if (itemsCount < ItemsPerPage)
-                            HasMoreItems = false;
 
                         dispatcher.RunAsync(
                             CoreDispatcherPriority.High,
