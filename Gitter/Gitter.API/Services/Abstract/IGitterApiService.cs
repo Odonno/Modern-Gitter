@@ -23,6 +23,7 @@ namespace Gitter.API.Services.Abstract
         #region Rooms
 
         Task<IEnumerable<Room>> GetRoomsAsync();
+        Task<Room> JoinRoomAsync(string uri);
 
         #endregion
 

@@ -168,6 +168,10 @@
                               Command="{Binding Path=SelectedRoom.SendMessageCommand}"
                               Visibility="{Binding Path=SelectedRoom, Converter={StaticResource NullToVisibilityConverter}}" />
             </CommandBar.PrimaryCommands>
+            
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Label="chat with us" Command="{Binding Path=ChatWithUsCommand}" />
+            </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>
 

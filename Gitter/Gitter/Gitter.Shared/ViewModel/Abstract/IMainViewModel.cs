@@ -12,5 +12,6 @@ namespace Gitter.ViewModel.Abstract
         IRoomViewModel SelectedRoom { get; }
         
         ICommand SelectRoomCommand { get; }
+        ICommand ChatWithUsCommand { get; }
     }
 }

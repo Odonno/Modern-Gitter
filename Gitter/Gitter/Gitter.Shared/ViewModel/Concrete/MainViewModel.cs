@@ -13,6 +13,13 @@ namespace Gitter.ViewModel.Concrete
 {
     public class MainViewModel : ViewModelBase, IMainViewModel
     {
+        #region Fields
+
+        private const string OwnChatRoomName = "Odonno/Modern-Gitter";
+
+        #endregion
+
+
         #region Services
 
         private readonly IGitterApiService _gitterApiService;
@@ -27,6 +34,8 @@ namespace Gitter.ViewModel.Concrete
         public IRoomsViewModel Rooms { get; private set; }
 
         private IRoomViewModel _selectedRoom;
+        private string _ownChatRoom;
+
         public IRoomViewModel SelectedRoom
         {
             get
@@ -44,8 +53,9 @@ namespace Gitter.ViewModel.Concrete
 
 
         #region Commands
-        
+
         public ICommand SelectRoomCommand { get; private set; }
+        public ICommand ChatWithUsCommand { get; private set; }
 
         #endregion
 
@@ -59,6 +69,7 @@ namespace Gitter.ViewModel.Concrete
 
             // Commands
             SelectRoomCommand = new RelayCommand<IRoomViewModel>(SelectRoom);
+            ChatWithUsCommand = new RelayCommand(ChatWithUs);
 
             // ViewModels
             Rooms = ViewModelLocator.Rooms;
@@ -96,10 +107,35 @@ namespace Gitter.ViewModel.Concrete
 
         private void SelectRoom(IRoomViewModel room)
         {
-            SelectedRoom = room;
+            if (SelectedRoom != room)
+            {
+                SelectedRoom = room;
 
-            App.TelemetryClient.TrackEvent("SelectRoom",
-                new Dictionary<string, string> { { "Room", room.Room.Name } });
+                App.TelemetryClient.TrackEvent("SelectRoom",
+                    new Dictionary<string, string> { { "Room", room.Room.Name } });
+            }
+        }
+
+        private async void ChatWithUs()
+        {
+            var alreadyJoinedRoom = Rooms.Rooms.FirstOrDefault(r => r.Room.Name == OwnChatRoomName);
+
+            if (alreadyJoinedRoom == null)
+            {
+                var room = await _gitterApiService.JoinRoomAsync(OwnChatRoomName);
+                alreadyJoinedRoom = new RoomViewModel(room);
+                Rooms.Rooms.Add(alreadyJoinedRoom);
+
+                App.TelemetryClient.TrackEvent("ChatWithUs",
+                    new Dictionary<string, string> { { "AlreadyJoined", "false" } });
+            }
+            else
+            {
+                App.TelemetryClient.TrackEvent("ChatWithUs",
+                    new Dictionary<string, string> { { "AlreadyJoined", "true" } });
+            }
+
+            SelectRoom(alreadyJoinedRoom);
         }
 
         #endregion

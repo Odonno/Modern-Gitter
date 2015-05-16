@@ -135,6 +135,26 @@ namespace Gitter.API.Services.Concrete
             }
         }
 
+        public async Task<Room> JoinRoomAsync(string uri)
+        {
+            using (var httpClient = HttpClient)
+            {
+                var response = await httpClient.PostAsync("rooms",
+                    new FormUrlEncodedContent(new Dictionary<string, string>
+                    {
+                        {"uri", uri}
+                    }));
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<Room>(content);
+                }
+
+                throw new HttpRequestException();
+            }
+        }
+
         #endregion
 
         #region Messages
