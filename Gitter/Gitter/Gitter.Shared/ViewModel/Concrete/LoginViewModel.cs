@@ -13,9 +13,10 @@ namespace Gitter.ViewModel.Concrete
     {
         #region Services
 
+        private readonly IGitterApiService _gitterApiService;
         private readonly INavigationService _navigationService;
         private readonly ISessionService _sessionService;
-        private readonly IGitterApiService _gitterApiService;
+        private readonly ILocalNotificationService _localNotificationService;
 
         #endregion
 
@@ -23,11 +24,14 @@ namespace Gitter.ViewModel.Concrete
         #region Constructor
 
         public LoginViewModel(INavigationService navigationService,
-            ISessionService sessionService)
+            ISessionService sessionService,
+            ILocalNotificationService localNotificationService)
         {
+            // Inject Services
             _gitterApiService = ViewModelLocator.GitterApi;
             _navigationService = navigationService;
             _sessionService = sessionService;
+            _localNotificationService = localNotificationService;
 
 
             if (IsInDesignMode)
@@ -76,7 +80,8 @@ namespace Gitter.ViewModel.Concrete
 
             if (isToShowMessage)
             {
-                // TODO : Send error notification
+                // Send error notification
+                _localNotificationService.SendNotification("Authentication", "An error occured");
             }
         }
 
