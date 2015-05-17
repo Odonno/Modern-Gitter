@@ -110,6 +110,7 @@ namespace Gitter.ViewModel.Concrete
             if (SelectedRoom != room)
             {
                 SelectedRoom = room;
+                SelectedRoom.Messages.Reset();
 
                 App.TelemetryClient.TrackEvent("SelectRoom",
                     new Dictionary<string, string> { { "Room", room.Room.Name } });

@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using Gitter.DataObjects.Abstract;
-using Gitter.Model;
 using Gitter.ViewModel;
 using Gitter.ViewModel.Abstract;
 using Gitter.ViewModel.Concrete;
@@ -12,6 +11,8 @@ namespace Gitter.DataObjects.Concrete
 {
     public class MessagesIncrementalLoadingCollection : IncrementalLoadingCollection<IMessageViewModel>
     {
+        private readonly object _lock = new object();
+
         public string BeforeId { get; private set; }
         public string RoomId { get; private set; }
 
@@ -30,20 +31,24 @@ namespace Gitter.DataObjects.Concrete
             if (ViewModelBase.IsInDesignModeStatic)
                 return new List<IMessageViewModel>();
 #endif
-            
-            if (Page++ == 0)
-                BeforeId = null;
 
-            var beforeMessages = await ViewModelLocator.GitterApi.GetRoomMessagesAsync(RoomId, ItemsPerPage, BeforeId);
+            lock (_lock)
+            {
+                if (Page++ == 0)
+                    BeforeId = null;
 
-            if (beforeMessages.Count() < ItemsPerPage)
-                HasMoreItems = false;
-            else
-                BeforeId = Ascendant ? beforeMessages.First().Id : beforeMessages.Last().Id;
+                var beforeMessages = ViewModelLocator.GitterApi.GetRoomMessagesAsync(RoomId, ItemsPerPage, BeforeId)
+                    .ConfigureAwait(false).GetAwaiter().GetResult();
 
-            return beforeMessages
-                .Where(message => !string.IsNullOrWhiteSpace(message.Text))
-                .Select(message => new MessageViewModel(message));
+                if (beforeMessages.Count() < ItemsPerPage)
+                    HasMoreItems = false;
+                else
+                    BeforeId = Ascendant ? beforeMessages.First().Id : beforeMessages.Last().Id;
+
+                return beforeMessages
+                    .Where(message => !string.IsNullOrWhiteSpace(message.Text))
+                    .Select(message => new MessageViewModel(message));
+            }
         }
     }
 }

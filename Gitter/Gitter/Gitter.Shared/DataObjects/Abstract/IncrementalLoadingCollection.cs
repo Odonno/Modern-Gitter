@@ -78,6 +78,7 @@ namespace Gitter.DataObjects.Abstract
             Clear();
             Page = 0;
             HasMoreItems = true;
+            LoadMoreItemsAsync((uint) ItemsPerPage);
         }
     }
 }
