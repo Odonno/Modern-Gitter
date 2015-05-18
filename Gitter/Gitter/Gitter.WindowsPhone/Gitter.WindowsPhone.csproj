@@ -159,6 +159,14 @@
       <HintPath>..\..\packages\Newtonsoft.Json.6.0.8\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Net.Http.Extensions, Version=1.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Net.Http.2.2.29\lib\wpa81\System.Net.Http.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives, Version=4.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Net.Http.2.2.29\lib\wpa81\System.Net.Http.Primitives.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Reactive.Core, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Rx-Core.2.2.5\lib\portable-win81+wpa81\System.Reactive.Core.dll</HintPath>
       <Private>True</Private>
@@ -180,10 +188,6 @@
     <ProjectReference Include="..\..\Gitter.API\Gitter.API.csproj">
       <Project>{b8339332-779b-48be-8342-f95386362db1}</Project>
       <Name>Gitter.API</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Gitter.ConcreteAPI\Gitter.ConcreteAPI.csproj">
-      <Project>{9e7ff1cc-6b9c-48b7-ae4d-a32dc1f75753}</Project>
-      <Name>Gitter.ConcreteAPI</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Gitter.Model\Gitter.Model.csproj">
       <Project>{16d857a7-428a-4d1e-bbd8-95678de737e4}</Project>
@@ -216,6 +220,11 @@
     <Error Condition="!Exists('..\..\packages\Microsoft.ApplicationInsights.0.16.1-build00418\build\portable-win81+wpa81\Microsoft.ApplicationInsights.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.ApplicationInsights.0.16.1-build00418\build\portable-win81+wpa81\Microsoft.ApplicationInsights.targets'))" />
   </Target>
   <Import Project="..\..\packages\Microsoft.ApplicationInsights.0.16.1-build00418\build\portable-win81+wpa81\Microsoft.ApplicationInsights.targets" Condition="Exists('..\..\packages\Microsoft.ApplicationInsights.0.16.1-build00418\build\portable-win81+wpa81\Microsoft.ApplicationInsights.targets')" />
+  <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

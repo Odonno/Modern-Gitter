@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Web.Http;
+using Windows.Web.Http.Headers;
 using Gitter.API.Configuration;
 using Gitter.API.Services.Abstract;
 using Gitter.Model;
 using Gitter.Services.Abstract;
-using ModernHttpClient;
 using Newtonsoft.Json;
 
 namespace Gitter.API.Services.Concrete
@@ -21,41 +20,19 @@ namespace Gitter.API.Services.Concrete
     {
         #region Fields
 
+        private readonly string _baseApiAddress = string.Format("{0}{1}", Constants.ApiBaseUrl, Constants.ApiVersion);
+        private readonly string _baseStreamingApiAddress = string.Format("{0}{1}", Constants.StreamApiBaseUrl, Constants.ApiVersion);
+
         private HttpClient HttpClient
         {
             get
             {
-                var httpClient = new HttpClient(new NativeMessageHandler())
-                {
-                    BaseAddress = new Uri(string.Format("{0}{1}",
-                        Constants.ApiBaseUrl,
-                        Constants.ApiVersion))
-                };
+                var httpClient = new HttpClient();
 
-                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                httpClient.DefaultRequestHeaders.Accept.Add(new HttpMediaTypeWithQualityHeaderValue("application/json"));
 
                 if (!string.IsNullOrWhiteSpace(AccessToken))
-                    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", AccessToken);
-
-                return httpClient;
-            }
-        }
-
-        private HttpClient StreamHttpClient
-        {
-            get
-            {
-                var httpClient = new HttpClient(new NativeMessageHandler())
-                {
-                    BaseAddress = new Uri(string.Format("{0}{1}",
-                        Constants.StreamApiBaseUrl,
-                        Constants.ApiVersion))
-                };
-
-                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                if (!string.IsNullOrWhiteSpace(AccessToken))
-                    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", AccessToken);
+                    httpClient.DefaultRequestHeaders.Authorization = new HttpCredentialsHeaderValue("Bearer", AccessToken);
 
                 return httpClient;
             }
@@ -103,7 +80,7 @@ namespace Gitter.API.Services.Concrete
         {
             using (var httpClient = HttpClient)
             {
-                var response = await httpClient.GetAsync("user");
+                var response = await httpClient.GetAsync(new Uri(_baseApiAddress + "user"));
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -111,7 +88,7 @@ namespace Gitter.API.Services.Concrete
                     return JsonConvert.DeserializeObject<IEnumerable<User>>(content).FirstOrDefault();
                 }
 
-                throw new HttpRequestException();
+                throw new Exception();
             }
         }
 
@@ -123,7 +100,7 @@ namespace Gitter.API.Services.Concrete
         {
             using (var httpClient = HttpClient)
             {
-                var response = await httpClient.GetAsync("rooms");
+                var response = await httpClient.GetAsync(new Uri(_baseApiAddress + "rooms"));
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -131,7 +108,7 @@ namespace Gitter.API.Services.Concrete
                     return JsonConvert.DeserializeObject<IEnumerable<Room>>(content);
                 }
 
-                throw new HttpRequestException();
+                throw new Exception();
             }
         }
 
@@ -139,8 +116,8 @@ namespace Gitter.API.Services.Concrete
         {
             using (var httpClient = HttpClient)
             {
-                var response = await httpClient.PostAsync("rooms",
-                    new FormUrlEncodedContent(new Dictionary<string, string>
+                var response = await httpClient.PostAsync(new Uri(_baseApiAddress + "rooms"),
+                    new HttpFormUrlEncodedContent(new Dictionary<string, string>
                     {
                         {"uri", uri}
                     }));
@@ -151,7 +128,7 @@ namespace Gitter.API.Services.Concrete
                     return JsonConvert.DeserializeObject<Room>(content);
                 }
 
-                throw new HttpRequestException();
+                throw new Exception();
             }
         }
 
@@ -163,18 +140,18 @@ namespace Gitter.API.Services.Concrete
         {
             string url = string.Format("rooms/{0}/chatMessages", roomId);
 
-            return Observable.Using(() => StreamHttpClient,
-                client => client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead)
+            return Observable.Using(() => HttpClient,
+                client => client.GetInputStreamAsync(new Uri(_baseStreamingApiAddress + url))
+                    .AsTask()
                     .ToObservable()
-                    .SelectMany(x => x.Content.ReadAsStreamAsync())
-                    .Select(x => Observable.FromAsync(() => ReadStream(x)).Repeat())
+                    .Select(x => Observable.FromAsync(() => ReadStream(x.AsStreamForRead())).Repeat())
                     .Concat()
                     .Where(x => !string.IsNullOrWhiteSpace(x))
                     .Select(JsonConvert.DeserializeObject<Message>));
         }
         private async Task<string> ReadStream(Stream stream)
         {
-            using (var reader = new StreamReader(stream, Encoding.UTF8, false, 1024, true))
+            using (var reader = new StreamReader(stream, Encoding.UTF8))
             {
                 return await reader.ReadLineAsync();
             }
@@ -188,7 +165,7 @@ namespace Gitter.API.Services.Concrete
                 if (!string.IsNullOrWhiteSpace(beforeId))
                     url += string.Format("&beforeId={0}", beforeId);
 
-                var response = await httpClient.GetAsync(url);
+                var response = await httpClient.GetAsync(new Uri(_baseApiAddress + url));
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -196,7 +173,7 @@ namespace Gitter.API.Services.Concrete
                     return JsonConvert.DeserializeObject<IEnumerable<Message>>(content);
                 }
 
-                throw new HttpRequestException();
+                throw new Exception();
             }
         }
 
@@ -204,8 +181,8 @@ namespace Gitter.API.Services.Concrete
         {
             using (var httpClient = HttpClient)
             {
-                var response = await httpClient.PostAsync(string.Format("rooms/{0}/chatMessages", roomId),
-                    new FormUrlEncodedContent(new Dictionary<string, string>
+                var response = await httpClient.PostAsync(new Uri(_baseApiAddress + string.Format("rooms/{0}/chatMessages", roomId)),
+                    new HttpFormUrlEncodedContent(new Dictionary<string, string>
                     {
                         {"text", message}
                     }));
@@ -216,7 +193,7 @@ namespace Gitter.API.Services.Concrete
                     return JsonConvert.DeserializeObject<Message>(content);
                 }
 
-                throw new HttpRequestException();
+                throw new Exception();
             }
         }
 
@@ -224,8 +201,8 @@ namespace Gitter.API.Services.Concrete
         {
             using (var httpClient = HttpClient)
             {
-                var response = await httpClient.PutAsync(string.Format("rooms/{0}/chatMessages/{1}", roomId, messageId),
-                    new FormUrlEncodedContent(new Dictionary<string, string>
+                var response = await httpClient.PutAsync(new Uri(_baseApiAddress + string.Format("rooms/{0}/chatMessages/{1}", roomId, messageId)),
+                    new HttpFormUrlEncodedContent(new Dictionary<string, string>
                     {
                         {"text", message}
                     }));
@@ -236,7 +213,7 @@ namespace Gitter.API.Services.Concrete
                     return JsonConvert.DeserializeObject<Message>(content);
                 }
 
-                throw new HttpRequestException();
+                throw new Exception();
             }
         }
 

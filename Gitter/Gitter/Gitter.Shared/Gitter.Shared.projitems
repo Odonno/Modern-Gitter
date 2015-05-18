@@ -33,6 +33,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\Abstract\ISessionService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Concrete\ApplicationStorageService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Concrete\BackgroundTaskService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Concrete\GitterApiService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Concrete\LocalNotificationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Concrete\SessionService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UserControls\ChatMessageControl.xaml.cs">
