@@ -59,10 +59,12 @@ namespace Gitter.ViewModel
                 SimpleIoc.Default.Register<INavigationService>(() => navigationService);
             }
 
+            SimpleIoc.Default.Register<IGitterApiService, GitterApiService>();
+
             SimpleIoc.Default.Register<ISessionService, SessionService>();
             SimpleIoc.Default.Register<IApplicationStorageService, ApplicationStorageService>();
             SimpleIoc.Default.Register<ILocalNotificationService, LocalNotificationService>();
-            SimpleIoc.Default.Register<IGitterApiService, GitterApiService>();
+            SimpleIoc.Default.Register<IBackgroundTaskService, BackgroundTaskService>();
 
             // ViewModels
             SimpleIoc.Default.Register<IMainViewModel, MainViewModel>();

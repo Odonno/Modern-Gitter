@@ -18,6 +18,8 @@ using Windows.UI.Xaml.Navigation;
 
 // Pour en savoir plus sur le modèle d'élément Page vierge, consultez la page http://go.microsoft.com/fwlink/?LinkId=234238
 using GitHub.Common;
+using Gitter.Services.Abstract;
+using Microsoft.Practices.ServiceLocation;
 
 namespace Gitter
 {
@@ -97,7 +99,7 @@ namespace Gitter
         /// </summary>
         /// <param name="e">Fournit des données pour les méthodes de navigation et
         /// les gestionnaires d'événements qui ne peuvent pas annuler la requête de navigation.</param>
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             _navigationHelper.OnNavigatedTo(e);
 
@@ -105,6 +107,7 @@ namespace Gitter
             if (e.NavigationMode == NavigationMode.New)
             {
                 Frame.BackStack.Remove(Frame.BackStack.LastOrDefault());
+                await ServiceLocator.Current.GetInstance<IBackgroundTaskService>().RegisterTasksAsync();
             }
         }
 
