@@ -41,20 +41,30 @@
 
                 <DataTemplate>
 
-                    <ListView ItemsSource="{Binding Path=Rooms}">
+                    <ListView ItemsSource="{Binding Path=Rooms}" Margin="0 -6 0 0">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <Button Style="{StaticResource TextBlockButtonStyle}"
+                                        Background="{StaticResource BlueGrey}"
+                                        RequestedTheme="Dark"
+                                        Margin="0 3"
+                                        HorizontalAlignment="Stretch"
                                         Command="{Binding Main.SelectRoomCommand, Source={StaticResource Locator}}"
                                         CommandParameter="{Binding}">
-                                    <StackPanel Margin="0 6" DataContext="{Binding Path=Room}">
+                                    <StackPanel Margin="12 6" DataContext="{Binding Path=Room}">
                                         <TextBlock Text="{Binding Path=Name}" FontSize="24" />
-                                        <TextBlock Text="{Binding Path=Topic}" FontSize="10"
+                                        <TextBlock Text="{Binding Path=Topic}" FontSize="8" TextWrapping="Wrap"
                                                    Visibility="{Binding Path=Topic, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
                                     </StackPanel>
                                 </Button>
                             </DataTemplate>
                         </ListView.ItemTemplate>
+
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
                     </ListView>
 
                 </DataTemplate>
@@ -75,9 +85,10 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
 
-                        <Grid Background="Black">
+                        <Grid Background="{StaticResource BlueGrey}">
                             <TextBlock FontSize="26" Margin="12 6"
-                                       Foreground="White" FontWeight="SemiBold"
+                                       RequestedTheme="Dark"
+                                       FontWeight="SemiBold"
                                        Text="{Binding Path=Room.Name}" />
                         </Grid>
 
