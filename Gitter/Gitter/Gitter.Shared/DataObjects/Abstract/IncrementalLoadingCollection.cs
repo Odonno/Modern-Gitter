@@ -8,6 +8,7 @@ using Windows.Foundation;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
+using GalaSoft.MvvmLight;
 
 namespace Gitter.DataObjects.Abstract
 {
@@ -78,7 +79,11 @@ namespace Gitter.DataObjects.Abstract
             Clear();
             Page = 0;
             HasMoreItems = true;
-            LoadMoreItemsAsync((uint) ItemsPerPage);
+
+            if (ViewModelBase.IsInDesignModeStatic)
+                return;
+            
+            LoadMoreItemsAsync((uint)ItemsPerPage);
         }
     }
 }

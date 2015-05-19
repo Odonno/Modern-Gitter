@@ -87,12 +87,20 @@
 
                         <Grid Background="{StaticResource BlueGrey}">
                             <TextBlock FontSize="26" Margin="12 6"
+                                       Visibility="{Binding Source={StaticResource Locator}, Path=Main.SelectedRoom, Converter={StaticResource NullToVisibilityConverter}}"
                                        RequestedTheme="Dark"
                                        FontWeight="SemiBold"
                                        Text="{Binding Path=Room.Name}" />
+
+                            <TextBlock FontSize="26" Margin="12 6"
+                                       Visibility="{Binding Source={StaticResource Locator}, Path=Main.SelectedRoom, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter=inverse}"
+                                       RequestedTheme="Dark"
+                                       FontWeight="SemiBold"
+                                       Text="please select a room" />
                         </Grid>
 
                         <ListView Grid.Row="1" Margin="0 12 0 0"
+                                  Visibility="{Binding Source={StaticResource Locator}, Path=Main.SelectedRoom, Converter={StaticResource NullToVisibilityConverter}}"
                                   ItemsSource="{Binding Path=Messages}"
                                   IncrementalLoadingTrigger="Edge">
                             <ListView.ItemContainerStyle>
@@ -146,6 +154,7 @@
                         </ListView>
 
                         <TextBox Grid.Row="2" 
+                                 Visibility="{Binding Source={StaticResource Locator}, Path=Main.SelectedRoom, Converter={StaticResource NullToVisibilityConverter}}"
                                  Text="{Binding Path=TextMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                  PlaceholderText="type your message here" />
 

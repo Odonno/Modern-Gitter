@@ -60,8 +60,7 @@ namespace Gitter.ViewModel.Concrete
                         UnreadMentions = 0,
                         DisabledNotifications = false,
                         Type = "ONETOONE"
-                    })
-                    ,
+                    }),
                     new RoomViewModel(new Room
                     {
                         Id = "5330777dc3599d1de448e194",
@@ -76,8 +75,7 @@ namespace Gitter.ViewModel.Concrete
                         DisabledNotifications = false,
                         Type = "ORG",
                         Version = 1
-                    })
-                    ,
+                    }),
                     new RoomViewModel(new Room
                     {
                         Id = "5330780dc3599d1de448e198",
@@ -92,8 +90,7 @@ namespace Gitter.ViewModel.Concrete
                         DisabledNotifications = false,
                         Type = "ORG_CHANNEL",
                         Version = 1
-                    })
-                    ,
+                    }),
                     new RoomViewModel(new Room
                     {
                         Id = "53307793c3599d1de448e196",

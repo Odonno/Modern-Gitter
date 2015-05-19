@@ -27,10 +27,8 @@ namespace Gitter.DataObjects.Concrete
 
         protected override async Task<IEnumerable<IMessageViewModel>> LoadMoreItemsAsync()
         {
-#if DEBUG
             if (ViewModelBase.IsInDesignModeStatic)
                 return new List<IMessageViewModel>();
-#endif
 
             lock (_lock)
             {

@@ -8,6 +8,9 @@ namespace Gitter.Converters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
+            if (parameter != null && parameter.ToString() == "inverse")
+                return (value != null) ? Visibility.Collapsed : Visibility.Visible;
+
             return (value == null) ? Visibility.Collapsed : Visibility.Visible;
         }
 

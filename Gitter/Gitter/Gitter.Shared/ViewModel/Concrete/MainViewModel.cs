@@ -32,10 +32,8 @@ namespace Gitter.ViewModel.Concrete
         public DateTime CurrentDateTime { get; private set; }
         public User CurrentUser { get; private set; }
         public IRoomsViewModel Rooms { get; private set; }
-
+        
         private IRoomViewModel _selectedRoom;
-        private string _ownChatRoom;
-
         public IRoomViewModel SelectedRoom
         {
             get
@@ -89,8 +87,6 @@ namespace Gitter.ViewModel.Concrete
                     SmallAvatarUrl = "https://avatars.githubusercontent.com/u/14751?",
                     MediumAvatarUrl = "https://avatars.githubusercontent.com/u/14751?"
                 };
-
-                SelectedRoom = Rooms.Rooms.First();
             }
             else
             {
