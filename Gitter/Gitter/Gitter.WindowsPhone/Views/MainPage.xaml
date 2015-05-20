@@ -20,7 +20,7 @@
         </Grid.ChildrenTransitions>
 
         <!-- Content -->
-        <Hub Margin="0 24 0 0">
+        <Hub x:Name="hub" Margin="0 24 0 0">
             <!-- Header -->
             <Hub.HeaderTemplate>
                 <DataTemplate>

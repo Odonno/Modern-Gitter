@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using Gitter.API.Services.Abstract;
+using Gitter.Messages;
 using Gitter.Model;
 using Gitter.ViewModel.Abstract;
 
@@ -107,6 +109,8 @@ namespace Gitter.ViewModel.Concrete
             {
                 SelectedRoom = room;
                 SelectedRoom.Messages.Reset();
+
+                Messenger.Default.Send(new SelectRoomMessage());
 
                 App.TelemetryClient.TrackEvent("SelectRoom",
                     new Dictionary<string, string> { { "Room", room.Room.Name } });

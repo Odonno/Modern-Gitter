@@ -17,7 +17,9 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 // Pour en savoir plus sur le modèle d'élément Page vierge, consultez la page http://go.microsoft.com/fwlink/?LinkId=234238
+using GalaSoft.MvvmLight.Messaging;
 using GitHub.Common;
+using Gitter.Messages;
 using Gitter.Services.Abstract;
 using Microsoft.Practices.ServiceLocation;
 
@@ -41,6 +43,9 @@ namespace Gitter
             _navigationHelper = new NavigationHelper(this);
             _navigationHelper.LoadState += NavigationHelper_LoadState;
             _navigationHelper.SaveState += NavigationHelper_SaveState;
+
+            // navigate to the chat when user select a room
+            Messenger.Default.Register<SelectRoomMessage>(this, message => hub.ScrollToSection(chatSection));
         }
 
 
