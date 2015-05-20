@@ -92,6 +92,23 @@ namespace Gitter.API.Services.Concrete
             }
         }
 
+        public async Task ReadChatMessagesAsync(string userId, string roomId, IEnumerable<string> messageIds)
+        {
+            using (var httpClient = HttpClient)
+            {
+                var response = await httpClient.PostAsync(new Uri(_baseApiAddress + string.Format("user/{0}/rooms/{1}/unreadItems", userId, roomId)),
+                    new HttpFormUrlEncodedContent(new Dictionary<string, string>
+                    {
+                        {"chat", messageIds.ToString()}
+                    }));
+
+                if (response.IsSuccessStatusCode)
+                    return;
+
+                throw new Exception();
+            }
+        }
+
         #endregion
 
         #region Rooms

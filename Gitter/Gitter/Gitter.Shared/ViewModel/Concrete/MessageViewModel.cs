@@ -55,6 +55,17 @@ namespace Gitter.ViewModel.Concrete
             }
         }
 
+        private bool _read;
+        public bool Read
+        {
+            get { return _read; }
+            set
+            {
+                _read = value;
+                RaisePropertyChanged();
+            }
+        }
+
         #endregion
 
 
@@ -69,6 +80,7 @@ namespace Gitter.ViewModel.Concrete
             Text = message.Text;
             SentDate = message.SentDate;
             User = message.User;
+            Read = message.ReadByCurrent;
 
 
             if (IsInDesignMode)
@@ -91,6 +103,13 @@ namespace Gitter.ViewModel.Concrete
         public void UpdateMessage(string text)
         {
             Text = text;
+            Message.Text = text;
+        }
+
+        public void ReadByCurrent()
+        {
+            Read = true;
+            Message.ReadByCurrent = true;
         }
 
         #endregion

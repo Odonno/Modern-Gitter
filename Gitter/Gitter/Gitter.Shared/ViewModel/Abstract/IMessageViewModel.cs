@@ -10,8 +10,10 @@ namespace Gitter.ViewModel.Abstract
         string Text { get; }
         DateTime SentDate { get; }
         User User { get; }
+        bool Read { get; }
 
 
         void UpdateMessage(string text);
+        void ReadByCurrent();
     }
 }

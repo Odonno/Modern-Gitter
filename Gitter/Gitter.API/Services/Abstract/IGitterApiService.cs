@@ -17,6 +17,7 @@ namespace Gitter.API.Services.Abstract
         #region User
 
         Task<User> GetCurrentUserAsync();
+        Task ReadChatMessagesAsync(string userId, string roomId, IEnumerable<string> messageIds);
 
         #endregion
 

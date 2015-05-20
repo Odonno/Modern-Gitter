@@ -34,7 +34,7 @@ namespace Gitter.ViewModel.Concrete
         public DateTime CurrentDateTime { get; private set; }
         public User CurrentUser { get; private set; }
         public IRoomsViewModel Rooms { get; private set; }
-        
+
         private IRoomViewModel _selectedRoom;
         public IRoomViewModel SelectedRoom
         {
@@ -103,14 +103,26 @@ namespace Gitter.ViewModel.Concrete
 
         #region Command Methods
 
-        private void SelectRoom(IRoomViewModel room)
+        private async void SelectRoom(IRoomViewModel room)
         {
             if (SelectedRoom != room)
             {
+                // Select the Room and update ViewModel
                 SelectedRoom = room;
                 SelectedRoom.Messages.Reset();
 
+                // Update UI
                 Messenger.Default.Send(new SelectRoomMessage());
+
+                // By default, update API if current user read unread messages (at least 1)
+                var unreadMessages = SelectedRoom.Messages.Where(message => !message.Read);
+                if (unreadMessages.Any())
+                {
+                    await _gitterApiService.ReadChatMessagesAsync(CurrentUser.Id, SelectedRoom.Room.Id, unreadMessages.Select(m => m.Id));
+
+                    foreach (var message in unreadMessages)
+                        message.ReadByCurrent();
+                }
 
                 App.TelemetryClient.TrackEvent("SelectRoom",
                     new Dictionary<string, string> { { "Room", room.Room.Name } });
