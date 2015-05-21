@@ -51,11 +51,28 @@
                                         HorizontalAlignment="Stretch"
                                         Command="{Binding Main.SelectRoomCommand, Source={StaticResource Locator}}"
                                         CommandParameter="{Binding}">
-                                    <StackPanel Margin="12 6" DataContext="{Binding Path=Room}">
-                                        <TextBlock Text="{Binding Path=Name}" FontSize="24" />
-                                        <TextBlock Text="{Binding Path=Topic}" FontSize="8" TextWrapping="Wrap"
+                                    
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        
+                                        <StackPanel Margin="12 6" DataContext="{Binding Path=Room}">
+                                            <TextBlock Text="{Binding Path=Name}" FontSize="20" />
+                                            <TextBlock Text="{Binding Path=Topic}" FontSize="8" TextWrapping="Wrap"
                                                    Visibility="{Binding Path=Topic, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
-                                    </StackPanel>
+                                        </StackPanel>
+                                        
+                                        <Grid Grid.Column="1" Margin="0 6 6 0" VerticalAlignment="Top">
+                                            <Ellipse Width="20" Height="20" Fill="White" />
+                                            <TextBlock Text="{Binding Path=UnreadMessagesCount}"
+                                                       FontSize="14" FontWeight="Bold"
+                                                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                       Foreground="{StaticResource BlueGrey}"/>
+                                        </Grid>
+                                    </Grid>
+                                    
                                 </Button>
                             </DataTemplate>
                         </ListView.ItemTemplate>

@@ -80,7 +80,7 @@ namespace Gitter.ViewModel.Concrete
             Text = message.Text;
             SentDate = message.SentDate;
             User = message.User;
-            Read = message.ReadByCurrent;
+            Read = !message.UnreadByCurrent;
 
 
             if (IsInDesignMode)
@@ -109,7 +109,7 @@ namespace Gitter.ViewModel.Concrete
         public void ReadByCurrent()
         {
             Read = true;
-            Message.ReadByCurrent = true;
+            Message.UnreadByCurrent = !Read;
         }
 
         #endregion

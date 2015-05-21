@@ -25,7 +25,7 @@ namespace Gitter.Model
         public User User { get; set; }
 
         [JsonProperty("unread")]
-        public bool ReadByCurrent { get; set; }
+        public bool UnreadByCurrent { get; set; }
 
         [JsonProperty("readBy")]
         public int ReadCount { get; set; }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -38,6 +39,8 @@ namespace Gitter.ViewModel.Concrete
             }
         }
 
+        public int UnreadMessagesCount { get { return Messages.Count(message => !message.Read); } }
+        
         #endregion
 
 
@@ -56,7 +59,7 @@ namespace Gitter.ViewModel.Concrete
         {
             // Properties
             Room = room;
-
+            
             // Commands
             SendMessageCommand = new RelayCommand(SendMessage, CanSendMessage);
             RemoveMessageCommand = new RelayCommand<IMessageViewModel>(RemoveMessage, CanRemoveMessage);
@@ -91,7 +94,7 @@ namespace Gitter.ViewModel.Concrete
                         SentDate = new DateTime(2014, 3, 25, 11, 51, 32),
                         EditedDate = null,
                         User = malditogeek,
-                        ReadByCurrent = false,
+                        UnreadByCurrent = false,
                         ReadCount = 0,
                         Urls = new List<MessageUrl>(),
                         Mentions = new List<Mention>
@@ -115,7 +118,7 @@ namespace Gitter.ViewModel.Concrete
                         SentDate = new DateTime(2014, 3, 25, 11, 55, 47),
                         EditedDate = null,
                         User = malditogeek,
-                        ReadByCurrent = false,
+                        UnreadByCurrent = false,
                         ReadCount = 0,
                         Urls = new List<MessageUrl>(),
                         Mentions = new List<Mention>(),
@@ -139,6 +142,11 @@ namespace Gitter.ViewModel.Concrete
             {
                 await Messages.AddItem(new MessageViewModel(message));
             });
+
+            Messages.CollectionChanged += (sender, args) =>
+            {
+                RaisePropertyChanged("UnreadMessagesCount");
+            };
         }
 
         #endregion
