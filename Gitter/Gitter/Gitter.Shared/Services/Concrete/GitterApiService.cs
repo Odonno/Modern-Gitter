@@ -99,7 +99,7 @@ namespace Gitter.API.Services.Concrete
                 var response = await httpClient.PostAsync(new Uri(_baseApiAddress + string.Format("user/{0}/rooms/{1}/unreadItems", userId, roomId)),
                     new HttpFormUrlEncodedContent(new Dictionary<string, string>
                     {
-                        {"chat", messageIds.ToString()}
+                        {"chat", JsonConvert.SerializeObject(messageIds)}
                     }));
 
                 if (response.IsSuccessStatusCode)

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -152,7 +151,7 @@ namespace Gitter.ViewModel.Concrete
             // Use the stream API to add new messages when they comes
             _gitterApiService.GetRealtimeMessages(Room.Id).Subscribe(async message =>
             {
-                await Messages.AddItem(new MessageViewModel(message));
+                await Messages.AddItemAsync(new MessageViewModel(message));
 
                 if (message.UnreadByCurrent)
                     UnreadMessagesCount++;

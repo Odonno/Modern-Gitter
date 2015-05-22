@@ -68,7 +68,7 @@ namespace Gitter.DataObjects.Abstract
                 IsBusy = false;
             }
         }
-        public async Task AddItem(T item)
+        public async virtual Task AddItemAsync(T item)
         {
             var dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
             await dispatcher.RunAsync(CoreDispatcherPriority.High, () => Insert(0, item));

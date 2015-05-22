@@ -19,6 +19,8 @@ namespace Gitter.ViewModel.Concrete
 
         private const string OwnChatRoomName = "Odonno/Modern-Gitter";
 
+        private IDisposable _currentSelectedRoomUnreadMessages;
+
         #endregion
 
 
@@ -103,27 +105,33 @@ namespace Gitter.ViewModel.Concrete
 
         #region Command Methods
 
-        private async void SelectRoom(IRoomViewModel room)
+        private void SelectRoom(IRoomViewModel room)
         {
             if (SelectedRoom != room)
             {
+                // Remove event that was updating READ new messages
+                if (_currentSelectedRoomUnreadMessages != null)
+                    _currentSelectedRoomUnreadMessages.Dispose();
+
                 // Select the Room and update ViewModel
                 SelectedRoom = room;
                 SelectedRoom.Messages.Reset();
 
+                // Add event that will update READ new messages
+                _currentSelectedRoomUnreadMessages = SelectedRoom.Messages.NotifyUnreadMessages.Subscribe(
+                    async unreadMessages =>
+                    {
+                        if (unreadMessages.Any())
+                        {
+                            await _gitterApiService.ReadChatMessagesAsync(CurrentUser.Id, SelectedRoom.Room.Id, unreadMessages.Select(m => m.Id));
+
+                            foreach (var message in unreadMessages)
+                                message.ReadByCurrent();
+                        }
+                    });
+
                 // Update UI
                 Messenger.Default.Send(new SelectRoomMessage());
-
-                // BUG : Wrong place
-                // By default, update API if current user read unread messages (at least 1)
-                var unreadMessages = SelectedRoom.Messages.Where(message => !message.Read);
-                if (unreadMessages.Any())
-                {
-                    await _gitterApiService.ReadChatMessagesAsync(CurrentUser.Id, SelectedRoom.Room.Id, unreadMessages.Select(m => m.Id));
-
-                    foreach (var message in unreadMessages)
-                        message.ReadByCurrent();
-                }
 
                 App.TelemetryClient.TrackEvent("SelectRoom",
                     new Dictionary<string, string> { { "Room", room.Room.Name } });

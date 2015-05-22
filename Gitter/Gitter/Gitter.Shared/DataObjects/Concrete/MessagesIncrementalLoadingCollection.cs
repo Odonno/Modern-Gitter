@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using Gitter.DataObjects.Abstract;
@@ -11,10 +13,24 @@ namespace Gitter.DataObjects.Concrete
 {
     public class MessagesIncrementalLoadingCollection : IncrementalLoadingCollection<IMessageViewModel>
     {
+        #region Fields
         private readonly object _lock = new object();
+
+        #endregion
+
+
+        #region Properties
 
         public string BeforeId { get; private set; }
         public string RoomId { get; private set; }
+
+        private readonly Subject<IEnumerable<IMessageViewModel>> _notifyUnreadMessages = new Subject<IEnumerable<IMessageViewModel>>();
+        public IObservable<IEnumerable<IMessageViewModel>> NotifyUnreadMessages { get { return _notifyUnreadMessages; } }
+
+        #endregion
+
+
+        #region Constructor
 
 
         public MessagesIncrementalLoadingCollection(string roomId)
@@ -24,6 +40,10 @@ namespace Gitter.DataObjects.Concrete
             Ascendant = true;
         }
 
+        #endregion
+
+
+        #region Methods
 
         protected override async Task<IEnumerable<IMessageViewModel>> LoadMoreItemsAsync()
         {
@@ -43,10 +63,24 @@ namespace Gitter.DataObjects.Concrete
                 else
                     BeforeId = Ascendant ? beforeMessages.First().Id : beforeMessages.Last().Id;
 
-                return beforeMessages
+                var loadedMessages = beforeMessages
                     .Where(message => !string.IsNullOrWhiteSpace(message.Text))
                     .Select(message => new MessageViewModel(message));
+
+                _notifyUnreadMessages.OnNext(loadedMessages.Where(message => !message.Read));
+
+                return loadedMessages;
             }
         }
+
+        public override async Task AddItemAsync(IMessageViewModel item)
+        {
+            await base.AddItemAsync(item);
+
+            if (!item.Read)
+                _notifyUnreadMessages.OnNext(new[] { item });
+        }
+
+        #endregion
     }
 }
