@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Activation;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Views;
 using Gitter.API.Services.Abstract;
 using Gitter.Services.Abstract;
 using Gitter.ViewModel.Abstract;
+#if WINDOWS_PHONE_APP
+using Windows.ApplicationModel.Activation;
+#endif
 
 namespace Gitter.ViewModel.Concrete
 {
-    public class LoginViewModel : ViewModelBase, ILoginViewModel
+    public sealed class LoginViewModel : ViewModelBase, ILoginViewModel
     {
         #region Services
 

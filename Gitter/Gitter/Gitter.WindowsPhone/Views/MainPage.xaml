@@ -65,7 +65,7 @@
                                         </StackPanel>
                                         
                                         <Grid Grid.Column="1" Margin="0 6 6 0" VerticalAlignment="Top">
-                                            <Ellipse Width="20" Height="20" Fill="White" />
+                                            <Ellipse Width="24" Height="24" Fill="White" />
                                             <TextBlock Text="{Binding Path=UnreadMessagesCount}"
                                                        FontSize="14" FontWeight="Bold"
                                                        HorizontalAlignment="Center" VerticalAlignment="Center"

@@ -8,7 +8,7 @@ using Gitter.ViewModel.Abstract;
 
 namespace Gitter.ViewModel.Concrete
 {
-    public class RoomsViewModel : ViewModelBase, IRoomsViewModel
+    public sealed class RoomsViewModel : ViewModelBase, IRoomsViewModel
     {
         #region Services
 
@@ -56,7 +56,7 @@ namespace Gitter.ViewModel.Concrete
                         Topic = string.Empty,
                         OneToOne = true,
                         Users = new[] {suprememoocow},
-                        UnreadItems = 0,
+                        UnreadItems = 42,
                         UnreadMentions = 0,
                         DisabledNotifications = false,
                         Type = "ONETOONE"
@@ -84,7 +84,7 @@ namespace Gitter.ViewModel.Concrete
                         Url = "gitterHQ/devops",
                         OneToOne = false,
                         UserCount = 2,
-                        UnreadItems = 0,
+                        UnreadItems = 3,
                         UnreadMentions = 0,
                         LastAccessTime = new DateTime(2014, 3, 24, 18, 23, 10),
                         DisabledNotifications = false,

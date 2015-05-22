@@ -5,7 +5,7 @@ using Gitter.ViewModel.Abstract;
 
 namespace Gitter.ViewModel.Concrete
 {
-    public class MessageViewModel : ViewModelBase, IMessageViewModel
+    public sealed class MessageViewModel : ViewModelBase, IMessageViewModel
     {
         #region Properties
 

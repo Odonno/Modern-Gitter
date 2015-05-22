@@ -13,7 +13,7 @@ using Gitter.ViewModel.Abstract;
 
 namespace Gitter.ViewModel.Concrete
 {
-    public class MainViewModel : ViewModelBase, IMainViewModel
+    public sealed class MainViewModel : ViewModelBase, IMainViewModel
     {
         #region Fields
 
@@ -114,6 +114,7 @@ namespace Gitter.ViewModel.Concrete
                 // Update UI
                 Messenger.Default.Send(new SelectRoomMessage());
 
+                // BUG : Wrong place
                 // By default, update API if current user read unread messages (at least 1)
                 var unreadMessages = SelectedRoom.Messages.Where(message => !message.Read);
                 if (unreadMessages.Any())

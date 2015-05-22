@@ -11,7 +11,7 @@ using Gitter.ViewModel.Abstract;
 
 namespace Gitter.ViewModel.Concrete
 {
-    public class RoomViewModel : ViewModelBase, IRoomViewModel
+    public sealed class RoomViewModel : ViewModelBase, IRoomViewModel
     {
         #region Services
 
@@ -39,8 +39,17 @@ namespace Gitter.ViewModel.Concrete
             }
         }
 
-        public int UnreadMessagesCount { get { return Messages.Count(message => !message.Read); } }
-        
+        private int _unreadMessagesCount;
+        public int UnreadMessagesCount
+        {
+            get { return _unreadMessagesCount; }
+            private set
+            {
+                _unreadMessagesCount = value;
+                RaisePropertyChanged();
+            }
+        }
+
         #endregion
 
 
@@ -137,16 +146,17 @@ namespace Gitter.ViewModel.Concrete
                 _messages = new MessagesIncrementalLoadingCollection(Room.Id);
             }
 
+            // Update count of unread messages
+            UnreadMessagesCount = Room.UnreadItems;
+
             // Use the stream API to add new messages when they comes
             _gitterApiService.GetRealtimeMessages(Room.Id).Subscribe(async message =>
             {
                 await Messages.AddItem(new MessageViewModel(message));
-            });
 
-            Messages.CollectionChanged += (sender, args) =>
-            {
-                RaisePropertyChanged("UnreadMessagesCount");
-            };
+                if (message.UnreadByCurrent)
+                    UnreadMessagesCount++;
+            });
         }
 
         #endregion
