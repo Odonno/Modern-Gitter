@@ -64,10 +64,11 @@
                                                    Visibility="{Binding Path=Topic, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
                                         </StackPanel>
                                         
-                                        <Grid Grid.Column="1" Margin="0 6 6 0" VerticalAlignment="Top">
+                                        <Grid Grid.Column="1" Margin="0 6 6 0" VerticalAlignment="Top"
+                                              Visibility="{Binding Path=UnreadMessagesCount, Converter={StaticResource UnreadMessagesCountToVisibilityConverter}}">
                                             <Ellipse Width="24" Height="24" Fill="White" />
-                                            <TextBlock Text="{Binding Path=UnreadMessagesCount}"
-                                                       FontSize="14" FontWeight="Bold"
+                                            <TextBlock Text="{Binding Path=UnreadMessagesCount, Converter={StaticResource UnreadMessagesCountConverter}}"
+                                                       FontSize="12" FontWeight="Bold"
                                                        HorizontalAlignment="Center" VerticalAlignment="Center"
                                                        Foreground="{StaticResource BlueGrey}"/>
                                         </Grid>

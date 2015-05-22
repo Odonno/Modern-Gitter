@@ -28,6 +28,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\SamePreviousAuthorMarginConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\DistinctPreviousAuthorVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\SamePreviousAuthorVisibilityConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\UnreadMessagesCountConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\UnreadMessagesCountToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataObjects\Abstract\IncrementalLoadingCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataObjects\Concrete\MessagesIncrementalLoadingCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Messages\SelectRoomMessage.cs" />

@@ -56,7 +56,7 @@ namespace Gitter.ViewModel.Concrete
                         Topic = string.Empty,
                         OneToOne = true,
                         Users = new[] {suprememoocow},
-                        UnreadItems = 42,
+                        UnreadItems = 52,
                         UnreadMentions = 0,
                         DisabledNotifications = false,
                         Type = "ONETOONE"
@@ -99,7 +99,7 @@ namespace Gitter.ViewModel.Concrete
                         Url = "gitterHQ/devops",
                         OneToOne = false,
                         UserCount = 2,
-                        UnreadItems = 0,
+                        UnreadItems = 42,
                         UnreadMentions = 0,
                         LastAccessTime = new DateTime(2014, 3, 24, 18, 21, 08),
                         DisabledNotifications = false,
