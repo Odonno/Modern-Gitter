@@ -35,7 +35,7 @@ namespace Gitter.DataObjects.Abstract
 
             try
             {
-                CoreDispatcher dispatcher = Window.Current.Dispatcher;
+                var dispatcher = Window.Current.Dispatcher;
 
                 return Task.Run(
                     async () =>

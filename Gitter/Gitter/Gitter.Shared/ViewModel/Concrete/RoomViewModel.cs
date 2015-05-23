@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -153,9 +154,11 @@ namespace Gitter.ViewModel.Concrete
             // Use the stream API to add new messages when they comes
             _gitterApiService.GetRealtimeMessages(Room.Id).Subscribe(async message =>
             {
-                await Messages.AddItemAsync(new MessageViewModel(message));
+                var messageVM = new MessageViewModel(message);
 
-                if (message.UnreadByCurrent)
+                await Messages.AddItemAsync(messageVM);
+
+                if (!messageVM.Read)
                     UnreadMessagesCount++;
             });
         }
@@ -206,12 +209,22 @@ namespace Gitter.ViewModel.Concrete
                 new Dictionary<string, double> { { "SecondsAgo", ViewModelLocator.Main.CurrentDateTime.Subtract(message.SentDate).TotalSeconds } });
         }
 
-        public void Refresh()
+        private void Refresh()
         {
             Messages.Reset();
 
             App.TelemetryClient.TrackEvent("RefreshRoom",
                 new Dictionary<string, string> { { "Room", Room.Name } });
+        }
+
+        #endregion
+
+
+        #region Methods
+        
+        public void RefreshUnreadCount()
+        {
+            UnreadMessagesCount = Messages.Count(m => !m.Read);
         }
 
         #endregion

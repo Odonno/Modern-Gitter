@@ -16,6 +16,6 @@ namespace Gitter.ViewModel.Abstract
         ICommand RemoveMessageCommand { get; }
         ICommand RefreshCommand { get; }
 
-        void Refresh();
+        void RefreshUnreadCount();
     }
 }
