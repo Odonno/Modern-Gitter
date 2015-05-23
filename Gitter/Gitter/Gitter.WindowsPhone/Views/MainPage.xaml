@@ -211,12 +211,12 @@
     <Page.BottomAppBar>
         <CommandBar>
             <CommandBar.PrimaryCommands>
-                <AppBarButton Label="refresh" Icon="Refresh"
-                              Command="{Binding Path=SelectedRoom.RefreshCommand}"
-                              Visibility="{Binding Path=SelectedRoom, Converter={StaticResource NullToVisibilityConverter}}" />
                 <AppBarButton Label="send" Icon="PostUpdate"
                               Command="{Binding Path=SelectedRoom.SendMessageCommand}"
                               Visibility="{Binding Path=SelectedRoom, Converter={StaticResource NullToVisibilityConverter}}"/>
+                <AppBarButton Label="refresh" Icon="Refresh"
+                              Command="{Binding Path=SelectedRoom.RefreshCommand}"
+                              Visibility="{Binding Path=SelectedRoom, Converter={StaticResource NullToVisibilityConverter}}" />
             </CommandBar.PrimaryCommands>
             
             <CommandBar.SecondaryCommands>
