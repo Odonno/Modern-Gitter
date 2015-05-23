@@ -33,6 +33,20 @@ namespace Gitter.ViewModel.Concrete
 
         #region Properties
 
+        private int _currentSectionIndex;
+        public int CurrentSectionIndex
+        {
+            get
+            {
+                return _currentSectionIndex;
+            }
+            set
+            {
+                _currentSectionIndex = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public DateTime CurrentDateTime { get; private set; }
         public User CurrentUser { get; private set; }
         public IRoomsViewModel Rooms { get; private set; }

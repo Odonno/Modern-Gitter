@@ -22,6 +22,7 @@ using GalaSoft.MvvmLight.Messaging;
 using GitHub.Common;
 using Gitter.Messages;
 using Gitter.Services.Abstract;
+using Gitter.ViewModel;
 using Microsoft.Practices.ServiceLocation;
 
 namespace Gitter
@@ -46,7 +47,11 @@ namespace Gitter
             _navigationHelper.SaveState += NavigationHelper_SaveState;
 
             // navigate to the chat when user select a room
-            Messenger.Default.Register<SelectRoomMessage>(this, message => hub.ScrollToSection(chatSection));
+            Messenger.Default.Register<SelectRoomMessage>(this, message =>
+            {
+                hub.ScrollToSection(chatSection);
+                ViewModelLocator.Main.CurrentSectionIndex++;
+            });
         }
 
 
@@ -134,6 +139,20 @@ namespace Gitter
             // Hide the virtual keyboard when sending a message
             if (e.Key == VirtualKey.Enter)
                 Focus(FocusState.Programmatic);
+        }
+
+        #endregion
+
+
+        #region Hub Section
+
+        private void hub_SectionsInViewChanged(object sender, SectionsInViewChangedEventArgs e)
+        {
+            var currentSection = hub.SectionsInView.First();
+            var currentIndex = hub.Sections.IndexOf(currentSection);
+
+            // Update index when changing current section
+            ViewModelLocator.Main.CurrentSectionIndex = currentIndex;
         }
 
         #endregion

@@ -6,6 +6,7 @@ namespace Gitter.ViewModel.Abstract
 {
     public interface IMainViewModel
     {
+        int CurrentSectionIndex { get; set; }
         DateTime CurrentDateTime { get; }
         User CurrentUser { get; }
         IRoomsViewModel Rooms { get; }

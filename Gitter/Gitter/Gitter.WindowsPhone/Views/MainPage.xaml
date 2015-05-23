@@ -23,7 +23,8 @@
         </Grid.ChildrenTransitions>
 
         <!-- Content -->
-        <Hub x:Name="hub" Margin="0 24 0 0">
+        <Hub x:Name="hub" Margin="0 24 0 0"
+             SectionsInViewChanged="hub_SectionsInViewChanged">
             <!-- Header -->
             <Hub.HeaderTemplate>
                 <DataTemplate>
@@ -213,10 +214,12 @@
             <CommandBar.PrimaryCommands>
                 <AppBarButton Label="send" Icon="PostUpdate"
                               Command="{Binding Path=SelectedRoom.SendMessageCommand}"
-                              Visibility="{Binding Path=SelectedRoom, Converter={StaticResource NullToVisibilityConverter}}"/>
+                              IsEnabled="{Binding Path=SelectedRoom, Converter={StaticResource NullToBooleanConverter}}"
+                              Visibility="{Binding Path=CurrentSectionIndex, Converter={StaticResource SectionIndexToVisibilityConverter}, ConverterParameter=1}"/>
                 <AppBarButton Label="refresh" Icon="Refresh"
                               Command="{Binding Path=SelectedRoom.RefreshCommand}"
-                              Visibility="{Binding Path=SelectedRoom, Converter={StaticResource NullToVisibilityConverter}}" />
+                              IsEnabled="{Binding Path=SelectedRoom, Converter={StaticResource NullToBooleanConverter}}"
+                              Visibility="{Binding Path=CurrentSectionIndex, Converter={StaticResource SectionIndexToVisibilityConverter}, ConverterParameter=1}" />
             </CommandBar.PrimaryCommands>
             
             <CommandBar.SecondaryCommands>

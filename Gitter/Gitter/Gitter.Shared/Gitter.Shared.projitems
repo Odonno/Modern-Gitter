@@ -24,11 +24,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\EmptyStringToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\EnterKeyDownConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\MeToVisibilityConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\NullToBooleanConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\NullToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\SamePreviousAuthorConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\SamePreviousAuthorMarginConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\DistinctPreviousAuthorVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\SamePreviousAuthorVisibilityConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\SectionIndexToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\UnreadMessagesCountConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\UnreadMessagesCountToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataObjects\Abstract\IncrementalLoadingCollection.cs" />

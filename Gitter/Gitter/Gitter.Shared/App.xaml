@@ -11,6 +11,7 @@
         <converters:EmptyStringToVisibilityConverter x:Key="EmptyStringToVisibilityConverter" />
         <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
         <converters:MeToVisibilityConverter x:Key="MeToVisibilityConverter" />
+        <converters:NullToBooleanConverter x:Key="NullToBooleanConverter" />
         <converters:SamePreviousAuthorMarginConverter x:Key="SamePreviousAuthorMarginConverter" />
         <converters:SamePreviousAuthorVisibilityConverter x:Key="SamePreviousAuthorVisibilityConverter" />
         <converters:DistinctPreviousAuthorVisibilityConverter x:Key="DistinctPreviousAuthorVisibilityConverter" />
@@ -18,6 +19,7 @@
         <converters:UnreadMessagesCountConverter x:Key="UnreadMessagesCountConverter" />
         <converters:UnreadMessagesCountToVisibilityConverter x:Key="UnreadMessagesCountToVisibilityConverter" />
         <converters:EnterKeyDownConverter x:Key="EnterKeyDownConverter" />
+        <converters:SectionIndexToVisibilityConverter x:Key="SectionIndexToVisibilityConverter" />
         
         <!-- Styles -->
         
