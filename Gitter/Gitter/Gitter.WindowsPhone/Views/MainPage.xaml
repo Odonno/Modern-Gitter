@@ -1,5 +1,4 @@
 ﻿<Page
-    x:Class="Gitter.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,12 +6,13 @@
     xmlns:userControls="using:Gitter.UserControls"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
-    xmlns:system="using:System"
+    xmlns:WindowsPhone81="using:Microsoft.AdMediator.WindowsPhone81"
+    x:Class="Gitter.MainPage"
     mc:Ignorable="d"
     NavigationCacheMode="Required"
     RequestedTheme="Light"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    DataContext="{Binding Source={StaticResource Locator}, Path=Main}">
+    DataContext="{Binding Main, Source={StaticResource Locator}}">
 
     <Grid x:Name="LayoutRoot">
 
@@ -22,16 +22,24 @@
             </TransitionCollection>
         </Grid.ChildrenTransitions>
 
+        <!-- Advertisement -->
+        <WindowsPhone81:AdMediatorControl x:Name="AdMediator_BAC0F2" 
+                                          Canvas.ZIndex="1"
+                                          Id="AdMediator-Id-E4A3DD3B-F096-417B-92D4-9156551D7E69"
+                                          HorizontalAlignment="Left" VerticalAlignment="Top" />
+
         <!-- Content -->
         <Hub x:Name="hub" Margin="0 24 0 0"
+             Canvas.ZIndex="0"
              SectionsInViewChanged="hub_SectionsInViewChanged">
+            
             <!-- Header -->
             <Hub.HeaderTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
                         <Image Source="../Assets/Gitter.white.png"
                                Height="80"/>
-                        
+
                         <TextBlock Text="GITTER" Margin="6 0 0 0" FontSize="60" 
                                    FontWeight="SemiBold" CharacterSpacing="10" />
                     </StackPanel>
@@ -41,43 +49,43 @@
             <!-- List of rooms -->
             <HubSection x:Name="roomsSection" Header="rooms" 
                         HeaderTemplate="{StaticResource HeaderTemplate}"
-                        DataContext="{Binding Path=Rooms}">
+                        DataContext="{Binding Rooms}">
 
                 <DataTemplate>
 
-                    <ListView ItemsSource="{Binding Path=Rooms}" Margin="0 -6 0 0">
+                    <ListView ItemsSource="{Binding Rooms}" Margin="0 -6 0 0">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <Button Style="{StaticResource TextBlockButtonStyle}"
-                                        Background="{StaticResource BlueGrey}"
-                                        RequestedTheme="Dark"
-                                        Margin="0 3"
-                                        HorizontalAlignment="Stretch"
-                                        Command="{Binding Main.SelectRoomCommand, Source={StaticResource Locator}}"
-                                        CommandParameter="{Binding}">
-                                    
+									Background="{StaticResource BlueGrey}"
+									RequestedTheme="Dark"
+									Margin="0 3"
+									HorizontalAlignment="Stretch"
+									Command="{Binding Main.SelectRoomCommand, Source={StaticResource Locator}}"
+									CommandParameter="{Binding}">
+
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition />
                                             <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
-                                        
-                                        <StackPanel Margin="12 6" DataContext="{Binding Path=Room}">
-                                            <TextBlock Text="{Binding Path=Name}" FontSize="20" />
-                                            <TextBlock Text="{Binding Path=Topic}" FontSize="8" TextWrapping="Wrap"
-                                                   Visibility="{Binding Path=Topic, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+
+                                        <StackPanel Margin="12 6" DataContext="{Binding Room}">
+                                            <TextBlock Text="{Binding Name}" FontSize="20" />
+                                            <TextBlock Text="{Binding Topic}" FontSize="8" TextWrapping="Wrap"
+												Visibility="{Binding Topic, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
                                         </StackPanel>
-                                        
+
                                         <Grid Grid.Column="1" Margin="0 6 6 0" VerticalAlignment="Top"
-                                              Visibility="{Binding Path=UnreadMessagesCount, Converter={StaticResource UnreadMessagesCountToVisibilityConverter}}">
+											Visibility="{Binding UnreadMessagesCount, Converter={StaticResource UnreadMessagesCountToVisibilityConverter}}">
                                             <Ellipse Width="24" Height="24" Fill="White" />
-                                            <TextBlock Text="{Binding Path=UnreadMessagesCount, Converter={StaticResource UnreadMessagesCountConverter}}"
-                                                       FontSize="12" FontWeight="Bold"
-                                                       HorizontalAlignment="Center" VerticalAlignment="Center"
-                                                       Foreground="{StaticResource BlueGrey}"/>
+                                            <TextBlock Text="{Binding UnreadMessagesCount, Converter={StaticResource UnreadMessagesCountConverter}}"
+												FontSize="12" FontWeight="Bold"
+												HorizontalAlignment="Center" VerticalAlignment="Center"
+												Foreground="{StaticResource BlueGrey}"/>
                                         </Grid>
                                     </Grid>
-                                    
+
                                 </Button>
                             </DataTemplate>
                         </ListView.ItemTemplate>
@@ -96,7 +104,7 @@
             <!-- Chat - List of messages -->
             <HubSection x:Name="chatSection" Header="chat" 
                         HeaderTemplate="{StaticResource HeaderTemplate}"
-                        DataContext="{Binding Path=SelectedRoom}">
+                        DataContext="{Binding SelectedRoom}">
 
                 <DataTemplate>
 
@@ -109,22 +117,22 @@
 
                         <Grid Background="{StaticResource BlueGrey}">
                             <TextBlock FontSize="26" Margin="12 6"
-                                       Visibility="{Binding Source={StaticResource Locator}, Path=Main.SelectedRoom, Converter={StaticResource NullToVisibilityConverter}}"
-                                       RequestedTheme="Dark"
-                                       FontWeight="SemiBold"
-                                       Text="{Binding Path=Room.Name}" />
+								Visibility="{Binding Main.SelectedRoom, Converter={StaticResource NullToVisibilityConverter}, Source={StaticResource Locator}}"
+								RequestedTheme="Dark"
+								FontWeight="SemiBold"
+								Text="{Binding Room.Name}" />
 
                             <TextBlock FontSize="26" Margin="12 6"
-                                       Visibility="{Binding Source={StaticResource Locator}, Path=Main.SelectedRoom, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter=inverse}"
-                                       RequestedTheme="Dark"
-                                       FontWeight="SemiBold"
-                                       Text="please select a room" />
+								Visibility="{Binding Main.SelectedRoom, ConverterParameter=inverse, Converter={StaticResource NullToVisibilityConverter}, Source={StaticResource Locator}}"
+								RequestedTheme="Dark"
+								FontWeight="SemiBold"
+								Text="please select a room" />
                         </Grid>
 
                         <ListView Grid.Row="1" Margin="0 12 0 0"
-                                  Visibility="{Binding Source={StaticResource Locator}, Path=Main.SelectedRoom, Converter={StaticResource NullToVisibilityConverter}}"
-                                  ItemsSource="{Binding Path=Messages}"
-                                  IncrementalLoadingTrigger="Edge">
+							Visibility="{Binding Main.SelectedRoom, Converter={StaticResource NullToVisibilityConverter}, Source={StaticResource Locator}}"
+							ItemsSource="{Binding Messages}"
+							IncrementalLoadingTrigger="Edge">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
                                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -145,12 +153,12 @@
                             <ListView.Template>
                                 <ControlTemplate>
                                     <Border BorderThickness="{TemplateBinding BorderThickness}"
-                                            Padding="{TemplateBinding Padding}"
-                                            BorderBrush="{TemplateBinding BorderBrush}"
-                                            Background="{TemplateBinding Background}">
+										Padding="{TemplateBinding Padding}"
+										BorderBrush="{TemplateBinding BorderBrush}"
+										Background="{TemplateBinding Background}">
                                         <ScrollViewer ZoomMode="Disabled" 
-                                                      x:Name="ScrollViewer" 
-                                                      RenderTransformOrigin="0.5,0.5">
+											x:Name="ScrollViewer" 
+											RenderTransformOrigin="0.5,0.5">
                                             <ScrollViewer.RenderTransform>
                                                 <CompositeTransform Rotation="180" ScaleX="-1" />
                                             </ScrollViewer.RenderTransform>
@@ -162,9 +170,9 @@
 
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    
+
                                     <userControls:ChatMessageControl RenderTransformOrigin="0.5,0.5"
-                                                                     Visibility="{Binding Path=Text, Converter={StaticResource EmptyStringToVisibilityConverter}}">
+										Visibility="{Binding Text, Converter={StaticResource EmptyStringToVisibilityConverter}}">
                                         <userControls:ChatMessageControl.RenderTransform>
                                             <CompositeTransform Rotation="180" ScaleX="-1" />
                                         </userControls:ChatMessageControl.RenderTransform>
@@ -176,14 +184,14 @@
                         </ListView>
 
                         <TextBox Grid.Row="2" 
-                                 Visibility="{Binding Source={StaticResource Locator}, Path=Main.SelectedRoom, Converter={StaticResource NullToVisibilityConverter}}"
-                                 Text="{Binding Path=TextMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                 PlaceholderText="type your message here"
-                                 KeyDown="SendMessage_OnKeyDown">
+							Visibility="{Binding Main.SelectedRoom, Converter={StaticResource NullToVisibilityConverter}, Source={StaticResource Locator}}"
+							Text="{Binding TextMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+							PlaceholderText="type your message here"
+							KeyDown="SendMessage_OnKeyDown">
 
                             <interactivity:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="KeyDown">
-                                    <core:InvokeCommandAction Command="{Binding Path=SendMessageWithParamCommand}" InputConverter="{StaticResource EnterKeyDownConverter}"/>
+                                    <core:InvokeCommandAction Command="{Binding SendMessageWithParamCommand}" InputConverter="{StaticResource EnterKeyDownConverter}"/>
                                 </core:EventTriggerBehavior>
                             </interactivity:Interaction.Behaviors>
 
@@ -195,37 +203,39 @@
 
             </HubSection>
 
-            <!-- Chat - List of messages -->
+            <!-- Activities -->
             <HubSection x:Name="activitiesSection" Header="activities" 
                         HeaderTemplate="{StaticResource HeaderTemplate}">
 
                 <DataTemplate>
                     <TextBlock Text="currently not available"
-                               FontSize="30" Margin="0 0 0 60"
-                               VerticalAlignment="Center" HorizontalAlignment="Center" />
+						FontSize="30" Margin="0 0 0 60"
+						VerticalAlignment="Center" HorizontalAlignment="Center" />
                 </DataTemplate>
 
             </HubSection>
         </Hub>
     </Grid>
+    
 
     <Page.BottomAppBar>
         <CommandBar>
+
             <CommandBar.PrimaryCommands>
                 <AppBarButton Label="send" Icon="PostUpdate"
-                              Command="{Binding Path=SelectedRoom.SendMessageCommand}"
-                              IsEnabled="{Binding Path=SelectedRoom, Converter={StaticResource NullToBooleanConverter}}"
-                              Visibility="{Binding Path=CurrentSectionIndex, Converter={StaticResource SectionIndexToVisibilityConverter}, ConverterParameter=1}"/>
+                              Command="{Binding SelectedRoom.SendMessageCommand}"
+                              IsEnabled="{Binding SelectedRoom, Converter={StaticResource NullToBooleanConverter}}"
+                              Visibility="{Binding CurrentSectionIndex, ConverterParameter=1, Converter={StaticResource SectionIndexToVisibilityConverter}}" />
                 <AppBarButton Label="refresh" Icon="Refresh"
-                              Command="{Binding Path=SelectedRoom.RefreshCommand}"
-                              IsEnabled="{Binding Path=SelectedRoom, Converter={StaticResource NullToBooleanConverter}}"
-                              Visibility="{Binding Path=CurrentSectionIndex, Converter={StaticResource SectionIndexToVisibilityConverter}, ConverterParameter=1}" />
+                              Command="{Binding SelectedRoom.RefreshCommand}"
+                              IsEnabled="{Binding SelectedRoom, Converter={StaticResource NullToBooleanConverter}}"
+                              Visibility="{Binding CurrentSectionIndex, ConverterParameter=1, Converter={StaticResource SectionIndexToVisibilityConverter}}" />
             </CommandBar.PrimaryCommands>
             
             <CommandBar.SecondaryCommands>
-                <AppBarButton Label="chat with us" Command="{Binding Path=ChatWithUsCommand}" />
+                <AppBarButton Label="chat with us" Command="{Binding ChatWithUsCommand}" />
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>
-
+    
 </Page>
