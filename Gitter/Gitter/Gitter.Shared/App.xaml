@@ -17,6 +17,7 @@
         <converters:DateTimeOffsetToTimeAgoConverter x:Key="DateTimeOffsetToTimeAgoConverter" />
         <converters:UnreadMessagesCountConverter x:Key="UnreadMessagesCountConverter" />
         <converters:UnreadMessagesCountToVisibilityConverter x:Key="UnreadMessagesCountToVisibilityConverter" />
+        <converters:EnterKeyDownConverter x:Key="EnterKeyDownConverter" />
         
         <!-- Styles -->
         

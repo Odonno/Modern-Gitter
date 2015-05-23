@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.System;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -122,6 +123,18 @@ namespace Gitter
         }
 
         #endregion
+
+        #endregion
+
+
+        #region Sending Message
+
+        private void SendMessage_OnKeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            // Hide the virtual keyboard when sending a message
+            if (e.Key == VirtualKey.Enter)
+                Focus(FocusState.Programmatic);
+        }
 
         #endregion
     }

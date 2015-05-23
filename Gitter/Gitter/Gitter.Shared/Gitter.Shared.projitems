@@ -22,6 +22,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\DateTimeOffsetToTimeAgoConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\DistinctPreviousAuthorConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\EmptyStringToVisibilityConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\EnterKeyDownConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\MeToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\NullToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\SamePreviousAuthorConverter.cs" />

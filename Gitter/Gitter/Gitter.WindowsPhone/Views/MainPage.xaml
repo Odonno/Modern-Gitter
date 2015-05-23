@@ -5,6 +5,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:userControls="using:Gitter.UserControls"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:system="using:System"
     mc:Ignorable="d"
     NavigationCacheMode="Required"
     RequestedTheme="Light"
@@ -174,7 +177,16 @@
                         <TextBox Grid.Row="2" 
                                  Visibility="{Binding Source={StaticResource Locator}, Path=Main.SelectedRoom, Converter={StaticResource NullToVisibilityConverter}}"
                                  Text="{Binding Path=TextMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                 PlaceholderText="type your message here" />
+                                 PlaceholderText="type your message here"
+                                 KeyDown="SendMessage_OnKeyDown">
+
+                            <interactivity:Interaction.Behaviors>
+                                <core:EventTriggerBehavior EventName="KeyDown">
+                                    <core:InvokeCommandAction Command="{Binding Path=SendMessageWithParamCommand}" InputConverter="{StaticResource EnterKeyDownConverter}"/>
+                                </core:EventTriggerBehavior>
+                            </interactivity:Interaction.Behaviors>
+
+                        </TextBox>
 
                     </Grid>
 
@@ -204,7 +216,7 @@
                               Visibility="{Binding Path=SelectedRoom, Converter={StaticResource NullToVisibilityConverter}}" />
                 <AppBarButton Label="send" Icon="PostUpdate"
                               Command="{Binding Path=SelectedRoom.SendMessageCommand}"
-                              Visibility="{Binding Path=SelectedRoom, Converter={StaticResource NullToVisibilityConverter}}" />
+                              Visibility="{Binding Path=SelectedRoom, Converter={StaticResource NullToVisibilityConverter}}"/>
             </CommandBar.PrimaryCommands>
             
             <CommandBar.SecondaryCommands>

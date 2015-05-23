@@ -55,6 +55,7 @@ namespace Gitter.ViewModel.Concrete
         #region Commands
 
         public ICommand SendMessageCommand { get; private set; }
+        public ICommand SendMessageWithParamCommand { get; private set; }
         public ICommand RemoveMessageCommand { get; private set; }
         public ICommand RefreshCommand { get; private set; }
 
@@ -70,6 +71,7 @@ namespace Gitter.ViewModel.Concrete
             
             // Commands
             SendMessageCommand = new RelayCommand(SendMessage, CanSendMessage);
+            SendMessageWithParamCommand = new RelayCommand<bool>(SendMessageWithParam);
             RemoveMessageCommand = new RelayCommand<IMessageViewModel>(RemoveMessage, CanRemoveMessage);
             RefreshCommand = new RelayCommand(Refresh);
 
@@ -157,7 +159,7 @@ namespace Gitter.ViewModel.Concrete
                     UnreadMessagesCount++;
             });
         }
-
+        
         #endregion
 
 
@@ -175,6 +177,12 @@ namespace Gitter.ViewModel.Concrete
                 new Dictionary<string, string> { { "Room", Room.Name } },
                 new Dictionary<string, double> { { "MessageLength", TextMessage.Length } });
             TextMessage = string.Empty;
+        }
+
+        private void SendMessageWithParam(bool enterKeyPressed)
+        {
+            if (enterKeyPressed && CanSendMessage())
+                SendMessage();
         }
 
         private bool CanRemoveMessage(IMessageViewModel message)
