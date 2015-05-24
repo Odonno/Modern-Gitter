@@ -40,6 +40,7 @@
     <Compile Include="Abstract\IApplicationStorageService.cs" />
     <Compile Include="Abstract\IBackgroundTaskService.cs" />
     <Compile Include="Abstract\ILocalNotificationService.cs" />
+    <Compile Include="Abstract\IRatingService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

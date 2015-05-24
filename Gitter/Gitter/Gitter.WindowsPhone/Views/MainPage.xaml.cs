@@ -117,8 +117,16 @@ namespace Gitter
             // Remove SplashScreen page
             if (e.NavigationMode == NavigationMode.New)
             {
+                // Remove Splashscreen
                 Frame.BackStack.Remove(Frame.BackStack.LastOrDefault());
+
+                // Register backgroudn tasks
                 await ServiceLocator.Current.GetInstance<IBackgroundTaskService>().RegisterTasksAsync();
+
+#if !DEBUG
+                // Ask user to rate the app
+                ServiceLocator.Current.GetInstance<IRatingService>().AskForRating();
+#endif
             }
         }
 

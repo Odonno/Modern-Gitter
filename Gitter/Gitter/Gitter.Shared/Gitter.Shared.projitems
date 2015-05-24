@@ -41,6 +41,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\Concrete\BackgroundTaskService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Concrete\GitterApiService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Concrete\LocalNotificationService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Concrete\RatingService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Concrete\SessionService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UserControls\ChatMessageControl.xaml.cs">
       <DependentUpon>ChatMessageControl.xaml</DependentUpon>
@@ -65,5 +66,6 @@
   </ItemGroup>
   <ItemGroup>
     <PRIResource Include="$(MSBuildThisFileDirectory)Strings\en-US\ConvertersResources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\en-US\Resources.resw" />
   </ItemGroup>
 </Project>
