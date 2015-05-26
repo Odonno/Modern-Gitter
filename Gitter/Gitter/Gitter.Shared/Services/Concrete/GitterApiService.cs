@@ -97,10 +97,7 @@ namespace Gitter.API.Services.Concrete
             using (var httpClient = HttpClient)
             {
                 var response = await httpClient.PostAsync(new Uri(_baseApiAddress + string.Format("user/{0}/rooms/{1}/unreadItems", userId, roomId)),
-                    new HttpFormUrlEncodedContent(new Dictionary<string, string>
-                    {
-                        {"chat", JsonConvert.SerializeObject(messageIds)}
-                    }));
+                            new HttpStringContent("{\"chat\": " + JsonConvert.SerializeObject(messageIds) + "}"));
 
                 if (response.IsSuccessStatusCode)
                     return;
