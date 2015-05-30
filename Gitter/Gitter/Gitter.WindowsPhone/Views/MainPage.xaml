@@ -53,7 +53,7 @@
 
                 <DataTemplate>
 
-                    <ListView ItemsSource="{Binding Rooms}" Margin="0 -6 0 0">
+                    <ListView ItemsSource="{Binding Rooms}" Margin="0 -3 0 0">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <Button Style="{StaticResource TextBlockButtonStyle}"
@@ -116,13 +116,13 @@
                         </Grid.RowDefinitions>
 
                         <Grid Background="{StaticResource BlueGrey}">
-                            <TextBlock FontSize="26" Margin="12 6"
+                            <TextBlock FontSize="18" Margin="12 6"
 								Visibility="{Binding Main.SelectedRoom, Converter={StaticResource NullToVisibilityConverter}, Source={StaticResource Locator}}"
 								RequestedTheme="Dark"
 								FontWeight="SemiBold"
 								Text="{Binding Room.Name}" />
 
-                            <TextBlock FontSize="26" Margin="12 6"
+                            <TextBlock FontSize="18" Margin="12 6"
 								Visibility="{Binding Main.SelectedRoom, ConverterParameter=inverse, Converter={StaticResource NullToVisibilityConverter}, Source={StaticResource Locator}}"
 								RequestedTheme="Dark"
 								FontWeight="SemiBold"
