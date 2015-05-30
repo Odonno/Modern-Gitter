@@ -69,7 +69,7 @@ namespace Gitter.ViewModel.Concrete
         {
             // Properties
             Room = room;
-            
+
             // Commands
             SendMessageCommand = new RelayCommand(SendMessage, CanSendMessage);
             SendMessageWithParamCommand = new RelayCommand<bool>(SendMessageWithParam);
@@ -156,16 +156,20 @@ namespace Gitter.ViewModel.Concrete
             {
                 var messageVM = new MessageViewModel(message);
 
+                // Do not add an existing messages to the chat
                 if (Messages.Any(m => m.Id == messageVM.Id))
                     return;
 
-                await Messages.AddItemAsync(messageVM);
+                // Do not add message to UI when it is not the current selected room
+                if (ViewModelLocator.Main.SelectedRoom == this)
+                    await Messages.AddItemAsync(messageVM);
 
+                // If the message was not read, update unread notification
                 if (!messageVM.Read)
                     UnreadMessagesCount++;
             });
         }
-        
+
         #endregion
 
 
@@ -225,7 +229,7 @@ namespace Gitter.ViewModel.Concrete
 
 
         #region Methods
-        
+
         public void RefreshUnreadCount()
         {
             UnreadMessagesCount = Messages.Count(m => !m.Read);
