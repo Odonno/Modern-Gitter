@@ -22,12 +22,27 @@
         <!-- Image of the author of the message (not showing current user avatar) -->
         <Grid Grid.Column="0"
               Visibility="{Binding Converter={StaticResource DistinctPreviousAuthorVisibilityConverter}}">
+            
             <Image Visibility="{Binding Path=User, Converter={StaticResource MeToVisibilityConverter}, ConverterParameter=inverse}"
                    Source="{Binding Path=User.MediumAvatarUrl}"
                    HorizontalAlignment="Left" VerticalAlignment="Top" />
+
+            <interactivity:Interaction.Behaviors>
+                <core:EventTriggerBehavior EventName="Tapped">
+                    <behaviors:OpenMenuFlyoutAction />
+                </core:EventTriggerBehavior>
+            </interactivity:Interaction.Behaviors>
+
+            <FlyoutBase.AttachedFlyout>
+                <MenuFlyout>
+                    <MenuFlyoutItem Text="respond to" 
+                                Command="{Binding Path=Main.SelectedRoom.RespondToCommand, Source={StaticResource Locator}}"
+                                CommandParameter="{Binding Path=User}" />
+                </MenuFlyout>
+            </FlyoutBase.AttachedFlyout>
         </Grid>
 
-        <!-- Message content - message of any author excep current user -->
+        <!-- Message content - message of any author except current user -->
         <Grid x:Name="userGrid" Grid.Column="1" Margin="6 0 0 0"
               Visibility="{Binding Path=User, Converter={StaticResource MeToVisibilityConverter}, ConverterParameter=inverse}">
 
@@ -77,21 +92,20 @@
                 </StackPanel>
             </StackPanel>
 
-        </Grid>
+            <interactivity:Interaction.Behaviors>
+                <core:EventTriggerBehavior EventName="Holding">
+                    <behaviors:OpenMenuFlyoutAction />
+                </core:EventTriggerBehavior>
+            </interactivity:Interaction.Behaviors>
 
-        <interactivity:Interaction.Behaviors>
-            <core:EventTriggerBehavior EventName="Holding">
-                <behaviors:OpenMenuFlyoutAction />
-            </core:EventTriggerBehavior>
-        </interactivity:Interaction.Behaviors>
-
-        <FlyoutBase.AttachedFlyout>
-            <MenuFlyout>
-                <MenuFlyoutItem Text="remove" 
+            <FlyoutBase.AttachedFlyout>
+                <MenuFlyout>
+                    <MenuFlyoutItem Text="remove" 
                                 Command="{Binding Path=Main.SelectedRoom.RemoveMessageCommand, Source={StaticResource Locator}}"
                                 CommandParameter="{Binding}" />
-            </MenuFlyout>
-        </FlyoutBase.AttachedFlyout>
+                </MenuFlyout>
+            </FlyoutBase.AttachedFlyout>
 
+        </Grid>
     </Grid>
 </UserControl>

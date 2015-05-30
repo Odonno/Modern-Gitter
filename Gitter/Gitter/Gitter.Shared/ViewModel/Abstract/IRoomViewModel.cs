@@ -14,6 +14,7 @@ namespace Gitter.ViewModel.Abstract
         ICommand SendMessageCommand { get; }
         ICommand SendMessageWithParamCommand { get; }
         ICommand RemoveMessageCommand { get; }
+        ICommand RespondToCommand { get; }
         ICommand RefreshCommand { get; }
 
         void RefreshUnreadCount();
