@@ -156,6 +156,9 @@ namespace Gitter.ViewModel.Concrete
             {
                 var messageVM = new MessageViewModel(message);
 
+                if (Messages.Any(m => m.Id == messageVM.Id))
+                    return;
+
                 await Messages.AddItemAsync(messageVM);
 
                 if (!messageVM.Read)
@@ -174,7 +177,8 @@ namespace Gitter.ViewModel.Concrete
         }
         private async void SendMessage()
         {
-            await _gitterApiService.SendMessageAsync(Room.Id, TextMessage);
+            var message = await _gitterApiService.SendMessageAsync(Room.Id, TextMessage);
+            await Messages.AddItemAsync(new MessageViewModel(message));
 
             App.TelemetryClient.TrackEvent("SendMessage",
                 new Dictionary<string, string> { { "Room", Room.Name } },
