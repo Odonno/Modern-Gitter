@@ -10,6 +10,7 @@ using Gitter.API.Services.Abstract;
 using Gitter.Messages;
 using Gitter.Model;
 using Gitter.ViewModel.Abstract;
+using Gitter.Services.Abstract;
 
 namespace Gitter.ViewModel.Concrete
 {
@@ -27,6 +28,7 @@ namespace Gitter.ViewModel.Concrete
         #region Services
 
         private readonly IGitterApiService _gitterApiService;
+        private readonly ILocalNotificationService _localNotificationService;
 
         #endregion
 
@@ -78,10 +80,11 @@ namespace Gitter.ViewModel.Concrete
 
         #region Constructor
 
-        public MainViewModel(IGitterApiService gitterApiService)
+        public MainViewModel(IGitterApiService gitterApiService, ILocalNotificationService localNotificationService)
         {
             // Services
             _gitterApiService = gitterApiService;
+            _localNotificationService = localNotificationService;
 
             // Commands
             SelectRoomCommand = new RelayCommand<IRoomViewModel>(SelectRoom);
@@ -135,12 +138,22 @@ namespace Gitter.ViewModel.Concrete
                 _currentSelectedRoomUnreadMessages = SelectedRoom.Messages.NotifyUnreadMessages.Subscribe(
                     async unreadMessages =>
                     {
-                        if (unreadMessages.Any())
+                        if (!unreadMessages.Any())
+                            return;
+
+                        try
                         {
-                            await _gitterApiService.ReadChatMessagesAsync(CurrentUser.Id, SelectedRoom.Room.Id, unreadMessages.Select(m => m.Id));
+                            await _gitterApiService.ReadChatMessagesAsync(
+                                CurrentUser.Id,
+                                SelectedRoom.Room.Id,
+                                unreadMessages.Select(m => m.Id));
 
                             foreach (var message in unreadMessages)
                                 message.ReadByCurrent();
+                        }
+                        catch
+                        {
+                            _localNotificationService.SendNotification("Error", "Can't validate reading new messages");
                         }
                     });
 
