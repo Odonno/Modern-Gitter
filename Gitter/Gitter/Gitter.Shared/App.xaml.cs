@@ -19,13 +19,14 @@ using Windows.UI.Xaml.Navigation;
 
 // Pour plus d'informations sur le modèle Application vide, consultez la page http://go.microsoft.com/fwlink/?LinkId=234227
 using GitHub.Common;
+using Gitter.ViewModel;
 using Gitter.Views;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Extensibility;
-
 #if WINDOWS_PHONE_APP
 using GitHub.Services;
 #endif
+using Newtonsoft.Json;
 
 namespace Gitter
 {
@@ -49,6 +50,11 @@ namespace Gitter
         /// Allows tracking page views, exceptions and other telemetry through the Microsoft Application Insights service.
         /// </summary>
         public static TelemetryClient TelemetryClient;
+
+        /// <summary>
+        /// Selected Room Name when the app is launched
+        /// </summary>
+        public static string RoomName;
 
         #endregion
 
@@ -76,6 +82,13 @@ namespace Gitter
         /// <param name="e">Details about the launch request and process.</param>
         protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
+            // Retrieve room name (from toast notification)
+            if (!string.IsNullOrWhiteSpace(e.Arguments))
+            {
+                dynamic args = JsonConvert.DeserializeObject(e.Arguments);
+                RoomName = args.id;
+            }
+           
             var rootFrame = CreateRootFrame();
             await RestoreStatusAsync(e.PreviousExecutionState);
 

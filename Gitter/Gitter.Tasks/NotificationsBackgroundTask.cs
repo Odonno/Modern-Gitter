@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Background;
 using Gitter.API.Services.Abstract;
@@ -48,7 +49,9 @@ namespace Gitter.Tasks
         {
             try
             {
-                // you need to be authenticated first to get current notifications
+                throw new NotImplementedException();
+
+                // You need to be authenticated first to get current notifications
                 _gitterApiService.TryAuthenticate();
 
                 // Detect unread chat messages (rooms with unread messages)
@@ -60,7 +63,7 @@ namespace Gitter.Tasks
                 {
                     // show notifications (toast notifications)
                     string notificationContent = string.Format("You have {0} unread messages", room.UnreadItems);
-                    _localNotificationService.SendNotification(room.Name, notificationContent);
+                    _localNotificationService.SendNotification(room.Name, notificationContent, room.Name);
                 }
             }
             finally

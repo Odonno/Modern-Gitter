@@ -74,7 +74,7 @@ namespace Gitter.ViewModel.Concrete
 
         public ICommand SelectRoomCommand { get; private set; }
         public ICommand ChatWithUsCommand { get; private set; }
-
+        
         #endregion
 
 
@@ -195,6 +195,12 @@ namespace Gitter.ViewModel.Concrete
         private async Task LaunchAsync()
         {
             CurrentUser = await _gitterApiService.GetCurrentUserAsync();
+        }
+
+        public void SelectRoom(string roomName)
+        {
+            var room = Rooms.Rooms.FirstOrDefault(r => r.Room.Name == roomName);
+            SelectRoom(room);
         }
 
         #endregion

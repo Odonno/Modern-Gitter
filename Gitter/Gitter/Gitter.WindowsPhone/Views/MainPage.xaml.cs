@@ -120,13 +120,17 @@ namespace Gitter
                 // Remove Splashscreen
                 Frame.BackStack.Remove(Frame.BackStack.LastOrDefault());
 
-                // Register backgroudn tasks
+                // Register background tasks
                 await ServiceLocator.Current.GetInstance<IBackgroundTaskService>().RegisterTasksAsync();
 
 #if !DEBUG
                 // Ask user to rate the app
                 ServiceLocator.Current.GetInstance<IRatingService>().AskForRating();
 #endif
+
+                // Select room if there os a value in the app launcher
+                if (!string.IsNullOrWhiteSpace(App.RoomName))
+                    ViewModelLocator.Main.SelectRoom(App.RoomName);
             }
         }
 
