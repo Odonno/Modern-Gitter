@@ -13,6 +13,7 @@ using Gitter.API.Services.Abstract;
 using Gitter.Model;
 using Gitter.Services.Abstract;
 using Newtonsoft.Json;
+using UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding;
 
 namespace Gitter.API.Services.Concrete
 {
@@ -30,7 +31,7 @@ namespace Gitter.API.Services.Concrete
                 var httpClient = new HttpClient();
 
                 httpClient.DefaultRequestHeaders.Accept.Add(new HttpMediaTypeWithQualityHeaderValue("application/json"));
-
+                
                 if (!string.IsNullOrWhiteSpace(AccessToken))
                     httpClient.DefaultRequestHeaders.Authorization = new HttpCredentialsHeaderValue("Bearer", AccessToken);
 
@@ -96,8 +97,13 @@ namespace Gitter.API.Services.Concrete
         {
             using (var httpClient = HttpClient)
             {
-                var response = await httpClient.PostAsync(new Uri(_baseApiAddress + string.Format("user/{0}/rooms/{1}/unreadItems", userId, roomId)),
-                            new HttpStringContent("{\"chat\": " + JsonConvert.SerializeObject(messageIds) + "}"));
+                var content = new HttpStringContent("{\"chat\": " + JsonConvert.SerializeObject(messageIds) + "}",
+                    UnicodeEncoding.Utf8, 
+                    "application/json");
+
+                var response = await httpClient.PostAsync(
+                    new Uri(_baseApiAddress + string.Format("user/{0}/rooms/{1}/unreadItems", userId, roomId)),
+                    content);
 
                 if (response.IsSuccessStatusCode)
                     return;
