@@ -172,7 +172,7 @@
                                 <DataTemplate>
 
                                     <userControls:ChatMessageControl RenderTransformOrigin="0.5,0.5"
-										Visibility="{Binding Text, Converter={StaticResource EmptyStringToVisibilityConverter}}">
+                                                                     Visibility="{Binding Text, Converter={StaticResource EmptyStringToVisibilityConverter}}">
                                         <userControls:ChatMessageControl.RenderTransform>
                                             <CompositeTransform Rotation="180" ScaleX="-1" />
                                         </userControls:ChatMessageControl.RenderTransform>
@@ -184,10 +184,11 @@
                         </ListView>
 
                         <TextBox Grid.Row="2" 
-							Visibility="{Binding Main.SelectedRoom, Converter={StaticResource NullToVisibilityConverter}, Source={StaticResource Locator}}"
-							Text="{Binding TextMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-							PlaceholderText="type your message here"
-							KeyDown="SendMessage_OnKeyDown">
+                                 Visibility="{Binding Main.SelectedRoom, Converter={StaticResource NullToVisibilityConverter}, Source={StaticResource Locator}}"
+                                 Text="{Binding TextMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 PlaceholderText="type your message here"
+                                 KeyDown="SendMessage_OnKeyDown"
+                                 TextWrapping="Wrap">
 
                             <interactivity:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="KeyDown">
