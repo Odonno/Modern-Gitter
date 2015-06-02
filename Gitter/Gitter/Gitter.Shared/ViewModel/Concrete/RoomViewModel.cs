@@ -43,7 +43,7 @@ namespace Gitter.ViewModel.Concrete
         public int UnreadMessagesCount
         {
             get { return _unreadMessagesCount; }
-            private set
+            set
             {
                 _unreadMessagesCount = value;
                 RaisePropertyChanged();
@@ -166,8 +166,8 @@ namespace Gitter.ViewModel.Concrete
                 if (ViewModelLocator.Main.SelectedRoom == this)
                     await Messages.AddItemAsync(messageVM);
 
-                // If the message was not read, update unread notification
-                if (!messageVM.Read)
+                // If the message was not read, update unread notification (except for the current selected room)
+                if (!messageVM.Read && ViewModelLocator.Main.SelectedRoom != this)
                     UnreadMessagesCount++;
             });
         }
@@ -230,16 +230,6 @@ namespace Gitter.ViewModel.Concrete
 
             App.TelemetryClient.TrackEvent("RefreshRoom",
                 new Dictionary<string, string> { { "Room", Room.Name } });
-        }
-
-        #endregion
-
-
-        #region Methods
-
-        public void RefreshUnreadCount()
-        {
-            UnreadMessagesCount = Messages.Count(m => !m.Read);
         }
 
         #endregion

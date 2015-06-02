@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.ApplicationModel.Core;
+using Windows.UI.Core;
+using Windows.UI.Xaml;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -148,11 +151,20 @@ namespace Gitter.ViewModel.Concrete
                                 SelectedRoom.Room.Id,
                                 unreadMessages.Select(m => m.Id));
 
+                            int unreadCount = 0;
+
                             foreach (var message in unreadMessages)
+                            {
                                 message.ReadByCurrent();
+                                unreadCount++;
+                            }
+
+                            var dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
+                            await dispatcher.RunAsync(CoreDispatcherPriority.High, () => SelectedRoom.UnreadMessagesCount -= unreadCount);
                         }
-                        catch
+                        catch (Exception ex)
                         {
+                            App.TelemetryClient.TrackException(ex);
                             _localNotificationService.SendNotification("Error", "Can't validate reading new messages");
                         }
                     });

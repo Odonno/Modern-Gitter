@@ -9,14 +9,12 @@ namespace Gitter.ViewModel.Abstract
         Room Room { get; }
         MessagesIncrementalLoadingCollection Messages { get; }
         string TextMessage { get; set; }
-        int UnreadMessagesCount { get; }
+        int UnreadMessagesCount { get; set; }
 
         ICommand SendMessageCommand { get; }
         ICommand SendMessageWithParamCommand { get; }
         ICommand RemoveMessageCommand { get; }
         ICommand RespondToCommand { get; }
         ICommand RefreshCommand { get; }
-
-        void RefreshUnreadCount();
     }
 }
