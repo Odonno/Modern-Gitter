@@ -77,7 +77,7 @@ namespace Gitter.DataObjects.Concrete
         {
             await base.AddItemAsync(item);
 
-            if (!item.Read)
+            if (!item.Read && ViewModelLocator.Main.CurrentUser.Id != item.User.Id)
                 _notifyUnreadMessages.OnNext(new[] { item });
         }
 
