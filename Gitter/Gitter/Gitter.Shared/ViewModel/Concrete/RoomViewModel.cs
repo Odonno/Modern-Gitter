@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
+using Windows.ApplicationModel.Core;
+using Windows.UI.Core;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Gitter.API.Services.Abstract;
@@ -168,7 +170,10 @@ namespace Gitter.ViewModel.Concrete
 
                 // If the message was not read, update unread notification (except for the current selected room)
                 if (!messageVM.Read && ViewModelLocator.Main.SelectedRoom != this)
-                    UnreadMessagesCount++;
+                {
+                    var dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
+                    await dispatcher.RunAsync(CoreDispatcherPriority.High, () => UnreadMessagesCount++);
+                }
             });
         }
 
