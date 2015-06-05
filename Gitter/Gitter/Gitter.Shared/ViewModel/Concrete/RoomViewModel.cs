@@ -183,8 +183,7 @@ namespace Gitter.ViewModel.Concrete
         }
         private async void SendMessage()
         {
-            var message = await _gitterApiService.SendMessageAsync(Room.Id, TextMessage);
-            await Messages.AddItemAsync(new MessageViewModel(message));
+            await _gitterApiService.SendMessageAsync(Room.Id, TextMessage);
 
             App.TelemetryClient.TrackEvent("SendMessage",
                 new Dictionary<string, string> { { "Room", Room.Name } },

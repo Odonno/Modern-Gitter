@@ -171,7 +171,7 @@ namespace Gitter.API.Services.Concrete
         }
         private async Task<string> ReadStream(Stream stream)
         {
-            using (var reader = new StreamReader(stream, Encoding.UTF8))
+            using (var reader = new StreamReader(stream, Encoding.UTF8, false, 1024, true))
             {
                 return await reader.ReadLineAsync();
             }
