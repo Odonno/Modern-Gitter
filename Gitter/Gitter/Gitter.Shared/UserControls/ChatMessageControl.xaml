@@ -43,10 +43,10 @@
         </Grid>
 
         <!-- Message content - message of any author except current user -->
-        <Grid x:Name="userGrid" Grid.Column="1" Margin="6 0 0 0"
+        <Grid x:Name="userGrid" Grid.Column="1" Margin="6 0 -6 0"
               Visibility="{Binding Path=User, Converter={StaticResource MeToVisibilityConverter}, ConverterParameter=inverse}">
 
-            <Polygon Points="8,0 0,5, 8,10" Margin="0 6 0 0"
+            <Polygon Points="8,0 0,0 8,10" Margin="0 6 0 0"
                      Visibility="{Binding Converter={StaticResource DistinctPreviousAuthorVisibilityConverter}}"
                      Stroke="{StaticResource BlueGrey}"
                      Fill="{StaticResource BlueGrey}" />
@@ -71,13 +71,8 @@
         </Grid>
 
         <!-- Message content - message of current user -->
-        <Grid x:Name="meGrid" Grid.Column="1" Margin="6 0 0 0"
+        <Grid x:Name="meGrid" Grid.Column="1" Margin="6 0 -6 0"
               Visibility="{Binding Path=User, Converter={StaticResource MeToVisibilityConverter}}">
-
-            <Polygon Points="0,0 8,5, 0,10" Margin="0 6 0 0" HorizontalAlignment="Right"
-                     Visibility="{Binding Converter={StaticResource DistinctPreviousAuthorVisibilityConverter}}"
-                     Stroke="{StaticResource WhiteGray}" 
-                     Fill="{StaticResource WhiteGray}" />
 
             <StackPanel Margin="6 0" Background="{StaticResource WhiteGray}">
                 <TextBlock FontSize="14" TextWrapping="Wrap" Margin="6 3 6 0" 
