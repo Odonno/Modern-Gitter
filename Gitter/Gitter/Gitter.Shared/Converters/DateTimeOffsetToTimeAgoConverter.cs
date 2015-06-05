@@ -14,6 +14,9 @@ namespace Gitter.Converters
             var dateTimeOffset = (DateTime)value;
             var timeSpanDiff = new DateTimeOffset(DateTime.Now).Subtract(dateTimeOffset);
 
+            if (timeSpanDiff.TotalSeconds <= 0)
+                return _resourceLoader.GetString("FewSecondsAgo");
+
             if (timeSpanDiff.TotalSeconds < 60)
                 return string.Format(_resourceLoader.GetString("SecondsAgo"),
                     timeSpanDiff.Seconds,

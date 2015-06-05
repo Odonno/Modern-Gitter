@@ -120,6 +120,9 @@
   <data name="DaysAgo" xml:space="preserve">
     <value>{0} day{1} ago</value>
   </data>
+  <data name="FewSecondsAgo" xml:space="preserve">
+    <value>a few seconds ago</value>
+  </data>
   <data name="HoursAgo" xml:space="preserve">
     <value>{0} hour{1} ago</value>
   </data>
