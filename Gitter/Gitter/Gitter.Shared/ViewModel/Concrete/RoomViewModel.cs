@@ -63,6 +63,7 @@ namespace Gitter.ViewModel.Concrete
         public ICommand SendMessageCommand { get; private set; }
         public ICommand SendMessageWithParamCommand { get; private set; }
         public ICommand RemoveMessageCommand { get; private set; }
+        public ICommand CopyMessageCommand { get; private set; }
         public ICommand RespondToCommand { get; private set; }
         public ICommand RefreshCommand { get; private set; }
 
@@ -80,6 +81,7 @@ namespace Gitter.ViewModel.Concrete
             SendMessageCommand = new RelayCommand(SendMessage, CanSendMessage);
             SendMessageWithParamCommand = new RelayCommand<bool>(SendMessageWithParam);
             RemoveMessageCommand = new RelayCommand<IMessageViewModel>(RemoveMessage, CanRemoveMessage);
+            CopyMessageCommand = new RelayCommand<IMessageViewModel>(CopyMessage);
             RespondToCommand = new RelayCommand<User>(RespondTo);
             RefreshCommand = new RelayCommand(Refresh);
 
@@ -227,6 +229,14 @@ namespace Gitter.ViewModel.Concrete
             App.TelemetryClient.TrackEvent("RemoveMessage",
                 new Dictionary<string, string> { { "Room", Room.Name } },
                 new Dictionary<string, double> { { "SecondsAgo", ViewModelLocator.Main.CurrentDateTime.Subtract(message.SentDate).TotalSeconds } });
+        }
+
+        private void CopyMessage(IMessageViewModel message)
+        {
+            TextMessage += string.Format("{0} ", message.Text);
+
+            App.TelemetryClient.TrackEvent("CopyMessage",
+                new Dictionary<string, string> { { "Room", Room.Name } });
         }
 
         private void RespondTo(User user)

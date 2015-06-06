@@ -68,6 +68,20 @@
 
             </StackPanel>
 
+            <interactivity:Interaction.Behaviors>
+                <core:EventTriggerBehavior EventName="Holding">
+                    <behaviors:OpenMenuFlyoutAction />
+                </core:EventTriggerBehavior>
+            </interactivity:Interaction.Behaviors>
+
+            <FlyoutBase.AttachedFlyout>
+                <MenuFlyout>
+                    <MenuFlyoutItem Text="copy" 
+                                Command="{Binding Path=Main.SelectedRoom.CopyMessageCommand, Source={StaticResource Locator}}"
+                                CommandParameter="{Binding}" />
+                </MenuFlyout>
+            </FlyoutBase.AttachedFlyout>
+
         </Grid>
 
         <!-- Message content - message of current user -->
@@ -97,6 +111,9 @@
                 <MenuFlyout>
                     <MenuFlyoutItem Text="remove" 
                                 Command="{Binding Path=Main.SelectedRoom.RemoveMessageCommand, Source={StaticResource Locator}}"
+                                CommandParameter="{Binding}" />
+                    <MenuFlyoutItem Text="copy" 
+                                Command="{Binding Path=Main.SelectedRoom.CopyMessageCommand, Source={StaticResource Locator}}"
                                 CommandParameter="{Binding}" />
                 </MenuFlyout>
             </FlyoutBase.AttachedFlyout>
