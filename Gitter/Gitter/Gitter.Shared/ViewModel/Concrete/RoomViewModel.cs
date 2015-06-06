@@ -9,7 +9,9 @@ using GalaSoft.MvvmLight.Command;
 using Gitter.API.Services.Abstract;
 using Gitter.DataObjects.Concrete;
 using Gitter.Model;
+using Gitter.Services.Abstract;
 using Gitter.ViewModel.Abstract;
+using Microsoft.Practices.ServiceLocation;
 
 namespace Gitter.ViewModel.Concrete
 {
@@ -18,6 +20,7 @@ namespace Gitter.ViewModel.Concrete
         #region Services
 
         private readonly IGitterApiService _gitterApiService;
+        private readonly ILocalNotificationService _localNotificationService;
 
         #endregion
 
@@ -82,6 +85,7 @@ namespace Gitter.ViewModel.Concrete
 
             // Inject Services
             _gitterApiService = ViewModelLocator.GitterApi;
+            _localNotificationService = ServiceLocator.Current.GetInstance<ILocalNotificationService>();
 
 
             if (IsInDesignMode)
@@ -173,6 +177,8 @@ namespace Gitter.ViewModel.Concrete
                 {
                     var dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
                     await dispatcher.RunAsync(CoreDispatcherPriority.High, () => UnreadMessagesCount++);
+
+                    _localNotificationService.SendNotification(Room.Name, message.Text, Room.Name);
                 }
             });
         }
