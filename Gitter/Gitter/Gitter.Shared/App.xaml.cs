@@ -19,7 +19,6 @@ using Windows.UI.Xaml.Navigation;
 
 // Pour plus d'informations sur le modèle Application vide, consultez la page http://go.microsoft.com/fwlink/?LinkId=234227
 using GitHub.Common;
-using Gitter.ViewModel;
 using Gitter.Views;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Extensibility;
@@ -85,8 +84,8 @@ namespace Gitter
             // Retrieve room name (from toast notification)
             if (!string.IsNullOrWhiteSpace(e.Arguments))
             {
-                dynamic args = JsonConvert.DeserializeObject(e.Arguments);
-                RoomName = args.id;
+                var args = JsonConvert.DeserializeObject<Dictionary<string, string>>(e.Arguments);
+                RoomName = args["id"];
             }
            
             var rootFrame = CreateRootFrame();
