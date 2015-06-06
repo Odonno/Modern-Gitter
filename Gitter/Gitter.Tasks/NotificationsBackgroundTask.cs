@@ -22,6 +22,7 @@ namespace Gitter.Tasks
 
         private readonly ILocalNotificationService _localNotificationService;
         private readonly IGitterApiService _gitterApiService;
+        private readonly IApplicationStorageService _applicationStorageService;
 
         #endregion
 
@@ -32,6 +33,7 @@ namespace Gitter.Tasks
         {
             _localNotificationService = new LocalNotificationService();
             _gitterApiService = new GitterApiService(new ApplicationStorageService());
+            _applicationStorageService = new ApplicationStorageService();
         }
 
         #endregion
@@ -49,21 +51,29 @@ namespace Gitter.Tasks
         {
             try
             {
-                throw new NotImplementedException();
-
                 // You need to be authenticated first to get current notifications
                 _gitterApiService.TryAuthenticate();
 
-                // Detect unread chat messages (rooms with unread messages)
-                var roomsWithUnreadMessages = (await _gitterApiService.GetRoomsAsync())
-                    .Where(room => !room.DisabledNotifications && room.UnreadItems > 0);
+                // Retrieve rooms that user want notifications
+                var notifyableRooms = (await _gitterApiService.GetRoomsAsync()).Where(room => !room.DisabledNotifications);
 
-                // TODO : Update notifications for unread messages (add / update / remove)
-                foreach (var room in roomsWithUnreadMessages)
+                // Add notifications for unread messages
+                foreach (var room in notifyableRooms)
                 {
-                    // show notifications (toast notifications)
-                    string notificationContent = string.Format("You have {0} unread messages", room.UnreadItems);
-                    _localNotificationService.SendNotification(room.Name, notificationContent, room.Name);
+                    if (_applicationStorageService.Exists(room.Name))
+                    {
+                        // Detect if there is no new notification to launch (no unread messages)
+                        if (room.UnreadItems == 0)
+                            _applicationStorageService.Remove(room.Name);
+                    }
+                    else if (room.UnreadItems > 0)
+                    {
+                        // Show notifications (toast notifications)
+                        string notificationContent = string.Format("You have {0} unread messages", room.UnreadItems);
+                        _localNotificationService.SendNotification(room.Name, notificationContent, room.Name);
+
+                        _applicationStorageService.Save(room.Name, room.UnreadItems);
+                    }
                 }
             }
             finally

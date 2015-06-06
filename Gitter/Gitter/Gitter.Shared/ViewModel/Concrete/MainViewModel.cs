@@ -31,6 +31,7 @@ namespace Gitter.ViewModel.Concrete
 
         private readonly IGitterApiService _gitterApiService;
         private readonly ILocalNotificationService _localNotificationService;
+        private readonly IApplicationStorageService _applicationStorageService;
 
         #endregion
 
@@ -82,11 +83,14 @@ namespace Gitter.ViewModel.Concrete
 
         #region Constructor
 
-        public MainViewModel(IGitterApiService gitterApiService, ILocalNotificationService localNotificationService)
+        public MainViewModel(IGitterApiService gitterApiService, 
+            ILocalNotificationService localNotificationService,
+            IApplicationStorageService applicationStorageService)
         {
             // Services
             _gitterApiService = gitterApiService;
             _localNotificationService = localNotificationService;
+            _applicationStorageService = applicationStorageService;
 
             // Commands
             SelectRoomCommand = new RelayCommand<IRoomViewModel>(SelectRoom);
@@ -167,6 +171,10 @@ namespace Gitter.ViewModel.Concrete
                             _localNotificationService.SendNotification("Error", "Can't validate reading new messages");
                         }
                     });
+
+                // Remove notification data cause there is no new unread message
+                if (_applicationStorageService.Exists(SelectedRoom.Room.Name))
+                    _applicationStorageService.Remove(SelectedRoom.Room.Name);
 
                 // Update UI
                 Messenger.Default.Send(new SelectRoomMessage());

@@ -180,7 +180,8 @@ namespace Gitter.ViewModel.Concrete
                     var dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
                     await dispatcher.RunAsync(CoreDispatcherPriority.High, () => UnreadMessagesCount++);
 
-                    _localNotificationService.SendNotification(Room.Name, message.Text, Room.Name);
+                    if (!Room.DisabledNotifications)
+                        _localNotificationService.SendNotification(Room.Name, message.Text, Room.Name);
                 }
             });
         }
