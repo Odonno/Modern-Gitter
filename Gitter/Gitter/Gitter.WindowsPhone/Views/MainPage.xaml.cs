@@ -39,6 +39,8 @@ namespace Gitter
 
             // set status bar color
             statusBar.ForegroundColor = Colors.Black;
+            // set progress indicator, to use it in a global service
+            ServiceLocator.Current.GetInstance<IProgressIndicatorService>().ProgressIndicator = statusBar.ProgressIndicator;
 
             InitializeComponent();
 

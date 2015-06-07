@@ -21,6 +21,7 @@ namespace Gitter.ViewModel.Concrete
 
         private readonly IGitterApiService _gitterApiService;
         private readonly ILocalNotificationService _localNotificationService;
+        private readonly IProgressIndicatorService _progressIndicatorService;
 
         #endregion
 
@@ -88,6 +89,7 @@ namespace Gitter.ViewModel.Concrete
             // Inject Services
             _gitterApiService = ViewModelLocator.GitterApi;
             _localNotificationService = ServiceLocator.Current.GetInstance<ILocalNotificationService>();
+            _progressIndicatorService = ServiceLocator.Current.GetInstance<IProgressIndicatorService>();
 
 
             if (IsInDesignMode)
@@ -197,12 +199,18 @@ namespace Gitter.ViewModel.Concrete
         }
         private async void SendMessage()
         {
+            // Start async task
+            await _progressIndicatorService.ShowAsync();
+
             await _gitterApiService.SendMessageAsync(Room.Id, TextMessage);
 
             App.TelemetryClient.TrackEvent("SendMessage",
                 new Dictionary<string, string> { { "Room", Room.Name } },
                 new Dictionary<string, double> { { "MessageLength", TextMessage.Length } });
             TextMessage = string.Empty;
+
+            // End async task
+            await _progressIndicatorService.HideAsync();
         }
 
         private void SendMessageWithParam(bool enterKeyPressed)

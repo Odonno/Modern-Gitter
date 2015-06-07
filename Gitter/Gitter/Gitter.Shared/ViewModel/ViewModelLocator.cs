@@ -66,6 +66,7 @@ namespace Gitter.ViewModel
             SimpleIoc.Default.Register<ILocalNotificationService, LocalNotificationService>();
             SimpleIoc.Default.Register<IRatingService, RatingService>();
             SimpleIoc.Default.Register<IBackgroundTaskService, BackgroundTaskService>();
+            SimpleIoc.Default.Register<IProgressIndicatorService, ProgressIndicatorService>();
 
             // ViewModels
             SimpleIoc.Default.Register<IMainViewModel, MainViewModel>();

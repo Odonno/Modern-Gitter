@@ -32,6 +32,7 @@ namespace Gitter.ViewModel.Concrete
         private readonly IGitterApiService _gitterApiService;
         private readonly ILocalNotificationService _localNotificationService;
         private readonly IApplicationStorageService _applicationStorageService;
+        private readonly IProgressIndicatorService _progressIndicatorService;
 
         #endregion
 
@@ -85,12 +86,14 @@ namespace Gitter.ViewModel.Concrete
 
         public MainViewModel(IGitterApiService gitterApiService, 
             ILocalNotificationService localNotificationService,
-            IApplicationStorageService applicationStorageService)
+            IApplicationStorageService applicationStorageService,
+            IProgressIndicatorService progressIndicatorService)
         {
             // Services
             _gitterApiService = gitterApiService;
             _localNotificationService = localNotificationService;
             _applicationStorageService = applicationStorageService;
+            _progressIndicatorService = progressIndicatorService;
 
             // Commands
             SelectRoomCommand = new RelayCommand<IRoomViewModel>(SelectRoom);
@@ -128,10 +131,13 @@ namespace Gitter.ViewModel.Concrete
 
         #region Command Methods
 
-        private void SelectRoom(IRoomViewModel room)
+        private async void SelectRoom(IRoomViewModel room)
         {
             if (SelectedRoom != room)
             {
+                // Start async task
+                await _progressIndicatorService.ShowAsync();
+
                 // Remove event that was updating READ new messages
                 if (_currentSelectedRoomUnreadMessages != null)
                     _currentSelectedRoomUnreadMessages.Dispose();
@@ -181,11 +187,17 @@ namespace Gitter.ViewModel.Concrete
 
                 App.TelemetryClient.TrackEvent("SelectRoom",
                     new Dictionary<string, string> { { "Room", room.Room.Name } });
+
+                // End async task
+                await _progressIndicatorService.HideAsync();
             }
         }
 
         private async void ChatWithUs()
         {
+            // Start async task
+            await _progressIndicatorService.ShowAsync();
+
             var alreadyJoinedRoom = Rooms.Rooms.FirstOrDefault(r => r.Room.Name == OwnChatRoomName);
 
             if (alreadyJoinedRoom == null)
@@ -204,6 +216,9 @@ namespace Gitter.ViewModel.Concrete
             }
 
             SelectRoom(alreadyJoinedRoom);
+
+            // End async task
+            await _progressIndicatorService.HideAsync();
         }
 
         #endregion
@@ -213,7 +228,13 @@ namespace Gitter.ViewModel.Concrete
 
         private async Task LaunchAsync()
         {
+            // Start async task
+            await _progressIndicatorService.ShowAsync();
+
             CurrentUser = await _gitterApiService.GetCurrentUserAsync();
+
+            // End async task
+            await _progressIndicatorService.HideAsync();
         }
 
         public void SelectRoom(string roomName)
