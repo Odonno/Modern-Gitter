@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
@@ -71,7 +72,13 @@ namespace Gitter.DataObjects.Abstract
         public async virtual Task AddItemAsync(T item)
         {
             var dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
-            await dispatcher.RunAsync(CoreDispatcherPriority.High, () => Insert(0, item));
+            await dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
+            {
+                Insert(0, item);
+
+                // Need to notify UI (chat messages) to get a correct UI (ex : grouped messages)
+                OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+            });
         }
         protected abstract Task<IEnumerable<T>> LoadMoreItemsAsync();
         public void Reset()
