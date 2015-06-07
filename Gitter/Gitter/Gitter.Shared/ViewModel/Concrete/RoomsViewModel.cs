@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using Gitter.API.Services.Abstract;
 using Gitter.Model;
+using Gitter.Services.Abstract;
 using Gitter.ViewModel.Abstract;
 
 namespace Gitter.ViewModel.Concrete
@@ -13,6 +14,7 @@ namespace Gitter.ViewModel.Concrete
         #region Services
 
         private readonly IGitterApiService _gitterApiService;
+        private readonly IEventService _eventService;
 
         #endregion
 
@@ -27,10 +29,12 @@ namespace Gitter.ViewModel.Concrete
 
         #region Constructor
 
-        public RoomsViewModel()
+        public RoomsViewModel(IGitterApiService gitterApiService,
+            IEventService eventService)
         {
             // Inject Services
-            _gitterApiService = ViewModelLocator.GitterApi;
+            _gitterApiService = gitterApiService;
+            _eventService = eventService;
 
 
             if (IsInDesignMode)
@@ -127,6 +131,8 @@ namespace Gitter.ViewModel.Concrete
 
             foreach (var room in rooms)
                 Rooms.Add(new RoomViewModel(room));
+
+            _eventService.RefreshRooms.OnNext(true);
         }
 
         #endregion

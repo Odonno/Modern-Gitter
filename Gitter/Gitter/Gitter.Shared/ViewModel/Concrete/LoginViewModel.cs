@@ -26,11 +26,12 @@ namespace Gitter.ViewModel.Concrete
         #region Constructor
 
         public LoginViewModel(INavigationService navigationService,
+            IGitterApiService gitterApiService,
             ISessionService sessionService,
             ILocalNotificationService localNotificationService)
         {
             // Inject Services
-            _gitterApiService = ViewModelLocator.GitterApi;
+            _gitterApiService = gitterApiService;
             _navigationService = navigationService;
             _sessionService = sessionService;
             _localNotificationService = localNotificationService;

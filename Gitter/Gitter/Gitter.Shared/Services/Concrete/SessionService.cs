@@ -9,7 +9,6 @@ using Windows.Security.Authentication.Web;
 using Gitter.API.Configuration;
 using Gitter.API.Services.Abstract;
 using Gitter.Services.Abstract;
-using Gitter.ViewModel;
 #if WINDOWS_PHONE_APP
 using Windows.ApplicationModel.Activation;
 #endif
@@ -27,9 +26,9 @@ namespace Gitter.Services.Concrete
 
         #region Constructor
 
-        public SessionService()
+        public SessionService(IGitterApiService gitterApiService)
         {
-            _gitterApiService = ViewModelLocator.GitterApi;
+            _gitterApiService = gitterApiService;
         }
 
         #endregion

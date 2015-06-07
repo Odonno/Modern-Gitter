@@ -87,7 +87,7 @@ namespace Gitter.ViewModel.Concrete
             RefreshCommand = new RelayCommand(Refresh);
 
             // Inject Services
-            _gitterApiService = ViewModelLocator.GitterApi;
+            _gitterApiService = ServiceLocator.Current.GetInstance<IGitterApiService>();
             _localNotificationService = ServiceLocator.Current.GetInstance<ILocalNotificationService>();
             _progressIndicatorService = ServiceLocator.Current.GetInstance<IProgressIndicatorService>();
 

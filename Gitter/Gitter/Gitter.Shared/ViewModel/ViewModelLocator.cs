@@ -67,6 +67,7 @@ namespace Gitter.ViewModel
             SimpleIoc.Default.Register<IRatingService, RatingService>();
             SimpleIoc.Default.Register<IBackgroundTaskService, BackgroundTaskService>();
             SimpleIoc.Default.Register<IProgressIndicatorService, ProgressIndicatorService>();
+            SimpleIoc.Default.Register<IEventService, EventService>();
 
             // ViewModels
             SimpleIoc.Default.Register<IMainViewModel, MainViewModel>();
@@ -88,19 +89,6 @@ namespace Gitter.ViewModel
             navigationService.Configure("Main", typeof(MainPage));
 
             return navigationService;
-        }
-
-        #endregion
-
-
-        #region Services
-
-        public static IGitterApiService GitterApi
-        {
-            get
-            {
-                return ServiceLocator.Current.GetInstance<IGitterApiService>();
-            }
         }
 
         #endregion

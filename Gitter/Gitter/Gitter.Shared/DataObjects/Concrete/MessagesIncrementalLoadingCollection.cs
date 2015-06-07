@@ -4,10 +4,12 @@ using System.Linq;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
+using Gitter.API.Services.Abstract;
 using Gitter.DataObjects.Abstract;
 using Gitter.ViewModel;
 using Gitter.ViewModel.Abstract;
 using Gitter.ViewModel.Concrete;
+using Microsoft.Practices.ServiceLocation;
 
 namespace Gitter.DataObjects.Concrete
 {
@@ -55,7 +57,7 @@ namespace Gitter.DataObjects.Concrete
                 if (Page++ == 0)
                     BeforeId = null;
 
-                var beforeMessages = ViewModelLocator.GitterApi.GetRoomMessagesAsync(RoomId, ItemsPerPage, BeforeId)
+                var beforeMessages = ServiceLocator.Current.GetInstance<IGitterApiService>().GetRoomMessagesAsync(RoomId, ItemsPerPage, BeforeId)
                     .ConfigureAwait(false).GetAwaiter().GetResult();
 
                 if (beforeMessages.Count() < ItemsPerPage)

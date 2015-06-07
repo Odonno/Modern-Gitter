@@ -36,9 +36,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)DataObjects\Abstract\IncrementalLoadingCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataObjects\Concrete\MessagesIncrementalLoadingCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Messages\SelectRoomMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Abstract\IEventService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Abstract\IProgressIndicatorService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Abstract\ISessionService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Concrete\BackgroundTaskService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Concrete\EventService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Concrete\ProgressIndicatorService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Concrete\RatingService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Concrete\SessionService.cs" />

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
@@ -23,6 +22,7 @@ namespace Gitter.ViewModel.Concrete
         private const string OwnChatRoomName = "Odonno/Modern-Gitter";
 
         private IDisposable _currentSelectedRoomUnreadMessages;
+        private IDisposable _refreshRooms;
 
         #endregion
 
@@ -33,6 +33,7 @@ namespace Gitter.ViewModel.Concrete
         private readonly ILocalNotificationService _localNotificationService;
         private readonly IApplicationStorageService _applicationStorageService;
         private readonly IProgressIndicatorService _progressIndicatorService;
+        private readonly IEventService _eventService;
 
         #endregion
 
@@ -87,13 +88,15 @@ namespace Gitter.ViewModel.Concrete
         public MainViewModel(IGitterApiService gitterApiService,
             ILocalNotificationService localNotificationService,
             IApplicationStorageService applicationStorageService,
-            IProgressIndicatorService progressIndicatorService)
+            IProgressIndicatorService progressIndicatorService,
+            IEventService eventService)
         {
             // Services
             _gitterApiService = gitterApiService;
             _localNotificationService = localNotificationService;
             _applicationStorageService = applicationStorageService;
             _progressIndicatorService = progressIndicatorService;
+            _eventService = eventService;
 
             // Commands
             SelectRoomCommand = new RelayCommand<IRoomViewModel>(SelectRoom);
@@ -237,13 +240,22 @@ namespace Gitter.ViewModel.Concrete
             await _progressIndicatorService.HideAsync();
         }
 
-        public async void SelectRoom(string roomName)
+        public void SelectRoom(string roomName)
         {
-            while (!Rooms.Rooms.Any())
-                await Task.Delay(250);
-
-            var room = Rooms.Rooms.FirstOrDefault(r => r.Room.Name == roomName);
-            SelectRoom(room);
+            if (Rooms.Rooms.Any())
+            {
+                var room = Rooms.Rooms.FirstOrDefault(r => r.Room.Name == roomName);
+                SelectRoom(room);
+            }
+            else
+            {
+                _refreshRooms = _eventService.RefreshRooms.Subscribe(_ =>
+                {
+                    var room = Rooms.Rooms.FirstOrDefault(r => r.Room.Name == roomName);
+                    SelectRoom(room);
+                    _refreshRooms.Dispose();
+                });
+            }
         }
 
         #endregion
