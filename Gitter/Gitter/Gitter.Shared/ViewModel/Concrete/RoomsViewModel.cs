@@ -121,14 +121,12 @@ namespace Gitter.ViewModel.Concrete
 
         #region Methods
 
-        private async Task RefreshAsync()
+        private async void RefreshAsync()
         {
             var rooms = await _gitterApiService.GetRoomsAsync();
 
             foreach (var room in rooms)
-            {
                 Rooms.Add(new RoomViewModel(room));
-            }
         }
 
         #endregion

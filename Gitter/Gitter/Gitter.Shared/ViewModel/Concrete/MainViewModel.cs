@@ -78,13 +78,13 @@ namespace Gitter.ViewModel.Concrete
 
         public ICommand SelectRoomCommand { get; private set; }
         public ICommand ChatWithUsCommand { get; private set; }
-        
+
         #endregion
 
 
         #region Constructor
 
-        public MainViewModel(IGitterApiService gitterApiService, 
+        public MainViewModel(IGitterApiService gitterApiService,
             ILocalNotificationService localNotificationService,
             IApplicationStorageService applicationStorageService,
             IProgressIndicatorService progressIndicatorService)
@@ -226,7 +226,7 @@ namespace Gitter.ViewModel.Concrete
 
         #region Methods
 
-        private async Task LaunchAsync()
+        private async void LaunchAsync()
         {
             // Start async task
             await _progressIndicatorService.ShowAsync();
@@ -237,8 +237,11 @@ namespace Gitter.ViewModel.Concrete
             await _progressIndicatorService.HideAsync();
         }
 
-        public void SelectRoom(string roomName)
+        public async void SelectRoom(string roomName)
         {
+            while (!Rooms.Rooms.Any())
+                await Task.Delay(250);
+
             var room = Rooms.Rooms.FirstOrDefault(r => r.Room.Name == roomName);
             SelectRoom(room);
         }

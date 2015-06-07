@@ -74,9 +74,9 @@ namespace Gitter
         #region Launched events
 
         /// <summary>
-        /// Invoked when the application is launched normally by the end user.  Other entry points
-        /// will be used when the application is launched to open a specific file, to display
-        /// search results, and so forth.
+        /// Invoked when the application is launched normally by the end user.
+        /// Other entry points will be used when the application is launched to open a specific file, 
+        /// to display search results, and so forth.
         /// </summary>
         /// <param name="e">Details about the launch request and process.</param>
         protected override async void OnLaunched(LaunchActivatedEventArgs e)
