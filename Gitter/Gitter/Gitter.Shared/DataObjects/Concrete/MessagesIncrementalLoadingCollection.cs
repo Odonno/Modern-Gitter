@@ -36,7 +36,7 @@ namespace Gitter.DataObjects.Concrete
         public MessagesIncrementalLoadingCollection(string roomId)
         {
             RoomId = roomId;
-            ItemsPerPage = 50;
+            ItemsPerPage = 20;
             Ascendant = true;
         }
 
