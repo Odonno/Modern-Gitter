@@ -44,16 +44,16 @@ namespace Gitter.API.Services.Concrete
 
         #region Services
 
-        private readonly IApplicationStorageService _applicationStorageService;
+        private readonly IPasswordStorageService _passwordStorageService;
 
         #endregion
 
 
         #region Constructor
 
-        public GitterApiService(IApplicationStorageService applicationStorageService)
+        public GitterApiService(IPasswordStorageService passwordStorageService)
         {
-            _applicationStorageService = applicationStorageService;
+            _passwordStorageService = passwordStorageService;
         }
 
         #endregion
@@ -63,8 +63,8 @@ namespace Gitter.API.Services.Concrete
 
         public string AccessToken
         {
-            get { return (string)_applicationStorageService.Retrieve("token"); }
-            private set { _applicationStorageService.Save("token", value); }
+            get { return _passwordStorageService.Retrieve("token"); }
+            private set { _passwordStorageService.Save("token", value); }
         }
 
         public void TryAuthenticate(string token = null)
