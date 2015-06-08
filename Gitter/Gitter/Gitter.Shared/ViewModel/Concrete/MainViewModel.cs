@@ -197,10 +197,10 @@ namespace Gitter.ViewModel.Concrete
 
                 // End async task
                 await _progressIndicatorService.HideAsync();
-
-                // Go to dedicated room
-                _navigationService.NavigateTo("Room");
             }
+
+            // Go to dedicated room
+            _navigationService.NavigateTo("Room");
         }
 
         private async void ChatWithUs()
