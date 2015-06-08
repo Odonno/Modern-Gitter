@@ -87,6 +87,7 @@ namespace Gitter.ViewModel
 
             navigationService.Configure("SplashScreen", typeof(SplashScreenPage));
             navigationService.Configure("Main", typeof(MainPage));
+            navigationService.Configure("Room", typeof(RoomPage));
 
             return navigationService;
         }

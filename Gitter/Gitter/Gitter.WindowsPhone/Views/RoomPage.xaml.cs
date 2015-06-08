@@ -1,13 +1,12 @@
-﻿using System;
+﻿using Windows.System;
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
-using Windows.System;
-using Windows.UI;
+using Windows.Graphics.Display;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -17,29 +16,18 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// Pour en savoir plus sur le modèle d'élément Page vierge, consultez la page http://go.microsoft.com/fwlink/?LinkId=234238
+// Pour en savoir plus sur le modèle d'élément Page de base, consultez la page http://go.microsoft.com/fwlink/?LinkID=390556
 using GitHub.Common;
-using Gitter.Services.Abstract;
-using Gitter.ViewModel;
-using Microsoft.Practices.ServiceLocation;
 
-namespace Gitter
+namespace Gitter.Views
 {
     /// <summary>
     /// Une page vide peut être utilisée seule ou constituer une page de destination au sein d'un frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class RoomPage : Page
     {
-        public MainPage()
+        public RoomPage()
         {
-            // retrieve status bar
-            var statusBar = StatusBar.GetForCurrentView();
-
-            // set status bar color
-            statusBar.ForegroundColor = Colors.Black;
-            // set progress indicator, to use it in a global service
-            ServiceLocator.Current.GetInstance<IProgressIndicatorService>().ProgressIndicator = statusBar.ProgressIndicator;
-
             InitializeComponent();
 
             _navigationHelper = new NavigationHelper(this);
@@ -103,31 +91,9 @@ namespace Gitter
         /// </summary>
         /// <param name="e">Fournit des données pour les méthodes de navigation et
         /// les gestionnaires d'événements qui ne peuvent pas annuler la requête de navigation.</param>
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             _navigationHelper.OnNavigatedTo(e);
-
-            // Remove SplashScreen page
-            if (e.NavigationMode == NavigationMode.New)
-            {
-                // Remove Splashscreen
-                Frame.BackStack.Remove(Frame.BackStack.LastOrDefault());
-
-                // Register background tasks
-                await ServiceLocator.Current.GetInstance<IBackgroundTaskService>().RegisterTasksAsync();
-
-#if !DEBUG
-                // Ask user to rate the app
-                ServiceLocator.Current.GetInstance<IRatingService>().AskForRating();
-#endif
-            }
-
-            // Select room if there is a value in the app launcher
-            if (!string.IsNullOrWhiteSpace(App.RoomName))
-            {
-                ViewModelLocator.Main.SelectRoom(App.RoomName);
-                App.RoomName = string.Empty;
-            }
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -136,6 +102,18 @@ namespace Gitter
         }
 
         #endregion
+
+        #endregion
+
+
+        #region Sending Message
+
+        private void SendMessage_OnKeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            // Hide the virtual keyboard when sending a message
+            if (e.Key == VirtualKey.Enter)
+                Focus(FocusState.Programmatic);
+        }
 
         #endregion
     }

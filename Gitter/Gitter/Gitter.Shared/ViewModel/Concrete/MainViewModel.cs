@@ -7,6 +7,7 @@ using Windows.UI.Core;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using GalaSoft.MvvmLight.Views;
 using Gitter.API.Services.Abstract;
 using Gitter.Messages;
 using Gitter.Model;
@@ -34,6 +35,7 @@ namespace Gitter.ViewModel.Concrete
         private readonly IApplicationStorageService _applicationStorageService;
         private readonly IProgressIndicatorService _progressIndicatorService;
         private readonly IEventService _eventService;
+        private readonly INavigationService _navigationService;
 
         #endregion
 
@@ -89,7 +91,8 @@ namespace Gitter.ViewModel.Concrete
             ILocalNotificationService localNotificationService,
             IApplicationStorageService applicationStorageService,
             IProgressIndicatorService progressIndicatorService,
-            IEventService eventService)
+            IEventService eventService,
+            INavigationService navigationService)
         {
             // Services
             _gitterApiService = gitterApiService;
@@ -97,6 +100,7 @@ namespace Gitter.ViewModel.Concrete
             _applicationStorageService = applicationStorageService;
             _progressIndicatorService = progressIndicatorService;
             _eventService = eventService;
+            _navigationService = navigationService;
 
             // Commands
             SelectRoomCommand = new RelayCommand<IRoomViewModel>(SelectRoom);
@@ -193,6 +197,9 @@ namespace Gitter.ViewModel.Concrete
 
                 // End async task
                 await _progressIndicatorService.HideAsync();
+
+                // Go to dedicated room
+                _navigationService.NavigateTo("Room");
             }
         }
 

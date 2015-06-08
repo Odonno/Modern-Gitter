@@ -107,7 +107,7 @@
 
         <!-- Header Template (of hub) -->
         <DataTemplate x:Key="HeaderTemplate">
-            <TextBlock Text="{Binding}" Margin="0 -12" Style="{ThemeResource HeaderTextBlockStyle}" />
+            <TextBlock Text="{Binding}" Style="{ThemeResource HeaderTextBlockStyle}" />
         </DataTemplate>
     </Application.Resources>
 </Application>
