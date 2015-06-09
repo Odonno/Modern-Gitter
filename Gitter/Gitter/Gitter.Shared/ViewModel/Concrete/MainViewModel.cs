@@ -87,6 +87,18 @@ namespace Gitter.ViewModel.Concrete
             }
         }
 
+        private bool _isRefreshing;
+        public bool IsRefreshing
+        {
+            get { return _isRefreshing; }
+            set
+            {
+                _isRefreshing = value;
+                RaisePropertyChanged();
+                ((RelayCommand)(RefreshCommand)).RaiseCanExecuteChanged();
+            }
+        }
+
         #endregion
 
 
@@ -94,6 +106,7 @@ namespace Gitter.ViewModel.Concrete
 
         public ICommand SelectRoomCommand { get; private set; }
         public ICommand ChatWithUsCommand { get; private set; }
+        public ICommand RefreshCommand { get; private set; }
 
         #endregion
 
@@ -118,6 +131,7 @@ namespace Gitter.ViewModel.Concrete
             // Commands
             SelectRoomCommand = new RelayCommand<IRoomViewModel>(SelectRoom);
             ChatWithUsCommand = new RelayCommand(ChatWithUs, CanChatWithUs);
+            RefreshCommand = new RelayCommand(Refresh, () => !IsRefreshing);
 
             // ViewModels
             Rooms = ViewModelLocator.Rooms;
@@ -144,7 +158,7 @@ namespace Gitter.ViewModel.Concrete
             {
                 // Code runs "for real"
 
-                LaunchAsync();
+                Refresh();
             }
         }
 
@@ -204,7 +218,7 @@ namespace Gitter.ViewModel.Concrete
                 // Remove notification data cause there is no new unread message
                 if (_applicationStorageService.Exists(SelectedRoom.Room.Name))
                     _applicationStorageService.Remove(SelectedRoom.Room.Name);
-                
+
                 App.TelemetryClient.TrackEvent("SelectRoom",
                     new Dictionary<string, string> { { "Room", room.Room.Name } });
 
@@ -248,33 +262,42 @@ namespace Gitter.ViewModel.Concrete
             await _progressIndicatorService.HideAsync();
         }
 
-        #endregion
-
-
-        #region Methods
-
-        private async void LaunchAsync()
+        private async void Refresh()
         {
             // Start async task
             await _progressIndicatorService.ShowAsync();
 
             try
             {
-                CurrentUser = await _gitterApiService.GetCurrentUserAsync();
+                IsRefreshing = true;
+
+                if (CurrentUser == null)
+                    CurrentUser = await _gitterApiService.GetCurrentUserAsync();
                 await RefreshRoomsAsync();
             }
             catch (Exception ex)
             {
                 _localNotificationService.SendNotification("Network failure", "This app requires a network connection");
             }
+            finally
+            {
+                IsRefreshing = false;
+            }
 
             // End async task
             await _progressIndicatorService.HideAsync();
         }
 
+        #endregion
+
+
+        #region Methods
+
         private async Task RefreshRoomsAsync()
         {
             var rooms = await _gitterApiService.GetRoomsAsync();
+
+            Rooms.Rooms.Clear();
 
             foreach (var room in rooms)
                 Rooms.Rooms.Add(new RoomViewModel(room));

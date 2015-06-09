@@ -91,8 +91,15 @@
 
     <Page.BottomAppBar>
         <CommandBar>
+            <CommandBar.PrimaryCommands>
+                <AppBarButton Label="refresh" 
+                              Command="{Binding Path=RefreshCommand}"
+                              Icon="Refresh" />
+            </CommandBar.PrimaryCommands>
+            
             <CommandBar.SecondaryCommands>
-                <AppBarButton Label="chat with us" Command="{Binding ChatWithUsCommand}" />
+                <AppBarButton Label="chat with us" 
+                              Command="{Binding Path=ChatWithUsCommand}" />
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>
