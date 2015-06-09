@@ -106,6 +106,17 @@ namespace Gitter.ViewModel.Concrete
                     MediumAvatarUrl = "https://avatars.githubusercontent.com/u/14751?"
                 };
 
+                var suprememoocow = new User
+                {
+                    Id = "53307831c3599d1de448e19a",
+                    Username = "suprememoocow",
+                    DisplayName = "Andrew Newdigate",
+                    Url = "/suprememoocow,",
+                    SmallAvatarUrl = "https://avatars.githubusercontent.com/u/594566?",
+                    MediumAvatarUrl = "https://avatars.githubusercontent.com/u/594566?"
+                };
+
+
                 _messages = new MessagesIncrementalLoadingCollection("123456")
                 {
                     new MessageViewModel(new Message
@@ -130,8 +141,7 @@ namespace Gitter.ViewModel.Concrete
                         },
                         Issues = new List<Issue>(),
                         Version = 1
-                    })
-                    ,
+                    }),
                     new MessageViewModel(new Message
                     {
                         Id = "53316ec37bfc1a0000000011",
@@ -150,6 +160,36 @@ namespace Gitter.ViewModel.Concrete
                             new Issue {Number = "11"}
                         },
                         Version = 1
+                    }),
+                    new MessageViewModel(new Message
+                    {
+                        Id = "53316ec37bfc1a0000000012",
+                        Text = "This is a test message",
+                        Html = "This is a test message",
+                        SentDate = new DateTime(2014, 3, 25, 11, 55, 47),
+                        EditedDate = null,
+                        User = suprememoocow,
+                        UnreadByCurrent = false,
+                        ReadCount = 0,
+                        Urls = new List<MessageUrl>(),
+                        Mentions = new List<Mention>(),
+                        Issues = new List<Issue>(),
+                        Version = 1
+                    }),
+                    new MessageViewModel(new Message
+                    {
+                        Id = "53316ec37bfc1a0000000013",
+                        Text = "Another long long ............... message",
+                        Html = "Another long long ............... message",
+                        SentDate = new DateTime(2014, 3, 25, 11, 55, 47),
+                        EditedDate = null,
+                        User = malditogeek,
+                        UnreadByCurrent = false,
+                        ReadCount = 0,
+                        Urls = new List<MessageUrl>(),
+                        Mentions = new List<Mention>(),
+                        Issues = new List<Issue>(),
+                        Version = 1
                     })
                 };
             }
@@ -158,34 +198,35 @@ namespace Gitter.ViewModel.Concrete
                 // Code runs "for real"
 
                 _messages = new MessagesIncrementalLoadingCollection(Room.Id);
+
+                // Use the stream API to add new messages when they comes
+                _gitterApiService.GetRealtimeMessages(Room.Id).Subscribe(async message =>
+                {
+                    var messageVM = new MessageViewModel(message);
+
+                    // Do not add an existing messages to the chat
+                    if (Messages.Any(m => m.Id == messageVM.Id))
+                        return;
+
+                    // Do not add message to UI when it is not the current selected room
+                    if (ViewModelLocator.Main.SelectedRoom == this)
+                        await Messages.AddItemAsync(messageVM);
+
+                    // TODO : Check user is still in room page
+                    // If the message was not read, update unread notification (except for the current selected room)
+                    if (!messageVM.Read && ViewModelLocator.Main.SelectedRoom != this)
+                    {
+                        var dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
+                        await dispatcher.RunAsync(CoreDispatcherPriority.High, () => UnreadMessagesCount++);
+
+                        if (!Room.DisabledNotifications)
+                            _localNotificationService.SendNotification(Room.Name, message.Text, Room.Name);
+                    }
+                });
             }
 
             // Update count of unread messages
             UnreadMessagesCount = Room.UnreadItems;
-
-            // Use the stream API to add new messages when they comes
-            _gitterApiService.GetRealtimeMessages(Room.Id).Subscribe(async message =>
-            {
-                var messageVM = new MessageViewModel(message);
-
-                // Do not add an existing messages to the chat
-                if (Messages.Any(m => m.Id == messageVM.Id))
-                    return;
-
-                // Do not add message to UI when it is not the current selected room
-                if (ViewModelLocator.Main.SelectedRoom == this)
-                    await Messages.AddItemAsync(messageVM);
-
-                // If the message was not read, update unread notification (except for the current selected room)
-                if (!messageVM.Read && ViewModelLocator.Main.SelectedRoom != this)
-                {
-                    var dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
-                    await dispatcher.RunAsync(CoreDispatcherPriority.High, () => UnreadMessagesCount++);
-
-                    if (!Room.DisabledNotifications)
-                        _localNotificationService.SendNotification(Room.Name, message.Text, Room.Name);
-                }
-            });
         }
 
         #endregion

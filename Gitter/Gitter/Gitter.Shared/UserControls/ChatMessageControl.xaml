@@ -15,7 +15,7 @@
           RequestedTheme="Dark">
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="48" />
+            <ColumnDefinition Width="36" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
@@ -52,7 +52,7 @@
                      Fill="{StaticResource BlueGrey}" />
 
             <StackPanel Margin="6 0" Background="{StaticResource BlueGrey}">
-                <TextBlock FontSize="14" TextWrapping="Wrap" Margin="6 3 6 0"
+                <TextBlock FontSize="18" TextWrapping="Wrap" Margin="6 3 6 0"
                            Text="{Binding Path=Text}" />
 
                 <StackPanel Visibility="{Binding Converter={StaticResource SamePreviousAuthorVisibilityConverter}}">
@@ -89,7 +89,7 @@
               Visibility="{Binding Path=User, Converter={StaticResource MeToVisibilityConverter}}">
 
             <StackPanel Margin="6 0" Background="{StaticResource WhiteGray}">
-                <TextBlock FontSize="14" TextWrapping="Wrap" Margin="6 3 6 0" 
+                <TextBlock FontSize="18" TextWrapping="Wrap" Margin="6 3 6 0" 
                            Text="{Binding Path=Text}" />
 
                 <StackPanel Visibility="{Binding Converter={StaticResource SamePreviousAuthorVisibilityConverter}}">

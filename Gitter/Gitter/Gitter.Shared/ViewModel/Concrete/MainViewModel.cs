@@ -124,6 +124,8 @@ namespace Gitter.ViewModel.Concrete
                     SmallAvatarUrl = "https://avatars.githubusercontent.com/u/14751?",
                     MediumAvatarUrl = "https://avatars.githubusercontent.com/u/14751?"
                 };
+
+                SelectedRoom = Rooms.Rooms.FirstOrDefault();
             }
             else
             {
@@ -140,6 +142,7 @@ namespace Gitter.ViewModel.Concrete
 
         private async void SelectRoom(IRoomViewModel room)
         {
+            // TODO : Optimize room management to not load room every time
             if (SelectedRoom != room)
             {
                 // Start async task

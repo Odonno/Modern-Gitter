@@ -41,6 +41,9 @@ namespace Gitter.DataObjects.Abstract
                 return Task.Run(
                     async () =>
                     {
+                        if (ViewModelBase.IsInDesignModeStatic)
+                            return new LoadMoreItemsResult();
+
                         var items = await LoadMoreItemsAsync();
                         var itemsCount = items.Count();
 
