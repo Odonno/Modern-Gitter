@@ -48,6 +48,9 @@ namespace Gitter.Services.Concrete
                 // Set the condition trigger that feels right for you
                 taskBuilder.SetTrigger(new TimeTrigger(15, false));
 
+                taskBuilder.AddCondition(new SystemCondition(SystemConditionType.InternetAvailable));
+                taskBuilder.AddCondition(new SystemCondition(SystemConditionType.UserNotPresent));
+
                 taskBuilder.Register();
             }
         }
