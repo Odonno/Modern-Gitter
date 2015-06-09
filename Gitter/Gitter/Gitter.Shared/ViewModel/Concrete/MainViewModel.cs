@@ -1,15 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
 using Gitter.API.Services.Abstract;
-using Gitter.Messages;
 using Gitter.Model;
 using Gitter.ViewModel.Abstract;
 using Gitter.Services.Abstract;
@@ -42,22 +41,36 @@ namespace Gitter.ViewModel.Concrete
 
         #region Properties
 
-        private int _currentSectionIndex;
-        public int CurrentSectionIndex
+        private DateTime _currentDateTime;
+        public DateTime CurrentDateTime
         {
             get
             {
-                return _currentSectionIndex;
+                return _currentDateTime;
             }
-            set
+            private set
             {
-                _currentSectionIndex = value;
+                _currentDateTime = value;
                 RaisePropertyChanged();
             }
         }
 
-        public DateTime CurrentDateTime { get; private set; }
-        public User CurrentUser { get; private set; }
+        private User _currentUser;
+        public User CurrentUser
+        {
+            get
+            {
+                return _currentUser;
+            }
+            private set
+            {
+                _currentUser = value;
+                RaisePropertyChanged();
+                ((RelayCommand)(ChatWithUsCommand)).RaiseCanExecuteChanged();
+            }
+        }
+
+
         public IRoomsViewModel Rooms { get; private set; }
 
         private IRoomViewModel _selectedRoom;
@@ -104,7 +117,7 @@ namespace Gitter.ViewModel.Concrete
 
             // Commands
             SelectRoomCommand = new RelayCommand<IRoomViewModel>(SelectRoom);
-            ChatWithUsCommand = new RelayCommand(ChatWithUs);
+            ChatWithUsCommand = new RelayCommand(ChatWithUs, CanChatWithUs);
 
             // ViewModels
             Rooms = ViewModelLocator.Rooms;
@@ -191,10 +204,7 @@ namespace Gitter.ViewModel.Concrete
                 // Remove notification data cause there is no new unread message
                 if (_applicationStorageService.Exists(SelectedRoom.Room.Name))
                     _applicationStorageService.Remove(SelectedRoom.Room.Name);
-
-                // Update UI
-                Messenger.Default.Send(new SelectRoomMessage());
-
+                
                 App.TelemetryClient.TrackEvent("SelectRoom",
                     new Dictionary<string, string> { { "Room", room.Room.Name } });
 
@@ -206,6 +216,10 @@ namespace Gitter.ViewModel.Concrete
             _navigationService.NavigateTo("Room");
         }
 
+        private bool CanChatWithUs()
+        {
+            return CurrentUser != null;
+        }
         private async void ChatWithUs()
         {
             // Start async task
@@ -244,10 +258,28 @@ namespace Gitter.ViewModel.Concrete
             // Start async task
             await _progressIndicatorService.ShowAsync();
 
-            CurrentUser = await _gitterApiService.GetCurrentUserAsync();
+            try
+            {
+                CurrentUser = await _gitterApiService.GetCurrentUserAsync();
+                await RefreshRoomsAsync();
+            }
+            catch (Exception ex)
+            {
+                _localNotificationService.SendNotification("Network failure", "This app requires a network connection");
+            }
 
             // End async task
             await _progressIndicatorService.HideAsync();
+        }
+
+        private async Task RefreshRoomsAsync()
+        {
+            var rooms = await _gitterApiService.GetRoomsAsync();
+
+            foreach (var room in rooms)
+                Rooms.Rooms.Add(new RoomViewModel(room));
+
+            _eventService.RefreshRooms.OnNext(true);
         }
 
         public void SelectRoom(string roomName)

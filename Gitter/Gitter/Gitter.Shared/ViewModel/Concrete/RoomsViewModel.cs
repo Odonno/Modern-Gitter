@@ -1,24 +1,13 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
-using Gitter.API.Services.Abstract;
 using Gitter.Model;
-using Gitter.Services.Abstract;
 using Gitter.ViewModel.Abstract;
 
 namespace Gitter.ViewModel.Concrete
 {
     public sealed class RoomsViewModel : ViewModelBase, IRoomsViewModel
     {
-        #region Services
-
-        private readonly IGitterApiService _gitterApiService;
-        private readonly IEventService _eventService;
-
-        #endregion
-
-
         #region Properties
 
         private readonly ObservableCollection<IRoomViewModel> _rooms = new ObservableCollection<IRoomViewModel>();
@@ -29,14 +18,8 @@ namespace Gitter.ViewModel.Concrete
 
         #region Constructor
 
-        public RoomsViewModel(IGitterApiService gitterApiService,
-            IEventService eventService)
+        public RoomsViewModel()
         {
-            // Inject Services
-            _gitterApiService = gitterApiService;
-            _eventService = eventService;
-
-
             if (IsInDesignMode)
             {
                 // Code runs in Blend --> create design time data.
@@ -115,24 +98,7 @@ namespace Gitter.ViewModel.Concrete
             else
             {
                 // Code runs "for real"
-
-                RefreshAsync();
             }
-        }
-
-        #endregion
-
-
-        #region Methods
-
-        private async void RefreshAsync()
-        {
-            var rooms = await _gitterApiService.GetRoomsAsync();
-
-            foreach (var room in rooms)
-                Rooms.Add(new RoomViewModel(room));
-
-            _eventService.RefreshRooms.OnNext(true);
         }
 
         #endregion

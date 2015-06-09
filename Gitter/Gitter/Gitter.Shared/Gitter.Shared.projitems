@@ -35,7 +35,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\UnreadMessagesCountToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataObjects\Abstract\IncrementalLoadingCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataObjects\Concrete\MessagesIncrementalLoadingCollection.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Messages\SelectRoomMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Abstract\IEventService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Abstract\IProgressIndicatorService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Abstract\ISessionService.cs" />
