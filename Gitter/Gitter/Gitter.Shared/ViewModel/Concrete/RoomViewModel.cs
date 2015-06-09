@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
 using Windows.ApplicationModel.Core;
+using Windows.Media.SpeechRecognition;
 using Windows.UI.Core;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -66,6 +67,7 @@ namespace Gitter.ViewModel.Concrete
         public ICommand RemoveMessageCommand { get; private set; }
         public ICommand CopyMessageCommand { get; private set; }
         public ICommand RespondToCommand { get; private set; }
+        public ICommand TalkCommand { get; private set; }
         public ICommand RefreshCommand { get; private set; }
 
         #endregion
@@ -84,6 +86,7 @@ namespace Gitter.ViewModel.Concrete
             RemoveMessageCommand = new RelayCommand<IMessageViewModel>(RemoveMessage, CanRemoveMessage);
             CopyMessageCommand = new RelayCommand<IMessageViewModel>(CopyMessage);
             RespondToCommand = new RelayCommand<User>(RespondTo);
+            TalkCommand = new RelayCommand(Talk);
             RefreshCommand = new RelayCommand(Refresh);
 
             // Inject Services
@@ -228,7 +231,7 @@ namespace Gitter.ViewModel.Concrete
             // Update count of unread messages
             UnreadMessagesCount = Room.UnreadItems;
         }
-
+        
         #endregion
 
 
@@ -292,6 +295,21 @@ namespace Gitter.ViewModel.Concrete
         private void RespondTo(User user)
         {
             TextMessage += string.Format("@{0} ", user.Username);
+        }
+
+        private async void Talk()
+        {
+            // Create an instance of SpeechRecognizer
+            var speechRecognizer = new SpeechRecognizer();
+
+            // Compile the dictation grammar by default
+            await speechRecognizer.CompileConstraintsAsync();
+
+            // Start recognition
+            var speechRecognitionResult = await speechRecognizer.RecognizeWithUIAsync();
+
+            // Add text to message that will be sent
+            TextMessage += speechRecognitionResult.Text;
         }
 
         private void Refresh()

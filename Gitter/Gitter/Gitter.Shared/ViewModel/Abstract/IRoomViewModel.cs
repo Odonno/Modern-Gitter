@@ -16,6 +16,7 @@ namespace Gitter.ViewModel.Abstract
         ICommand RemoveMessageCommand { get; }
         ICommand CopyMessageCommand { get; }
         ICommand RespondToCommand { get; }
+        ICommand TalkCommand { get; }
         ICommand RefreshCommand { get; }
     }
 }

@@ -122,6 +122,9 @@
                 <AppBarButton Label="send" Icon="PostUpdate"
                               Command="{Binding SendMessageCommand}"
                               IsEnabled="{Binding Converter={StaticResource NullToBooleanConverter}}" />
+                <AppBarButton Label="talk" Icon="Microphone"
+                              Command="{Binding TalkCommand}"
+                              IsEnabled="{Binding Converter={StaticResource NullToBooleanConverter}}" />
                 <AppBarButton Label="refresh" Icon="Refresh"
                               Command="{Binding RefreshCommand}"
                               IsEnabled="{Binding Converter={StaticResource NullToBooleanConverter}}" />
