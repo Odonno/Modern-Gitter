@@ -88,7 +88,9 @@ namespace Gitter.ViewModel
 
             navigationService.Configure("SplashScreen", typeof(SplashScreenPage));
             navigationService.Configure("Main", typeof(MainPage));
+#if WINDOWS_PHONE_APP
             navigationService.Configure("Room", typeof(RoomPage));
+#endif
 
             return navigationService;
         }

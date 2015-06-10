@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
 using Windows.ApplicationModel.Core;
-using Windows.Media.SpeechRecognition;
 using Windows.UI.Core;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -13,6 +12,9 @@ using Gitter.Model;
 using Gitter.Services.Abstract;
 using Gitter.ViewModel.Abstract;
 using Microsoft.Practices.ServiceLocation;
+#if WINDOWS_PHONE_APP
+using Windows.Media.SpeechRecognition;
+#endif
 
 namespace Gitter.ViewModel.Concrete
 {
@@ -299,6 +301,7 @@ namespace Gitter.ViewModel.Concrete
 
         private async void Talk()
         {
+#if WINDOWS_PHONE_APP
             // Create an instance of SpeechRecognizer
             var speechRecognizer = new SpeechRecognizer();
 
@@ -310,6 +313,7 @@ namespace Gitter.ViewModel.Concrete
 
             // Add text to message that will be sent
             TextMessage += speechRecognitionResult.Text;
+#endif
         }
 
         private void Refresh()

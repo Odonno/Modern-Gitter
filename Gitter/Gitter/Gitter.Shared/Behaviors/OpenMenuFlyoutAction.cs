@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml;
+﻿#if !WINDOWS_UAP
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls.Primitives;
 using Microsoft.Xaml.Interactivity;
 
@@ -17,3 +18,4 @@ namespace Gitter.Behaviors
         }
     }
 }
+#endif

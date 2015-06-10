@@ -226,8 +226,10 @@ namespace Gitter.ViewModel.Concrete
                 await _progressIndicatorService.HideAsync();
             }
 
+#if WINDOWS_PHONE_APP
             // Go to dedicated room
             _navigationService.NavigateTo("Room");
+#endif
         }
 
         private bool CanChatWithUs()

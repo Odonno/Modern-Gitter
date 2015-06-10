@@ -5,10 +5,10 @@ namespace Gitter.Services.Abstract
 {
     public interface IProgressIndicatorService
     {
+#if WINDOWS_PHONE_APP
         StatusBarProgressIndicator ProgressIndicator { get; set; }
-        bool ShowProgressIndicator { get; }
-
-
+#endif
+        
         Task ShowAsync();
         Task HideAsync();
     }
