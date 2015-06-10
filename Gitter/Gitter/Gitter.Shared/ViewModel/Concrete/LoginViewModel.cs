@@ -62,7 +62,7 @@ namespace Gitter.ViewModel.Concrete
                 {
                     var auth = await _sessionService.LoginAsync();
 
-#if WINDOWS_APP
+#if !WINDOWS_PHONE_APP
                     if (auth == null)
                         isToShowMessage = true;
 

@@ -1,0 +1,73 @@
+﻿<UserControl
+    x:Class="Gitter.Windows10.UserControls.ChatMessageControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <Grid Margin="{Binding Converter={StaticResource SamePreviousAuthorMarginConverter}}"
+                                      RequestedTheme="Dark">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="60" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <!-- Image of the author of the message (not showing current user avatar) -->
+        <Grid Grid.Column="0"
+              Visibility="{Binding Converter={StaticResource DistinctPreviousAuthorVisibilityConverter}}">
+
+            <Image Visibility="{Binding Path=User, Converter={StaticResource MeToVisibilityConverter}, ConverterParameter=inverse}"
+                   Source="{Binding Path=User.MediumAvatarUrl}"
+                   HorizontalAlignment="Left" VerticalAlignment="Top" />
+
+        </Grid>
+
+        <!-- Message content - message of any author except current user -->
+        <Grid x:Name="userGrid" Grid.Column="1" Margin="6 0 -6 0"
+              Visibility="{Binding Path=User, Converter={StaticResource MeToVisibilityConverter}, ConverterParameter=inverse}">
+
+            <Polygon Points="8,0 0,0 8,10" Margin="0 6 0 0"
+                                                 Visibility="{Binding Converter={StaticResource DistinctPreviousAuthorVisibilityConverter}}"
+                                                 Stroke="{StaticResource BlueGrey}"
+                                                 Fill="{StaticResource BlueGrey}" />
+
+            <StackPanel Margin="6 0" Background="{StaticResource BlueGrey}">
+                <TextBlock FontSize="18" TextWrapping="Wrap" Margin="6 3 6 0"
+                           Text="{Binding Path=Text}" />
+
+                <StackPanel Visibility="{Binding Converter={StaticResource SamePreviousAuthorVisibilityConverter}}">
+                    <TextBlock FontSize="8" TextWrapping="Wrap" Margin="6 0 6 0" 
+                               HorizontalAlignment="Right">
+                        @<Run Text="{Binding Path=User.Username}" />
+                    </TextBlock>
+
+                    <TextBlock FontSize="8" TextWrapping="Wrap" Margin="6 0 6 6" HorizontalAlignment="Right"
+                               Text="{Binding Path=SentDate, Converter={StaticResource DateTimeOffsetToTimeAgoConverter}}" />
+                </StackPanel>
+
+            </StackPanel>
+
+        </Grid>
+
+        <!-- Message content - message of current user -->
+        <Grid x:Name="meGrid" Grid.Column="1" Margin="6 0 -6 0"
+              Visibility="{Binding Path=User, Converter={StaticResource MeToVisibilityConverter}}">
+
+            <StackPanel Margin="6 0" Background="{StaticResource WhiteGray}">
+                <TextBlock FontSize="18" TextWrapping="Wrap" Margin="6 3 6 0" Text="{Binding Path=Text}" />
+
+                <StackPanel Visibility="{Binding Converter={StaticResource SamePreviousAuthorVisibilityConverter}}">
+
+                    <TextBlock FontSize="8" TextWrapping="Wrap" Margin="6 0 6 6" HorizontalAlignment="Right"
+                               Text="{Binding Path=SentDate, Converter={StaticResource DateTimeOffsetToTimeAgoConverter}}" />
+
+                </StackPanel>
+            </StackPanel>
+
+        </Grid>
+    </Grid>
+</UserControl>

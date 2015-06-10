@@ -42,7 +42,6 @@
             </Grid.RowDefinitions>
 
             <ListView Margin="0 12 0 0"
-                      Visibility="{Binding Converter={StaticResource NullToVisibilityConverter}, Source={StaticResource Locator}}"
                       ItemsSource="{Binding Messages}"
                       IncrementalLoadingTrigger="Edge">
                 

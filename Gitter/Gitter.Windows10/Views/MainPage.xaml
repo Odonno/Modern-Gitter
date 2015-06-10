@@ -4,21 +4,199 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    xmlns:userControls="using:Gitter.Windows10.UserControls"
+    mc:Ignorable="d"
+    NavigationCacheMode="Required"
+    RequestedTheme="Light"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    DataContext="{Binding Source={StaticResource Locator}, Path=Main}">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <SplitView>
+        <SplitView IsPaneOpen="True" PaneBackground="{StaticResource BlueGrey}"
+                   DisplayMode="Inline">
             <SplitView.Pane>
-                <Grid>
+                <Grid RequestedTheme="Dark" Margin="12">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
 
+                    <ListView x:Name="roomsListView" Grid.Row="0" 
+                              ItemsSource="{Binding Path=Rooms.Rooms}">
+
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Button Margin="0 3"
+                                        HorizontalContentAlignment="Stretch"
+                                        HorizontalAlignment="Stretch"
+                                        Command="{Binding Main.SelectRoomCommand, Source={StaticResource Locator}}"
+                                        CommandParameter="{Binding}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <StackPanel DataContext="{Binding Room}">
+                                            <TextBlock Text="{Binding Name}" FontSize="20" />
+                                            <TextBlock Text="{Binding Topic}" FontSize="8" 
+                                                       TextWrapping="Wrap"
+                                                       Visibility="{Binding Topic, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+                                        </StackPanel>
+
+                                        <Grid Grid.Column="1" Margin="0 6 6 0" VerticalAlignment="Top"
+                                              Visibility="{Binding UnreadMessagesCount, Converter={StaticResource UnreadMessagesCountToVisibilityConverter}}">
+
+                                            <Ellipse Width="24" Height="24" Fill="White" />
+                                            <TextBlock Text="{Binding UnreadMessagesCount, Converter={StaticResource UnreadMessagesCountConverter}}"
+                                                       FontSize="12" FontWeight="Bold"
+                                                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                       Foreground="{StaticResource BlueGrey}"/>
+
+                                        </Grid>
+                                    </Grid>
+                                </Button>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListViewItem">
+                                            <Border x:Name="border" Background="Transparent">
+                                                <VisualStateManager.VisualStateGroups>
+                                                    <VisualStateGroup x:Name="CommonStates">
+                                                        <VisualState x:Name="Normal" />
+                                                        <VisualState x:Name="Disabled" />
+                                                    </VisualStateGroup>
+                                                    <VisualStateGroup x:Name="SelectionStates">
+                                                        <VisualState x:Name="Unselected" />
+                                                        <VisualState x:Name="Selected">
+                                                            <Storyboard>
+                                                                <ColorAnimationUsingKeyFrames Storyboard.TargetName="border"
+                                                              Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
+                                                                    <EasingColorKeyFrame KeyTime="0" Value="LightBlue" />
+                                                                </ColorAnimationUsingKeyFrames>
+                                                            </Storyboard>
+                                                        </VisualState>
+                                                        <VisualState x:Name="SelectedUnfocused">
+                                                            <Storyboard>
+                                                                <ColorAnimationUsingKeyFrames Storyboard.TargetName="border"
+                                                              Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
+                                                                    <EasingColorKeyFrame KeyTime="0" Value="SkyBlue" />
+                                                                </ColorAnimationUsingKeyFrames>
+                                                            </Storyboard>
+                                                        </VisualState>
+                                                    </VisualStateGroup>
+                                                </VisualStateManager.VisualStateGroups>
+                                                <ContentPresenter/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+
+                    </ListView>
+
+                    <Button Grid.Row="1" Content="refresh" FontSize="22"
+                            HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                            Command="{Binding Path=RefreshCommand}" />
                 </Grid>
             </SplitView.Pane>
-            
+
             <SplitView.Content>
-                <Grid>
-                    
+                <Grid DataContext="{Binding Path=SelectedRoom}" 
+                      Margin="6">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <ListView x:Name="messagesListView"
+                              ItemsSource="{Binding Path=Messages}"
+                              IncrementalLoadingTrigger="Edge">
+
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListViewItem">
+                                            <ContentPresenter />
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+
+                        <ListView.ItemContainerTransitions>
+                            <TransitionCollection />
+                        </ListView.ItemContainerTransitions>
+
+                        <ListView.Template>
+                            <ControlTemplate>
+                                <Border BorderThickness="{TemplateBinding BorderThickness}"
+                                        Padding="{TemplateBinding Padding}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        Background="{TemplateBinding Background}">
+                                    <ScrollViewer x:Name="ScrollViewer" 
+                                                  ZoomMode="Disabled" 
+                                                  RenderTransformOrigin="0.5,0.5">
+                                        <ScrollViewer.RenderTransform>
+                                            <CompositeTransform Rotation="180" ScaleX="-1" />
+                                        </ScrollViewer.RenderTransform>
+
+                                        <ItemsPresenter x:Name="ItemsPresenter" Margin="0 0 18 0" />
+                                    </ScrollViewer>
+                                </Border>
+                            </ControlTemplate>
+                        </ListView.Template>
+
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+
+                                <userControls:ChatMessageControl RenderTransformOrigin="0.5,0.5"
+                                                                 Visibility="{Binding Text, Converter={StaticResource EmptyStringToVisibilityConverter}}">
+                                    <userControls:ChatMessageControl.RenderTransform>
+                                        <CompositeTransform Rotation="180" ScaleX="-1" />
+                                    </userControls:ChatMessageControl.RenderTransform>
+                                </userControls:ChatMessageControl>
+
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+
+                    </ListView>
+
+                    <TextBox Grid.Row="1" Margin="72 0 18 0"
+                             Visibility="{Binding Main.SelectedRoom, Converter={StaticResource NullToVisibilityConverter}, Source={StaticResource Locator}}"
+                             Text="{Binding TextMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             PlaceholderText="type your message here"
+                             TextWrapping="Wrap" />
                 </Grid>
             </SplitView.Content>
         </SplitView>
     </Grid>
+
+    <Page.BottomAppBar>
+        <CommandBar>
+            <CommandBar.PrimaryCommands>
+                <AppBarButton Label="send" Icon="PostUpdate"
+                              Command="{Binding SelectedRoom.SendMessageCommand}"
+                              IsEnabled="{Binding Converter={StaticResource NullToBooleanConverter}}" />
+                <AppBarButton Label="refresh" Icon="Refresh"
+                              Command="{Binding SelectedRoom.RefreshCommand}"
+                              IsEnabled="{Binding Converter={StaticResource NullToBooleanConverter}}" />
+            </CommandBar.PrimaryCommands>
+
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Label="chat with us" 
+                              Command="{Binding Path=ChatWithUsCommand}" />
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
 </Page>
