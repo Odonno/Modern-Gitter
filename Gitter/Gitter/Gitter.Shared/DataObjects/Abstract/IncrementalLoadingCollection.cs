@@ -47,7 +47,7 @@ namespace Gitter.DataObjects.Abstract
                         var items = await LoadMoreItemsAsync();
                         var itemsCount = items.Count();
 
-                        dispatcher.RunAsync(
+                        await dispatcher.RunAsync(
                             CoreDispatcherPriority.High,
                             () =>
                             {
@@ -84,7 +84,7 @@ namespace Gitter.DataObjects.Abstract
             });
         }
         protected abstract Task<IEnumerable<T>> LoadMoreItemsAsync();
-        public void Reset()
+        public async void Reset()
         {
             Clear();
             Page = 0;
@@ -93,7 +93,7 @@ namespace Gitter.DataObjects.Abstract
             if (ViewModelBase.IsInDesignModeStatic)
                 return;
             
-            LoadMoreItemsAsync((uint)ItemsPerPage);
+            await LoadMoreItemsAsync((uint)ItemsPerPage);
         }
     }
 }

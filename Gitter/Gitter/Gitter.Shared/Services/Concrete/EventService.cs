@@ -1,5 +1,7 @@
-﻿using System.Reactive.Subjects;
+﻿using System.Collections.Generic;
+using System.Reactive.Subjects;
 using Gitter.Services.Abstract;
+using Gitter.ViewModel.Abstract;
 
 namespace Gitter.Services.Concrete
 {
@@ -8,6 +10,7 @@ namespace Gitter.Services.Concrete
         #region Properties
 
         public Subject<bool> RefreshRooms { get; private set; }
+        public Subject<IEnumerable<IMessageViewModel>> NotifyUnreadMessages { get; private set; }
 
         #endregion
 
@@ -17,6 +20,7 @@ namespace Gitter.Services.Concrete
         public EventService()
         {
             RefreshRooms = new Subject<bool>();
+            NotifyUnreadMessages = new Subject<IEnumerable<IMessageViewModel>>();
         }
 
         #endregion

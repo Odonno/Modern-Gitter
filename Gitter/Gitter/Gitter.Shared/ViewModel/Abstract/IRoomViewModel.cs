@@ -6,6 +6,7 @@ namespace Gitter.ViewModel.Abstract
 {
     public interface IRoomViewModel
     {
+        bool IsLoaded { get; set; }
         Room Room { get; }
         MessagesIncrementalLoadingCollection Messages { get; }
         string TextMessage { get; set; }

@@ -31,6 +31,8 @@ namespace Gitter.ViewModel.Concrete
 
         #region Properties
 
+        public bool IsLoaded { get; set; }
+
         public Room Room { get; private set; }
 
         private readonly MessagesIncrementalLoadingCollection _messages;

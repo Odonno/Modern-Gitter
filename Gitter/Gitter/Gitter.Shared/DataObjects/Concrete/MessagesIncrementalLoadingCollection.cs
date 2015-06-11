@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using Gitter.API.Services.Abstract;
 using Gitter.DataObjects.Abstract;
+using Gitter.Services.Abstract;
 using Gitter.ViewModel;
 using Gitter.ViewModel.Abstract;
 using Gitter.ViewModel.Concrete;
@@ -25,9 +26,6 @@ namespace Gitter.DataObjects.Concrete
 
         public string BeforeId { get; private set; }
         public string RoomId { get; private set; }
-
-        private readonly Subject<IEnumerable<IMessageViewModel>> _notifyUnreadMessages = new Subject<IEnumerable<IMessageViewModel>>();
-        public IObservable<IEnumerable<IMessageViewModel>> NotifyUnreadMessages { get { return _notifyUnreadMessages; } }
 
         #endregion
 
@@ -69,7 +67,7 @@ namespace Gitter.DataObjects.Concrete
                     .Where(message => !string.IsNullOrWhiteSpace(message.Text))
                     .Select(message => new MessageViewModel(message));
 
-                _notifyUnreadMessages.OnNext(loadedMessages.Where(message => !message.Read));
+                ServiceLocator.Current.GetInstance<IEventService>().NotifyUnreadMessages.OnNext(loadedMessages.Where(message => !message.Read));
 
                 return loadedMessages;
             }
@@ -80,7 +78,7 @@ namespace Gitter.DataObjects.Concrete
             await base.AddItemAsync(item);
 
             if (!item.Read && ViewModelLocator.Main.CurrentUser.Id != item.User.Id)
-                _notifyUnreadMessages.OnNext(new[] { item });
+                ServiceLocator.Current.GetInstance<IEventService>().NotifyUnreadMessages.OnNext(new[] { item });
         }
 
         #endregion

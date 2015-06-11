@@ -87,7 +87,7 @@ namespace Gitter.ViewModel.Concrete
                 RaisePropertyChanged();
             }
         }
-        
+
         private bool _isRefreshing;
         public bool IsRefreshing
         {
@@ -233,6 +233,49 @@ namespace Gitter.ViewModel.Concrete
                 // Code runs "for real"
 
                 Refresh();
+
+                // Add event that will update READ new messages
+                _currentSelectedRoomUnreadMessages = _eventService.NotifyUnreadMessages.Subscribe(
+                    async unreadMessages =>
+                    {
+                        // Notify only if there is unread messages
+                        if (!unreadMessages.Any(m => !m.Read))
+                            return;
+                        
+                        try
+                        {
+                            // Update server to tell user read messages
+                            await _gitterApiService.ReadChatMessagesAsync(
+                                CurrentUser.Id,
+                                SelectedRoom.Room.Id,
+                                unreadMessages.Select(m => m.Id));
+                            
+                            // Remove notification data cause there is no new unread message
+                            if (_applicationStorageService.Exists(SelectedRoom.Room.Name))
+                                _applicationStorageService.Remove(SelectedRoom.Room.Name);
+
+                            // Update UI
+                            var dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
+                            await dispatcher.RunAsync(CoreDispatcherPriority.High,
+                                () =>
+                                {
+                                    int unreadCount = 0;
+
+                                    foreach (var message in unreadMessages)
+                                    {
+                                        message.ReadByCurrent();
+                                        unreadCount++;
+                                    }
+
+                                    SelectedRoom.UnreadMessagesCount -= unreadCount;
+                                });
+                        }
+                        catch (Exception ex)
+                        {
+                            App.TelemetryClient.TrackException(ex);
+                            _localNotificationService.SendNotification("Error", "Can't validate reading new messages");
+                        }
+                    });
             }
         }
 
@@ -241,66 +284,28 @@ namespace Gitter.ViewModel.Concrete
 
         #region Command Methods
 
-        private async void SelectRoom(IRoomViewModel room)
+        private void SelectRoom(IRoomViewModel room)
         {
-            // TODO : Optimize room management to not load room every time
+            // Select the Room
             if (SelectedRoom != room)
             {
-                // Start async task
-                await _progressIndicatorService.ShowAsync();
-
-                // Remove event that was updating READ new messages
-                if (_currentSelectedRoomUnreadMessages != null)
-                    _currentSelectedRoomUnreadMessages.Dispose();
-
-                // Select the Room and update ViewModel
                 SelectedRoom = room;
-                SelectedRoom.Messages.Reset();
-
-                // Add event that will update READ new messages
-                _currentSelectedRoomUnreadMessages = SelectedRoom.Messages.NotifyUnreadMessages.Subscribe(
-                    async unreadMessages =>
-                    {
-                        if (!unreadMessages.Any())
-                            return;
-
-                        try
-                        {
-                            // BUG : send error notification when receiving messages in realtime (in room page)
-                            await _gitterApiService.ReadChatMessagesAsync(
-                                CurrentUser.Id,
-                                SelectedRoom.Room.Id,
-                                unreadMessages.Select(m => m.Id));
-
-                            int unreadCount = 0;
-
-                            foreach (var message in unreadMessages)
-                            {
-                                message.ReadByCurrent();
-                                unreadCount++;
-                            }
-
-                            var dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
-                            await dispatcher.RunAsync(CoreDispatcherPriority.High, () => SelectedRoom.UnreadMessagesCount -= unreadCount);
-                        }
-                        catch (Exception ex)
-                        {
-                            App.TelemetryClient.TrackException(ex);
-                            _localNotificationService.SendNotification("Error", "Can't validate reading new messages");
-                        }
-                    });
-
-                // Remove notification data cause there is no new unread message
-                if (_applicationStorageService.Exists(SelectedRoom.Room.Name))
-                    _applicationStorageService.Remove(SelectedRoom.Room.Name);
 
                 App.TelemetryClient.TrackEvent("SelectRoom",
                     new Dictionary<string, string> { { "Room", room.Room.Name } });
-
-                // End async task
-                await _progressIndicatorService.HideAsync();
             }
 
+            if (!SelectedRoom.IsLoaded)
+            {
+                // Load room the first time
+                SelectedRoom.Messages.Reset();
+                SelectedRoom.IsLoaded = true;
+            }
+            else
+            {
+                // Do not load room again
+            }
+            
 #if WINDOWS_PHONE_APP
             // Go to dedicated room
             _navigationService.NavigateTo("Room");
