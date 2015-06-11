@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -70,8 +71,8 @@ namespace Gitter.ViewModel.Concrete
             }
         }
 
-
-        public IRoomsViewModel Rooms { get; private set; }
+        private readonly ObservableCollection<IRoomViewModel> _rooms = new ObservableCollection<IRoomViewModel>();
+        public ObservableCollection<IRoomViewModel> Rooms { get { return _rooms; } }
 
         private IRoomViewModel _selectedRoom;
         public IRoomViewModel SelectedRoom
@@ -134,7 +135,6 @@ namespace Gitter.ViewModel.Concrete
             RefreshCommand = new RelayCommand(Refresh, () => !IsRefreshing);
 
             // ViewModels
-            Rooms = ViewModelLocator.Rooms;
             CurrentDateTime = DateTime.Now;
 
 
@@ -152,7 +152,81 @@ namespace Gitter.ViewModel.Concrete
                     MediumAvatarUrl = "https://avatars.githubusercontent.com/u/14751?"
                 };
 
-                SelectedRoom = Rooms.Rooms.FirstOrDefault();
+                var suprememoocow = new User
+                {
+                    Id = "53307831c3599d1de448e19a",
+                    Username = "suprememoocow",
+                    DisplayName = "Andrew Newdigate",
+                    Url = "/suprememoocow,",
+                    SmallAvatarUrl = "https://avatars.githubusercontent.com/u/594566?",
+                    MediumAvatarUrl = "https://avatars.githubusercontent.com/u/594566?"
+                };
+
+                Rooms.Add(new RoomViewModel(new Room
+                {
+                    Id = "53307860c3599d1de448e19d",
+                    Name = "Andrew Newdigate",
+                    Topic = string.Empty,
+                    OneToOne = true,
+                    Users = new[] { suprememoocow },
+                    UnreadItems = 52,
+                    UnreadMentions = 0,
+                    DisabledNotifications = false,
+                    Type = "ONETOONE"
+                }));
+
+                Rooms.Add(
+                   new RoomViewModel(new Room
+                   {
+                       Id = "5330777dc3599d1de448e194",
+                       Name = "gitterHQ",
+                       Topic = "Gitter",
+                       Url = "gitterHQ",
+                       OneToOne = false,
+                       UserCount = 2,
+                       UnreadItems = 0,
+                       UnreadMentions = 0,
+                       LastAccessTime = new DateTime(2014, 3, 24, 18, 22, 28),
+                       DisabledNotifications = false,
+                       Type = "ORG",
+                       Version = 1
+                   }));
+
+                Rooms.Add(
+               new RoomViewModel(new Room
+               {
+                   Id = "5330780dc3599d1de448e198",
+                   Name = "gitterHQ/devops",
+                   Topic = string.Empty,
+                   Url = "gitterHQ/devops",
+                   OneToOne = false,
+                   UserCount = 2,
+                   UnreadItems = 3,
+                   UnreadMentions = 0,
+                   LastAccessTime = new DateTime(2014, 3, 24, 18, 23, 10),
+                   DisabledNotifications = false,
+                   Type = "ORG_CHANNEL",
+                   Version = 1
+               }));
+
+                Rooms.Add(
+               new RoomViewModel(new Room
+               {
+                   Id = "53307793c3599d1de448e196",
+                   Name = "malditogeek/vmux",
+                   Topic = "VMUX - Plugin-free video calls in your browser using WebRTC",
+                   Url = "gitterHQ/devops",
+                   OneToOne = false,
+                   UserCount = 2,
+                   UnreadItems = 42,
+                   UnreadMentions = 0,
+                   LastAccessTime = new DateTime(2014, 3, 24, 18, 21, 08),
+                   DisabledNotifications = false,
+                   Type = "REPO",
+                   Version = 1
+               }));
+
+                SelectedRoom = Rooms.FirstOrDefault();
             }
             else
             {
@@ -241,13 +315,13 @@ namespace Gitter.ViewModel.Concrete
             // Start async task
             await _progressIndicatorService.ShowAsync();
 
-            var alreadyJoinedRoom = Rooms.Rooms.FirstOrDefault(r => r.Room.Name == OwnChatRoomName);
+            var alreadyJoinedRoom = Rooms.FirstOrDefault(r => r.Room.Name == OwnChatRoomName);
 
             if (alreadyJoinedRoom == null)
             {
                 var room = await _gitterApiService.JoinRoomAsync(OwnChatRoomName);
                 alreadyJoinedRoom = new RoomViewModel(room);
-                Rooms.Rooms.Add(alreadyJoinedRoom);
+                Rooms.Add(alreadyJoinedRoom);
 
                 App.TelemetryClient.TrackEvent("ChatWithUs",
                     new Dictionary<string, string> { { "AlreadyJoined", "false" } });
@@ -299,26 +373,26 @@ namespace Gitter.ViewModel.Concrete
         {
             var rooms = await _gitterApiService.GetRoomsAsync();
 
-            Rooms.Rooms.Clear();
+            Rooms.Clear();
 
             foreach (var room in rooms)
-                Rooms.Rooms.Add(new RoomViewModel(room));
+                Rooms.Add(new RoomViewModel(room));
 
             _eventService.RefreshRooms.OnNext(true);
         }
 
         public void SelectRoom(string roomName)
         {
-            if (Rooms.Rooms.Any())
+            if (Rooms.Any())
             {
-                var room = Rooms.Rooms.FirstOrDefault(r => r.Room.Name == roomName);
+                var room = Rooms.FirstOrDefault(r => r.Room.Name == roomName);
                 SelectRoom(room);
             }
             else
             {
                 _refreshRooms = _eventService.RefreshRooms.Subscribe(_ =>
                 {
-                    var room = Rooms.Rooms.FirstOrDefault(r => r.Room.Name == roomName);
+                    var room = Rooms.FirstOrDefault(r => r.Room.Name == roomName);
                     SelectRoom(room);
                     _refreshRooms.Dispose();
                 });

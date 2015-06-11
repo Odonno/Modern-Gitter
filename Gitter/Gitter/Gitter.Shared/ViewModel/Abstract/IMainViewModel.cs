@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Gitter.Model;
 
@@ -8,7 +9,7 @@ namespace Gitter.ViewModel.Abstract
     {
         DateTime CurrentDateTime { get; }
         User CurrentUser { get; }
-        IRoomsViewModel Rooms { get; }
+        ObservableCollection<IRoomViewModel> Rooms { get; }
         IRoomViewModel SelectedRoom { get; }
         
         ICommand SelectRoomCommand { get; }

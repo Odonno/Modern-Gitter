@@ -73,7 +73,6 @@ namespace Gitter.ViewModel
             // ViewModels
             SimpleIoc.Default.Register<IMainViewModel, MainViewModel>();
             SimpleIoc.Default.Register<ILoginViewModel, LoginViewModel>();
-            SimpleIoc.Default.Register<IRoomsViewModel, RoomsViewModel>();
             SimpleIoc.Default.Register<IRoomViewModel, RoomViewModel>();
         }
 
@@ -113,14 +112,6 @@ namespace Gitter.ViewModel
             get
             {
                 return ServiceLocator.Current.GetInstance<ILoginViewModel>();
-            }
-        }
-
-        public static IRoomsViewModel Rooms
-        {
-            get
-            {
-                return ServiceLocator.Current.GetInstance<IRoomsViewModel>();
             }
         }
 
