@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Navigation;
 
 // Pour en savoir plus sur le modèle d'élément Page de base, consultez la page http://go.microsoft.com/fwlink/?LinkID=390556
 using GitHub.Common;
+using Gitter.ViewModel;
 
 namespace Gitter.Views
 {
@@ -99,6 +100,8 @@ namespace Gitter.Views
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             _navigationHelper.OnNavigatedFrom(e);
+
+            ViewModelLocator.Main.SelectedRoom = null;
         }
 
         #endregion

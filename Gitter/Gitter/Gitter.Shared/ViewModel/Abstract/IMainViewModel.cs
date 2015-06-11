@@ -10,8 +10,8 @@ namespace Gitter.ViewModel.Abstract
         DateTime CurrentDateTime { get; }
         User CurrentUser { get; }
         ObservableCollection<IRoomViewModel> Rooms { get; }
-        IRoomViewModel SelectedRoom { get; }
-        
+        IRoomViewModel SelectedRoom { get; set; }
+
         ICommand SelectRoomCommand { get; }
         ICommand ChatWithUsCommand { get; }
         ICommand RefreshCommand { get; }

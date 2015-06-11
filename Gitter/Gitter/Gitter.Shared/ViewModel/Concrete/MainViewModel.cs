@@ -87,7 +87,7 @@ namespace Gitter.ViewModel.Concrete
                 RaisePropertyChanged();
             }
         }
-
+        
         private bool _isRefreshing;
         public bool IsRefreshing
         {
@@ -266,6 +266,7 @@ namespace Gitter.ViewModel.Concrete
 
                         try
                         {
+                            // BUG : send error notification when receiving messages in realtime (in room page)
                             await _gitterApiService.ReadChatMessagesAsync(
                                 CurrentUser.Id,
                                 SelectedRoom.Room.Id,

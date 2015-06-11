@@ -217,13 +217,17 @@ namespace Gitter.ViewModel.Concrete
                     if (ViewModelLocator.Main.SelectedRoom == this)
                         await Messages.AddItemAsync(messageVM);
 
-                    // TODO : Check user is still in room page
-                    // If the message was not read, update unread notification (except for the current selected room)
-                    if (!messageVM.Read && ViewModelLocator.Main.SelectedRoom != this)
+                    // If the message was not read, update unread notifications when user is not reading (except for the current selected room)
+                    if (!messageVM.Read)
                     {
-                        var dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
-                        await dispatcher.RunAsync(CoreDispatcherPriority.High, () => UnreadMessagesCount++);
+                        // Add in-app notification (count) when necesary
+                        if (ViewModelLocator.Main.SelectedRoom != this)
+                        {
+                            var dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
+                            await dispatcher.RunAsync(CoreDispatcherPriority.High, () => UnreadMessagesCount++);
+                        }
 
+                        // Send notification (new message)
                         if (!Room.DisabledNotifications)
                             _localNotificationService.SendNotification(Room.Name, message.Text, Room.Name);
                     }

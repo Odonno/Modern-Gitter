@@ -22,7 +22,7 @@
                     </Grid.RowDefinitions>
 
                     <ListView x:Name="roomsListView" Grid.Row="0" 
-                              ItemsSource="{Binding Path=Rooms.Rooms}">
+                              ItemsSource="{Binding Path=Rooms}">
 
                         <ListView.ItemTemplate>
                             <DataTemplate>
