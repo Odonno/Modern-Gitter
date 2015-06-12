@@ -168,63 +168,60 @@ namespace Gitter.ViewModel.Concrete
                     Name = "Andrew Newdigate",
                     Topic = string.Empty,
                     OneToOne = true,
-                    Users = new[] { suprememoocow },
+                    Users = new[] {suprememoocow},
                     UnreadItems = 52,
                     UnreadMentions = 0,
                     DisabledNotifications = false,
                     Type = "ONETOONE"
                 }));
 
-                Rooms.Add(
-                   new RoomViewModel(new Room
-                   {
-                       Id = "5330777dc3599d1de448e194",
-                       Name = "gitterHQ",
-                       Topic = "Gitter",
-                       Url = "gitterHQ",
-                       OneToOne = false,
-                       UserCount = 2,
-                       UnreadItems = 0,
-                       UnreadMentions = 0,
-                       LastAccessTime = new DateTime(2014, 3, 24, 18, 22, 28),
-                       DisabledNotifications = false,
-                       Type = "ORG",
-                       Version = 1
-                   }));
+                Rooms.Add(new RoomViewModel(new Room
+                {
+                    Id = "5330777dc3599d1de448e194",
+                    Name = "gitterHQ",
+                    Topic = "Gitter",
+                    Url = "gitterHQ",
+                    OneToOne = false,
+                    UserCount = 2,
+                    UnreadItems = 0,
+                    UnreadMentions = 0,
+                    LastAccessTime = new DateTime(2014, 3, 24, 18, 22, 28),
+                    DisabledNotifications = false,
+                    Type = "ORG",
+                    Version = 1
+                }));
 
-                Rooms.Add(
-               new RoomViewModel(new Room
-               {
-                   Id = "5330780dc3599d1de448e198",
-                   Name = "gitterHQ/devops",
-                   Topic = string.Empty,
-                   Url = "gitterHQ/devops",
-                   OneToOne = false,
-                   UserCount = 2,
-                   UnreadItems = 3,
-                   UnreadMentions = 0,
-                   LastAccessTime = new DateTime(2014, 3, 24, 18, 23, 10),
-                   DisabledNotifications = false,
-                   Type = "ORG_CHANNEL",
-                   Version = 1
-               }));
+                Rooms.Add(new RoomViewModel(new Room
+                {
+                    Id = "5330780dc3599d1de448e198",
+                    Name = "gitterHQ/devops",
+                    Topic = string.Empty,
+                    Url = "gitterHQ/devops",
+                    OneToOne = false,
+                    UserCount = 2,
+                    UnreadItems = 3,
+                    UnreadMentions = 0,
+                    LastAccessTime = new DateTime(2014, 3, 24, 18, 23, 10),
+                    DisabledNotifications = false,
+                    Type = "ORG_CHANNEL",
+                    Version = 1
+                }));
 
-                Rooms.Add(
-               new RoomViewModel(new Room
-               {
-                   Id = "53307793c3599d1de448e196",
-                   Name = "malditogeek/vmux",
-                   Topic = "VMUX - Plugin-free video calls in your browser using WebRTC",
-                   Url = "gitterHQ/devops",
-                   OneToOne = false,
-                   UserCount = 2,
-                   UnreadItems = 42,
-                   UnreadMentions = 0,
-                   LastAccessTime = new DateTime(2014, 3, 24, 18, 21, 08),
-                   DisabledNotifications = false,
-                   Type = "REPO",
-                   Version = 1
-               }));
+                Rooms.Add(new RoomViewModel(new Room
+                {
+                    Id = "53307793c3599d1de448e196",
+                    Name = "malditogeek/vmux",
+                    Topic = "VMUX - Plugin-free video calls in your browser using WebRTC",
+                    Url = "gitterHQ/devops",
+                    OneToOne = false,
+                    UserCount = 2,
+                    UnreadItems = 42,
+                    UnreadMentions = 0,
+                    LastAccessTime = new DateTime(2014, 3, 24, 18, 21, 08),
+                    DisabledNotifications = false,
+                    Type = "REPO",
+                    Version = 1
+                }));
 
                 SelectedRoom = Rooms.FirstOrDefault();
             }
@@ -241,7 +238,7 @@ namespace Gitter.ViewModel.Concrete
                         // Notify only if there is unread messages
                         if (!unreadMessages.Any(m => !m.Read))
                             return;
-                        
+
                         try
                         {
                             // Update server to tell user read messages
@@ -249,7 +246,7 @@ namespace Gitter.ViewModel.Concrete
                                 CurrentUser.Id,
                                 SelectedRoom.Room.Id,
                                 unreadMessages.Select(m => m.Id));
-                            
+
                             // Remove notification data cause there is no new unread message
                             if (_applicationStorageService.Exists(SelectedRoom.Room.Name))
                                 _applicationStorageService.Remove(SelectedRoom.Room.Name);
@@ -301,11 +298,7 @@ namespace Gitter.ViewModel.Concrete
                 SelectedRoom.Messages.Reset();
                 SelectedRoom.IsLoaded = true;
             }
-            else
-            {
-                // Do not load room again
-            }
-            
+
 #if WINDOWS_PHONE_APP
             // Go to dedicated room
             _navigationService.NavigateTo("Room");

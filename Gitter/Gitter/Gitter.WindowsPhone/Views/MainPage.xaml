@@ -25,12 +25,6 @@
         </Grid.RowDefinitions>
         
 
-        <!-- Advertisement -->
-        <WindowsPhone81:AdMediatorControl x:Name="AdMediator_BAC0F2" 
-                                          Canvas.ZIndex="1"
-                                          Id="AdMediator-Id-E4A3DD3B-F096-417B-92D4-9156551D7E69"
-                                          HorizontalAlignment="Left" VerticalAlignment="Top" />
-        
         <!-- Title -->
         <StackPanel Orientation="Horizontal">
             <Image Source="../Assets/Gitter.white.png" Height="80"/>

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using Gitter.API.Services.Abstract;
@@ -17,7 +16,18 @@ namespace Gitter.DataObjects.Concrete
     public class MessagesIncrementalLoadingCollection : IncrementalLoadingCollection<IMessageViewModel>
     {
         #region Fields
+
         private readonly object _lock = new object();
+
+        private readonly List<IMessageViewModel> _cachedMessages = new List<IMessageViewModel>();
+
+        #endregion
+
+
+        #region Services
+
+        private readonly IGitterApiService _gitterApiService;
+        private readonly IEventService _eventService;
 
         #endregion
 
@@ -38,6 +48,41 @@ namespace Gitter.DataObjects.Concrete
             RoomId = roomId;
             ItemsPerPage = 20;
             Ascendant = true;
+
+            _gitterApiService = ServiceLocator.Current.GetInstance<IGitterApiService>();
+            _eventService = ServiceLocator.Current.GetInstance<IEventService>();
+
+            _eventService.ReadRoom.Subscribe(async room =>
+            {
+                if (room.Room.Id == roomId)
+                {
+                    // Add current cached messages in UI
+                    foreach (var message in _cachedMessages)
+                        await AddItemAsync(message);
+
+                    _cachedMessages.Clear();
+                }
+            });
+
+            _eventService.PushMessage.Subscribe(async messageRoom =>
+            {
+                var id = messageRoom.Item1;
+                var message = messageRoom.Item2;
+
+                if (id == roomId)
+                {
+                    if (ViewModelLocator.Main.SelectedRoom != null)
+                    {
+                        // Add message in UI
+                        await AddItemAsync(message);
+                    }
+                    else if (Page > 0) // only if room is already loaded
+                    {
+                        // Cached message to be added in the future
+                        _cachedMessages.Add(message);
+                    }
+                }
+            });
         }
 
         #endregion
@@ -55,7 +100,7 @@ namespace Gitter.DataObjects.Concrete
                 if (Page++ == 0)
                     BeforeId = null;
 
-                var beforeMessages = ServiceLocator.Current.GetInstance<IGitterApiService>().GetRoomMessagesAsync(RoomId, ItemsPerPage, BeforeId)
+                var beforeMessages = _gitterApiService.GetRoomMessagesAsync(RoomId, ItemsPerPage, BeforeId)
                     .ConfigureAwait(false).GetAwaiter().GetResult();
 
                 if (beforeMessages.Count() < ItemsPerPage)
@@ -67,7 +112,7 @@ namespace Gitter.DataObjects.Concrete
                     .Where(message => !string.IsNullOrWhiteSpace(message.Text))
                     .Select(message => new MessageViewModel(message));
 
-                ServiceLocator.Current.GetInstance<IEventService>().NotifyUnreadMessages.OnNext(loadedMessages.Where(message => !message.Read));
+                _eventService.NotifyUnreadMessages.OnNext(loadedMessages.Where(message => !message.Read));
 
                 return loadedMessages;
             }
@@ -78,7 +123,7 @@ namespace Gitter.DataObjects.Concrete
             await base.AddItemAsync(item);
 
             if (!item.Read && ViewModelLocator.Main.CurrentUser.Id != item.User.Id)
-                ServiceLocator.Current.GetInstance<IEventService>().NotifyUnreadMessages.OnNext(new[] { item });
+                _eventService.NotifyUnreadMessages.OnNext(new[] { item });
         }
 
         #endregion

@@ -18,7 +18,9 @@ using Windows.UI.Xaml.Navigation;
 
 // Pour en savoir plus sur le modèle d'élément Page de base, consultez la page http://go.microsoft.com/fwlink/?LinkID=390556
 using GitHub.Common;
+using Gitter.Services.Abstract;
 using Gitter.ViewModel;
+using Microsoft.Practices.ServiceLocation;
 
 namespace Gitter.Views
 {
@@ -27,9 +29,18 @@ namespace Gitter.Views
     /// </summary>
     public sealed partial class RoomPage : Page
     {
+        #region Fields
+
+        private readonly IEventService _eventService;
+
+        #endregion
+
+
         public RoomPage()
         {
             InitializeComponent();
+
+            _eventService = ServiceLocator.Current.GetInstance<IEventService>();
 
             _navigationHelper = new NavigationHelper(this);
             _navigationHelper.LoadState += NavigationHelper_LoadState;
@@ -95,6 +106,8 @@ namespace Gitter.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             _navigationHelper.OnNavigatedTo(e);
+
+            _eventService.ReadRoom.OnNext(ViewModelLocator.Main.SelectedRoom);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)

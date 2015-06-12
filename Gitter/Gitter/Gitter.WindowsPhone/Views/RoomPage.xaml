@@ -1,5 +1,4 @@
 ﻿<Page
-    x:Class="Gitter.Views.RoomPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,11 +6,28 @@
     xmlns:userControls="using:Gitter.UserControls"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:WindowsPhone81="using:Microsoft.AdMediator.WindowsPhone81"
+    x:Class="Gitter.Views.RoomPage"
     mc:Ignorable="d"
     NavigationCacheMode="Required"
     RequestedTheme="Light"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     DataContext="{Binding Main.SelectedRoom, Source={StaticResource Locator}}">
+
+
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton Label="send" Icon="PostUpdate"
+        		Command="{Binding SendMessageCommand}"
+        		IsEnabled="{Binding Converter={StaticResource NullToBooleanConverter}}" />
+            <AppBarButton Label="talk" Icon="Microphone"
+        		Command="{Binding TalkCommand}"
+        		IsEnabled="{Binding Converter={StaticResource NullToBooleanConverter}}" />
+            <AppBarButton Label="refresh" Icon="Refresh"
+        		Command="{Binding RefreshCommand}"
+        		IsEnabled="{Binding Converter={StaticResource NullToBooleanConverter}}" />
+        </CommandBar>
+    </Page.BottomAppBar>
 
     <Grid x:Name="LayoutRoot" Margin="12 0">
 
@@ -22,16 +38,22 @@
         </Grid.ChildrenTransitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" MinHeight="50" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        
-        
+
+
+        <!-- Advertisement -->
+        <WindowsPhone81:AdMediatorControl x:Name="AdMediator_576F10"
+                                          Canvas.ZIndex="1" Margin="-12 0"
+                                          Id="AdMediator-Id-2CCEED31-AE6A-40CE-946B-36235B99163B" 
+                                          HorizontalAlignment="Left" VerticalAlignment="Top" />
+
         <!-- Title -->
         <StackPanel>
-            <TextBlock Text="{Binding Path=Room.Name}" 
+            <TextBlock Text="{Binding Room.Name}" 
                        Style="{ThemeResource TitleTextBlockStyle}" 
-                       Margin="0,12,0,0" />
+                       Margin="0 12 0 0" />
         </StackPanel>
 
         <!-- Content = Chat - List of messages -->
@@ -42,9 +64,9 @@
             </Grid.RowDefinitions>
 
             <ListView Margin="0 12 0 0"
-                      ItemsSource="{Binding Messages}"
-                      IncrementalLoadingTrigger="Edge">
-                
+				ItemsSource="{Binding Messages}"
+				IncrementalLoadingTrigger="Edge">
+
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -65,12 +87,12 @@
                 <ListView.Template>
                     <ControlTemplate>
                         <Border BorderThickness="{TemplateBinding BorderThickness}"
-                                Padding="{TemplateBinding Padding}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                Background="{TemplateBinding Background}">
+							Padding="{TemplateBinding Padding}"
+							BorderBrush="{TemplateBinding BorderBrush}"
+							Background="{TemplateBinding Background}">
                             <ScrollViewer x:Name="ScrollViewer" 
-                                          ZoomMode="Disabled" 
-                                          RenderTransformOrigin="0.5,0.5">
+								ZoomMode="Disabled" 
+								RenderTransformOrigin="0.5,0.5">
                                 <ScrollViewer.RenderTransform>
                                     <CompositeTransform Rotation="180" ScaleX="-1" />
                                 </ScrollViewer.RenderTransform>
@@ -84,7 +106,7 @@
                     <DataTemplate>
 
                         <userControls:ChatMessageControl RenderTransformOrigin="0.5,0.5"
-                                                         Visibility="{Binding Text, Converter={StaticResource EmptyStringToVisibilityConverter}}">
+							Visibility="{Binding Text, Converter={StaticResource EmptyStringToVisibilityConverter}}">
                             <userControls:ChatMessageControl.RenderTransform>
                                 <CompositeTransform Rotation="180" ScaleX="-1" />
                             </userControls:ChatMessageControl.RenderTransform>
@@ -96,39 +118,21 @@
             </ListView>
 
             <TextBox Grid.Row="1" 
-                     Visibility="{Binding Main.SelectedRoom, Converter={StaticResource NullToVisibilityConverter}, Source={StaticResource Locator}}"
-                     Text="{Binding TextMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                     PlaceholderText="type your message here"
-                     KeyDown="SendMessage_OnKeyDown"
-                     TextWrapping="Wrap">
+				Visibility="{Binding Main.SelectedRoom, Converter={StaticResource NullToVisibilityConverter}, Source={StaticResource Locator}}"
+				Text="{Binding TextMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+				PlaceholderText="type your message here"
+				KeyDown="SendMessage_OnKeyDown"
+				TextWrapping="Wrap">
 
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="KeyDown">
                         <core:InvokeCommandAction Command="{Binding SendMessageWithParamCommand}"
-                                                  InputConverter="{StaticResource EnterKeyDownConverter}"/>
+							InputConverter="{StaticResource EnterKeyDownConverter}"/>
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
 
             </TextBox>
         </Grid>
-
     </Grid>
-
-
-    <Page.BottomAppBar>
-        <CommandBar>
-            <CommandBar.PrimaryCommands>
-                <AppBarButton Label="send" Icon="PostUpdate"
-                              Command="{Binding SendMessageCommand}"
-                              IsEnabled="{Binding Converter={StaticResource NullToBooleanConverter}}" />
-                <AppBarButton Label="talk" Icon="Microphone"
-                              Command="{Binding TalkCommand}"
-                              IsEnabled="{Binding Converter={StaticResource NullToBooleanConverter}}" />
-                <AppBarButton Label="refresh" Icon="Refresh"
-                              Command="{Binding RefreshCommand}"
-                              IsEnabled="{Binding Converter={StaticResource NullToBooleanConverter}}" />
-            </CommandBar.PrimaryCommands>
-        </CommandBar>
-    </Page.BottomAppBar>
 
 </Page>

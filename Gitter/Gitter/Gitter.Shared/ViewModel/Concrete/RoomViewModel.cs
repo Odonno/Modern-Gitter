@@ -25,6 +25,7 @@ namespace Gitter.ViewModel.Concrete
         private readonly IGitterApiService _gitterApiService;
         private readonly ILocalNotificationService _localNotificationService;
         private readonly IProgressIndicatorService _progressIndicatorService;
+        private readonly IEventService _eventService;
 
         #endregion
 
@@ -97,6 +98,7 @@ namespace Gitter.ViewModel.Concrete
             _gitterApiService = ServiceLocator.Current.GetInstance<IGitterApiService>();
             _localNotificationService = ServiceLocator.Current.GetInstance<ILocalNotificationService>();
             _progressIndicatorService = ServiceLocator.Current.GetInstance<IProgressIndicatorService>();
+            _eventService = ServiceLocator.Current.GetInstance<IEventService>();
 
 
             if (IsInDesignMode)
@@ -215,9 +217,8 @@ namespace Gitter.ViewModel.Concrete
                     if (Messages.Any(m => m.Id == messageVM.Id))
                         return;
 
-                    // Do not add message to UI when it is not the current selected room
-                    if (ViewModelLocator.Main.SelectedRoom == this)
-                        await Messages.AddItemAsync(messageVM);
+                    // Add message to the room
+                    _eventService.PushMessage.OnNext(new Tuple<string, IMessageViewModel>(Room.Id, messageVM));
 
                     // If the message was not read, update unread notifications when user is not reading (except for the current selected room)
                     if (!messageVM.Read)
@@ -239,7 +240,7 @@ namespace Gitter.ViewModel.Concrete
             // Update count of unread messages
             UnreadMessagesCount = Room.UnreadItems;
         }
-        
+
         #endregion
 
 
