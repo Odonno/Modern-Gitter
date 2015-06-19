@@ -62,6 +62,18 @@ namespace Gitter.ViewModel.Concrete
             }
         }
 
+        private bool _isSendingMessage;
+        public bool IsSendingMessage
+        {
+            get { return _isSendingMessage; }
+            set
+            {
+                _isSendingMessage = value;
+                RaisePropertyChanged();
+                ((RelayCommand)(SendMessageCommand)).RaiseCanExecuteChanged();
+            }
+        }
+
         #endregion
 
 
@@ -248,12 +260,13 @@ namespace Gitter.ViewModel.Concrete
 
         private bool CanSendMessage()
         {
-            return Room != null && !string.IsNullOrWhiteSpace(TextMessage);
+            return Room != null && !string.IsNullOrWhiteSpace(TextMessage) && !IsSendingMessage;
         }
         private async void SendMessage()
         {
             // Start async task
             await _progressIndicatorService.ShowAsync();
+            IsSendingMessage = true;
 
             await _gitterApiService.SendMessageAsync(Room.Id, TextMessage);
 
@@ -264,6 +277,7 @@ namespace Gitter.ViewModel.Concrete
 
             // End async task
             await _progressIndicatorService.HideAsync();
+            IsSendingMessage = false;
         }
 
         private void SendMessageWithParam(bool enterKeyPressed)
