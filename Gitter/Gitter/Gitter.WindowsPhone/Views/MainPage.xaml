@@ -3,7 +3,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:WindowsPhone81="using:Microsoft.AdMediator.WindowsPhone81"
     x:Class="Gitter.MainPage"
     mc:Ignorable="d"
     NavigationCacheMode="Required"
@@ -86,13 +85,13 @@
     <Page.BottomAppBar>
         <CommandBar>
             <CommandBar.PrimaryCommands>
-                <AppBarButton Label="refresh" 
+                <AppBarButton x:Uid="/UIResources/refresh" Label="refresh" 
                               Command="{Binding Path=RefreshCommand}"
                               Icon="Refresh" />
             </CommandBar.PrimaryCommands>
             
             <CommandBar.SecondaryCommands>
-                <AppBarButton Label="chat with us" 
+                <AppBarButton x:Uid="/UIResources/chatWithUs" Label="chat with us" 
                               Command="{Binding Path=ChatWithUsCommand}" />
             </CommandBar.SecondaryCommands>
         </CommandBar>

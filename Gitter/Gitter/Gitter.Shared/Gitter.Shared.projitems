@@ -56,5 +56,9 @@
   <ItemGroup>
     <PRIResource Include="$(MSBuildThisFileDirectory)Strings\en-US\ConvertersResources.resw" />
     <PRIResource Include="$(MSBuildThisFileDirectory)Strings\en-US\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\en-US\UIResources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\fr-FR\ConvertersResources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\fr-FR\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\fr-FR\UIResources.resw" />
   </ItemGroup>
 </Project>

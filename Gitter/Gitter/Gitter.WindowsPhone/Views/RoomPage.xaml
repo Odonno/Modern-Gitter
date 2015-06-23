@@ -15,20 +15,6 @@
     DataContext="{Binding Main.SelectedRoom, Source={StaticResource Locator}}">
 
 
-    <Page.BottomAppBar>
-        <CommandBar>
-            <AppBarButton Label="send" Icon="PostUpdate"
-        		Command="{Binding SendMessageCommand}"
-        		IsEnabled="{Binding Converter={StaticResource NullToBooleanConverter}}" />
-            <AppBarButton Label="talk" Icon="Microphone"
-        		Command="{Binding TalkCommand}"
-        		IsEnabled="{Binding Converter={StaticResource NullToBooleanConverter}}" />
-            <AppBarButton Label="refresh" Icon="Refresh"
-        		Command="{Binding RefreshCommand}"
-        		IsEnabled="{Binding Converter={StaticResource NullToBooleanConverter}}" />
-        </CommandBar>
-    </Page.BottomAppBar>
-
     <Grid x:Name="LayoutRoot" Margin="12 0">
 
         <Grid.ChildrenTransitions>
@@ -64,8 +50,8 @@
             </Grid.RowDefinitions>
 
             <ListView Margin="0 12 0 0"
-				ItemsSource="{Binding Messages}"
-				IncrementalLoadingTrigger="Edge">
+                      ItemsSource="{Binding Messages}"
+                      IncrementalLoadingTrigger="Edge">
 
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
@@ -87,12 +73,12 @@
                 <ListView.Template>
                     <ControlTemplate>
                         <Border BorderThickness="{TemplateBinding BorderThickness}"
-							Padding="{TemplateBinding Padding}"
-							BorderBrush="{TemplateBinding BorderBrush}"
-							Background="{TemplateBinding Background}">
+                                Padding="{TemplateBinding Padding}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                Background="{TemplateBinding Background}">
                             <ScrollViewer x:Name="ScrollViewer" 
-								ZoomMode="Disabled" 
-								RenderTransformOrigin="0.5,0.5">
+                                          ZoomMode="Disabled" 
+                                          RenderTransformOrigin="0.5,0.5">
                                 <ScrollViewer.RenderTransform>
                                     <CompositeTransform Rotation="180" ScaleX="-1" />
                                 </ScrollViewer.RenderTransform>
@@ -106,7 +92,7 @@
                     <DataTemplate>
 
                         <userControls:ChatMessageControl RenderTransformOrigin="0.5,0.5"
-							Visibility="{Binding Text, Converter={StaticResource EmptyStringToVisibilityConverter}}">
+                                                         Visibility="{Binding Text, Converter={StaticResource EmptyStringToVisibilityConverter}}">
                             <userControls:ChatMessageControl.RenderTransform>
                                 <CompositeTransform Rotation="180" ScaleX="-1" />
                             </userControls:ChatMessageControl.RenderTransform>
@@ -118,21 +104,36 @@
             </ListView>
 
             <TextBox Grid.Row="1" 
-				Visibility="{Binding Main.SelectedRoom, Converter={StaticResource NullToVisibilityConverter}, Source={StaticResource Locator}}"
-				Text="{Binding TextMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-				PlaceholderText="type your message here"
-				KeyDown="SendMessage_OnKeyDown"
-				TextWrapping="Wrap">
+                     Visibility="{Binding Main.SelectedRoom, Converter={StaticResource NullToVisibilityConverter}, Source={StaticResource Locator}}"
+                     Text="{Binding TextMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     x:Uid="/UIResources/typeMessageHere" PlaceholderText="type your message here"
+                     KeyDown="SendMessage_OnKeyDown"
+                     TextWrapping="Wrap">
 
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="KeyDown">
                         <core:InvokeCommandAction Command="{Binding SendMessageWithParamCommand}"
-							InputConverter="{StaticResource EnterKeyDownConverter}"/>
+                                                  InputConverter="{StaticResource EnterKeyDownConverter}"/>
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
 
             </TextBox>
         </Grid>
     </Grid>
+    
+
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton x:Uid="/UIResources/send" Label="send" Icon="PostUpdate"
+        		Command="{Binding SendMessageCommand}"
+        		IsEnabled="{Binding Converter={StaticResource NullToBooleanConverter}}" />
+            <AppBarButton x:Uid="/UIResources/talk" Label="talk" Icon="Microphone"
+        		Command="{Binding TalkCommand}"
+        		IsEnabled="{Binding Converter={StaticResource NullToBooleanConverter}}" />
+            <AppBarButton x:Uid="/UIResources/refresh" Label="refresh" Icon="Refresh"
+        		Command="{Binding RefreshCommand}"
+        		IsEnabled="{Binding Converter={StaticResource NullToBooleanConverter}}" />
+        </CommandBar>
+    </Page.BottomAppBar>
 
 </Page>
