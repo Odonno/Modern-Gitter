@@ -8,6 +8,7 @@
         <viewModel:ViewModelLocator x:Key="Locator" />
         
         <!-- Converters -->
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <converters:EmptyStringToVisibilityConverter x:Key="EmptyStringToVisibilityConverter" />
         <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
         <converters:MeToVisibilityConverter x:Key="MeToVisibilityConverter" />
@@ -102,12 +103,12 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
+        
         <!-- Templates -->
 
         <!-- Header Template (of hub) -->
         <DataTemplate x:Key="HeaderTemplate">
             <TextBlock Text="{Binding}" Style="{ThemeResource HeaderTextBlockStyle}" />
-        </DataTemplate>
+        </DataTemplate>    
     </Application.Resources>
 </Application>

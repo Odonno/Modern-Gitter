@@ -12,112 +12,155 @@
     DataContext="{Binding Source={StaticResource Locator}, Path=Main}">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <SplitView IsPaneOpen="True" PaneBackground="{StaticResource BlueGrey}"
-                   DisplayMode="Inline">
-            <SplitView.Pane>
-                <Grid RequestedTheme="Dark" Margin="12">
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
 
-                    <ListView x:Name="roomsListView" Grid.Row="0" 
+        <!-- Main Toggle Button (show/hide pane) -->
+        <Grid Grid.Row="0" Background="{StaticResource BlueGrey}">
+
+            <ToggleButton x:Name="paneToggle"  IsChecked="True" Background="{StaticResource BlueGrey}"
+                          Style="{StaticResource TextBlockButtonStyle}" HorizontalAlignment="Left">
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 6">
+                    <Image Source="../Assets/Gitter.transparent.png" Height="56" Margin="0 0 0 -6" />
+                    <TextBlock Text="GITTER" Margin="6 0 0 0" VerticalAlignment="Bottom" Foreground="White"
+                               FontSize="40" CharacterSpacing="10" 
+                               Visibility="{Binding ElementName=paneToggle, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <TextBlock Text="{Binding Path=SelectedRoom.Room.Name}" Margin="6 0 0 0" VerticalAlignment="Bottom" Foreground="White"
+                               FontSize="32" CharacterSpacing="10" 
+                               Visibility="{Binding ElementName=paneToggle, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=inverse}" />
+                </StackPanel>
+            </ToggleButton>
+
+        </Grid>
+
+
+        <!-- SplitView => Rooms & Messages -->
+        <SplitView Grid.Row="1"
+                   IsPaneOpen="{Binding ElementName=paneToggle, Path=IsChecked}" 
+                   PaneBackground="{StaticResource BlueGrey}"
+                   DisplayMode="Inline">
+
+            <!-- Pane Content - Left side -->
+            <SplitView.Pane>
+                <Grid RequestedTheme="Dark" Margin="6 0 6 6">
+
+                    <!-- Compact Pane View -->
+                    <Grid Visibility="{Binding ElementName=paneToggle, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=inverse}">
+                        <!-- TODO : Used to show if rooms received new messages (unread count) -->
+                    </Grid>
+
+                    <!-- Full Pane View -->
+                    <Grid Visibility="{Binding ElementName=paneToggle, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+
+                        <!-- List of rooms -->
+                        <ListView Grid.Row="0" x:Name="roomsListView"
                               ItemsSource="{Binding Path=Rooms}">
 
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Button Margin="0 3"
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Button Margin="0 3"
                                         HorizontalContentAlignment="Stretch"
                                         HorizontalAlignment="Stretch"
                                         Command="{Binding Main.SelectRoomCommand, Source={StaticResource Locator}}"
                                         CommandParameter="{Binding}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
 
-                                        <StackPanel DataContext="{Binding Room}">
-                                            <TextBlock Text="{Binding Name}" FontSize="20" />
-                                            <TextBlock Text="{Binding Topic}" FontSize="8" 
+                                            <StackPanel DataContext="{Binding Room}">
+                                                <TextBlock Text="{Binding Name}" FontSize="20" />
+                                                <TextBlock Text="{Binding Topic}" FontSize="8" 
                                                        TextWrapping="Wrap"
                                                        Visibility="{Binding Topic, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
-                                        </StackPanel>
+                                            </StackPanel>
 
-                                        <Grid Grid.Column="1" Margin="0 6 6 0" VerticalAlignment="Top"
+                                            <Grid Grid.Column="1" Margin="0 -2 -4 0" VerticalAlignment="Top"
                                               Visibility="{Binding UnreadMessagesCount, Converter={StaticResource UnreadMessagesCountToVisibilityConverter}}">
 
-                                            <Ellipse Width="24" Height="24" Fill="White" />
-                                            <TextBlock Text="{Binding UnreadMessagesCount, Converter={StaticResource UnreadMessagesCountConverter}}"
-                                                       FontSize="12" FontWeight="Bold"
+                                                <Ellipse Width="24" Height="24" Fill="White" />
+                                                <TextBlock Text="{Binding UnreadMessagesCount, Converter={StaticResource UnreadMessagesCountConverter}}"
+                                                       FontSize="12" FontWeight="Bold" Margin="0 -1 0 0"
                                                        HorizontalAlignment="Center" VerticalAlignment="Center"
                                                        Foreground="{StaticResource BlueGrey}"/>
 
+                                            </Grid>
                                         </Grid>
-                                    </Grid>
-                                </Button>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
+                                    </Button>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
 
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="ListViewItem">
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
 
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="ListViewItem">
-                                            <Border x:Name="border" Background="Transparent">
-                                                <VisualStateManager.VisualStateGroups>
-                                                    <VisualStateGroup x:Name="CommonStates">
-                                                        <VisualState x:Name="Normal" />
-                                                        <VisualState x:Name="Disabled" />
-                                                    </VisualStateGroup>
-                                                    <VisualStateGroup x:Name="SelectionStates">
-                                                        <VisualState x:Name="Unselected" />
-                                                        <VisualState x:Name="Selected">
-                                                            <Storyboard>
-                                                                <ColorAnimationUsingKeyFrames Storyboard.TargetName="border"
-                                                              Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
-                                                                    <EasingColorKeyFrame KeyTime="0" Value="LightBlue" />
-                                                                </ColorAnimationUsingKeyFrames>
-                                                            </Storyboard>
-                                                        </VisualState>
-                                                        <VisualState x:Name="SelectedUnfocused">
-                                                            <Storyboard>
-                                                                <ColorAnimationUsingKeyFrames Storyboard.TargetName="border"
-                                                              Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
-                                                                    <EasingColorKeyFrame KeyTime="0" Value="SkyBlue" />
-                                                                </ColorAnimationUsingKeyFrames>
-                                                            </Storyboard>
-                                                        </VisualState>
-                                                    </VisualStateGroup>
-                                                </VisualStateManager.VisualStateGroups>
-                                                <ContentPresenter/>
-                                            </Border>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </ListView.ItemContainerStyle>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="ListViewItem">
+                                                <Border x:Name="border" Background="Transparent">
+                                                    <VisualStateManager.VisualStateGroups>
+                                                        <VisualStateGroup x:Name="CommonStates">
+                                                            <VisualState x:Name="Normal" />
+                                                            <VisualState x:Name="Disabled" />
+                                                        </VisualStateGroup>
+                                                        <VisualStateGroup x:Name="SelectionStates">
+                                                            <VisualState x:Name="Unselected" />
+                                                            <VisualState x:Name="Selected">
+                                                                <Storyboard>
+                                                                    <ColorAnimationUsingKeyFrames Storyboard.TargetName="border"
+                                                                                              Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
+                                                                        <EasingColorKeyFrame KeyTime="0" Value="LightBlue" />
+                                                                    </ColorAnimationUsingKeyFrames>
+                                                                </Storyboard>
+                                                            </VisualState>
+                                                            <VisualState x:Name="SelectedUnfocused">
+                                                                <Storyboard>
+                                                                    <ColorAnimationUsingKeyFrames Storyboard.TargetName="border"
+                                                                                              Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
+                                                                        <EasingColorKeyFrame KeyTime="0" Value="SkyBlue" />
+                                                                    </ColorAnimationUsingKeyFrames>
+                                                                </Storyboard>
+                                                            </VisualState>
+                                                        </VisualStateGroup>
+                                                    </VisualStateManager.VisualStateGroups>
+                                                    <ContentPresenter/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ListView.ItemContainerStyle>
 
-                    </ListView>
+                        </ListView>
 
-                    <Button Grid.Row="1" x:Uid="/UIResources/refreshContent" Content="refresh" 
+                        <!-- Refresh rooms button -->
+                        <Button Grid.Row="1" x:Uid="/UIResources/refreshContent" Content="refresh" 
                             FontSize="22"
                             HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                             Command="{Binding Path=RefreshCommand}" />
+                    </Grid>
+
                 </Grid>
             </SplitView.Pane>
 
+            <!-- Main content of the app (chat messages) -->
             <SplitView.Content>
-                <Grid DataContext="{Binding Path=SelectedRoom}" 
-                      Margin="6">
+                <Grid DataContext="{Binding Path=SelectedRoom}" Margin="6">
 
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
+                    <!-- List of messages -->
                     <ListView x:Name="messagesListView"
                               ItemsSource="{Binding Path=Messages}"
                               IncrementalLoadingTrigger="Edge">
@@ -173,6 +216,7 @@
 
                     </ListView>
 
+                    <!-- Here user can type & send his message -->
                     <TextBox Grid.Row="1" Margin="72 0 18 0"
                              Visibility="{Binding Main.SelectedRoom, Converter={StaticResource NullToVisibilityConverter}, Source={StaticResource Locator}}"
                              Text="{Binding TextMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -183,6 +227,7 @@
         </SplitView>
     </Grid>
 
+    <!-- Actions in AppBar -->
     <Page.BottomAppBar>
         <CommandBar>
             <CommandBar.PrimaryCommands>
