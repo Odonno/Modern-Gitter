@@ -102,7 +102,8 @@
 
                     </ListView>
 
-                    <Button Grid.Row="1" Content="refresh" FontSize="22"
+                    <Button Grid.Row="1" x:Uid="/UIResources/refreshContent" Content="refresh" 
+                            FontSize="22"
                             HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                             Command="{Binding Path=RefreshCommand}" />
                 </Grid>
@@ -175,7 +176,7 @@
                     <TextBox Grid.Row="1" Margin="72 0 18 0"
                              Visibility="{Binding Main.SelectedRoom, Converter={StaticResource NullToVisibilityConverter}, Source={StaticResource Locator}}"
                              Text="{Binding TextMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                             PlaceholderText="type your message here"
+                             x:Uid="/UIResources/typeMessageHere" PlaceholderText="type your message here"
                              TextWrapping="Wrap" />
                 </Grid>
             </SplitView.Content>
@@ -185,16 +186,16 @@
     <Page.BottomAppBar>
         <CommandBar>
             <CommandBar.PrimaryCommands>
-                <AppBarButton Label="send" Icon="PostUpdate"
+                <AppBarButton x:Uid="/UIResources/send" Label="send" Icon="PostUpdate"
                               Command="{Binding SelectedRoom.SendMessageCommand}"
                               IsEnabled="{Binding Converter={StaticResource NullToBooleanConverter}}" />
-                <AppBarButton Label="refresh" Icon="Refresh"
+                <AppBarButton x:Uid="/UIResources/refresh" Label="refresh" Icon="Refresh"
                               Command="{Binding SelectedRoom.RefreshCommand}"
                               IsEnabled="{Binding Converter={StaticResource NullToBooleanConverter}}" />
             </CommandBar.PrimaryCommands>
 
             <CommandBar.SecondaryCommands>
-                <AppBarButton Label="chat with us" 
+                <AppBarButton x:Uid="/UIResources/chatWithUs" Label="chat with us" 
                               Command="{Binding Path=ChatWithUsCommand}" />
             </CommandBar.SecondaryCommands>
         </CommandBar>

@@ -120,8 +120,20 @@
   <data name="chatWithUs.Label" xml:space="preserve">
     <value>discuter avec nous</value>
   </data>
+  <data name="copy.Text" xml:space="preserve">
+    <value>copier</value>
+  </data>
   <data name="refresh.Label" xml:space="preserve">
     <value>rafraîchir</value>
+  </data>
+  <data name="refreshContent.Content" xml:space="preserve">
+    <value>rafraîchir</value>
+  </data>
+  <data name="remove.Text" xml:space="preserve">
+    <value>supprimer</value>
+  </data>
+  <data name="respondTo.Text" xml:space="preserve">
+    <value>répondre à</value>
   </data>
   <data name="send.Label" xml:space="preserve">
     <value>envoyer</value>

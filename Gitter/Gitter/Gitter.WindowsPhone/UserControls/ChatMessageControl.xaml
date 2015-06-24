@@ -35,9 +35,9 @@
 
             <FlyoutBase.AttachedFlyout>
                 <MenuFlyout>
-                    <MenuFlyoutItem Text="respond to" 
-                                Command="{Binding Path=Main.SelectedRoom.RespondToCommand, Source={StaticResource Locator}}"
-                                CommandParameter="{Binding Path=User}" />
+                    <MenuFlyoutItem x:Uid="/UIResources/respondTo" Text="respond to" 
+                                    Command="{Binding Path=Main.SelectedRoom.RespondToCommand, Source={StaticResource Locator}}"
+                                    CommandParameter="{Binding Path=User}" />
                 </MenuFlyout>
             </FlyoutBase.AttachedFlyout>
         </Grid>
@@ -76,9 +76,9 @@
 
             <FlyoutBase.AttachedFlyout>
                 <MenuFlyout>
-                    <MenuFlyoutItem Text="copy" 
-                                Command="{Binding Path=Main.SelectedRoom.CopyMessageCommand, Source={StaticResource Locator}}"
-                                CommandParameter="{Binding}" />
+                    <MenuFlyoutItem x:Uid="/UIResources/copy" Text="copy" 
+                                    Command="{Binding Path=Main.SelectedRoom.CopyMessageCommand, Source={StaticResource Locator}}"
+                                    CommandParameter="{Binding}" />
                 </MenuFlyout>
             </FlyoutBase.AttachedFlyout>
 
@@ -109,12 +109,12 @@
 
             <FlyoutBase.AttachedFlyout>
                 <MenuFlyout>
-                    <MenuFlyoutItem Text="remove" 
-                                Command="{Binding Path=Main.SelectedRoom.RemoveMessageCommand, Source={StaticResource Locator}}"
-                                CommandParameter="{Binding}" />
-                    <MenuFlyoutItem Text="copy" 
-                                Command="{Binding Path=Main.SelectedRoom.CopyMessageCommand, Source={StaticResource Locator}}"
-                                CommandParameter="{Binding}" />
+                    <MenuFlyoutItem x:Uid="/UIResources/remove" Text="remove" 
+                                    Command="{Binding Path=Main.SelectedRoom.RemoveMessageCommand, Source={StaticResource Locator}}"
+                                    CommandParameter="{Binding}" />
+                    <MenuFlyoutItem x:Uid="/UIResources/copy" Text="copy" 
+                                    Command="{Binding Path=Main.SelectedRoom.CopyMessageCommand, Source={StaticResource Locator}}"
+                                    CommandParameter="{Binding}" />
                 </MenuFlyout>
             </FlyoutBase.AttachedFlyout>
 
