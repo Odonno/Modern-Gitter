@@ -120,6 +120,9 @@
   <data name="chatWithUs.Label" xml:space="preserve">
     <value>discuter avec nous</value>
   </data>
+  <data name="chatWithUsButton.Content" xml:space="preserve">
+    <value>discuter avec nous</value>
+  </data>
   <data name="copy.Text" xml:space="preserve">
     <value>copier</value>
   </data>

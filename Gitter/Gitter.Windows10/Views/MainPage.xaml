@@ -62,6 +62,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
 
 
@@ -148,6 +149,11 @@
                                 FontSize="22"
                                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                 Command="{Binding Path=RefreshCommand}" />
+                        
+                        <!-- Chat with us button -->
+                        <Button Grid.Row="2" x:Uid="/UIResources/chatWithUsButton" Content="chat with us" Margin="0 6 0 0"
+                                FontSize="22" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                Command="{Binding Path=ChatWithUsCommand}" />
                     </Grid>
 
                 </Grid>
@@ -219,32 +225,29 @@
                     </ListView>
 
                     <!-- Here user can type & send his message -->
-                    <TextBox Grid.Row="1" Margin="72 0 18 0"
-                             Visibility="{Binding Main.SelectedRoom, Converter={StaticResource NullToVisibilityConverter}, Source={StaticResource Locator}}"
-                             Text="{Binding TextMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                             x:Uid="/UIResources/typeMessageHere" PlaceholderText="type your message here"
-                             TextWrapping="Wrap" />
+                    <Grid Grid.Row="1" Margin="72 0 18 0"
+                          Visibility="{Binding Main.SelectedRoom, Converter={StaticResource NullToVisibilityConverter}, Source={StaticResource Locator}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        
+                        <TextBox x:Uid="/UIResources/typeMessageHere" PlaceholderText="type your message here"
+                                 Text="{Binding TextMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 TextWrapping="Wrap" />
+
+                        <Button Grid.Column="1" x:Name="sendButton" 
+                                Style="{StaticResource TextBlockButtonStyle}"
+                                FontFamily="Segoe MDL2 Assets" FontSize="34"
+                                Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                Margin="6 0 0 0" Content=""
+                                Command="{Binding SendMessageCommand}"
+                                IsEnabled="{Binding Converter={StaticResource NullToBooleanConverter}}" />
+                    </Grid>
+                    
                 </Grid>
             </SplitView.Content>
         </SplitView>
     </Grid>
-
-    <!-- Actions in AppBar -->
-    <Page.BottomAppBar>
-        <CommandBar>
-            <CommandBar.PrimaryCommands>
-                <AppBarButton x:Uid="/UIResources/send" Label="send" Icon="PostUpdate"
-                              Command="{Binding SelectedRoom.SendMessageCommand}"
-                              IsEnabled="{Binding Converter={StaticResource NullToBooleanConverter}}" />
-                <AppBarButton x:Uid="/UIResources/refresh" Label="refresh" Icon="Refresh"
-                              Command="{Binding SelectedRoom.RefreshCommand}"
-                              IsEnabled="{Binding Converter={StaticResource NullToBooleanConverter}}" />
-            </CommandBar.PrimaryCommands>
-
-            <CommandBar.SecondaryCommands>
-                <AppBarButton x:Uid="/UIResources/chatWithUs" Label="chat with us" 
-                              Command="{Binding Path=ChatWithUsCommand}" />
-            </CommandBar.SecondaryCommands>
-        </CommandBar>
-    </Page.BottomAppBar>
+    
 </Page>
