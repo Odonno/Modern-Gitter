@@ -20,7 +20,7 @@
         <!-- Main Toggle Button (show/hide pane) -->
         <Grid Grid.Row="0" Background="{StaticResource BlueGrey}">
 
-            <ToggleButton x:Name="paneToggle"  IsChecked="True" Background="{StaticResource BlueGrey}"
+            <ToggleButton x:Name="paneToggle" IsChecked="True" Background="{StaticResource BlueGrey}"
                           Style="{StaticResource TextBlockButtonStyle}" HorizontalAlignment="Left">
                 <StackPanel Orientation="Horizontal" Margin="0 0 0 6">
                     <Image Source="../Assets/Gitter.transparent.png" Height="56" Margin="0 0 0 -6" />
@@ -66,10 +66,11 @@
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Button Margin="0 3"
-                                        HorizontalContentAlignment="Stretch"
-                                        HorizontalAlignment="Stretch"
-                                        Command="{Binding Main.SelectRoomCommand, Source={StaticResource Locator}}"
-                                        CommandParameter="{Binding}">
+                                            HorizontalContentAlignment="Stretch"
+                                            HorizontalAlignment="Stretch"
+                                            Command="{Binding Main.SelectRoomCommand, Source={StaticResource Locator}}"
+                                            CommandParameter="{Binding}"
+                                            Tapped="SelectRoom_Tapped">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition />
@@ -143,9 +144,9 @@
 
                         <!-- Refresh rooms button -->
                         <Button Grid.Row="1" x:Uid="/UIResources/refreshContent" Content="refresh" 
-                            FontSize="22"
-                            HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                            Command="{Binding Path=RefreshCommand}" />
+                                FontSize="22"
+                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                Command="{Binding Path=RefreshCommand}" />
                     </Grid>
 
                 </Grid>
