@@ -9,10 +9,42 @@
     d:DesignWidth="400">
 
     <Grid Margin="{Binding Converter={StaticResource SamePreviousAuthorMarginConverter}}"
-                                      RequestedTheme="Dark">
+          RequestedTheme="Dark">
 
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="NarrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="imageColumn.Width" Value="30" />
+                        <Setter Target="textMessage.FontSize" Value="12" />
+                        <Setter Target="myTextMessage.FontSize" Value="12" />
+                        <Setter Target="username.FontSize" Value="8" />
+                        <Setter Target="sentDate.FontSize" Value="8" />
+                        <Setter Target="mySentDate.FontSize" Value="8" />
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="WideState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="400" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="imageColumn.Width" Value="60" />
+                        <Setter Target="textMessage.FontSize" Value="18" />
+                        <Setter Target="myTextMessage.FontSize" Value="18" />
+                        <Setter Target="username.FontSize" Value="12" />
+                        <Setter Target="sentDate.FontSize" Value="12" />
+                        <Setter Target="mySentDate.FontSize" Value="12" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="60" />
+            <ColumnDefinition x:Name="imageColumn" Width="60" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
@@ -31,21 +63,21 @@
               Visibility="{Binding Path=User, Converter={StaticResource MeToVisibilityConverter}, ConverterParameter=inverse}">
 
             <Polygon Points="8,0 0,0 8,10" Margin="0 6 0 0"
-                                                 Visibility="{Binding Converter={StaticResource DistinctPreviousAuthorVisibilityConverter}}"
-                                                 Stroke="{StaticResource BlueGrey}"
-                                                 Fill="{StaticResource BlueGrey}" />
+                     Visibility="{Binding Converter={StaticResource DistinctPreviousAuthorVisibilityConverter}}"
+                     Stroke="{StaticResource BlueGrey}"
+                     Fill="{StaticResource BlueGrey}" />
 
             <StackPanel Margin="6 0" Background="{StaticResource BlueGrey}">
-                <TextBlock FontSize="18" TextWrapping="Wrap" Margin="6 3 6 0"
+                <TextBlock x:Name="textMessage" FontSize="18" TextWrapping="Wrap" Margin="6 0 6 0"
                            Text="{Binding Path=Text}" />
 
                 <StackPanel Visibility="{Binding Converter={StaticResource SamePreviousAuthorVisibilityConverter}}">
-                    <TextBlock FontSize="8" TextWrapping="Wrap" Margin="6 0 6 0" 
+                    <TextBlock x:Name="username" FontSize="8" TextWrapping="Wrap" Margin="6 0 6 0" 
                                HorizontalAlignment="Right">
                         @<Run Text="{Binding Path=User.Username}" />
                     </TextBlock>
 
-                    <TextBlock FontSize="8" TextWrapping="Wrap" Margin="6 0 6 6" HorizontalAlignment="Right"
+                    <TextBlock x:Name="sentDate" FontSize="8" TextWrapping="Wrap" Margin="6 0 6 6" HorizontalAlignment="Right"
                                Text="{Binding Path=SentDate, Converter={StaticResource DateTimeOffsetToTimeAgoConverter}}" />
                 </StackPanel>
 
@@ -58,11 +90,11 @@
               Visibility="{Binding Path=User, Converter={StaticResource MeToVisibilityConverter}}">
 
             <StackPanel Margin="6 0" Background="{StaticResource WhiteGray}">
-                <TextBlock FontSize="18" TextWrapping="Wrap" Margin="6 3 6 0" Text="{Binding Path=Text}" />
+                <TextBlock x:Name="myTextMessage" FontSize="18" TextWrapping="Wrap" Margin="6 0 6 0" Text="{Binding Path=Text}" />
 
                 <StackPanel Visibility="{Binding Converter={StaticResource SamePreviousAuthorVisibilityConverter}}">
 
-                    <TextBlock FontSize="8" TextWrapping="Wrap" Margin="6 0 6 6" HorizontalAlignment="Right"
+                    <TextBlock x:Name="mySentDate" FontSize="8" TextWrapping="Wrap" Margin="6 0 6 6" HorizontalAlignment="Right"
                                Text="{Binding Path=SentDate, Converter={StaticResource DateTimeOffsetToTimeAgoConverter}}" />
 
                 </StackPanel>

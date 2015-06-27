@@ -11,7 +11,34 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     DataContext="{Binding Source={StaticResource Locator}, Path=Main}">
 
+
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="NarrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="roomName.FontSize" Value="22" />
+                        <Setter Target="roomTopic.FontSize" Value="8" />
+                        <Setter Target="sendMessageGrid.Margin" Value="42 0 18 0" />
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="WideState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="400" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="roomName.FontSize" Value="28" />
+                        <Setter Target="roomTopic.FontSize" Value="10" />
+                        <Setter Target="sendMessageGrid.Margin" Value="72 0 18 0" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="60" />
             <RowDefinition />
@@ -32,8 +59,8 @@
                 <StackPanel DataContext="{Binding Path=SelectedRoom.Room}"
                             Margin="6 0 0 6" VerticalAlignment="Bottom"
                             Visibility="{Binding ElementName=splitView, Path=IsPaneOpen, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=inverse}">
-                    <TextBlock Text="{Binding Path=Name}" Foreground="White" FontSize="28" CharacterSpacing="5" />
-                    <TextBlock Text="{Binding Path=Topic}" Foreground="White" FontSize="10"
+                    <TextBlock x:Name="roomName" Text="{Binding Path=Name}" Foreground="White" FontSize="28" CharacterSpacing="5" />
+                    <TextBlock x:Name="roomTopic" Text="{Binding Path=Topic}" Foreground="White" FontSize="10"
                                Visibility="{Binding Path=Topic, Converter={StaticResource EmptyStringToVisibilityConverter}}"/>
                 </StackPanel>
 
@@ -68,7 +95,7 @@
 
                         <!-- List of rooms -->
                         <ListView Grid.Row="0" x:Name="roomsListView"
-                              ItemsSource="{Binding Path=Rooms}">
+                                  ItemsSource="{Binding Path=Rooms}">
 
                             <ListView.ItemTemplate>
                                 <DataTemplate>
@@ -149,7 +176,7 @@
                                 FontSize="22"
                                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                 Command="{Binding Path=RefreshCommand}" />
-                        
+
                         <!-- Chat with us button -->
                         <Button Grid.Row="2" x:Uid="/UIResources/chatWithUsButton" Content="chat with us" Margin="0 6 0 0"
                                 FontSize="22" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
@@ -225,13 +252,13 @@
                     </ListView>
 
                     <!-- Here user can type & send his message -->
-                    <Grid Grid.Row="1" Margin="72 0 18 0"
+                    <Grid x:Name="sendMessageGrid" Grid.Row="1" Margin="72 0 18 0"
                           Visibility="{Binding Main.SelectedRoom, Converter={StaticResource NullToVisibilityConverter}, Source={StaticResource Locator}}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        
+
                         <TextBox x:Uid="/UIResources/typeMessageHere" PlaceholderText="type your message here"
                                  Text="{Binding TextMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                  TextWrapping="Wrap" />
@@ -244,10 +271,10 @@
                                 Command="{Binding SendMessageCommand}"
                                 IsEnabled="{Binding Converter={StaticResource NullToBooleanConverter}}" />
                     </Grid>
-                    
+
                 </Grid>
             </SplitView.Content>
         </SplitView>
     </Grid>
-    
+
 </Page>
