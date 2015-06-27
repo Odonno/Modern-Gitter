@@ -10,8 +10,8 @@
     DataContext="{Binding Source={StaticResource Locator}, Path=Login}">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <StackPanel x:Name="ContentRoot" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 0 0 120">
-            <Image Source="../Assets/Gitter.white.png" Height="200"/>
+        <StackPanel x:Name="ContentRoot" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 60 0 0">
+            <Image Source="../Assets/Gitter.white.png" Height="200" />
 
             <ProgressRing IsActive="True" Background="Transparent"
                           Foreground="Black" Margin="0 40 0 0"
