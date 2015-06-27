@@ -20,39 +20,45 @@
         <!-- Main Toggle Button (show/hide pane) -->
         <Grid Grid.Row="0" Background="{StaticResource BlueGrey}">
 
-            <ToggleButton x:Name="paneToggle" IsChecked="True" Background="{StaticResource BlueGrey}"
-                          Style="{StaticResource TextBlockButtonStyle}" HorizontalAlignment="Left">
-                <StackPanel Orientation="Horizontal" Margin="0 0 0 6">
-                    <Image Source="../Assets/Gitter.transparent.png" Height="56" Margin="0 0 0 -6" />
-                    <TextBlock Text="GITTER" Margin="6 0 0 0" VerticalAlignment="Bottom" Foreground="White"
-                               FontSize="40" CharacterSpacing="10" 
-                               Visibility="{Binding ElementName=paneToggle, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                    <TextBlock Text="{Binding Path=SelectedRoom.Room.Name}" Margin="6 0 0 0" VerticalAlignment="Bottom" Foreground="White"
-                               FontSize="32" CharacterSpacing="10" 
-                               Visibility="{Binding ElementName=paneToggle, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=inverse}" />
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="togglePane" Margin="0" Padding="0" Tapped="TogglePane_Tapped">
+                    <Image Source="../Assets/Gitter.transparent.png" Height="56" />
+                </Button>
+
+                <TextBlock Text="GITTER" Margin="6 0 0 6" VerticalAlignment="Bottom" Foreground="White"
+                           FontSize="40" CharacterSpacing="10" 
+                           Visibility="{Binding ElementName=splitView, Path=IsPaneOpen, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+                <StackPanel DataContext="{Binding Path=SelectedRoom.Room}"
+                            Margin="6 0 0 6" VerticalAlignment="Bottom"
+                            Visibility="{Binding ElementName=splitView, Path=IsPaneOpen, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=inverse}">
+                    <TextBlock Text="{Binding Path=Name}" Foreground="White" FontSize="28" CharacterSpacing="5" />
+                    <TextBlock Text="{Binding Path=Topic}" Foreground="White" FontSize="10"
+                               Visibility="{Binding Path=Topic, Converter={StaticResource EmptyStringToVisibilityConverter}}"/>
                 </StackPanel>
-            </ToggleButton>
+
+            </StackPanel>
 
         </Grid>
 
 
         <!-- SplitView => Rooms & Messages -->
-        <SplitView Grid.Row="1"
-                   IsPaneOpen="{Binding ElementName=paneToggle, Path=IsChecked}" 
+        <SplitView x:Name="splitView" Grid.Row="1"
                    PaneBackground="{StaticResource BlueGrey}"
-                   DisplayMode="Inline">
+                   DisplayMode="Inline"
+                   IsPaneOpen="True">
 
             <!-- Pane Content - Left side -->
             <SplitView.Pane>
                 <Grid RequestedTheme="Dark" Margin="6 0 6 6">
 
                     <!-- Compact Pane View -->
-                    <Grid Visibility="{Binding ElementName=paneToggle, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=inverse}">
+                    <Grid Visibility="{Binding ElementName=splitView, Path=IsPaneOpen, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=inverse}">
                         <!-- TODO : Used to show if rooms received new messages (unread count) -->
                     </Grid>
 
                     <!-- Full Pane View -->
-                    <Grid Visibility="{Binding ElementName=paneToggle, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Grid Visibility="{Binding ElementName=splitView, Path=IsPaneOpen, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition Height="Auto" />
@@ -77,12 +83,7 @@
                                                 <ColumnDefinition Width="Auto" />
                                             </Grid.ColumnDefinitions>
 
-                                            <StackPanel DataContext="{Binding Room}">
-                                                <TextBlock Text="{Binding Name}" FontSize="20" />
-                                                <TextBlock Text="{Binding Topic}" FontSize="8" 
-                                                       TextWrapping="Wrap"
-                                                       Visibility="{Binding Topic, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
-                                            </StackPanel>
+                                            <TextBlock Text="{Binding Room.Name}" FontSize="20" />
 
                                             <Grid Grid.Column="1" Margin="0 -2 -4 0" VerticalAlignment="Top"
                                               Visibility="{Binding UnreadMessagesCount, Converter={StaticResource UnreadMessagesCountToVisibilityConverter}}">

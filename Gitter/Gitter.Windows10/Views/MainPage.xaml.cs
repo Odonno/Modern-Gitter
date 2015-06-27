@@ -31,7 +31,17 @@ namespace Gitter.Views
         private void SelectRoom_Tapped(object sender, TappedRoutedEventArgs e)
         {
             if (ActualWidth < 900)
-                paneToggle.IsChecked = !paneToggle.IsChecked;
+                TogglePane();
+        }
+
+        private void TogglePane_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            TogglePane();
+        }
+
+        private void TogglePane()
+        {
+            splitView.IsPaneOpen = !splitView.IsPaneOpen;
         }
     }
 }
