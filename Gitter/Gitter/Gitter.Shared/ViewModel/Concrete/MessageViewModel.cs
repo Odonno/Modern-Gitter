@@ -33,6 +33,17 @@ namespace Gitter.ViewModel.Concrete
             }
         }
 
+        private string _html;
+        public string Html
+        {
+            get { return _html; }
+            set
+            {
+                _html = value;
+                RaisePropertyChanged();
+            }
+        }
+
         private DateTime _sentDate;
         public DateTime SentDate
         {
@@ -78,6 +89,7 @@ namespace Gitter.ViewModel.Concrete
 
             Id = message.Id;
             Text = message.Text;
+            Html = message.Html;
             SentDate = message.SentDate;
             User = message.User;
             Read = !message.UnreadByCurrent;

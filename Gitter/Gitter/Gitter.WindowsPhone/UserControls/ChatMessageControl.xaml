@@ -7,6 +7,7 @@
     xmlns:behaviors="using:Gitter.Behaviors"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:common="using:Gitter.Common"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
@@ -52,8 +53,8 @@
                      Fill="{StaticResource BlueGrey}" />
 
             <StackPanel Margin="6 0" Background="{StaticResource BlueGrey}">
-                <TextBlock FontSize="18" TextWrapping="Wrap" Margin="6 3 6 0"
-                           Text="{Binding Path=Text}" />
+                <RichTextBlock FontSize="18" TextWrapping="Wrap" Margin="6 3 6 0"
+                               common:Properties.Html="{Binding Path=Html}" />
 
                 <StackPanel Visibility="{Binding Converter={StaticResource SamePreviousAuthorVisibilityConverter}}">
                     <TextBlock FontSize="8" TextWrapping="Wrap" Margin="6 0 6 0" 
@@ -89,8 +90,8 @@
               Visibility="{Binding Path=User, Converter={StaticResource MeToVisibilityConverter}}">
 
             <StackPanel Margin="6 0" Background="{StaticResource WhiteGray}">
-                <TextBlock FontSize="18" TextWrapping="Wrap" Margin="6 3 6 0" 
-                           Text="{Binding Path=Text}" />
+                <RichTextBlock FontSize="18" TextWrapping="Wrap" Margin="6 3 6 0"
+                               common:Properties.Html="{Binding Path=Html}" />
 
                 <StackPanel Visibility="{Binding Converter={StaticResource SamePreviousAuthorVisibilityConverter}}">
 
