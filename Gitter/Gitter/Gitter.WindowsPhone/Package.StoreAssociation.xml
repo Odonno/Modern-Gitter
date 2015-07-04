@@ -216,10 +216,17 @@
     <MainPackageIdentityName>49142DavidBOTTIAU.WantApps</MainPackageIdentityName>
   </AccountPackageIdentityNames>
   <PackageInfoList LandingUrl="https://dev.windowsphone.com/AppSubmission/AssociationLanding?windowsProductId=e12abdb0-c7e8-4430-8fbb-5e5e766c36cd">
-    <PackageInfo>
-      <OsMinVersion>6.3.0.0</OsMinVersion>
-      <PackageArchitecture>neutral</PackageArchitecture>
-      <PackageMaxArchitectureVersion>1.0.1.0</PackageMaxArchitectureVersion>
-    </PackageInfo>
+    <BundleInfo>
+      <PackageInfo>
+        <OsMinVersion>6.3.0.0</OsMinVersion>
+        <PackageArchitecture>neutral</PackageArchitecture>
+        <PackageMaxArchitectureVersion>1.1.0.0</PackageMaxArchitectureVersion>
+      </PackageInfo>
+      <PackageInfo>
+        <OsMinVersion>6.3.0.0</OsMinVersion>
+        <PackageArchitecture></PackageArchitecture>
+        <PackageMaxArchitectureVersion>1.1.0.0</PackageMaxArchitectureVersion>
+      </PackageInfo>
+    </BundleInfo>
   </PackageInfoList>
 </StoreAssociation>

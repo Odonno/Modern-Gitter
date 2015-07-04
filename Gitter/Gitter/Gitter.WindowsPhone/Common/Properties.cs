@@ -1,4 +1,6 @@
-﻿using HtmlAgilityPack;
+﻿using System.Diagnostics;
+using Windows.UI.Text;
+using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -119,9 +121,23 @@ namespace Gitter.Common
         {
             switch (node.Name)
             {
+                case "h1":
+                case "h2":
+                case "h3":
+                case "h4":
+                case "h5":
+                case "h6":
+                    return GenerateTitle(node, node.Name);
+                case "strong":
+                    return GenerateText(node, "bold");
+                case "em":
+                    return GenerateText(node, "italic");
+                case "span":
                 case "#text":
                 case "div":
                     return GenerateText(node);
+                case "br":
+                    return GenerateLineReturn();
                 case "p":
                 case "P":
                     return GenerateInnerParagraph(node);
@@ -132,16 +148,51 @@ namespace Gitter.Common
                 case "A":
                     if (node.ChildNodes.Count >= 1 && (node.FirstChild.Name == "img" || node.FirstChild.Name == "IMG"))
                         return GenerateImage(node.FirstChild);
-                    else
-                        return GenerateHyperLink(node);
+                    return GenerateHyperLink(node);
+                case "code":
+                    return GenerateCode(node);
+                case "blockquote":
+                    return GenerateQuote(node);
+                default:
+#if DEBUG
+                    Debug.WriteLine(node.Name);
+#endif
+                    return null;
             }
-
-            return null;
         }
 
-        private static Inline GenerateText(HtmlNode node)
+        private static Inline GenerateTitle(HtmlNode node, string type)
         {
-            return new Run { Text = WebUtility.HtmlDecode(node.InnerText) };
+            throw new NotImplementedException();
+        }
+
+        private static Inline GenerateText(HtmlNode node, string @class = null)
+        {
+            var content = new Run { Text = WebUtility.HtmlDecode(node.InnerText) };
+
+            if (!string.IsNullOrWhiteSpace(@class))
+            {
+                if (@class == "bold")
+                    content.FontWeight = FontWeights.Bold;
+
+                if (@class == "italic")
+                    content.FontStyle = FontStyle.Italic;
+            }
+
+            if (node.Attributes["class"] != null)
+            {
+                @class = node.Attributes["class"].Value;
+
+                if (@class == "mention")
+                    content.FontStyle = FontStyle.Italic;
+            }
+
+            return content;
+        }
+
+        private static Inline GenerateLineReturn()
+        {
+            return new LineBreak();
         }
 
         private static Inline GenerateImage(HtmlNode node)
@@ -170,6 +221,16 @@ namespace Gitter.Common
             hyperlink.Inlines.Add(new Run { Text = node.InnerText });
 
             return hyperlink;
+        }
+
+        private static Inline GenerateCode(HtmlNode node)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static Inline GenerateQuote(HtmlNode node)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion
