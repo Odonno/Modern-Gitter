@@ -19,13 +19,13 @@ using Windows.UI.Xaml.Navigation;
 
 // Pour plus d'informations sur le modèle Application vide, consultez la page http://go.microsoft.com/fwlink/?LinkId=234227
 using GitHub.Common;
+using Newtonsoft.Json;
 using Gitter.Views;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Extensibility;
 #if WINDOWS_PHONE_APP
 using GitHub.Services;
 #endif
-using Newtonsoft.Json;
 
 namespace Gitter
 {
@@ -34,16 +34,16 @@ namespace Gitter
     /// </summary>
     public sealed partial class App : Application
     {
-        #region Fields
+#region Fields
 
 #if WINDOWS_PHONE_APP
         private static TransitionCollection _transitions;
         private ContinuationManager _continuationManager;
 #endif
 
-        #endregion
+#endregion
 
-        #region Properties
+#region Properties
 
         /// <summary>
         /// Allows tracking page views, exceptions and other telemetry through the Microsoft Application Insights service.
@@ -55,9 +55,9 @@ namespace Gitter
         /// </summary>
         public static string RoomName;
 
-        #endregion
+#endregion
 
-        #region Constructor
+#region Constructor
 
         /// <summary>
         /// Initialise l'objet d'application de singleton.  Il s'agit de la première ligne du code créé
@@ -69,9 +69,9 @@ namespace Gitter
             Suspending += OnSuspending;
         }
 
-        #endregion
+#endregion
 
-        #region Launched events
+#region Launched events
 
         /// <summary>
         /// Invoked when the application is launched normally by the end user.
@@ -168,9 +168,9 @@ namespace Gitter
         }
 #endif
 
-        #endregion
+#endregion
 
-        #region Suspending Events
+#region Suspending Events
 
         /// <summary>
         /// Appelé lorsque l'exécution de l'application est suspendue.  L'état de l'application est enregistré
@@ -186,9 +186,9 @@ namespace Gitter
             deferral.Complete();
         }
 
-        #endregion
+#endregion
 
-        #region Transitions management
+#region Transitions management
 
 #if WINDOWS_PHONE_APP
         public static void FirstNavigate()
@@ -199,9 +199,9 @@ namespace Gitter
         }
 #endif
 
-        #endregion
+#endregion
 
-        #region Telemetry management
+#region Telemetry management
 
         public static void StartTelemetry()
         {
@@ -212,6 +212,6 @@ namespace Gitter
 #endif
         }
 
-        #endregion
+#endregion
     }
 }

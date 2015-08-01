@@ -1,4 +1,4 @@
-﻿#if !WINDOWS_UAP
+﻿#if !WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls.Primitives;
 using Microsoft.Xaml.Interactivity;

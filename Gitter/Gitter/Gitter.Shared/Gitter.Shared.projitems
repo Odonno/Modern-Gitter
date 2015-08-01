@@ -62,4 +62,7 @@
     <PRIResource Include="$(MSBuildThisFileDirectory)Strings\fr-FR\Resources.resw" />
     <PRIResource Include="$(MSBuildThisFileDirectory)Strings\fr-FR\UIResources.resw" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)ApplicationInsights.config" />
+  </ItemGroup>
 </Project>

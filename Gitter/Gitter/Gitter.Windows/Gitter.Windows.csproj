@@ -116,7 +116,6 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="ApplicationInsights.config" />
     <None Include="Gitter.Windows_TemporaryKey.pfx" />
     <None Include="packages.config" />
   </ItemGroup>

@@ -86,7 +86,6 @@
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <Content Include="AdMediator.config" />
-    <None Include="ApplicationInsights.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
