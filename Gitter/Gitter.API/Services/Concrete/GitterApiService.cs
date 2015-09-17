@@ -11,7 +11,6 @@ using Gitter.API.Configuration;
 using Gitter.API.Helpers;
 using Gitter.API.Services.Abstract;
 using Gitter.Model;
-using Gitter.Services.Abstract;
 using Newtonsoft.Json;
 using UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding;
 
@@ -20,6 +19,8 @@ namespace Gitter.API.Services.Concrete
     public class GitterApiService : IGitterApiService
     {
         #region Fields
+
+        private string _accessToken;
 
         private readonly string _baseApiAddress = $"{Constants.ApiBaseUrl}{Constants.ApiVersion}";
         private readonly string _baseStreamingApiAddress = $"{Constants.StreamApiBaseUrl}{Constants.ApiVersion}";
@@ -32,8 +33,8 @@ namespace Gitter.API.Services.Concrete
 
                 httpClient.DefaultRequestHeaders.Accept.Add(new HttpMediaTypeWithQualityHeaderValue("application/json"));
 
-                if (!string.IsNullOrWhiteSpace(AccessToken))
-                    httpClient.DefaultRequestHeaders.Authorization = new HttpCredentialsHeaderValue("Bearer", AccessToken);
+                if (!string.IsNullOrWhiteSpace(_accessToken))
+                    httpClient.DefaultRequestHeaders.Authorization = new HttpCredentialsHeaderValue("Bearer", _accessToken);
 
                 return httpClient;
             }
@@ -42,35 +43,12 @@ namespace Gitter.API.Services.Concrete
         #endregion
 
 
-        #region Services
-
-        private readonly IPasswordStorageService _passwordStorageService;
-
-        #endregion
-
-
-        #region Constructor
-
-        public GitterApiService(IPasswordStorageService passwordStorageService)
-        {
-            _passwordStorageService = passwordStorageService;
-        }
-
-        #endregion
-
-
         #region Authentication
-
-        public string AccessToken
-        {
-            get { return _passwordStorageService.Retrieve("token"); }
-            private set { _passwordStorageService.Save("token", value); }
-        }
 
         public void TryAuthenticate(string token = null)
         {
             if (!string.IsNullOrWhiteSpace(token))
-                AccessToken = token;
+                _accessToken = token;
         }
 
         #endregion

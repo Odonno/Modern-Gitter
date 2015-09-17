@@ -21,15 +21,17 @@ namespace Gitter.Services.Concrete
         #region Services
 
         private readonly IGitterApiService _gitterApiService;
+        private readonly IPasswordStorageService _passwordStorageService;
 
         #endregion
 
 
         #region Constructor
 
-        public SessionService(IGitterApiService gitterApiService)
+        public SessionService(IGitterApiService gitterApiService, IPasswordStorageService passwordStorageService)
         {
             _gitterApiService = gitterApiService;
+            _passwordStorageService = passwordStorageService;
         }
 
         #endregion
@@ -92,6 +94,9 @@ namespace Gitter.Services.Concrete
                 var token = await GetToken(code);
 
                 _gitterApiService.TryAuthenticate(token);
+
+                // Save token in local storage
+                _passwordStorageService.Save("token", token);
 
                 return true;
             }

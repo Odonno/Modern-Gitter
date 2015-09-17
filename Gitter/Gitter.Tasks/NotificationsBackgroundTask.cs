@@ -22,6 +22,7 @@ namespace Gitter.Tasks
 
         private readonly ILocalNotificationService _localNotificationService;
         private readonly IGitterApiService _gitterApiService;
+        private readonly IPasswordStorageService _passwordStorageService;
         private readonly IApplicationStorageService _applicationStorageService;
 
         #endregion
@@ -32,7 +33,8 @@ namespace Gitter.Tasks
         public NotificationsBackgroundTask()
         {
             _localNotificationService = new LocalNotificationService();
-            _gitterApiService = new GitterApiService(new PasswordStorageService());
+            _gitterApiService = new GitterApiService();
+            _passwordStorageService = new PasswordStorageService();
             _applicationStorageService = new ApplicationStorageService();
         }
 
@@ -51,8 +53,11 @@ namespace Gitter.Tasks
         {
             try
             {
+                // Retrieve token from local storage
+                string token = _passwordStorageService.Retrieve("token");
+
                 // You need to be authenticated first to get current notifications
-                _gitterApiService.TryAuthenticate();
+                _gitterApiService.TryAuthenticate(token);
 
                 // Retrieve rooms that user want notifications
                 var notifyableRooms = (await _gitterApiService.GetRoomsAsync()).Where(room => !room.DisabledNotifications);

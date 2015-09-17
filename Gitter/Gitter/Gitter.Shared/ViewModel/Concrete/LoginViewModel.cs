@@ -14,10 +14,10 @@ namespace Gitter.ViewModel.Concrete
     public sealed class LoginViewModel : ViewModelBase, ILoginViewModel
     {
         #region Services
-
-        private readonly IGitterApiService _gitterApiService;
+        
         private readonly INavigationService _navigationService;
         private readonly ISessionService _sessionService;
+        private readonly IPasswordStorageService _passwordStorageService;
         private readonly ILocalNotificationService _localNotificationService;
 
         #endregion
@@ -26,14 +26,14 @@ namespace Gitter.ViewModel.Concrete
         #region Constructor
 
         public LoginViewModel(INavigationService navigationService,
-            IGitterApiService gitterApiService,
             ISessionService sessionService,
+            IPasswordStorageService passwordStorageService,
             ILocalNotificationService localNotificationService)
         {
             // Inject Services
-            _gitterApiService = gitterApiService;
             _navigationService = navigationService;
             _sessionService = sessionService;
+            _passwordStorageService = passwordStorageService;
             _localNotificationService = localNotificationService;
 
 
@@ -58,7 +58,10 @@ namespace Gitter.ViewModel.Concrete
 
             try
             {
-                if (string.IsNullOrWhiteSpace(_gitterApiService.AccessToken))
+                // Retrieve token from local storage
+                string token = _passwordStorageService.Retrieve("token");
+
+                if (string.IsNullOrWhiteSpace(token))
                 {
                     var auth = await _sessionService.LoginAsync();
 
