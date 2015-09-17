@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 
 namespace Gitter.Model
@@ -20,6 +21,9 @@ namespace Gitter.Model
 
         [JsonProperty("oneToOne")]
         public bool OneToOne { get; set; }
+
+        [JsonProperty("user")]
+        public User User { get; set; }
 
         [JsonProperty("users")]
         public IList<User> Users { get; set; }
@@ -44,5 +48,20 @@ namespace Gitter.Model
 
         [JsonProperty("v")]
         public int Version { get; set; }
+
+        [JsonIgnore]
+        public string Image
+        {
+            get
+            {
+                if (User == null)
+                {
+                    string orgName = Name.Split(new[] {'/'}, StringSplitOptions.RemoveEmptyEntries).First();
+                    return $"https://avatars.githubusercontent.com/{orgName}";
+                }
+
+                return User.MediumAvatarUrl;
+            }
+        }
     }
 }

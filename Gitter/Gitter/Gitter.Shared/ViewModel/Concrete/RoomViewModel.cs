@@ -34,10 +34,9 @@ namespace Gitter.ViewModel.Concrete
 
         public bool IsLoaded { get; set; }
 
-        public Room Room { get; private set; }
+        public Room Room { get; }
 
-        private readonly MessagesIncrementalLoadingCollection _messages;
-        public MessagesIncrementalLoadingCollection Messages { get { return _messages; } }
+        public MessagesIncrementalLoadingCollection Messages { get; }
 
         private string _textMessage;
         public string TextMessage
@@ -138,7 +137,7 @@ namespace Gitter.ViewModel.Concrete
                 };
 
 
-                _messages = new MessagesIncrementalLoadingCollection("123456")
+                Messages = new MessagesIncrementalLoadingCollection("123456")
                 {
                     new MessageViewModel(new Message
                     {
@@ -218,7 +217,7 @@ namespace Gitter.ViewModel.Concrete
             {
                 // Code runs "for real"
 
-                _messages = new MessagesIncrementalLoadingCollection(Room.Id);
+                Messages = new MessagesIncrementalLoadingCollection(Room.Id);
 
                 // Use the stream API to add new messages when they comes
                 _gitterApiService.GetRealtimeMessages(Room.Id).Subscribe(async message =>
@@ -309,7 +308,7 @@ namespace Gitter.ViewModel.Concrete
 
         private void CopyMessage(IMessageViewModel message)
         {
-            TextMessage += string.Format("{0} ", message.Text);
+            TextMessage += $"{message.Text} ";
 
             App.TelemetryClient.TrackEvent("CopyMessage",
                 new Dictionary<string, string> { { "Room", Room.Name } });
@@ -317,7 +316,7 @@ namespace Gitter.ViewModel.Concrete
 
         private void RespondTo(User user)
         {
-            TextMessage += string.Format("@{0} ", user.Username);
+            TextMessage += $"@{user.Username} ";
         }
 
         private async void Talk()

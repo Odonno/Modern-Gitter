@@ -194,8 +194,7 @@
     <MainPackageIdentityName>49142DavidBOTTIAU.BatailleNavale</MainPackageIdentityName>
     <MainPackageIdentityName>49142DavidBOTTIAU.Bats-moi</MainPackageIdentityName>
     <MainPackageIdentityName>49142DavidBOTTIAU.Calcule-moi</MainPackageIdentityName>
-    <MainPackageIdentityName>49142DavidBOTTIAU.ColorCapture</MainPackageIdentityName>
-    <MainPackageIdentityName>49142DavidBOTTIAU.Coloreach</MainPackageIdentityName>
+    <MainPackageIdentityName>49142DavidBOTTIAU.Cestpasfaux</MainPackageIdentityName>
     <MainPackageIdentityName>49142DavidBOTTIAU.Colorrrs</MainPackageIdentityName>
     <MainPackageIdentityName>49142DavidBOTTIAU.Crypte-moi</MainPackageIdentityName>
     <MainPackageIdentityName>49142DavidBOTTIAU.Dessine-moi</MainPackageIdentityName>
@@ -209,24 +208,18 @@
     <MainPackageIdentityName>49142DavidBOTTIAU.Pomodorize</MainPackageIdentityName>
     <MainPackageIdentityName>49142DavidBOTTIAU.Pousse-moi</MainPackageIdentityName>
     <MainPackageIdentityName>49142DavidBOTTIAU.RenaultWindows8</MainPackageIdentityName>
-    <MainPackageIdentityName>49142DavidBOTTIAU.RumbleBubble</MainPackageIdentityName>
-    <MainPackageIdentityName>49142DavidBOTTIAU.StickmanLegends</MainPackageIdentityName>
     <MainPackageIdentityName>49142DavidBOTTIAU.Trouve-moi</MainPackageIdentityName>
-    <MainPackageIdentityName>49142DavidBOTTIAU.VisualLightStudio</MainPackageIdentityName>
-    <MainPackageIdentityName>49142DavidBOTTIAU.WantApps</MainPackageIdentityName>
   </AccountPackageIdentityNames>
-  <PackageInfoList LandingUrl="https://dev.windowsphone.com/AppSubmission/AssociationLanding?windowsProductId=e12abdb0-c7e8-4430-8fbb-5e5e766c36cd">
-    <BundleInfo>
-      <PackageInfo>
-        <OsMinVersion>6.3.0.0</OsMinVersion>
-        <PackageArchitecture>neutral</PackageArchitecture>
-        <PackageMaxArchitectureVersion>1.1.0.0</PackageMaxArchitectureVersion>
-      </PackageInfo>
-      <PackageInfo>
-        <OsMinVersion>6.3.0.0</OsMinVersion>
-        <PackageArchitecture></PackageArchitecture>
-        <PackageMaxArchitectureVersion>1.1.0.0</PackageMaxArchitectureVersion>
-      </PackageInfo>
-    </BundleInfo>
+  <PackageInfoList LandingUrl="https://dev.windows.com/dashboard/Application?appId=9WZDNCRD2TZJ">
+    <PackageInfo>
+      <OsMinVersion>6.3.0.0</OsMinVersion>
+      <PackageArchitecture>Neutral</PackageArchitecture>
+      <PackageMaxArchitectureVersion>1.1.1.0</PackageMaxArchitectureVersion>
+    </PackageInfo>
+    <PackageInfo>
+      <OsMinVersion>6.3.0.0</OsMinVersion>
+      <PackageArchitecture>Unknown</PackageArchitecture>
+      <PackageMaxArchitectureVersion>1.1.1.0</PackageMaxArchitectureVersion>
+    </PackageInfo>
   </PackageInfoList>
 </StoreAssociation>

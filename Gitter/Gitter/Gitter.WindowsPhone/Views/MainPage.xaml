@@ -22,7 +22,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
+
 
         <!-- Title -->
         <StackPanel Orientation="Horizontal">
@@ -46,26 +46,26 @@
 
                         <Grid>
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="24" />
                                 <ColumnDefinition />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
-                            <StackPanel Margin="12 6" DataContext="{Binding Room}">
-                                <TextBlock Text="{Binding Name}" FontSize="20" />
-                                <TextBlock Text="{Binding Topic}" FontSize="8" 
-                                           TextWrapping="Wrap"
-                                           Visibility="{Binding Topic, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
-                            </StackPanel>
+                            <Image Margin="6 6 0 6" Source="{Binding Path=Room.Image}" />
 
-                            <Grid Grid.Column="1" Margin="0 6 6 0" VerticalAlignment="Top"
+                            <TextBlock Grid.Column="1" Margin="12 6" 
+                                       VerticalAlignment="Center"
+                                       Text="{Binding Room.Name}" FontSize="16" />
+
+                            <Grid Grid.Column="2" Margin="6 0" VerticalAlignment="Center"
                                   Visibility="{Binding UnreadMessagesCount, Converter={StaticResource UnreadMessagesCountToVisibilityConverter}}">
-                               
-                                <Ellipse Width="24" Height="24" Fill="White" />
+
+                                <Ellipse Width="18" Height="18" Fill="White" />
                                 <TextBlock Text="{Binding UnreadMessagesCount, Converter={StaticResource UnreadMessagesCountConverter}}"
-                                           FontSize="12" FontWeight="Bold"
+                                           FontSize="9" FontWeight="Bold"
                                            HorizontalAlignment="Center" VerticalAlignment="Center"
                                            Foreground="{StaticResource BlueGrey}"/>
-                                
+
                             </Grid>
                         </Grid>
 
@@ -80,7 +80,7 @@
             </ListView.ItemContainerStyle>
         </ListView>
     </Grid>
-    
+
 
     <Page.BottomAppBar>
         <CommandBar>
@@ -89,12 +89,12 @@
                               Command="{Binding Path=RefreshCommand}"
                               Icon="Refresh" />
             </CommandBar.PrimaryCommands>
-            
+
             <CommandBar.SecondaryCommands>
                 <AppBarButton x:Uid="/UIResources/chatWithUs" Label="chat with us" 
                               Command="{Binding Path=ChatWithUsCommand}" />
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>
-    
+
 </Page>

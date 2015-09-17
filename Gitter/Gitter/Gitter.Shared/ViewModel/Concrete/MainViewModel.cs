@@ -34,6 +34,7 @@ namespace Gitter.ViewModel.Concrete
         private readonly ILocalNotificationService _localNotificationService;
         private readonly IApplicationStorageService _applicationStorageService;
         private readonly IProgressIndicatorService _progressIndicatorService;
+        private readonly IPasswordStorageService _passwordStorageService;
         private readonly IEventService _eventService;
         private readonly INavigationService _navigationService;
 
@@ -118,6 +119,7 @@ namespace Gitter.ViewModel.Concrete
             ILocalNotificationService localNotificationService,
             IApplicationStorageService applicationStorageService,
             IProgressIndicatorService progressIndicatorService,
+            IPasswordStorageService passwordStorageService,
             IEventService eventService,
             INavigationService navigationService)
         {
@@ -126,6 +128,7 @@ namespace Gitter.ViewModel.Concrete
             _localNotificationService = localNotificationService;
             _applicationStorageService = applicationStorageService;
             _progressIndicatorService = progressIndicatorService;
+            _passwordStorageService = passwordStorageService;
             _eventService = eventService;
             _navigationService = navigationService;
 
@@ -228,6 +231,10 @@ namespace Gitter.ViewModel.Concrete
             else
             {
                 // Code runs "for real"
+
+                // Retrieve access token to use in the app
+                string token = _passwordStorageService.Retrieve("token");
+                _gitterApiService.TryAuthenticate(token);
 
                 Refresh();
 
