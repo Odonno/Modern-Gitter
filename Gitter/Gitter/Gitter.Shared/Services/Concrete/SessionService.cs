@@ -8,6 +8,7 @@ using Windows.Data.Json;
 using Windows.Security.Authentication.Web;
 using Gitter.API.Configuration;
 using Gitter.API.Services.Abstract;
+using Gitter.Configuration;
 using Gitter.Services.Abstract;
 #if WINDOWS_PHONE_APP
 using Windows.ApplicationModel.Activation;
@@ -41,10 +42,7 @@ namespace Gitter.Services.Concrete
             try
             {
                 var startUri = new Uri(
-                    string.Format("https://gitter.im/login/oauth/authorize?client_id={0}&response_type={1}&redirect_uri={2}",
-                    Constants.OauthKey, 
-                    "code",
-                    Constants.RedirectUrl));
+                    $"https://gitter.im/login/oauth/authorize?client_id={Credentials.OauthKey}&response_type=code&redirect_uri={Constants.RedirectUrl}");
                 var endUri = new Uri(Constants.RedirectUrl);
 
 #if WINDOWS_PHONE_APP
@@ -126,8 +124,8 @@ namespace Gitter.Services.Concrete
 
                 var content = new FormUrlEncodedContent(new[] 
                 {
-                    new KeyValuePair<string, string>("client_id", Constants.OauthKey),
-                    new KeyValuePair<string, string>("client_secret", Constants.OauthSecret),
+                    new KeyValuePair<string, string>("client_id", Credentials.OauthKey),
+                    new KeyValuePair<string, string>("client_secret", Credentials.OauthSecret),
                     new KeyValuePair<string, string>("code", code),
                     new KeyValuePair<string, string>("redirect_uri", Constants.RedirectUrl),
                     new KeyValuePair<string, string>("grant_type", "authorization_code")
