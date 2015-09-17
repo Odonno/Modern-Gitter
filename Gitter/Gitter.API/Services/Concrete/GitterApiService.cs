@@ -31,7 +31,7 @@ namespace Gitter.API.Services.Concrete
                 var httpClient = new HttpClient();
 
                 httpClient.DefaultRequestHeaders.Accept.Add(new HttpMediaTypeWithQualityHeaderValue("application/json"));
-                
+
                 if (!string.IsNullOrWhiteSpace(AccessToken))
                     httpClient.DefaultRequestHeaders.Authorization = new HttpCredentialsHeaderValue("Bearer", AccessToken);
 
@@ -79,14 +79,16 @@ namespace Gitter.API.Services.Concrete
 
         public async Task<User> GetCurrentUserAsync()
         {
+            string url = _baseApiAddress + "user";
+
             using (var httpClient = HttpClient)
             {
-                var response = await httpClient.GetAsync(new Uri(_baseApiAddress + "user"));
+                var response = await httpClient.GetAsync(new Uri(url));
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var content = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<IEnumerable<User>>(content).FirstOrDefault();
+                    var result = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<IEnumerable<User>>(result).FirstOrDefault();
                 }
 
                 throw new Exception();
@@ -95,20 +97,17 @@ namespace Gitter.API.Services.Concrete
 
         public async Task ReadChatMessagesAsync(string userId, string roomId, IEnumerable<string> messageIds)
         {
+            string url = _baseApiAddress + $"user/{userId}/rooms/{roomId}/unreadItems";
+            var content = new HttpStringContent("{\"chat\": " + JsonConvert.SerializeObject(messageIds) + "}",
+                UnicodeEncoding.Utf8,
+                "application/json");
+
             using (var httpClient = HttpClient)
             {
-                var content = new HttpStringContent("{\"chat\": " + JsonConvert.SerializeObject(messageIds) + "}",
-                    UnicodeEncoding.Utf8, 
-                    "application/json");
+                var response = await httpClient.PostAsync(new Uri(url), content);
 
-                var response = await httpClient.PostAsync(
-                    new Uri(_baseApiAddress + $"user/{userId}/rooms/{roomId}/unreadItems"),
-                    content);
-
-                if (response.IsSuccessStatusCode)
-                    return;
-
-                throw new Exception();
+                if (!response.IsSuccessStatusCode)
+                    throw new Exception();
             }
         }
 
@@ -118,15 +117,16 @@ namespace Gitter.API.Services.Concrete
 
         public async Task<IEnumerable<Room>> GetRoomsAsync()
         {
+            string url = _baseApiAddress + "rooms";
+
             using (var httpClient = HttpClient)
             {
-                string url = _baseApiAddress + "rooms";
                 var response = await httpClient.GetAsync(new Uri(url));
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var content = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<IEnumerable<Room>>(content);
+                    var result = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<IEnumerable<Room>>(result);
                 }
 
                 throw new Exception();
@@ -135,19 +135,20 @@ namespace Gitter.API.Services.Concrete
 
         public async Task<Room> JoinRoomAsync(string uri)
         {
+            string url = _baseApiAddress + "rooms";
+            var content = new HttpFormUrlEncodedContent(new Dictionary<string, string>
+            {
+                {"uri", uri}
+            });
+
             using (var httpClient = HttpClient)
             {
-                string url = _baseApiAddress + "rooms";
-                var response = await httpClient.PostAsync(new Uri(url),
-                    new HttpFormUrlEncodedContent(new Dictionary<string, string>
-                    {
-                        {"uri", uri}
-                    }));
+                var response = await httpClient.PostAsync(new Uri(url), content);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var content = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<Room>(content);
+                    var result = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<Room>(result);
                 }
 
                 throw new Exception();
@@ -160,10 +161,10 @@ namespace Gitter.API.Services.Concrete
 
         public IObservable<Message> GetRealtimeMessages(string roomId)
         {
-            string url = $"rooms/{roomId}/chatMessages";
+            string url = _baseStreamingApiAddress + $"rooms/{roomId}/chatMessages";
 
             return Observable.Using(() => HttpClient,
-                client => client.GetInputStreamAsync(new Uri(_baseStreamingApiAddress + url))
+                client => client.GetInputStreamAsync(new Uri(url))
                     .AsTask()
                     .ToObservable()
                     .Select(x => Observable.FromAsync(() => ReadStream(x.AsStreamForRead())).Repeat())
@@ -181,25 +182,25 @@ namespace Gitter.API.Services.Concrete
 
         public async Task<IEnumerable<Message>> GetRoomMessagesAsync(string roomId, int limit = 50, string beforeId = null, string afterId = null, int skip = 0)
         {
+            string url = _baseApiAddress + $"rooms/{roomId}/chatMessages?limit={limit}";
+
+            if (!string.IsNullOrWhiteSpace(beforeId))
+                url += $"&beforeId={beforeId}";
+
+            if (!string.IsNullOrWhiteSpace(afterId))
+                url += $"&afterId={afterId}";
+
+            if (skip > 0)
+                url += $"&skip={skip}";
+
             using (var httpClient = HttpClient)
             {
-                string url = $"rooms/{roomId}/chatMessages?limit={limit}";
-
-                if (!string.IsNullOrWhiteSpace(beforeId))
-                    url += $"&beforeId={beforeId}";
-
-                if (!string.IsNullOrWhiteSpace(afterId))
-                    url += $"&afterId={afterId}";
-
-                if (skip > 0)
-                    url += $"&skip={skip}";
-
-                var response = await httpClient.GetAsync(new Uri(_baseApiAddress + url));
+                var response = await httpClient.GetAsync(new Uri(url));
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var content = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<IEnumerable<Message>>(content);
+                    var result = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<IEnumerable<Message>>(result);
                 }
 
                 throw new Exception();
@@ -208,19 +209,20 @@ namespace Gitter.API.Services.Concrete
 
         public async Task<Message> SendMessageAsync(string roomId, string message)
         {
+            string url = _baseApiAddress + $"rooms/{roomId}/chatMessages";
+            var content = new HttpFormUrlEncodedContent(new Dictionary<string, string>
+            {
+                {"text", message}
+            });
+
             using (var httpClient = HttpClient)
             {
-                string url = _baseApiAddress + $"rooms/{roomId}/chatMessages";
-                var response = await httpClient.PostAsync(new Uri(url),
-                    new HttpFormUrlEncodedContent(new Dictionary<string, string>
-                    {
-                        {"text", message}
-                    }));
+                var response = await httpClient.PostAsync(new Uri(url), content);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var content = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<Message>(content);
+                    var result = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<Message>(result);
                 }
 
                 throw new Exception();
@@ -229,19 +231,20 @@ namespace Gitter.API.Services.Concrete
 
         public async Task<Message> UpdateMessageAsync(string roomId, string messageId, string message)
         {
+            string url = _baseApiAddress + $"rooms/{roomId}/chatMessages/{messageId}";
+            var content = new HttpFormUrlEncodedContent(new Dictionary<string, string>
+            {
+                {"text", message}
+            });
+
             using (var httpClient = HttpClient)
             {
-                string url = _baseApiAddress + $"rooms/{roomId}/chatMessages/{messageId}";
-                var response = await httpClient.PutAsync(new Uri(url),
-                    new HttpFormUrlEncodedContent(new Dictionary<string, string>
-                    {
-                        {"text", message}
-                    }));
+                var response = await httpClient.PutAsync(new Uri(url), content);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var content = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<Message>(content);
+                    var result = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<Message>(result);
                 }
 
                 throw new Exception();
