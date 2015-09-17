@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Views;
-using Gitter.API.Services.Abstract;
 using Gitter.Services.Abstract;
 using Gitter.ViewModel.Abstract;
 #if WINDOWS_PHONE_APP

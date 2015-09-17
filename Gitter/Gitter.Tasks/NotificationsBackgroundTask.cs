@@ -74,7 +74,7 @@ namespace Gitter.Tasks
                     else if (room.UnreadItems > 0)
                     {
                         // Show notifications (toast notifications)
-                        string notificationContent = string.Format("You have {0} unread messages", room.UnreadItems);
+                        string notificationContent = $"You have {room.UnreadItems} unread messages";
                         _localNotificationService.SendNotification(room.Name, notificationContent, room.Name);
 
                         _applicationStorageService.Save(room.Name, room.UnreadItems);
