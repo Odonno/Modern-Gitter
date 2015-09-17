@@ -31,7 +31,7 @@ namespace Gitter.API.Services.Abstract
         #region Messages
 
         IObservable<Message> GetRealtimeMessages(string roomId);
-        Task<IEnumerable<Message>> GetRoomMessagesAsync(string roomId, int limit = 50, string beforeId = null);
+        Task<IEnumerable<Message>> GetRoomMessagesAsync(string roomId, int limit = 50, string beforeId = null, string afterId = null, int skip = 0);
         Task<Message> SendMessageAsync(string roomId, string message);
         Task<Message> UpdateMessageAsync(string roomId, string messageId, string message);
 

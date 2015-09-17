@@ -99,21 +99,8 @@ namespace Gitter.ViewModel
 
         #region ViewModels
 
-        public static IMainViewModel Main
-        {
-            get
-            {
-                return ServiceLocator.Current.GetInstance<IMainViewModel>();
-            }
-        }
-
-        public static ILoginViewModel Login
-        {
-            get
-            {
-                return ServiceLocator.Current.GetInstance<ILoginViewModel>();
-            }
-        }
+        public static IMainViewModel Main => ServiceLocator.Current.GetInstance<IMainViewModel>();
+        public static ILoginViewModel Login => ServiceLocator.Current.GetInstance<ILoginViewModel>();
 
         #endregion
     }

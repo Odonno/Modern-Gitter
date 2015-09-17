@@ -21,8 +21,8 @@ namespace Gitter.API.Services.Concrete
     {
         #region Fields
 
-        private readonly string _baseApiAddress = string.Format("{0}{1}", Constants.ApiBaseUrl, Constants.ApiVersion);
-        private readonly string _baseStreamingApiAddress = string.Format("{0}{1}", Constants.StreamApiBaseUrl, Constants.ApiVersion);
+        private readonly string _baseApiAddress = $"{Constants.ApiBaseUrl}{Constants.ApiVersion}";
+        private readonly string _baseStreamingApiAddress = $"{Constants.StreamApiBaseUrl}{Constants.ApiVersion}";
 
         private HttpClient HttpClient
         {
@@ -102,7 +102,7 @@ namespace Gitter.API.Services.Concrete
                     "application/json");
 
                 var response = await httpClient.PostAsync(
-                    new Uri(_baseApiAddress + string.Format("user/{0}/rooms/{1}/unreadItems", userId, roomId)),
+                    new Uri(_baseApiAddress + $"user/{userId}/rooms/{roomId}/unreadItems"),
                     content);
 
                 if (response.IsSuccessStatusCode)
@@ -158,7 +158,7 @@ namespace Gitter.API.Services.Concrete
 
         public IObservable<Message> GetRealtimeMessages(string roomId)
         {
-            string url = string.Format("rooms/{0}/chatMessages", roomId);
+            string url = $"rooms/{roomId}/chatMessages";
 
             return Observable.Using(() => HttpClient,
                 client => client.GetInputStreamAsync(new Uri(_baseStreamingApiAddress + url))
@@ -177,13 +177,20 @@ namespace Gitter.API.Services.Concrete
             }
         }
 
-        public async Task<IEnumerable<Message>> GetRoomMessagesAsync(string roomId, int limit = 50, string beforeId = null)
+        public async Task<IEnumerable<Message>> GetRoomMessagesAsync(string roomId, int limit = 50, string beforeId = null, string afterId = null, int skip = 0)
         {
             using (var httpClient = HttpClient)
             {
-                string url = string.Format("rooms/{0}/chatMessages?limit={1}", roomId, limit);
+                string url = $"rooms/{roomId}/chatMessages?limit={limit}";
+
                 if (!string.IsNullOrWhiteSpace(beforeId))
-                    url += string.Format("&beforeId={0}", beforeId);
+                    url += $"&beforeId={beforeId}";
+
+                if (!string.IsNullOrWhiteSpace(afterId))
+                    url += $"&afterId={afterId}";
+
+                if (skip > 0)
+                    url += $"&skip={skip}";
 
                 var response = await httpClient.GetAsync(new Uri(_baseApiAddress + url));
 
@@ -201,7 +208,7 @@ namespace Gitter.API.Services.Concrete
         {
             using (var httpClient = HttpClient)
             {
-                var response = await httpClient.PostAsync(new Uri(_baseApiAddress + string.Format("rooms/{0}/chatMessages", roomId)),
+                var response = await httpClient.PostAsync(new Uri(_baseApiAddress + $"rooms/{roomId}/chatMessages"),
                     new HttpFormUrlEncodedContent(new Dictionary<string, string>
                     {
                         {"text", message}
@@ -221,7 +228,7 @@ namespace Gitter.API.Services.Concrete
         {
             using (var httpClient = HttpClient)
             {
-                var response = await httpClient.PutAsync(new Uri(_baseApiAddress + string.Format("rooms/{0}/chatMessages/{1}", roomId, messageId)),
+                var response = await httpClient.PutAsync(new Uri(_baseApiAddress + $"rooms/{roomId}/chatMessages/{messageId}"),
                     new HttpFormUrlEncodedContent(new Dictionary<string, string>
                     {
                         {"text", message}
