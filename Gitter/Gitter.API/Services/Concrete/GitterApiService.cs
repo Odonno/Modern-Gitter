@@ -4,11 +4,11 @@ using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Web.Http;
 using Windows.Web.Http.Headers;
 using Gitter.API.Configuration;
+using Gitter.API.Helpers;
 using Gitter.API.Services.Abstract;
 using Gitter.Model;
 using Gitter.Services.Abstract;
@@ -167,19 +167,12 @@ namespace Gitter.API.Services.Concrete
                 client => client.GetInputStreamAsync(new Uri(url))
                     .AsTask()
                     .ToObservable()
-                    .Select(x => Observable.FromAsync(() => ReadStream(x.AsStreamForRead())).Repeat())
+                    .Select(x => Observable.FromAsync(() => StreamHelper.ReadStream(x.AsStreamForRead())).Repeat())
                     .Concat()
                     .Where(x => !string.IsNullOrWhiteSpace(x))
                     .Select(JsonConvert.DeserializeObject<Message>));
         }
-        private async Task<string> ReadStream(Stream stream)
-        {
-            using (var reader = new StreamReader(stream, Encoding.UTF8, false, 1024, true))
-            {
-                return await reader.ReadLineAsync();
-            }
-        }
-
+        
         public async Task<IEnumerable<Message>> GetRoomMessagesAsync(string roomId, int limit = 50, string beforeId = null, string afterId = null, int skip = 0)
         {
             string url = _baseApiAddress + $"rooms/{roomId}/chatMessages?limit={limit}";
