@@ -120,7 +120,8 @@ namespace Gitter.API.Services.Concrete
         {
             using (var httpClient = HttpClient)
             {
-                var response = await httpClient.GetAsync(new Uri(_baseApiAddress + "rooms"));
+                string url = _baseApiAddress + "rooms";
+                var response = await httpClient.GetAsync(new Uri(url));
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -136,7 +137,8 @@ namespace Gitter.API.Services.Concrete
         {
             using (var httpClient = HttpClient)
             {
-                var response = await httpClient.PostAsync(new Uri(_baseApiAddress + "rooms"),
+                string url = _baseApiAddress + "rooms";
+                var response = await httpClient.PostAsync(new Uri(url),
                     new HttpFormUrlEncodedContent(new Dictionary<string, string>
                     {
                         {"uri", uri}
@@ -208,7 +210,8 @@ namespace Gitter.API.Services.Concrete
         {
             using (var httpClient = HttpClient)
             {
-                var response = await httpClient.PostAsync(new Uri(_baseApiAddress + $"rooms/{roomId}/chatMessages"),
+                string url = _baseApiAddress + $"rooms/{roomId}/chatMessages";
+                var response = await httpClient.PostAsync(new Uri(url),
                     new HttpFormUrlEncodedContent(new Dictionary<string, string>
                     {
                         {"text", message}
@@ -228,7 +231,8 @@ namespace Gitter.API.Services.Concrete
         {
             using (var httpClient = HttpClient)
             {
-                var response = await httpClient.PutAsync(new Uri(_baseApiAddress + $"rooms/{roomId}/chatMessages/{messageId}"),
+                string url = _baseApiAddress + $"rooms/{roomId}/chatMessages/{messageId}";
+                var response = await httpClient.PutAsync(new Uri(url),
                     new HttpFormUrlEncodedContent(new Dictionary<string, string>
                     {
                         {"text", message}
