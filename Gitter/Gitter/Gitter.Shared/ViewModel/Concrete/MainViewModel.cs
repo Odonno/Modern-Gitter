@@ -95,8 +95,10 @@ namespace Gitter.ViewModel.Concrete
                 if (string.IsNullOrWhiteSpace(SearchedRoomText))
                     return Rooms;
 
-                return Rooms.Where(room => room.Room.Name.Contains(SearchedRoomText) ||
-                                           room.Room.Url.Contains(SearchedRoomText));
+                string lowerSearch = SearchedRoomText.ToLower();
+
+                return Rooms.Where(room => room.Room.Name.ToLower().Contains(lowerSearch) ||
+                                           room.Room.Url.ToLower().Contains(lowerSearch));
             }
         }
 
