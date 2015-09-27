@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reactive;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.ApplicationModel.Core;
@@ -13,10 +15,11 @@ using Gitter.ViewModel.Abstract;
 using Gitter.Services.Abstract;
 using GitterSharp.Model;
 using GitterSharp.Services;
+using ReactiveUI;
 
 namespace Gitter.ViewModel.Concrete
 {
-    public sealed class MainViewModel : ViewModelBase, IMainViewModel
+    public sealed class MainViewModel : ReactiveViewModelBase, IMainViewModel
     {
         #region Fields
 
@@ -53,7 +56,7 @@ namespace Gitter.ViewModel.Concrete
             private set
             {
                 _currentDateTime = value;
-                RaisePropertyChanged();
+                this.RaisePropertyChanged();
             }
         }
 
@@ -67,7 +70,7 @@ namespace Gitter.ViewModel.Concrete
             private set
             {
                 _currentUser = value;
-                RaisePropertyChanged();
+                this.RaisePropertyChanged();
                 ((RelayCommand)(ChatWithUsCommand)).RaiseCanExecuteChanged();
             }
         }
@@ -84,23 +87,11 @@ namespace Gitter.ViewModel.Concrete
             set
             {
                 _selectedRoom = value;
-                RaisePropertyChanged();
+                this.RaisePropertyChanged();
             }
         }
 
-        public IEnumerable<IRoomViewModel> SearchedRooms
-        {
-            get
-            {
-                if (string.IsNullOrWhiteSpace(SearchedRoomText))
-                    return Rooms;
-
-                string lowerSearch = SearchedRoomText.ToLower();
-
-                return Rooms.Where(room => room.Room.Name.ToLower().Contains(lowerSearch) ||
-                                           room.Room.Url.ToLower().Contains(lowerSearch));
-            }
-        }
+        public ObservableCollection<IRoomViewModel> SearchedRooms { get; } = new ObservableCollection<IRoomViewModel>();
 
         private string _searchedRoomText;
         public string SearchedRoomText
@@ -112,8 +103,7 @@ namespace Gitter.ViewModel.Concrete
             set
             {
                 _searchedRoomText = value;
-                RaisePropertyChanged();
-                RaisePropertyChanged("SearchedRooms");
+                this.RaisePropertyChanged();
             }
         }
 
@@ -124,7 +114,7 @@ namespace Gitter.ViewModel.Concrete
             set
             {
                 _isRefreshing = value;
-                RaisePropertyChanged();
+                this.RaisePropertyChanged();
                 ((RelayCommand)(RefreshCommand)).RaiseCanExecuteChanged();
             }
         }
@@ -138,6 +128,13 @@ namespace Gitter.ViewModel.Concrete
         public ICommand ChatWithUsCommand { get; }
         public ICommand RefreshCommand { get; }
         public ICommand ToggleSearchCommand { get; }
+
+        #endregion
+
+
+        #region Private Commands
+
+        private readonly ReactiveCommand<IEnumerable<IRoomViewModel>> _search;
 
         #endregion
 
@@ -167,7 +164,41 @@ namespace Gitter.ViewModel.Concrete
             RefreshCommand = new RelayCommand(Refresh, () => !IsRefreshing);
             ToggleSearchCommand = new RelayCommand<bool>(ToggleSearch);
 
-            // ViewModels
+            // Execute search when user finished to type the search text
+            _search = ReactiveCommand.CreateAsyncTask(
+                 Observable.Return(true),
+                _ =>
+                    {
+                        IEnumerable<IRoomViewModel> rooms;
+
+                        if (string.IsNullOrWhiteSpace(SearchedRoomText))
+                        {
+                            rooms = Rooms;
+                        }
+                        else
+                        {
+                            string lowerSearch = SearchedRoomText.ToLower();
+                            rooms = Rooms.Where(room => room.Room.Name.ToLower().Contains(lowerSearch) ||
+                                                        room.Room.Url.ToLower().Contains(lowerSearch));
+                        }
+                    
+                        return Task.FromResult(rooms);
+                    }
+                );
+
+            this.WhenAnyValue(x => x.SearchedRoomText)
+                .Throttle(TimeSpan.FromSeconds(0.5), RxApp.MainThreadScheduler)
+                .InvokeCommand(this, x => x._search);
+
+            _search.Subscribe(rooms =>
+            {
+                SearchedRooms.Clear();
+
+                foreach (var room in rooms)
+                    SearchedRooms.Add(room);
+            });
+
+            // ViewModel properties
             CurrentDateTime = DateTime.Now;
 
 
@@ -390,8 +421,8 @@ namespace Gitter.ViewModel.Concrete
             // Add ordered rooms to UI list
             foreach (var room in orderedRooms)
                 Rooms.Add(new RoomViewModel(room));
-
-            RaisePropertyChanged("SearchedRooms");
+            
+            await _search.ExecuteAsync();
 
             _eventService.RefreshRooms.OnNext(true);
         }
