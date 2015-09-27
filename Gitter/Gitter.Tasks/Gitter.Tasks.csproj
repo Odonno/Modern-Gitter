@@ -49,12 +49,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Gitter.API, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\gitter-api-pcl.0.1.1\lib\Gitter.API.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Gitter.Model, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\gitter-api-pcl.0.1.1\lib\Gitter.Model.dll</HintPath>
+    <Reference Include="GitterSharp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\gitter-api-pcl.0.2.0\lib\GitterSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

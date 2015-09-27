@@ -1,6 +1,5 @@
 ﻿using System;
 using Windows.UI.Xaml.Data;
-using Gitter.Model;
 using Gitter.ViewModel;
 using Gitter.ViewModel.Abstract;
 

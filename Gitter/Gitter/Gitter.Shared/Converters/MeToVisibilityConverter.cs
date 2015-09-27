@@ -1,8 +1,8 @@
 ﻿using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
-using Gitter.Model;
 using Gitter.ViewModel;
+using GitterSharp.Model;
 
 namespace Gitter.Converters
 {
@@ -13,7 +13,7 @@ namespace Gitter.Converters
             var user = value as User;
 
             if (user == null)
-                throw new ArgumentNullException("value");
+                throw new ArgumentNullException(nameof(value));
 
             bool isCurrentUser = (user.Id == ViewModelLocator.Main.CurrentUser.Id);
 

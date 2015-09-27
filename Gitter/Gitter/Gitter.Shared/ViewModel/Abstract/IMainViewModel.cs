@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using Gitter.Model;
+using GitterSharp.Model;
 
 namespace Gitter.ViewModel.Abstract
 {

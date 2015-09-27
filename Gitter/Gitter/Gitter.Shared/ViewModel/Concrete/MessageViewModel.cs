@@ -1,7 +1,7 @@
 ﻿using System;
 using GalaSoft.MvvmLight;
-using Gitter.Model;
 using Gitter.ViewModel.Abstract;
+using GitterSharp.Model;
 
 namespace Gitter.ViewModel.Concrete
 {

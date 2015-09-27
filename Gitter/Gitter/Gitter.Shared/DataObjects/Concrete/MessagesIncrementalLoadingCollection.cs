@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
-using Gitter.API.Services.Abstract;
 using Gitter.DataObjects.Abstract;
 using Gitter.Services.Abstract;
 using Gitter.ViewModel;
 using Gitter.ViewModel.Abstract;
 using Gitter.ViewModel.Concrete;
+using GitterSharp.Services;
 using Microsoft.Practices.ServiceLocation;
 
 namespace Gitter.DataObjects.Concrete

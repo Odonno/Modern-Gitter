@@ -1,6 +1,5 @@
 ﻿using System;
 using Windows.UI.Xaml.Data;
-using Gitter.Model;
 using Gitter.ViewModel;
 using Gitter.ViewModel.Abstract;
 
@@ -13,7 +12,7 @@ namespace Gitter.Converters
             var message = value as IMessageViewModel;
 
             if (message == null)
-                throw new ArgumentNullException("value");
+                throw new ArgumentNullException(nameof(value));
 
             var currentIndex = ViewModelLocator.Main.SelectedRoom.Messages.IndexOf(message);
 

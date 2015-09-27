@@ -1,11 +1,9 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Background;
-using Gitter.API.Services.Abstract;
-using Gitter.API.Services.Concrete;
 using Gitter.Services.Abstract;
 using Gitter.Services.Concrete;
+using GitterSharp.Services;
 
 namespace Gitter.Tasks
 {

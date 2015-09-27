@@ -15,13 +15,12 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
-using Gitter.API.Services.Abstract;
-using Gitter.API.Services.Concrete;
 using Gitter.Services.Abstract;
 using Gitter.Services.Concrete;
 using Gitter.ViewModel.Abstract;
 using Gitter.ViewModel.Concrete;
 using Gitter.Views;
+using GitterSharp.Services;
 using Microsoft.Practices.ServiceLocation;
 
 namespace Gitter.ViewModel

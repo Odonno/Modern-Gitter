@@ -1,5 +1,5 @@
 ﻿using System;
-using Gitter.Model;
+using GitterSharp.Model;
 
 namespace Gitter.ViewModel.Abstract
 {

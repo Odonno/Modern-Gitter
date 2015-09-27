@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 using Gitter.DataObjects.Concrete;
-using Gitter.Model;
+using GitterSharp.Model;
 
 namespace Gitter.ViewModel.Abstract
 {

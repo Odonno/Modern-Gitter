@@ -9,10 +9,10 @@ using Windows.UI.Core;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
-using Gitter.API.Services.Abstract;
-using Gitter.Model;
 using Gitter.ViewModel.Abstract;
 using Gitter.Services.Abstract;
+using GitterSharp.Model;
+using GitterSharp.Services;
 
 namespace Gitter.ViewModel.Concrete
 {

@@ -6,11 +6,11 @@ using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using Gitter.API.Services.Abstract;
 using Gitter.DataObjects.Concrete;
-using Gitter.Model;
 using Gitter.Services.Abstract;
 using Gitter.ViewModel.Abstract;
+using GitterSharp.Model;
+using GitterSharp.Services;
 using Microsoft.Practices.ServiceLocation;
 #if WINDOWS_PHONE_APP
 using Windows.Media.SpeechRecognition;

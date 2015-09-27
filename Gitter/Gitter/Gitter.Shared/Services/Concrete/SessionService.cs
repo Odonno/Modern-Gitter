@@ -6,10 +6,10 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Windows.Data.Json;
 using Windows.Security.Authentication.Web;
-using Gitter.API.Configuration;
-using Gitter.API.Services.Abstract;
 using Gitter.Configuration;
 using Gitter.Services.Abstract;
+using GitterSharp.Configuration;
+using GitterSharp.Services;
 #if WINDOWS_PHONE_APP
 using Windows.ApplicationModel.Activation;
 #endif
