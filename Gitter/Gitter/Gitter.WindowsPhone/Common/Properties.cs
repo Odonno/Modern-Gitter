@@ -7,7 +7,11 @@ using System.Net;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Documents;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Imaging;
+using GalaSoft.MvvmLight.Views;
+using Gitter.ViewModel.Abstract;
+using Microsoft.Practices.ServiceLocation;
 
 namespace Gitter.Common
 {
@@ -197,10 +201,16 @@ namespace Gitter.Common
 
         private static Inline GenerateImage(HtmlNode node)
         {
-            var bitmapImage = new BitmapImage(new Uri(node.Attributes["src"].Value));
+            string src = node.Attributes["src"].Value;
 
-            var image = new Image();
-            image.Source = bitmapImage;
+            var bitmapImage = new BitmapImage(new Uri(src));
+            var image = new Image { Source = bitmapImage };
+
+            image.Tapped += (sender, args) =>
+            {
+                ServiceLocator.Current.GetInstance<IFullImageViewModel>().Source = src;
+                ServiceLocator.Current.GetInstance<INavigationService>().NavigateTo("FullImage");
+            };
 
             return new InlineUIContainer { Child = image };
         }

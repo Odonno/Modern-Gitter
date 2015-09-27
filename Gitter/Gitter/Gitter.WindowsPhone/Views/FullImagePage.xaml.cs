@@ -1,13 +1,10 @@
-﻿using Windows.System;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
-using Windows.Graphics.Display;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -15,32 +12,21 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
-// Pour en savoir plus sur le modèle d'élément Page de base, consultez la page http://go.microsoft.com/fwlink/?LinkID=390556
 using GitHub.Common;
-using Gitter.Services.Abstract;
-using Gitter.ViewModel;
-using Microsoft.Practices.ServiceLocation;
+using Windows.UI.ViewManagement;
+
+// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
 namespace Gitter.Views
 {
     /// <summary>
-    /// Une page vide peut être utilisée seule ou constituer une page de destination au sein d'un frame.
+    /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class RoomPage : Page
+    public sealed partial class FullImagePage : Page
     {
-        #region Fields
-
-        private readonly IEventService _eventService;
-
-        #endregion
-
-
-        public RoomPage()
+        public FullImagePage()
         {
             InitializeComponent();
-
-            _eventService = ServiceLocator.Current.GetInstance<IEventService>();
 
             _navigationHelper = new NavigationHelper(this);
             _navigationHelper.LoadState += NavigationHelper_LoadState;
@@ -103,35 +89,23 @@ namespace Gitter.Views
         /// </summary>
         /// <param name="e">Fournit des données pour les méthodes de navigation et
         /// les gestionnaires d'événements qui ne peuvent pas annuler la requête de navigation.</param>
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             _navigationHelper.OnNavigatedTo(e);
 
-            if (e.NavigationMode == NavigationMode.New || e.NavigationMode == NavigationMode.New)
-                _eventService.ReadRoom.OnNext(ViewModelLocator.Main.SelectedRoom);
+            // Hide status bar to show full screen image
+            await StatusBar.GetForCurrentView().HideAsync();
         }
 
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        protected async override void OnNavigatedFrom(NavigationEventArgs e)
         {
             _navigationHelper.OnNavigatedFrom(e);
 
-            if (e.NavigationMode == NavigationMode.Back)
-                ViewModelLocator.Main.SelectedRoom = null;
+            // Show status bar again once we saw the full screen image
+            await StatusBar.GetForCurrentView().ShowAsync();
         }
 
         #endregion
-
-        #endregion
-
-
-        #region Sending Message
-
-        private void SendMessage_OnKeyDown(object sender, KeyRoutedEventArgs e)
-        {
-            // Hide the virtual keyboard when sending a message
-            if (e.Key == VirtualKey.Enter)
-                Focus(FocusState.Programmatic);
-        }
 
         #endregion
     }

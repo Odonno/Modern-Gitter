@@ -36,7 +36,7 @@
                                           HorizontalAlignment="Left" VerticalAlignment="Top" />
 
         <!-- Title -->
-        <StackPanel>
+        <StackPanel Grid.Row="0">
             <TextBlock Text="{Binding Room.Name}" 
                        Style="{ThemeResource TitleTextBlockStyle}" 
                        Margin="0 12 0 0" />
