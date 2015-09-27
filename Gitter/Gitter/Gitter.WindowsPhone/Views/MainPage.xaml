@@ -34,7 +34,7 @@
         </StackPanel>
 
         <!-- Content - List of Rooms -->
-        <ListView Grid.Row="1" ItemsSource="{Binding Rooms}" Margin="12 0">
+        <ListView Grid.Row="1" ItemsSource="{Binding SearchedRooms}" Margin="12 0">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Button Style="{StaticResource TextBlockButtonStyle}"
@@ -84,7 +84,7 @@
         <!-- Search bar -->
         <TextBox Grid.Row="2" Margin="6" x:Uid="/UIResources/searchText"
                  PlaceholderText="search a room"
-                 Text="{Binding Path=SearchedRoom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                 Text="{Binding Path=SearchedRoomText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  Visibility="{Binding ElementName=SearchButton, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}" />
     </Grid>
 

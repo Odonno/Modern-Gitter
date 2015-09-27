@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using GitterSharp.Model;
@@ -11,7 +12,8 @@ namespace Gitter.ViewModel.Abstract
         User CurrentUser { get; }
         ObservableCollection<IRoomViewModel> Rooms { get; }
         IRoomViewModel SelectedRoom { get; set; }
-        string SearchedRoom { get; set; }
+        IEnumerable<IRoomViewModel> SearchedRooms { get; }
+        string SearchedRoomText { get; set; }
 
         ICommand SelectRoomCommand { get; }
         ICommand ChatWithUsCommand { get; }

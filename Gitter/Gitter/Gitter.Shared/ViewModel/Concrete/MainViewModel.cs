@@ -88,17 +88,30 @@ namespace Gitter.ViewModel.Concrete
             }
         }
 
-        private string _searchedRoom;
-        public string SearchedRoom
+        public IEnumerable<IRoomViewModel> SearchedRooms
         {
             get
             {
-                return _searchedRoom;
+                if (string.IsNullOrWhiteSpace(SearchedRoomText))
+                    return Rooms;
+
+                return Rooms.Where(room => room.Room.Name.Contains(SearchedRoomText) ||
+                                           room.Room.Url.Contains(SearchedRoomText));
+            }
+        }
+
+        private string _searchedRoomText;
+        public string SearchedRoomText
+        {
+            get
+            {
+                return _searchedRoomText;
             }
             set
             {
-                _searchedRoom = value;
+                _searchedRoomText = value;
                 RaisePropertyChanged();
+                RaisePropertyChanged("SearchedRooms");
             }
         }
 
@@ -368,6 +381,8 @@ namespace Gitter.ViewModel.Concrete
             foreach (var room in orderedRooms)
                 Rooms.Add(new RoomViewModel(room));
 
+            RaisePropertyChanged("SearchedRooms");
+
             _eventService.RefreshRooms.OnNext(true);
         }
 
@@ -428,11 +443,6 @@ namespace Gitter.ViewModel.Concrete
                 App.TelemetryClient.TrackException(ex);
                 _localNotificationService.SendNotification("Error", "Can't validate reading new messages");
             }
-        }
-
-        private void Search()
-        {
-            throw new NotImplementedException();
         }
 
         #endregion
