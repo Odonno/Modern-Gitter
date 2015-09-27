@@ -134,7 +134,7 @@ namespace Gitter.ViewModel.Concrete
 
         #region Private Commands
 
-        private readonly ReactiveCommand<IEnumerable<IRoomViewModel>> _search;
+        private ReactiveCommand<IEnumerable<IRoomViewModel>> _search;
 
         #endregion
 
@@ -164,39 +164,8 @@ namespace Gitter.ViewModel.Concrete
             RefreshCommand = new RelayCommand(Refresh, () => !IsRefreshing);
             ToggleSearchCommand = new RelayCommand<bool>(ToggleSearch);
 
-            // Execute search when user finished to type the search text
-            _search = ReactiveCommand.CreateAsyncTask(
-                 Observable.Return(true),
-                _ =>
-                    {
-                        IEnumerable<IRoomViewModel> rooms;
-
-                        if (string.IsNullOrWhiteSpace(SearchedRoomText))
-                        {
-                            rooms = Rooms;
-                        }
-                        else
-                        {
-                            string lowerSearch = SearchedRoomText.ToLower();
-                            rooms = Rooms.Where(room => room.Room.Name.ToLower().Contains(lowerSearch) ||
-                                                        room.Room.Url.ToLower().Contains(lowerSearch));
-                        }
-                    
-                        return Task.FromResult(rooms);
-                    }
-                );
-
-            this.WhenAnyValue(x => x.SearchedRoomText)
-                .Throttle(TimeSpan.FromSeconds(0.5), RxApp.MainThreadScheduler)
-                .InvokeCommand(this, x => x._search);
-
-            _search.Subscribe(rooms =>
-            {
-                SearchedRooms.Clear();
-
-                foreach (var room in rooms)
-                    SearchedRooms.Add(room);
-            });
+            // Create Rx commands
+            CreateSearchCommand();
 
             // ViewModel properties
             CurrentDateTime = DateTime.Now;
@@ -401,6 +370,41 @@ namespace Gitter.ViewModel.Concrete
 
         #endregion
 
+        #region Rx Command Methods
+
+        private void CreateSearchCommand()
+        {
+            // Execute search when user finished to type the search text
+            _search = ReactiveCommand.CreateAsyncTask(
+                Observable.Return(true),
+                _ => Task.FromResult(ExecuteSearch()));
+
+            // Execute Search when user stop to type > 0.5s
+            this.WhenAnyValue(x => x.SearchedRoomText)
+                .Throttle(TimeSpan.FromSeconds(0.5), RxApp.MainThreadScheduler)
+                .InvokeCommand(this, x => x._search);
+
+            // Update UI when we executed the search
+            _search.Subscribe(rooms =>
+            {
+                SearchedRooms.Clear();
+                foreach (var room in rooms)
+                    SearchedRooms.Add(room);
+            });
+        }
+
+        private IEnumerable<IRoomViewModel> ExecuteSearch()
+        {
+            if (string.IsNullOrWhiteSpace(SearchedRoomText))
+                return Rooms;
+
+            string lowerSearch = SearchedRoomText.ToLower();
+            return Rooms.Where(room => room.Room.Name.ToLower().Contains(lowerSearch) ||
+                                        room.Room.Url.ToLower().Contains(lowerSearch));
+        }
+
+        #endregion
+
 
         #region Methods
 
@@ -421,7 +425,8 @@ namespace Gitter.ViewModel.Concrete
             // Add ordered rooms to UI list
             foreach (var room in orderedRooms)
                 Rooms.Add(new RoomViewModel(room));
-            
+
+            // Execute search each time we refresh rooms
             await _search.ExecuteAsync();
 
             _eventService.RefreshRooms.OnNext(true);
