@@ -2,13 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
-using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 using Gitter.ViewModel.Abstract;
@@ -102,8 +100,7 @@ namespace Gitter.ViewModel.Concrete
             }
             set
             {
-                _searchedRoomText = value;
-                this.RaisePropertyChanged();
+                this.RaiseAndSetIfChanged(ref _searchedRoomText, value);
             }
         }
 
@@ -364,8 +361,7 @@ namespace Gitter.ViewModel.Concrete
 
         private void ToggleSearch(bool toggle)
         {
-            if (!toggle)
-                SearchedRoomText = string.Empty;
+            SearchedRoomText = string.Empty;
         }
 
         #endregion
@@ -379,7 +375,7 @@ namespace Gitter.ViewModel.Concrete
                 Observable.Return(true),
                 _ => Task.FromResult(ExecuteSearch()));
 
-            // Execute Search when user stop to type > 0.5s
+            // Execute Search when user stopped to type > 0.5s
             this.WhenAnyValue(x => x.SearchedRoomText)
                 .Throttle(TimeSpan.FromSeconds(0.5), RxApp.MainThreadScheduler)
                 .InvokeCommand(this, x => x._search);

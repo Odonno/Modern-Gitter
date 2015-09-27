@@ -82,7 +82,8 @@
         </ListView>
         
         <!-- Search bar -->
-        <TextBox Grid.Row="2" Margin="6" x:Uid="/UIResources/searchText"
+        <TextBox x:Name="SearchValue" Grid.Row="2" 
+                 Margin="6" x:Uid="/UIResources/searchText"
                  PlaceholderText="search a room"
                  Text="{Binding Path=SearchedRoomText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  Visibility="{Binding ElementName=SearchButton, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}" />
@@ -96,6 +97,7 @@
                                     x:Uid="/UIResources/search" Label="search" 
                                     Command="{Binding Path=ToggleSearchCommand}"
                                     CommandParameter="{Binding ElementName=SearchButton, Path=IsChecked}"
+                                    Checked="SearchButton_OnChecked"
                                     Icon="Find" />
                 
                 <AppBarButton x:Uid="/UIResources/refresh" Label="refresh" 

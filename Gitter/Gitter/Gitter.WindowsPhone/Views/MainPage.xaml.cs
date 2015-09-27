@@ -138,5 +138,15 @@ namespace Gitter
         #endregion
 
         #endregion
+
+
+        #region UI Events
+
+        private void SearchButton_OnChecked(object sender, RoutedEventArgs e)
+        {
+            SearchValue.Text = string.Empty;
+        }
+
+        #endregion
     }
 }
