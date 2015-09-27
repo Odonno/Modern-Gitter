@@ -62,7 +62,7 @@
 
                                 <Ellipse Width="18" Height="18" Fill="White" />
                                 <TextBlock Text="{Binding UnreadMessagesCount, Converter={StaticResource UnreadMessagesCountConverter}}"
-                                           FontSize="9" FontWeight="Bold"
+                                           FontSize="10" FontWeight="Bold"
                                            HorizontalAlignment="Center" VerticalAlignment="Center"
                                            Foreground="{StaticResource BlueGrey}"/>
 

@@ -8,7 +8,7 @@ namespace Gitter.Converters
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             int unreadCount = (int) value;
-            return (unreadCount > 50) ? "50+" : unreadCount.ToString();
+            return (unreadCount > 99) ? "*" : unreadCount.ToString();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
