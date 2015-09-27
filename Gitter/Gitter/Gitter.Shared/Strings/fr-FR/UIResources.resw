@@ -138,6 +138,12 @@
   <data name="respondTo.Text" xml:space="preserve">
     <value>répondre à</value>
   </data>
+  <data name="search.Label" xml:space="preserve">
+    <value>rechercher</value>
+  </data>
+  <data name="searchText.PlaceholderText" xml:space="preserve">
+    <value>entrez le nom d'une salle de chat</value>
+  </data>
   <data name="send.Label" xml:space="preserve">
     <value>envoyer</value>
   </data>

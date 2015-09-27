@@ -138,6 +138,12 @@
   <data name="respondTo.Text" xml:space="preserve">
     <value>respond to</value>
   </data>
+  <data name="search.Label" xml:space="preserve">
+    <value>search</value>
+  </data>
+  <data name="searchText.PlaceholderText" xml:space="preserve">
+    <value>search a room</value>
+  </data>
   <data name="send.Label" xml:space="preserve">
     <value>send</value>
   </data>

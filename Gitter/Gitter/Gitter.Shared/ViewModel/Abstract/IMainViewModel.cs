@@ -11,6 +11,7 @@ namespace Gitter.ViewModel.Abstract
         User CurrentUser { get; }
         ObservableCollection<IRoomViewModel> Rooms { get; }
         IRoomViewModel SelectedRoom { get; set; }
+        string SearchedRoom { get; set; }
 
         ICommand SelectRoomCommand { get; }
         ICommand ChatWithUsCommand { get; }

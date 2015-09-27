@@ -21,6 +21,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
 
@@ -79,12 +80,22 @@
                 </Style>
             </ListView.ItemContainerStyle>
         </ListView>
+        
+        <!-- Search bar -->
+        <TextBox Grid.Row="2" Margin="6" x:Uid="/UIResources/searchText"
+                 PlaceholderText="search a room"
+                 Text="{Binding Path=SearchedRoom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                 Visibility="{Binding ElementName=SearchButton, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}" />
     </Grid>
 
 
     <Page.BottomAppBar>
         <CommandBar>
             <CommandBar.PrimaryCommands>
+                <AppBarToggleButton x:Name="SearchButton"
+                                    x:Uid="/UIResources/search" Label="search" 
+                                    Icon="Zoom" />
+                
                 <AppBarButton x:Uid="/UIResources/refresh" Label="refresh" 
                               Command="{Binding Path=RefreshCommand}"
                               Icon="Refresh" />

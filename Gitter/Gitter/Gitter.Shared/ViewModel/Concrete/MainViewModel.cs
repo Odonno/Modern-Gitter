@@ -88,6 +88,20 @@ namespace Gitter.ViewModel.Concrete
             }
         }
 
+        private string _searchedRoom;
+        public string SearchedRoom
+        {
+            get
+            {
+                return _searchedRoom;
+            }
+            set
+            {
+                _searchedRoom = value;
+                RaisePropertyChanged();
+            }
+        }
+
         private bool _isRefreshing;
         public bool IsRefreshing
         {
@@ -414,6 +428,11 @@ namespace Gitter.ViewModel.Concrete
                 App.TelemetryClient.TrackException(ex);
                 _localNotificationService.SendNotification("Error", "Can't validate reading new messages");
             }
+        }
+
+        private void Search()
+        {
+            throw new NotImplementedException();
         }
 
         #endregion
