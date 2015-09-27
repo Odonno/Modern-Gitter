@@ -1,3 +1,3 @@
-MainPackage=C:\Users\David\Documents\GitHub\Modern-Gitter\Gitter\Gitter\Gitter.WindowsPhone\bin\Release\Gitter.WindowsPhone_1.2.2.0_AnyCPU.appx
-SymbolPackage=C:\Users\David\Documents\GitHub\Modern-Gitter\Gitter\Gitter\Gitter.WindowsPhone\AppPackages\Gitter.WindowsPhone_1.2.2.0_Test\Gitter.WindowsPhone_1.2.2.0_AnyCPU.appxsym
-ResourcePack=C:\Users\David\Documents\GitHub\Modern-Gitter\Gitter\Gitter\Gitter.WindowsPhone\bin\Release\Gitter.WindowsPhone_1.2.2.0_language-fr.appx
+MainPackage=C:\Users\David\Documents\GitHub\Modern-Gitter\Gitter\Gitter\Gitter.WindowsPhone\bin\Release\Gitter.WindowsPhone_1.2.3.0_AnyCPU.appx
+SymbolPackage=C:\Users\David\Documents\GitHub\Modern-Gitter\Gitter\Gitter\Gitter.WindowsPhone\AppPackages\Gitter.WindowsPhone_1.2.3.0_Test\Gitter.WindowsPhone_1.2.3.0_AnyCPU.appxsym
+ResourcePack=C:\Users\David\Documents\GitHub\Modern-Gitter\Gitter\Gitter\Gitter.WindowsPhone\bin\Release\Gitter.WindowsPhone_1.2.3.0_language-fr.appx

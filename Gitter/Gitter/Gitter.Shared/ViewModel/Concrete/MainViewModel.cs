@@ -105,9 +105,9 @@ namespace Gitter.ViewModel.Concrete
 
         #region Commands
 
-        public ICommand SelectRoomCommand { get; private set; }
-        public ICommand ChatWithUsCommand { get; private set; }
-        public ICommand RefreshCommand { get; private set; }
+        public ICommand SelectRoomCommand { get; }
+        public ICommand ChatWithUsCommand { get; }
+        public ICommand RefreshCommand { get; }
 
         #endregion
 
@@ -339,10 +339,19 @@ namespace Gitter.ViewModel.Concrete
         private async Task RefreshRoomsAsync()
         {
             var rooms = await _gitterApiService.GetRoomsAsync();
-
             Rooms.Clear();
 
-            foreach (var room in rooms)
+            // Order rooms (by favourites, unread mentions, unread items and then last accessed time)
+            var orderedRooms = from room in rooms
+                               orderby
+                                   room.Favourite descending,
+                                   room.UnreadMentions descending,
+                                   room.UnreadItems descending,
+                                   room.LastAccessTime descending
+                               select room;
+
+            // Add ordered rooms to UI list
+            foreach (var room in orderedRooms)
                 Rooms.Add(new RoomViewModel(room));
 
             _eventService.RefreshRooms.OnNext(true);
