@@ -10,7 +10,9 @@
     DataContext="{Binding FullImage, Source={StaticResource Locator}}">
 
     <ScrollViewer HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Visible" 
-                  VerticalAlignment="Stretch" MinZoomFactor="0.5">
+                  VerticalAlignment="Stretch" 
+                  ZoomMode="Enabled" ZoomSnapPointsType="Mandatory"
+                  MinZoomFactor="0.5">
         <Grid>
             <Image Source="{Binding Path=Source}" Stretch="Uniform" />
         </Grid>
