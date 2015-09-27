@@ -135,6 +135,7 @@ namespace Gitter.ViewModel.Concrete
         public ICommand SelectRoomCommand { get; }
         public ICommand ChatWithUsCommand { get; }
         public ICommand RefreshCommand { get; }
+        public ICommand ToggleSearchCommand { get; }
 
         #endregion
 
@@ -162,6 +163,7 @@ namespace Gitter.ViewModel.Concrete
             SelectRoomCommand = new RelayCommand<IRoomViewModel>(SelectRoom);
             ChatWithUsCommand = new RelayCommand(ChatWithUs, CanChatWithUs);
             RefreshCommand = new RelayCommand(Refresh, () => !IsRefreshing);
+            ToggleSearchCommand = new RelayCommand<bool>(ToggleSearch);
 
             // ViewModels
             CurrentDateTime = DateTime.Now;
@@ -356,6 +358,12 @@ namespace Gitter.ViewModel.Concrete
 
             // End async task
             await _progressIndicatorService.HideAsync();
+        }
+
+        private void ToggleSearch(bool toggle)
+        {
+            if (!toggle)
+                SearchedRoomText = string.Empty;
         }
 
         #endregion

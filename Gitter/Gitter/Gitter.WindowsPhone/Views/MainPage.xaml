@@ -94,6 +94,8 @@
             <CommandBar.PrimaryCommands>
                 <AppBarToggleButton x:Name="SearchButton"
                                     x:Uid="/UIResources/search" Label="search" 
+                                    Command="{Binding Path=ToggleSearchCommand}"
+                                    CommandParameter="{Binding ElementName=SearchButton, Path=IsChecked}"
                                     Icon="Zoom" />
                 
                 <AppBarButton x:Uid="/UIResources/refresh" Label="refresh" 
