@@ -220,9 +220,13 @@ namespace Gitter.Common
             return content;
         }
 
-        private static Inline GenerateText(HtmlNode node, string @class = null)
+        private static Inline GenerateText(HtmlNode node, string @class = null, int fontSize = 18)
         {
-            var content = new Run { Text = WebUtility.HtmlDecode(node.InnerText).Replace("\n", "") };
+            var content = new Run
+            {
+                Text = WebUtility.HtmlDecode(node.InnerText).Replace("\n", ""),
+                FontSize = fontSize
+            };
 
             if (!string.IsNullOrWhiteSpace(@class))
             {
@@ -299,8 +303,9 @@ namespace Gitter.Common
 
         private static void GenerateQuote(HtmlNode node)
         {
+            int blockquoteFontSize = 14;
             var block = CreateEmptyParagraph();
-            var content = GenerateText(node, "italic");
+            var content = GenerateText(node, "italic", blockquoteFontSize);
 
             block.Margin = new Thickness(12, 0, 0, 0);
             block.Inlines.Add(new Run
@@ -308,7 +313,7 @@ namespace Gitter.Common
                 Text = "\"",
                 FontWeight = FontWeights.Bold,
                 FontStyle = FontStyle.Italic,
-                FontSize = 24
+                FontSize = blockquoteFontSize
             });
             block.Inlines.Add(content);
             block.Inlines.Add(new Run
@@ -316,7 +321,7 @@ namespace Gitter.Common
                 Text = "\"",
                 FontWeight = FontWeights.Bold,
                 FontStyle = FontStyle.Italic,
-                FontSize = 24
+                FontSize = blockquoteFontSize
             });
         }
 
