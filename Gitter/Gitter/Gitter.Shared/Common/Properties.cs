@@ -109,59 +109,34 @@ namespace Gitter.Common
 
         private static void AddChildren(Paragraph p, HtmlNode node)
         {
-            bool added = false;
-            foreach (var childNode in node.ChildNodes)
-            {
-                Inline i = GenerateBlockForNode(childNode);
-                if (i != null)
-                {
-                    p.Inlines.Add(i);
-                    added = true;
-                }
-            }
-            if (!added)
-            {
-                p.Inlines.Add(new Run
-                {
-                    Text = WebUtility.HtmlDecode(node.InnerText)
-                });
-            }
+            AddChildren(p.Inlines, node, GenerateBlockForNode);
         }
         private static void AddChildren(Span s, HtmlNode node)
         {
-            bool added = false;
-            foreach (var childNode in node.ChildNodes)
-            {
-                Inline i = GenerateBlockForNode(childNode);
-                if (i != null)
-                {
-                    s.Inlines.Add(i);
-                    added = true;
-                }
-            }
-            if (!added)
-            {
-                s.Inlines.Add(new Run
-                {
-                    Text = WebUtility.HtmlDecode(node.InnerText)
-                });
-            }
+            AddChildren(s.Inlines, node, GenerateBlockForNode);
         }
         private static void AddChildrenForCode(Paragraph p, HtmlNode node)
         {
+            AddChildren(p.Inlines, node, GenerateCodeBlockForNode);
+        }
+
+        private static void AddChildren(InlineCollection children, HtmlNode node, Func<HtmlNode, Inline> generateBlock)
+        {
             bool added = false;
+
             foreach (var childNode in node.ChildNodes)
             {
-                Inline i = GenerateCodeBlockForNode(childNode);
+                var i = generateBlock(childNode);
                 if (i != null)
                 {
-                    p.Inlines.Add(i);
+                    children.Add(i);
                     added = true;
                 }
             }
+
             if (!added)
             {
-                p.Inlines.Add(new Run
+                children.Add(new Run
                 {
                     Text = WebUtility.HtmlDecode(node.InnerText)
                 });
