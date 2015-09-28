@@ -7,7 +7,6 @@ using System.Net;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Documents;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Imaging;
 using GalaSoft.MvvmLight.Views;
 using Gitter.ViewModel.Abstract;
@@ -89,9 +88,9 @@ namespace Gitter.Common
         private static void AddChildren(Paragraph p, HtmlNode node)
         {
             bool added = false;
-            foreach (HtmlNode child in node.ChildNodes)
+            foreach (var childNode in node.ChildNodes)
             {
-                Inline i = GenerateBlockForNode(child);
+                Inline i = GenerateBlockForNode(childNode);
                 if (i != null)
                 {
                     p.Inlines.Add(i);
@@ -106,9 +105,9 @@ namespace Gitter.Common
         private static void AddChildren(Span s, HtmlNode node)
         {
             bool added = false;
-            foreach (HtmlNode child in node.ChildNodes)
+            foreach (var childNode in node.ChildNodes)
             {
-                Inline i = GenerateBlockForNode(child);
+                Inline i = GenerateBlockForNode(childNode);
                 if (i != null)
                 {
                     s.Inlines.Add(i);
@@ -167,7 +166,38 @@ namespace Gitter.Common
 
         private static Inline GenerateTitle(HtmlNode node, string type)
         {
-            throw new NotImplementedException();
+            var content = new Run { Text = WebUtility.HtmlDecode(node.InnerText) };
+            int titleValue = Convert.ToInt32(type[1].ToString());
+
+            switch (titleValue)
+            {
+                case 1:
+                    content.FontSize = 44;
+                    content.FontWeight = FontWeights.Bold;
+                    break;
+                case 2:
+                    content.FontSize = 38;
+                    content.FontWeight = FontWeights.Bold;
+                    break;
+                case 3:
+                    content.FontSize = 32;
+                    content.FontWeight = FontWeights.Bold;
+                    break;
+                case 4:
+                    content.FontSize = 30;
+                    content.FontStyle = FontStyle.Italic;
+                    break;
+                case 5:
+                    content.FontSize = 28;
+                    content.FontStyle = FontStyle.Italic;
+                    break;
+                case 6:
+                    content.FontSize = 26;
+                    content.FontStyle = FontStyle.Italic;
+                    break;
+            }
+
+            return content;
         }
 
         private static Inline GenerateText(HtmlNode node, string @class = null)
