@@ -339,20 +339,20 @@ namespace Gitter.Common
         private static Inline GenerateHyperLink(HtmlNode node)
         {
             string link = node.Attributes["href"].Value;
-
-            var hyperlink = new Hyperlink { NavigateUri = new Uri(link) };
-            hyperlink.Inlines.Add(new Run { Text = node.InnerText });
-
-            return hyperlink;
+            return GenerateHyperlink(node, link);
         }
 
         private static Inline GenerateIssueLink(HtmlNode node)
         {
             string issueNumber = node.Attributes["data-issue"].Value;
-            string link = string.Format("http://github.com/{0}/issues/{1}",
-                ViewModelLocator.Main.SelectedRoom.Room.Name,
-                issueNumber);
+            string roomName = ViewModelLocator.Main.SelectedRoom.Room.Name;
+            string link = $"http://github.com/{roomName}/issues/{issueNumber}";
 
+            return GenerateHyperlink(node, link);
+        }
+
+        private static Inline GenerateHyperlink(HtmlNode node, string link)
+        {
             var hyperlink = new Hyperlink { NavigateUri = new Uri(link) };
             hyperlink.Inlines.Add(new Run { Text = node.InnerText });
 
