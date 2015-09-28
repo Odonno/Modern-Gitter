@@ -161,9 +161,6 @@ namespace Gitter.ViewModel.Concrete
             RefreshCommand = new RelayCommand(Refresh, () => !IsRefreshing);
             ToggleSearchCommand = new RelayCommand<bool>(ToggleSearch);
 
-            // Create Rx commands
-            CreateSearchCommand();
-
             // ViewModel properties
             CurrentDateTime = DateTime.Now;
 
@@ -254,10 +251,15 @@ namespace Gitter.ViewModel.Concrete
                 }));
 
                 SelectedRoom = Rooms.FirstOrDefault();
+
+                this.RaisePropertyChanged("SearchedRooms");
             }
             else
             {
                 // Code runs "for real"
+
+                // Create Rx commands
+                CreateSearchCommand();
 
                 // Retrieve access token to use in the app
                 string token = _passwordStorageService.Retrieve("token");
