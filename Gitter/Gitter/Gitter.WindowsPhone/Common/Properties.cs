@@ -61,7 +61,7 @@ namespace Gitter.Common
         #endregion
 
 
-        #region Properties
+        #region Fields
 
         private static List<Block> _blocks;
 
@@ -235,6 +235,8 @@ namespace Gitter.Common
                 FontSize = 14
             };
 
+            Color foregroundColor;
+
             string @class = null;
             if (node.Attributes["class"] != null)
                 @class = node.Attributes["class"].Value;
@@ -242,25 +244,26 @@ namespace Gitter.Common
             switch (@class)
             {
                 case "keyword":
-                    content.Foreground = new SolidColorBrush(Color.FromArgb(255, 249, 38, 114));
+                    foregroundColor = Color.FromArgb(255, 249, 38, 114);
                     break;
                 case "string":
-                    content.Foreground = new SolidColorBrush(Color.FromArgb(255, 230, 219, 116));
+                    foregroundColor = Color.FromArgb(255, 230, 219, 116);
                     break;
                 case "title":
-                    content.Foreground = new SolidColorBrush(Color.FromArgb(255, 166, 226, 46));
+                    foregroundColor = Color.FromArgb(255, 166, 226, 46);
                     break;
                 case "params":
-                    content.Foreground = new SolidColorBrush(Colors.White);
+                    foregroundColor = Colors.White;
                     break;
                 default:
-                    content.Foreground = new SolidColorBrush(Colors.White);
+                    foregroundColor = Colors.White;
                     break;
             }
 
             if (content.Text == "function")
-                content.Foreground = new SolidColorBrush(Color.FromArgb(255, 102, 217, 239));
+                foregroundColor = Color.FromArgb(255, 102, 217, 239);
 
+            content.Foreground = new SolidColorBrush(foregroundColor);
             return content;
         }
 
