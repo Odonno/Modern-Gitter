@@ -252,7 +252,8 @@ namespace Gitter.ViewModel.Concrete
 
                 SelectedRoom = Rooms.FirstOrDefault();
 
-                this.RaisePropertyChanged("SearchedRooms");
+                foreach (var room in Rooms)
+                    SearchedRooms.Add(room);
             }
             else
             {
