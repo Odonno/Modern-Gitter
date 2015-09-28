@@ -96,9 +96,8 @@ namespace Gitter.Common
 
         private static void GenerateParagraph(HtmlNode node)
         {
-            var p = new Paragraph();
+            var p = CreateEmptyParagraph();
             AddChildren(p, node);
-            _blocks.Add(p);
         }
         private static Paragraph CreateEmptyParagraph()
         {
@@ -197,20 +196,30 @@ namespace Gitter.Common
 
                 foreach (var childNode in node.ChildNodes)
                 {
-                    var childContent = GenerateCodeBlockForNode(childNode);
-                    s.Inlines.Add(childContent);
+                    var children = GenerateCodeBlockForNode(childNode);
+                    s.Inlines.Add(children);
                 }
 
                 return s;
             }
 
+            string text = WebUtility.HtmlDecode(node.InnerText);
+            var foregroundColor = RetrieveFormattedCodeColor(node, text);
+
             var content = new Run
             {
-                Text = WebUtility.HtmlDecode(node.InnerText),
-                FontSize = 14
+                Text = text,
+                FontSize = 14,
+                Foreground = new SolidColorBrush(foregroundColor)
             };
 
-            Color foregroundColor;
+            return content;
+        }
+
+        private static Color RetrieveFormattedCodeColor(HtmlNode node, string text)
+        {
+            if (text == "function")
+                return Color.FromArgb(255, 102, 217, 239);
 
             string @class = null;
             if (node.Attributes["class"] != null)
@@ -219,27 +228,16 @@ namespace Gitter.Common
             switch (@class)
             {
                 case "keyword":
-                    foregroundColor = Color.FromArgb(255, 249, 38, 114);
-                    break;
+                    return Color.FromArgb(255, 249, 38, 114);
                 case "string":
-                    foregroundColor = Color.FromArgb(255, 230, 219, 116);
-                    break;
+                    return Color.FromArgb(255, 230, 219, 116);
                 case "title":
-                    foregroundColor = Color.FromArgb(255, 166, 226, 46);
-                    break;
+                    return Color.FromArgb(255, 166, 226, 46);
                 case "params":
-                    foregroundColor = Colors.White;
-                    break;
+                    return Colors.White;
                 default:
-                    foregroundColor = Colors.White;
-                    break;
+                    return Colors.White;
             }
-
-            if (content.Text == "function")
-                foregroundColor = Color.FromArgb(255, 102, 217, 239);
-
-            content.Foreground = new SolidColorBrush(foregroundColor);
-            return content;
         }
 
         private static Inline GenerateTitle(HtmlNode node, string type)
