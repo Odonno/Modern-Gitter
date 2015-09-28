@@ -136,6 +136,23 @@ namespace Gitter.Common
                 s.Inlines.Add(new Run { Text = WebUtility.HtmlDecode(node.InnerText) });
             }
         }
+        private static void AddChildrenForCode(Paragraph p, HtmlNode node)
+        {
+            bool added = false;
+            foreach (var childNode in node.ChildNodes)
+            {
+                Inline i = GenerateCodeBlockForNode(childNode);
+                if (i != null)
+                {
+                    p.Inlines.Add(i);
+                    added = true;
+                }
+            }
+            if (!added)
+            {
+                p.Inlines.Add(new Run { Text = WebUtility.HtmlDecode(node.InnerText) });
+            }
+        }
 
         private static Inline GenerateBlockForNode(HtmlNode node)
         {
@@ -183,6 +200,59 @@ namespace Gitter.Common
 #endif
                     return null;
             }
+        }
+
+        private static Inline GenerateCodeBlockForNode(HtmlNode node)
+        {
+            if (node.Name == "span")
+            {
+                if (node.ChildNodes.Count > 1)
+                {
+                    var span = new Span();
+
+                    foreach (var childNode in node.ChildNodes)
+                    {
+                        var childContent = GenerateCodeBlockForNode(childNode);
+                        span.Inlines.Add(childContent);
+                    }
+
+                    return span;
+                }
+            }
+
+            var content = new Run
+            {
+                Text = WebUtility.HtmlDecode(node.InnerText),
+                FontSize = 14
+            };
+
+            string @class = null;
+            if (node.Attributes["class"] != null)
+                @class = node.Attributes["class"].Value;
+
+            switch (@class)
+            {
+                case "keyword":
+                    content.Foreground = new SolidColorBrush(Color.FromArgb(255, 249, 38, 114));
+                    break;
+                case "string":
+                    content.Foreground = new SolidColorBrush(Color.FromArgb(255, 230, 219, 116));
+                    break;
+                case "title":
+                    content.Foreground = new SolidColorBrush(Color.FromArgb(255, 166, 226, 46));
+                    break;
+                case "params":
+                    content.Foreground = new SolidColorBrush(Colors.White);
+                    break;
+                default:
+                    content.Foreground = new SolidColorBrush(Colors.White);
+                    break;
+            }
+
+            if (content.Text == "function")
+                content.Foreground = new SolidColorBrush(Color.FromArgb(255, 102, 217, 239));
+
+            return content;
         }
 
         private static Inline GenerateTitle(HtmlNode node, string type)
@@ -300,15 +370,9 @@ namespace Gitter.Common
         private static void GenerateFormattedCode(HtmlNode node)
         {
             var block = CreateEmptyParagraph();
-            var content = new Run
-            {
-                Text = WebUtility.HtmlDecode(node.InnerText),
-                Foreground = new SolidColorBrush(Colors.Khaki),
-                FontSize = 14
-            };
-
             block.Margin = new Thickness(12, 0, 0, 0);
-            block.Inlines.Add(content);
+
+            AddChildrenForCode(block, node.FirstChild);
         }
 
         private static void GenerateQuote(HtmlNode node)
