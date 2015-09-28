@@ -372,7 +372,11 @@ namespace Gitter.Common
             var block = CreateEmptyParagraph();
             block.Margin = new Thickness(12, 0, 0, 0);
 
+            block.Inlines.Add(GenerateLineReturn());
+
             AddChildrenForCode(block, node.FirstChild);
+
+            block.Inlines.Add(GenerateLineReturn());
         }
 
         private static void GenerateQuote(HtmlNode node)
