@@ -222,7 +222,7 @@ namespace Gitter.Common
 
         private static Inline GenerateText(HtmlNode node, string @class = null)
         {
-            var content = new Run { Text = WebUtility.HtmlDecode(node.InnerText) };
+            var content = new Run { Text = WebUtility.HtmlDecode(node.InnerText).Replace("\n", "") };
 
             if (!string.IsNullOrWhiteSpace(@class))
             {
@@ -303,7 +303,21 @@ namespace Gitter.Common
             var content = GenerateText(node, "italic");
 
             block.Margin = new Thickness(12, 0, 0, 0);
+            block.Inlines.Add(new Run
+            {
+                Text = "\"",
+                FontWeight = FontWeights.Bold,
+                FontStyle = FontStyle.Italic,
+                FontSize = 24
+            });
             block.Inlines.Add(content);
+            block.Inlines.Add(new Run
+            {
+                Text = "\"",
+                FontWeight = FontWeights.Bold,
+                FontStyle = FontStyle.Italic,
+                FontSize = 24
+            });
         }
 
         #endregion
