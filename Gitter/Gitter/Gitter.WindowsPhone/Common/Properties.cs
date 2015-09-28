@@ -71,14 +71,14 @@ namespace Gitter.Common
 
         #region Methods
 
-        private static void GenerateBlocksForHtml(string xhtml)
+        private static void GenerateBlocksForHtml(string html)
         {
             try
             {
                 _blocks = new List<Block>();
 
                 var htmlDoc = new HtmlDocument();
-                htmlDoc.LoadHtml(xhtml);
+                htmlDoc.LoadHtml(html);
 
                 GenerateParagraph(htmlDoc.DocumentNode);
             }
@@ -172,7 +172,8 @@ namespace Gitter.Common
                 case "code":
                     return GenerateCode(node);
                 case "pre":
-                    return GenerateFormattedCode(node);
+                    GenerateFormattedCode(node);
+                    return null;
                 case "blockquote":
                     GenerateQuote(node);
                     return null;
@@ -296,9 +297,18 @@ namespace Gitter.Common
             };
         }
 
-        private static Inline GenerateFormattedCode(HtmlNode node)
+        private static void GenerateFormattedCode(HtmlNode node)
         {
-            throw new NotImplementedException();
+            var block = CreateEmptyParagraph();
+            var content = new Run
+            {
+                Text = WebUtility.HtmlDecode(node.InnerText),
+                Foreground = new SolidColorBrush(Colors.Khaki),
+                FontSize = 14
+            };
+
+            block.Margin = new Thickness(12, 0, 0, 0);
+            block.Inlines.Add(content);
         }
 
         private static void GenerateQuote(HtmlNode node)
