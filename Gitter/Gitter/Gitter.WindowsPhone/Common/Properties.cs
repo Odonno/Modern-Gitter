@@ -4,9 +4,11 @@ using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
 using System.Net;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Documents;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using GalaSoft.MvvmLight.Views;
 using Gitter.ViewModel.Abstract;
@@ -154,6 +156,8 @@ namespace Gitter.Common
                     return GenerateHyperLink(node);
                 case "code":
                     return GenerateCode(node);
+                case "pre":
+                    return GenerateFormattedCode(node);
                 case "blockquote":
                     return GenerateQuote(node);
                 default:
@@ -264,6 +268,15 @@ namespace Gitter.Common
         }
 
         private static Inline GenerateCode(HtmlNode node)
+        {
+            return new Run
+            {
+                Text = WebUtility.HtmlDecode(node.InnerText),
+                Foreground = new SolidColorBrush(Colors.Black)
+            };
+        }
+
+        private static Inline GenerateFormattedCode(HtmlNode node)
         {
             throw new NotImplementedException();
         }
