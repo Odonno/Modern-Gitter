@@ -77,6 +77,9 @@ namespace Gitter.Common
             {
                 _blocks = new List<Block>();
 
+                if (string.IsNullOrEmpty(html))
+                    throw new ArgumentNullException(nameof(html));
+
                 var htmlDoc = new HtmlDocument();
                 htmlDoc.LoadHtml(html);
 
@@ -204,20 +207,17 @@ namespace Gitter.Common
 
         private static Inline GenerateCodeBlockForNode(HtmlNode node)
         {
-            if (node.Name == "span")
+            if (node.Name == "span" && node.ChildNodes.Count > 1)
             {
-                if (node.ChildNodes.Count > 1)
+                var span = new Span();
+
+                foreach (var childNode in node.ChildNodes)
                 {
-                    var span = new Span();
-
-                    foreach (var childNode in node.ChildNodes)
-                    {
-                        var childContent = GenerateCodeBlockForNode(childNode);
-                        span.Inlines.Add(childContent);
-                    }
-
-                    return span;
+                    var childContent = GenerateCodeBlockForNode(childNode);
+                    span.Inlines.Add(childContent);
                 }
+
+                return span;
             }
 
             var content = new Run
