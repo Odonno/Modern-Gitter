@@ -31,8 +31,9 @@ namespace Gitter.Views
             _navigationHelper = new NavigationHelper(this);
             _navigationHelper.LoadState += NavigationHelper_LoadState;
             _navigationHelper.SaveState += NavigationHelper_SaveState;
-        }
 
+            LayoutUpdated += FullImagePage_LayoutUpdated;
+        }
 
         #region Navigation Helper
 
@@ -106,6 +107,17 @@ namespace Gitter.Views
         }
 
         #endregion
+
+        #endregion
+
+
+        #region UI Events
+
+        private void FullImagePage_LayoutUpdated(object sender, object e)
+        {
+            // Set the image width property to be fully viewed loading the page
+            Image.Width = ScrollViewer.ViewportWidth;
+        }
 
         #endregion
     }

@@ -9,13 +9,13 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     DataContext="{Binding FullImage, Source={StaticResource Locator}}">
 
-    <ScrollViewer HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Visible" 
-                  VerticalAlignment="Stretch" 
-                  ZoomMode="Enabled" ZoomSnapPointsType="Mandatory"
-                  MinZoomFactor="0.5">
-        <Grid>
-            <Image Source="{Binding Path=Source}" Stretch="Uniform" />
-        </Grid>
-    </ScrollViewer>
-    
+    <Grid>
+        <ScrollViewer x:Name="ScrollViewer"
+                      HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
+                      ZoomMode="Enabled">
+            <Image x:Name="Image"
+                   Source="{Binding Path=Source}" Stretch="Uniform" 
+                   VerticalAlignment="Center" HorizontalAlignment="Center" />
+        </ScrollViewer>
+    </Grid>
 </Page>
