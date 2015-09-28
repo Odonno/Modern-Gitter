@@ -18,10 +18,12 @@ namespace Gitter.Common
 {
     public class Properties : DependencyObject
     {
-        #region Properties
+        #region Dependency Properties
 
-        public static readonly DependencyProperty HtmlProperty = DependencyProperty.RegisterAttached("Html",
-            typeof(string), typeof(Properties),
+        public static readonly DependencyProperty HtmlProperty = DependencyProperty.RegisterAttached(
+            "Html",
+            typeof(string),
+            typeof(Properties),
             new PropertyMetadata(null, HtmlChanged));
 
         public static void SetHtml(DependencyObject obj, string value)
@@ -44,13 +46,16 @@ namespace Gitter.Common
             if (richTextBlock == null)
                 return;
 
-            // Generate blocks
+            
             string xhtml = e.NewValue as string;
-            var blocks = GenerateBlocksForHtml(xhtml);
+
+            // Generate blocks
+            _blocks = new List<Block>();
+            GenerateBlocksForHtml(xhtml);
 
             // Add the blocks to the RichTextBlock
             richTextBlock.Blocks.Clear();
-            foreach (var block in blocks)
+            foreach (var block in _blocks)
             {
                 richTextBlock.Blocks.Add(block);
             }
@@ -59,25 +64,38 @@ namespace Gitter.Common
         #endregion
 
 
+        #region Properties
+
+        private static List<Block> _blocks;
+        private static Block _currentBlock;
+
+        #endregion
+
+
         #region Methods
 
-        private static List<Block> GenerateBlocksForHtml(string xhtml)
+        private static void GenerateBlocksForHtml(string xhtml)
         {
-            var blocks = new List<Block>();
-
             try
             {
                 var htmlDoc = new HtmlDocument();
                 htmlDoc.LoadHtml(xhtml);
 
-                var block = GenerateParagraph(htmlDoc.DocumentNode);
-                blocks.Add(block);
+                _currentBlock = GenerateParagraph(htmlDoc.DocumentNode);
+                _blocks.Add(_currentBlock);
             }
             catch (Exception ex)
             {
+                Debug.WriteLine(ex);
+                App.TelemetryClient.TrackException(ex);
             }
+        }
 
-            return blocks;
+        private static Block AddBlock()
+        {
+            var newBlock = new Paragraph();
+            _blocks.Add(newBlock);
+            return newBlock;
         }
 
         private static Block GenerateParagraph(HtmlNode node)
@@ -159,7 +177,8 @@ namespace Gitter.Common
                 case "pre":
                     return GenerateFormattedCode(node);
                 case "blockquote":
-                    return GenerateQuote(node);
+                    GenerateQuote(node);
+                    return null;
                 default:
 #if DEBUG
                     Debug.WriteLine(node.Name);
@@ -281,9 +300,13 @@ namespace Gitter.Common
             throw new NotImplementedException();
         }
 
-        private static Inline GenerateQuote(HtmlNode node)
+        private static void GenerateQuote(HtmlNode node)
         {
-            throw new NotImplementedException();
+            var block = AddBlock() as Paragraph;
+            var content = GenerateText(node, "italic");
+
+            block.Margin = new Thickness(12, 0, 0, 0);
+            block.Inlines.Add(content);
         }
 
         #endregion
