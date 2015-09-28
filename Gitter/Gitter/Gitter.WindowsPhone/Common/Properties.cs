@@ -43,20 +43,19 @@ namespace Gitter.Common
         private static void HtmlChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var richTextBlock = d as RichTextBlock;
+            if (richTextBlock != null)
+            {
+                // Retrieve the HTML value for the message
+                string html = e.NewValue as string;
 
-            if (richTextBlock == null)
-                return;
+                // Generate blocks
+                GenerateBlocksForHtml(html);
 
-            // Retrieve the HTML value for the message
-            string xhtml = e.NewValue as string;
-
-            // Generate blocks
-            GenerateBlocksForHtml(xhtml);
-
-            // Add the newly generated blocks to the RichTextBlock
-            richTextBlock.Blocks.Clear();
-            foreach (var block in _blocks)
-                richTextBlock.Blocks.Add(block);
+                // Add the newly generated blocks to the RichTextBlock
+                richTextBlock.Blocks.Clear();
+                foreach (var block in _blocks)
+                    richTextBlock.Blocks.Add(block);
+            }
         }
 
         #endregion
@@ -77,12 +76,15 @@ namespace Gitter.Common
             {
                 _blocks = new List<Block>();
 
+                // Throw exception if HTML content does not exist
                 if (string.IsNullOrEmpty(html))
                     throw new ArgumentNullException(nameof(html));
 
+                // Create an HTML document to search for elements inside (div, span, etc...)
                 var htmlDoc = new HtmlDocument();
                 htmlDoc.LoadHtml(html);
 
+                // Generate a complete paragraph based on the HTML content
                 GenerateParagraph(htmlDoc.DocumentNode);
             }
             catch (Exception ex)
@@ -100,9 +102,9 @@ namespace Gitter.Common
         }
         private static Paragraph CreateEmptyParagraph()
         {
-            var newBlock = new Paragraph();
-            _blocks.Add(newBlock);
-            return newBlock;
+            var p = new Paragraph();
+            _blocks.Add(p);
+            return p;
         }
 
         private static void AddChildren(Paragraph p, HtmlNode node)
@@ -119,7 +121,10 @@ namespace Gitter.Common
             }
             if (!added)
             {
-                p.Inlines.Add(new Run { Text = WebUtility.HtmlDecode(node.InnerText) });
+                p.Inlines.Add(new Run
+                {
+                    Text = WebUtility.HtmlDecode(node.InnerText)
+                });
             }
         }
         private static void AddChildren(Span s, HtmlNode node)
@@ -136,7 +141,10 @@ namespace Gitter.Common
             }
             if (!added)
             {
-                s.Inlines.Add(new Run { Text = WebUtility.HtmlDecode(node.InnerText) });
+                s.Inlines.Add(new Run
+                {
+                    Text = WebUtility.HtmlDecode(node.InnerText)
+                });
             }
         }
         private static void AddChildrenForCode(Paragraph p, HtmlNode node)
@@ -153,7 +161,10 @@ namespace Gitter.Common
             }
             if (!added)
             {
-                p.Inlines.Add(new Run { Text = WebUtility.HtmlDecode(node.InnerText) });
+                p.Inlines.Add(new Run
+                {
+                    Text = WebUtility.HtmlDecode(node.InnerText)
+                });
             }
         }
 
@@ -198,9 +209,7 @@ namespace Gitter.Common
                     GenerateQuote(node);
                     return null;
                 default:
-#if DEBUG
                     Debug.WriteLine(node.Name);
-#endif
                     return null;
             }
         }
@@ -209,15 +218,15 @@ namespace Gitter.Common
         {
             if (node.Name == "span" && node.ChildNodes.Count > 1)
             {
-                var span = new Span();
+                var s = new Span();
 
                 foreach (var childNode in node.ChildNodes)
                 {
                     var childContent = GenerateCodeBlockForNode(childNode);
-                    span.Inlines.Add(childContent);
+                    s.Inlines.Add(childContent);
                 }
 
-                return span;
+                return s;
             }
 
             var content = new Run
@@ -369,32 +378,30 @@ namespace Gitter.Common
 
         private static void GenerateFormattedCode(HtmlNode node)
         {
-            var block = CreateEmptyParagraph();
-            block.Margin = new Thickness(12, 0, 0, 0);
+            var p = CreateEmptyParagraph();
+            p.Margin = new Thickness(12, 0, 0, 0);
 
-            block.Inlines.Add(GenerateLineReturn());
-
-            AddChildrenForCode(block, node.FirstChild);
-
-            block.Inlines.Add(GenerateLineReturn());
+            p.Inlines.Add(GenerateLineReturn());
+            AddChildrenForCode(p, node.FirstChild);
+            p.Inlines.Add(GenerateLineReturn());
         }
 
         private static void GenerateQuote(HtmlNode node)
         {
             int blockquoteFontSize = 14;
-            var block = CreateEmptyParagraph();
+            var p = CreateEmptyParagraph();
             var content = GenerateText(node, "italic", blockquoteFontSize);
 
-            block.Margin = new Thickness(12, 0, 0, 0);
-            block.Inlines.Add(new Run
+            p.Margin = new Thickness(12, 0, 0, 0);
+            p.Inlines.Add(new Run
             {
                 Text = "\"",
                 FontWeight = FontWeights.Bold,
                 FontStyle = FontStyle.Italic,
                 FontSize = blockquoteFontSize
             });
-            block.Inlines.Add(content);
-            block.Inlines.Add(new Run
+            p.Inlines.Add(content);
+            p.Inlines.Add(new Run
             {
                 Text = "\"",
                 FontWeight = FontWeights.Bold,
