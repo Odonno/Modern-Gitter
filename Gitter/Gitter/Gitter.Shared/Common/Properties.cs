@@ -11,6 +11,7 @@ using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using GalaSoft.MvvmLight.Views;
+using Gitter.ViewModel;
 using Gitter.ViewModel.Abstract;
 using Microsoft.Practices.ServiceLocation;
 
@@ -299,6 +300,9 @@ namespace Gitter.Common
 
                 if (@class.Contains("mention"))
                     content.FontStyle = FontStyle.Italic;
+
+                if (@class.Contains("issue"))
+                    return GenerateIssueLink(node);
             }
 
             return content;
@@ -334,10 +338,22 @@ namespace Gitter.Common
 
         private static Inline GenerateHyperLink(HtmlNode node)
         {
-            var hyperlink = new Hyperlink
-            {
-                NavigateUri = new Uri(node.Attributes["href"].Value)
-            };
+            string link = node.Attributes["href"].Value;
+
+            var hyperlink = new Hyperlink { NavigateUri = new Uri(link) };
+            hyperlink.Inlines.Add(new Run { Text = node.InnerText });
+
+            return hyperlink;
+        }
+
+        private static Inline GenerateIssueLink(HtmlNode node)
+        {
+            string issueNumber = node.Attributes["data-issue"].Value;
+            string link = string.Format("http://github.com/{0}/issues/{1}",
+                ViewModelLocator.Main.SelectedRoom.Room.Name,
+                issueNumber);
+
+            var hyperlink = new Hyperlink { NavigateUri = new Uri(link) };
             hyperlink.Inlines.Add(new Run { Text = node.InnerText });
 
             return hyperlink;
