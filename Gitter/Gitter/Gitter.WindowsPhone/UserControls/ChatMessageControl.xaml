@@ -57,14 +57,11 @@
                                common:Properties.Html="{Binding Path=Html}" />
 
                 <StackPanel Visibility="{Binding Converter={StaticResource SamePreviousAuthorVisibilityConverter}}">
-                    <TextBlock FontSize="8" TextWrapping="Wrap" Margin="6 0 6 0" 
+                    <TextBlock FontSize="10" TextWrapping="Wrap" Margin="6" 
                                HorizontalAlignment="Right">
-                        @<Run Text="{Binding Path=User.Username}" />
+                        @<Run Text="{Binding Path=User.Username}" />,
+                        <Run Text="{Binding Path=SentDate, Converter={StaticResource DateTimeOffsetToTimeAgoConverter}}" />
                     </TextBlock>
-
-                    <TextBlock FontSize="8" TextWrapping="Wrap" Margin="6 0 6 6" 
-                               HorizontalAlignment="Right"
-                               Text="{Binding Path=SentDate, Converter={StaticResource DateTimeOffsetToTimeAgoConverter}}" />
                 </StackPanel>
 
             </StackPanel>
@@ -95,7 +92,7 @@
 
                 <StackPanel Visibility="{Binding Converter={StaticResource SamePreviousAuthorVisibilityConverter}}">
 
-                    <TextBlock FontSize="8" TextWrapping="Wrap" Margin="6 0 6 6" 
+                    <TextBlock FontSize="10" TextWrapping="Wrap" Margin="6 0 6 6" 
                                HorizontalAlignment="Right"
                                Text="{Binding Path=SentDate, Converter={StaticResource DateTimeOffsetToTimeAgoConverter}}" />
 
