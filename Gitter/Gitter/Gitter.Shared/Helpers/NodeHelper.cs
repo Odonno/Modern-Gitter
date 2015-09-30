@@ -20,6 +20,21 @@ namespace Gitter.Helpers
 {
     public static class NodeHelper
     {
+        public static Paragraph CurrentParagraph { get; set; }
+
+
+        public static void GenerateBlocks(HtmlDocument htmlDoc)
+        {
+            CurrentParagraph = HtmlToXaml.CreateEmptyParagraph();
+
+            foreach (var childNode in htmlDoc.DocumentNode.ChildNodes)
+            {
+                var i = GenerateBlockForNode(childNode);
+                if (i != null)
+                    CurrentParagraph.Inlines.Add(i);
+            }
+        }
+
         public static Inline GenerateBlockForNode(HtmlNode node)
         {
             switch (node.Name)
@@ -250,53 +265,62 @@ namespace Gitter.Helpers
 
         private static void GenerateFormattedCode(HtmlNode node)
         {
-            var p = HtmlToXaml.CreateEmptyParagraph();
-            p.Margin = new Thickness(12, 0, 0, 0);
+            CurrentParagraph = HtmlToXaml.CreateEmptyParagraph();
 
-            p.Inlines.Add(GenerateLineReturn());
-            p.AddChildren(node.FirstChild, true);
-            p.Inlines.Add(GenerateLineReturn());
+            CurrentParagraph.Margin = new Thickness(12, 0, 0, 0);
+
+            CurrentParagraph.Inlines.Add(GenerateLineReturn());
+            CurrentParagraph.AddChildren(node.FirstChild, true);
+            CurrentParagraph.Inlines.Add(GenerateLineReturn());
+
+            CurrentParagraph = HtmlToXaml.CreateEmptyParagraph();
         }
 
         private static void GenerateQuote(HtmlNode node)
         {
+            CurrentParagraph = HtmlToXaml.CreateEmptyParagraph();
+
             int blockquoteFontSize = 14;
-            var p = HtmlToXaml.CreateEmptyParagraph();
             var content = GenerateText(node, "italic", blockquoteFontSize);
 
-            p.Margin = new Thickness(12, 0, 0, 0);
-            p.Inlines.Add(new Run
+            CurrentParagraph.Margin = new Thickness(12, 0, 0, 0);
+            CurrentParagraph.Inlines.Add(new Run
             {
                 Text = "\"",
                 FontWeight = FontWeights.Bold,
                 FontStyle = FontStyle.Italic,
                 FontSize = blockquoteFontSize
             });
-            p.Inlines.Add(content);
-            p.Inlines.Add(new Run
+            CurrentParagraph.Inlines.Add(content);
+            CurrentParagraph.Inlines.Add(new Run
             {
                 Text = "\"",
                 FontWeight = FontWeights.Bold,
                 FontStyle = FontStyle.Italic,
                 FontSize = blockquoteFontSize
             });
+
+            CurrentParagraph = HtmlToXaml.CreateEmptyParagraph();
         }
 
         private static void GenerateItemList(HtmlNode node)
         {
-            var p = HtmlToXaml.CreateEmptyParagraph();
-            p.Margin = new Thickness(12, 0, 0, 0);
+            CurrentParagraph = HtmlToXaml.CreateEmptyParagraph();
+
+            CurrentParagraph.Margin = new Thickness(12, 0, 0, 0);
 
             var listElements = node.Descendants("li").ToArray();
             int elementCount = listElements.Length;
 
             for (int i = 0; i < elementCount; i++)
             {
-                p.Inlines.Add(new Run { Text = "* " + listElements[i].InnerText });
+                CurrentParagraph.Inlines.Add(new Run { Text = "* " + listElements[i].InnerText });
 
                 if (i < elementCount - 1)
-                    p.Inlines.Add(GenerateLineReturn());
+                    CurrentParagraph.Inlines.Add(GenerateLineReturn());
             }
+
+            CurrentParagraph = HtmlToXaml.CreateEmptyParagraph();
         }
     }
 }

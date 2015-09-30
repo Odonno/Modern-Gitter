@@ -33,8 +33,7 @@ namespace Gitter.Common
                 htmlDoc.LoadHtml(html);
 
                 // Generate a complete paragraph based on the HTML content
-                var p = CreateEmptyParagraph();
-                p.AddChildren(htmlDoc.DocumentNode);
+                NodeHelper.GenerateBlocks(htmlDoc);
             }
             catch (Exception ex)
             {
