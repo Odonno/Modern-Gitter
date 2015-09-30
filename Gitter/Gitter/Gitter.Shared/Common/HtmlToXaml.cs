@@ -18,7 +18,7 @@ namespace Gitter.Common
 
         #region Methods
 
-        public static void GenerateBlocksForHtml(string html)
+        public static void Execute(string html)
         {
             try
             {
@@ -33,7 +33,7 @@ namespace Gitter.Common
                 htmlDoc.LoadHtml(html);
 
                 // Generate a complete paragraph based on the HTML content
-                NodeHelper.GenerateBlocks(htmlDoc);
+                NodeHelper.GenerateParagraphs(htmlDoc);
             }
             catch (Exception ex)
             {
@@ -42,7 +42,7 @@ namespace Gitter.Common
             }
         }
 
-        public static Paragraph CreateEmptyParagraph()
+        public static Paragraph CreateNewParagraph()
         {
             var p = new Paragraph();
             Blocks.Add(p);

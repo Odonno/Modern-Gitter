@@ -23,9 +23,9 @@ namespace Gitter.Helpers
         public static Paragraph CurrentParagraph { get; set; }
 
 
-        public static void GenerateBlocks(HtmlDocument htmlDoc)
+        public static void GenerateParagraphs(HtmlDocument htmlDoc)
         {
-            CurrentParagraph = HtmlToXaml.CreateEmptyParagraph();
+            CurrentParagraph = HtmlToXaml.CreateNewParagraph();
 
             foreach (var childNode in htmlDoc.DocumentNode.ChildNodes)
             {
@@ -265,7 +265,7 @@ namespace Gitter.Helpers
 
         private static void GenerateFormattedCode(HtmlNode node)
         {
-            CurrentParagraph = HtmlToXaml.CreateEmptyParagraph();
+            CurrentParagraph = HtmlToXaml.CreateNewParagraph();
 
             CurrentParagraph.Margin = new Thickness(12, 0, 0, 0);
 
@@ -273,12 +273,12 @@ namespace Gitter.Helpers
             CurrentParagraph.AddChildren(node.FirstChild, true);
             CurrentParagraph.Inlines.Add(GenerateLineReturn());
 
-            CurrentParagraph = HtmlToXaml.CreateEmptyParagraph();
+            CurrentParagraph = HtmlToXaml.CreateNewParagraph();
         }
 
         private static void GenerateQuote(HtmlNode node)
         {
-            CurrentParagraph = HtmlToXaml.CreateEmptyParagraph();
+            CurrentParagraph = HtmlToXaml.CreateNewParagraph();
 
             int blockquoteFontSize = 14;
             var content = GenerateText(node, "italic", blockquoteFontSize);
@@ -300,12 +300,12 @@ namespace Gitter.Helpers
                 FontSize = blockquoteFontSize
             });
 
-            CurrentParagraph = HtmlToXaml.CreateEmptyParagraph();
+            CurrentParagraph = HtmlToXaml.CreateNewParagraph();
         }
 
         private static void GenerateItemList(HtmlNode node)
         {
-            CurrentParagraph = HtmlToXaml.CreateEmptyParagraph();
+            CurrentParagraph = HtmlToXaml.CreateNewParagraph();
 
             CurrentParagraph.Margin = new Thickness(12, 0, 0, 0);
 
@@ -320,7 +320,7 @@ namespace Gitter.Helpers
                     CurrentParagraph.Inlines.Add(GenerateLineReturn());
             }
 
-            CurrentParagraph = HtmlToXaml.CreateEmptyParagraph();
+            CurrentParagraph = HtmlToXaml.CreateNewParagraph();
         }
     }
 }

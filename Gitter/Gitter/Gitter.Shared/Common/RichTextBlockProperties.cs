@@ -36,7 +36,7 @@ namespace Gitter.Common
                 string html = e.NewValue as string;
 
                 // Generate blocks from HTML
-                HtmlToXaml.GenerateBlocksForHtml(html);
+                HtmlToXaml.Execute(html);
 
                 // Add the newly generated blocks to the RichTextBlock
                 richTextBlock.Blocks.Clear();
