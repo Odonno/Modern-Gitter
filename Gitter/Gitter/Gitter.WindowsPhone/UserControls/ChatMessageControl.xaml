@@ -54,7 +54,7 @@
 
             <StackPanel Margin="6 0" Background="{StaticResource BlueGrey}">
                 <RichTextBlock FontSize="18" TextWrapping="Wrap" Margin="6 3 6 0"
-                               common:Properties.Html="{Binding Path=Html}" />
+                               common:RichTextBlockProperties.Html="{Binding Path=Html}" />
 
                 <StackPanel Visibility="{Binding Converter={StaticResource SamePreviousAuthorVisibilityConverter}}">
                     <TextBlock FontSize="10" TextWrapping="Wrap" Margin="6" 
@@ -88,7 +88,7 @@
 
             <StackPanel Margin="6 0" Background="{StaticResource WhiteGray}">
                 <RichTextBlock FontSize="18" TextWrapping="Wrap" Margin="6 3 6 0"
-                               common:Properties.Html="{Binding Path=Html}" />
+                               common:RichTextBlockProperties.Html="{Binding Path=Html}" />
 
                 <StackPanel Visibility="{Binding Converter={StaticResource SamePreviousAuthorVisibilityConverter}}">
 

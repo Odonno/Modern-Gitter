@@ -17,14 +17,14 @@ using Microsoft.Practices.ServiceLocation;
 
 namespace Gitter.Common
 {
-    public class Properties : DependencyObject
+    public class RichTextBlockProperties : DependencyObject
     {
         #region Dependency Properties
 
         public static readonly DependencyProperty HtmlProperty = DependencyProperty.RegisterAttached(
             "Html",
             typeof(string),
-            typeof(Properties),
+            typeof(RichTextBlockProperties),
             new PropertyMetadata(null, HtmlChanged));
 
         public static void SetHtml(DependencyObject obj, string value)
