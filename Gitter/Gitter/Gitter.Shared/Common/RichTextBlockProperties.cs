@@ -3,6 +3,7 @@ using Windows.UI.Text;
 using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using Windows.UI;
 using Windows.UI.Xaml;
@@ -182,6 +183,9 @@ namespace Gitter.Common
                     return null;
                 case "blockquote":
                     GenerateQuote(node);
+                    return null;
+                case "ul":
+                    GenerateItemList(node);
                     return null;
                 default:
                     Debug.WriteLine(node.Name);
@@ -400,6 +404,23 @@ namespace Gitter.Common
                 FontStyle = FontStyle.Italic,
                 FontSize = blockquoteFontSize
             });
+        }
+
+        private static void GenerateItemList(HtmlNode node)
+        {
+            var p = CreateEmptyParagraph();
+            p.Margin = new Thickness(12, 0, 0, 0);
+
+            var listElements = node.Descendants("li").ToArray();
+            int elementCount = listElements.Length;
+
+            for (int i = 0; i < elementCount; i++)
+            {
+                p.Inlines.Add(new Run { Text = "* " + listElements[i].InnerText });
+
+                if (i < elementCount - 1)
+                    p.Inlines.Add(GenerateLineReturn());
+            }
         }
 
         #endregion
