@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml.Documents;
+﻿using System;
+using Windows.UI.Xaml.Documents;
 using Gitter.Common;
 using HtmlAgilityPack;
 
@@ -19,14 +20,12 @@ namespace Gitter.Helpers
             p.AddChildren(node);
         }
 
-        public static void AddChildren(this Paragraph p, HtmlNode node)
+        public static void AddChildren(this Paragraph p, HtmlNode node, bool isCodeBlock = false)
         {
-            p.Inlines.AddChildren(node, NodeHelper.GenerateBlockForNode);
-        }
-
-        public static void AddChildrenForCode(this Paragraph p, HtmlNode node)
-        {
-            p.Inlines.AddChildren(node, NodeHelper.GenerateCodeBlockForNode);
+            if (isCodeBlock)
+                p.Inlines.AddChildren(node, NodeHelper.GenerateCodeBlockForNode);
+            else
+                p.Inlines.AddChildren(node, NodeHelper.GenerateBlockForNode);
         }
     }
 }

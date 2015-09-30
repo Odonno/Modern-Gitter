@@ -253,7 +253,7 @@ namespace Gitter.Helpers
             p.Margin = new Thickness(12, 0, 0, 0);
 
             p.Inlines.Add(GenerateLineReturn());
-            p.AddChildrenForCode(node.FirstChild);
+            p.AddChildren(node.FirstChild, true);
             p.Inlines.Add(GenerateLineReturn());
         }
 
