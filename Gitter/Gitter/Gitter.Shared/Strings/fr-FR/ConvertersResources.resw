@@ -124,7 +124,7 @@
     <value>il y a quelques secondes</value>
   </data>
   <data name="HoursAgo" xml:space="preserve">
-    <value>il y a  {0} heure{1}</value>
+    <value>il y a {0} heure{1}</value>
   </data>
   <data name="MinutesAgo" xml:space="preserve">
     <value>il y a {0} minute{1}</value>
