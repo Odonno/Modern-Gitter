@@ -38,6 +38,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\UnreadMessagesCountToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataObjects\Abstract\IncrementalLoadingCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataObjects\Concrete\MessagesIncrementalLoadingCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\InlineCollectionHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\NodeHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ParagraphHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\SpanHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Abstract\IEventService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Abstract\IProgressIndicatorService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Abstract\ISessionService.cs" />
