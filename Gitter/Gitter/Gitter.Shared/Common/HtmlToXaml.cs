@@ -16,7 +16,7 @@ namespace Gitter.Common
         #endregion
 
 
-        #region Public Methods
+        #region Methods
 
         public static void GenerateBlocksForHtml(string html)
         {
@@ -33,13 +33,21 @@ namespace Gitter.Common
                 htmlDoc.LoadHtml(html);
 
                 // Generate a complete paragraph based on the HTML content
-                ParagraphHelper.GenerateParagraph(htmlDoc.DocumentNode);
+                var p = CreateEmptyParagraph();
+                p.AddChildren(htmlDoc.DocumentNode);
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
                 App.TelemetryClient.TrackException(ex);
             }
+        }
+
+        public static Paragraph CreateEmptyParagraph()
+        {
+            var p = new Paragraph();
+            Blocks.Add(p);
+            return p;
         }
 
         #endregion

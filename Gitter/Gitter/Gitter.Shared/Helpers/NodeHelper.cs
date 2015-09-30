@@ -10,6 +10,7 @@ using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using GalaSoft.MvvmLight.Views;
+using Gitter.Common;
 using Gitter.ViewModel;
 using Gitter.ViewModel.Abstract;
 using HtmlAgilityPack;
@@ -249,7 +250,7 @@ namespace Gitter.Helpers
 
         private static void GenerateFormattedCode(HtmlNode node)
         {
-            var p = ParagraphHelper.CreateEmptyParagraph();
+            var p = HtmlToXaml.CreateEmptyParagraph();
             p.Margin = new Thickness(12, 0, 0, 0);
 
             p.Inlines.Add(GenerateLineReturn());
@@ -260,7 +261,7 @@ namespace Gitter.Helpers
         private static void GenerateQuote(HtmlNode node)
         {
             int blockquoteFontSize = 14;
-            var p = ParagraphHelper.CreateEmptyParagraph();
+            var p = HtmlToXaml.CreateEmptyParagraph();
             var content = GenerateText(node, "italic", blockquoteFontSize);
 
             p.Margin = new Thickness(12, 0, 0, 0);
@@ -283,7 +284,7 @@ namespace Gitter.Helpers
 
         private static void GenerateItemList(HtmlNode node)
         {
-            var p = ParagraphHelper.CreateEmptyParagraph();
+            var p = HtmlToXaml.CreateEmptyParagraph();
             p.Margin = new Thickness(12, 0, 0, 0);
 
             var listElements = node.Descendants("li").ToArray();
