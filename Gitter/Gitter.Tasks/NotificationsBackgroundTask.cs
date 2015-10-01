@@ -6,6 +6,7 @@ using Gitter.Services.Concrete;
 using GitterSharp.Services;
 using GitterSharp.Model;
 using Gitter.Configuration;
+using System.Collections.Generic;
 
 namespace Gitter.Tasks
 {
@@ -79,10 +80,9 @@ namespace Gitter.Tasks
         private void CreateUnreadItemsNotification(Room room)
         {
             string id = room.Name;
-
-            // Show notifications (toast notifications)
             if (CanNotify(id, room.UnreadItems))
             {
+                // Show notifications (toast notifications)
                 string notificationContent = $"You have {room.UnreadItems} unread messages";
                 _localNotificationService.SendNotification(room.Name, notificationContent, id);
                 _applicationStorageService.Save(id, room.UnreadItems);
@@ -91,18 +91,23 @@ namespace Gitter.Tasks
 
         private async Task CreateUnreadMentionsNotificationAsync(Room room)
         {
-            string id = $"{room.Name}_mention";
+            // Retrieve id of messages that contains a mention
+            string userId = _applicationStorageService.Retrieve(StorageConstants.UserId) as string;
+            var unreadItems = await _gitterApiService.RetrieveUnreadChatMessagesAsync(userId, room.Id);
 
-            // Show notifications (toast notifications)
-            if (CanNotify(id, room.UnreadMentions))
+            // TODO : Retrieve messages that contains mentions
+            var messages = new List<Message>();
+
+            foreach (var message in messages)
             {
-                // TODO : Retrieve mentions content to know who mentioned you
-                string userId = _applicationStorageService.Retrieve(StorageConstants.UserId) as string;
-                var unreadItems = await _gitterApiService.RetrieveUnreadChatMessagesAsync(userId, room.Id);
-
-                string notificationContent = "Someone mentioned you";
-                _localNotificationService.SendNotification(room.Name, notificationContent, id);
-                _applicationStorageService.Save(id, room.UnreadMentions);
+                string id = $"{room.Name}_mention_{message.Id}";
+                if (!_applicationStorageService.Exists(id))
+                {
+                    // Show notifications (toast notifications)
+                    string notificationContent = $"{message.User.Username} mentioned you";
+                    _localNotificationService.SendNotification(room.Name, notificationContent, id);
+                    _applicationStorageService.Save(id, room.UnreadMentions);
+                }
             }
         }
 
