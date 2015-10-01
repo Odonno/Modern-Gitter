@@ -35,6 +35,10 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
+    <ProjectReference Include="..\Gitter.Configuration\Gitter.Configuration.csproj">
+      <Project>{b974757e-de42-436a-a014-6f5496655329}</Project>
+      <Name>Gitter.Configuration</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Gitter.Services\Gitter.Services.csproj">
       <Project>{132ab989-3150-4647-bb25-51ea4a253a0b}</Project>
       <Name>Gitter.Services</Name>

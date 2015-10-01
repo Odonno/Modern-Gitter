@@ -5,6 +5,7 @@ using Gitter.Services.Abstract;
 using Gitter.Services.Concrete;
 using GitterSharp.Services;
 using GitterSharp.Model;
+using Gitter.Configuration;
 
 namespace Gitter.Tasks
 {
@@ -96,7 +97,7 @@ namespace Gitter.Tasks
             if (CanNotify(id, room.UnreadMentions))
             {
                 // TODO : Retrieve mentions content to know who mentioned you
-                string userId = _applicationStorageService.Retrieve("User") as string;
+                string userId = _applicationStorageService.Retrieve(StorageConstants.UserId) as string;
                 var unreadItems = await _gitterApiService.RetrieveUnreadChatMessagesAsync(userId, room.Id);
 
                 string notificationContent = "Someone mentioned you";

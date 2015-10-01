@@ -17,6 +17,7 @@ using ReactiveUI;
 using Gitter.HtmlToXaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
+using Gitter.Configuration;
 
 namespace Gitter.ViewModel.Concrete
 {
@@ -369,7 +370,7 @@ namespace Gitter.ViewModel.Concrete
                     CurrentUser = await _gitterApiService.GetCurrentUserAsync();
 
                     // Save Gitter User ID
-                    _applicationStorageService.Save("User", CurrentUser.Id);
+                    _applicationStorageService.Save(StorageConstants.UserId, CurrentUser.Id);
                 }
 
                 await RefreshRoomsAsync();
