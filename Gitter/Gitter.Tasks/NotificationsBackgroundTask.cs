@@ -79,20 +79,11 @@ namespace Gitter.Tasks
         {
             string id = room.Name;
 
-            // Detect if there is no new notification to launch (no unread messages)
-            if (_applicationStorageService.Exists(id))
-            {
-                if (room.UnreadItems == 0)
-                    _applicationStorageService.Remove(id); // Reset notification id for the future
-                return;
-            }
-
             // Show notifications (toast notifications)
-            if (room.UnreadItems > 0)
+            if (CanNotify(id, room.UnreadItems))
             {
                 string notificationContent = $"You have {room.UnreadItems} unread messages";
                 _localNotificationService.SendNotification(room.Name, notificationContent, id);
-
                 _applicationStorageService.Save(id, room.UnreadItems);
             }
         }
@@ -101,23 +92,29 @@ namespace Gitter.Tasks
         {
             string id = $"{room.Name}_mention";
 
+            // Show notifications (toast notifications)
+            if (CanNotify(id, room.UnreadMentions))
+            {
+                // TODO : Retrieve mentions content to know who mentioned you
+                string notificationContent = "Someone mentioned you";
+                _localNotificationService.SendNotification(room.Name, notificationContent, id);
+                _applicationStorageService.Save(id, room.UnreadMentions);
+            }
+        }
+
+        private bool CanNotify(string id, int itemCount)
+        {
             // Detect if there is no new notification to launch (no unread messages)
             if (_applicationStorageService.Exists(id))
             {
-                if (room.UnreadMentions == 0)
-                    _applicationStorageService.Remove(id); // Reset notification id for the future
-                return;
+                // Reset notification id for the future
+                if (itemCount == 0)
+                    _applicationStorageService.Remove(id);
+
+                return false;
             }
 
-            // Show notifications (toast notifications)
-            if (room.UnreadMentions > 0)
-            {
-                // TODO : Retrieve mentions content to know who mentioned you
-                string notificationContent = $"Someone mentioned you";
-                _localNotificationService.SendNotification(room.Name, notificationContent, id);
-
-                _applicationStorageService.Save(id, room.UnreadMentions);
-            }
+            return itemCount > 0;
         }
 
         #endregion
