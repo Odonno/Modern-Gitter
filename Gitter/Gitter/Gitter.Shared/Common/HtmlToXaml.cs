@@ -12,6 +12,7 @@ namespace Gitter.Common
         #region Fields
 
         public static List<Block> Blocks { get; set; }
+        public static Paragraph CurrentParagraph { get; set; }
 
         #endregion
 
@@ -22,7 +23,9 @@ namespace Gitter.Common
         {
             try
             {
+                // Reset properties
                 Blocks = new List<Block>();
+                CurrentParagraph = null;
 
                 // Throw exception if HTML content does not exist
                 if (string.IsNullOrEmpty(html))
@@ -33,7 +36,7 @@ namespace Gitter.Common
                 htmlDoc.LoadHtml(html);
 
                 // Generate a complete paragraph based on the HTML content
-                NodeHelper.GenerateParagraphs(htmlDoc);
+                GenerateParagraphs(htmlDoc);
             }
             catch (Exception ex)
             {
@@ -42,7 +45,27 @@ namespace Gitter.Common
             }
         }
 
-        public static Paragraph CreateNewParagraph()
+        public static Paragraph NextParagraph()
+        {
+            if (CurrentParagraph == null || CurrentParagraph.Inlines.Count > 0)
+                CurrentParagraph = CreateNewParagraph();
+
+            return CurrentParagraph;
+        }
+
+        private static void GenerateParagraphs(HtmlDocument htmlDoc)
+        {
+            NextParagraph();
+
+            foreach (var childNode in htmlDoc.DocumentNode.ChildNodes)
+            {
+                var i = NodeHelper.GenerateBlockForNode(childNode);
+                if (i != null)
+                    CurrentParagraph.Inlines.Add(i);
+            }
+        }
+
+        private static Paragraph CreateNewParagraph()
         {
             var p = new Paragraph();
             Blocks.Add(p);
