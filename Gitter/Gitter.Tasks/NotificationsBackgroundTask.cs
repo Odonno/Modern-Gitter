@@ -80,7 +80,18 @@ namespace Gitter.Tasks
         private void CreateUnreadItemsNotification(Room room)
         {
             string id = room.Name;
-            if (CanNotify(id, room.UnreadItems))
+
+            // Detect if there is no new notification to launch (no unread messages)
+            if (_applicationStorageService.Exists(id))
+            {
+                // Reset notification id for the future
+                if (room.UnreadItems == 0)
+                    _applicationStorageService.Remove(id);
+
+                return;
+            }
+
+            if (room.UnreadItems > 0)
             {
                 // Show notifications (toast notifications)
                 string notificationContent = $"You have {room.UnreadItems} unread messages";
@@ -109,21 +120,6 @@ namespace Gitter.Tasks
                     _applicationStorageService.Save(id, room.UnreadMentions);
                 }
             }
-        }
-
-        private bool CanNotify(string id, int itemCount)
-        {
-            // Detect if there is no new notification to launch (no unread messages)
-            if (_applicationStorageService.Exists(id))
-            {
-                // Reset notification id for the future
-                if (itemCount == 0)
-                    _applicationStorageService.Remove(id);
-
-                return false;
-            }
-
-            return itemCount > 0;
         }
 
         #endregion
