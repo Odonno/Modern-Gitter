@@ -30,9 +30,12 @@
 
         <!-- Title -->
         <StackPanel Grid.Row="0">
-            <TextBlock Text="{Binding Room.Name}"
-                       Style="{ThemeResource TitleTextBlockStyle}"
-                       Margin="0 12 0 0" />
+            <HyperlinkButton NavigateUri="{Binding Room.Url}"
+                             Content="{Binding Room.Name}"
+                             Margin="0 12 0 0"
+                             FontSize="17.333"
+                             FontWeight="Bold"
+                             FontFamily="Segoe WP"/>
         </StackPanel>
 
         <!-- Content = Chat - List of messages -->
