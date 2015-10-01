@@ -4,7 +4,7 @@
       <vm:ViewModelLocator xmlns:vm="clr-namespace:Gitter"
                            x:Key="Locator" />
   </Application.Resources>
-  
+
   In the View:
   DataContext="{Binding Source={StaticResource Locator}, Path=ViewModelName}"
 
@@ -74,11 +74,12 @@ namespace Gitter.ViewModel
             SimpleIoc.Default.Register<ILoginViewModel, LoginViewModel>();
             SimpleIoc.Default.Register<IRoomViewModel, RoomViewModel>();
             SimpleIoc.Default.Register<IFullImageViewModel, FullImageViewModel>();
+            SimpleIoc.Default.Register<IAboutViewModel, AboutViewModel>();
         }
 
         #endregion
 
-        
+
         #region Navigation Service (Page declaration)
 
         private INavigationService CreateNavigationService()
@@ -89,6 +90,7 @@ namespace Gitter.ViewModel
             navigationService.Configure("Main", typeof(MainPage));
 #if WINDOWS_PHONE_APP
             navigationService.Configure("Room", typeof(RoomPage));
+            navigationService.Configure("About", typeof(AboutPage));
             navigationService.Configure("FullImage", typeof(FullImagePage));
 #endif
 
@@ -103,7 +105,8 @@ namespace Gitter.ViewModel
         public static IMainViewModel Main => ServiceLocator.Current.GetInstance<IMainViewModel>();
         public static ILoginViewModel Login => ServiceLocator.Current.GetInstance<ILoginViewModel>();
         public static IFullImageViewModel FullImage => ServiceLocator.Current.GetInstance<IFullImageViewModel>();
-        
+        public static IAboutViewModel About => ServiceLocator.Current.GetInstance<IAboutViewModel>();
+
         #endregion
     }
 }
