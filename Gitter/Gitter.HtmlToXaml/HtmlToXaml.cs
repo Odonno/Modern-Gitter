@@ -1,18 +1,21 @@
-﻿using System;
+﻿using Gitter.HtmlToXaml.Helpers;
+using HtmlAgilityPack;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Windows.UI.Xaml.Documents;
-using Gitter.Helpers;
-using HtmlAgilityPack;
+using Windows.UI.Xaml.Input;
 
-namespace Gitter.Common
+namespace Gitter.HtmlToXaml
 {
     public static class HtmlToXaml
     {
         #region Fields
 
+        public static string RoomName { get; set; }
         public static List<Block> Blocks { get; set; }
         public static Paragraph CurrentParagraph { get; set; }
+        public static TappedEventHandler ImageTapped { get; set; }
 
         #endregion
 
@@ -41,7 +44,6 @@ namespace Gitter.Common
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
-                App.TelemetryClient.TrackException(ex);
             }
         }
 

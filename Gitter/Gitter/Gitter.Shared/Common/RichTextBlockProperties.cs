@@ -1,7 +1,7 @@
 ﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace Gitter.Common
+namespace Gitter.HtmlToXaml
 {
     public class RichTextBlockProperties : DependencyObject
     {

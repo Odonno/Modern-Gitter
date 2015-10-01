@@ -9,16 +9,11 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
-using GalaSoft.MvvmLight.Views;
-using Gitter.Common;
-using Gitter.ViewModel;
-using Gitter.ViewModel.Abstract;
 using HtmlAgilityPack;
-using Microsoft.Practices.ServiceLocation;
 
-namespace Gitter.Helpers
+namespace Gitter.HtmlToXaml.Helpers
 {
-    public static class NodeHelper
+    internal static class NodeHelper
     {
         public static Inline GenerateBlockForNode(HtmlNode node)
         {
@@ -200,11 +195,7 @@ namespace Gitter.Helpers
             var bitmapImage = new BitmapImage(new Uri(src));
             var image = new Image { Source = bitmapImage };
 
-            image.Tapped += (sender, args) =>
-            {
-                ServiceLocator.Current.GetInstance<IFullImageViewModel>().Source = src;
-                ServiceLocator.Current.GetInstance<INavigationService>().NavigateTo("FullImage");
-            };
+            image.Tapped += HtmlToXaml.ImageTapped;
 
             return new InlineUIContainer { Child = image };
         }
@@ -225,7 +216,7 @@ namespace Gitter.Helpers
         private static Inline GenerateIssueLink(HtmlNode node)
         {
             string issueNumber = node.Attributes["data-issue"].Value;
-            string roomName = ViewModelLocator.Main.SelectedRoom.Room.Name;
+            string roomName = HtmlToXaml.RoomName;
             string link = $"http://github.com/{roomName}/issues/{issueNumber}";
 
             return GenerateHyperlink(node, link);

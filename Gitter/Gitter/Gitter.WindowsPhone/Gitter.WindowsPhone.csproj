@@ -225,6 +225,10 @@
       <Project>{b974757e-de42-436a-a014-6f5496655329}</Project>
       <Name>Gitter.Configuration</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Gitter.HtmlToXaml\Gitter.HtmlToXaml.csproj">
+      <Project>{131bc38b-4afc-4282-9bfa-159e3e87c843}</Project>
+      <Name>Gitter.HtmlToXaml</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Gitter.Services\Gitter.Services.csproj">
       <Project>{132ab989-3150-4647-bb25-51ea4a253a0b}</Project>
       <Name>Gitter.Services</Name>

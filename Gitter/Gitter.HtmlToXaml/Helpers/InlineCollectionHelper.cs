@@ -3,9 +3,9 @@ using System.Net;
 using Windows.UI.Xaml.Documents;
 using HtmlAgilityPack;
 
-namespace Gitter.Helpers
+namespace Gitter.HtmlToXaml.Helpers
 {
-    public static class InlineCollectionHelper
+    internal static class InlineCollectionHelper
     {
         public static void AddChildren(this InlineCollection children, HtmlNode node, Func<HtmlNode, Inline> generateBlock)
         {

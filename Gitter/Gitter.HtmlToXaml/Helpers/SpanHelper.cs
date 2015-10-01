@@ -1,9 +1,9 @@
 ﻿using Windows.UI.Xaml.Documents;
 using HtmlAgilityPack;
 
-namespace Gitter.Helpers
+namespace Gitter.HtmlToXaml.Helpers
 {
-    public static class SpanHelper
+    internal static class SpanHelper
     {
         public static void AddChildren(this Span s, HtmlNode node)
         {

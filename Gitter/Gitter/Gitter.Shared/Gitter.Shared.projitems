@@ -16,7 +16,6 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\OpenMenuFlyoutAction.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Common\HtmlToXaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\NavigationHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\RichTextBlockProperties.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\RelayCommand.cs" />
@@ -38,10 +37,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\UnreadMessagesCountToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataObjects\Abstract\IncrementalLoadingCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataObjects\Concrete\MessagesIncrementalLoadingCollection.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Helpers\InlineCollectionHelper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Helpers\NodeHelper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ParagraphHelper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Helpers\SpanHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Abstract\IEventService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Abstract\IProgressIndicatorService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Abstract\ISessionService.cs" />

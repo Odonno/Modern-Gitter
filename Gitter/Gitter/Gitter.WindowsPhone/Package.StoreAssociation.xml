@@ -385,13 +385,13 @@
   <PackageInfoList LandingUrl="https://dev.windows.com/dashboard/Application?appId=9WZDNCRD2TZJ">
     <PackageInfo>
       <OsMinVersion>6.3.1.0</OsMinVersion>
-      <PackageArchitecture>Neutral</PackageArchitecture>
-      <PackageMaxArchitectureVersion>1.2.5.0</PackageMaxArchitectureVersion>
+      <PackageArchitecture>Arm</PackageArchitecture>
+      <PackageMaxArchitectureVersion>1.2.6.0</PackageMaxArchitectureVersion>
     </PackageInfo>
     <PackageInfo>
       <OsMinVersion>6.3.1.0</OsMinVersion>
       <PackageArchitecture>Neutral</PackageArchitecture>
-      <PackageMaxArchitectureVersion>1.2.5.0</PackageMaxArchitectureVersion>
+      <PackageMaxArchitectureVersion>1.2.6.0</PackageMaxArchitectureVersion>
     </PackageInfo>
   </PackageInfoList>
 </StoreAssociation>

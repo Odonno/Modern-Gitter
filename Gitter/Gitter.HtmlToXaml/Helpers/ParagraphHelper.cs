@@ -1,9 +1,9 @@
 ﻿using Windows.UI.Xaml.Documents;
 using HtmlAgilityPack;
 
-namespace Gitter.Helpers
+namespace Gitter.HtmlToXaml.Helpers
 {
-    public static class ParagraphHelper
+    internal static class ParagraphHelper
     {
         public static void AddChildren(this Paragraph p, HtmlNode node, bool isCodeBlock = false)
         {

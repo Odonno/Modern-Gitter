@@ -7,7 +7,7 @@
     xmlns:behaviors="using:Gitter.Behaviors"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
-    xmlns:common="using:Gitter.Common"
+    xmlns:common="using:Gitter.HtmlToXaml"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">

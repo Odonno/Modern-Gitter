@@ -14,6 +14,9 @@ using Gitter.Services.Abstract;
 using GitterSharp.Model;
 using GitterSharp.Services;
 using ReactiveUI;
+using Gitter.HtmlToXaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace Gitter.ViewModel.Concrete
 {
@@ -163,6 +166,22 @@ namespace Gitter.ViewModel.Concrete
 
             // ViewModel properties
             CurrentDateTime = DateTime.Now;
+
+            // Events
+            _eventService.ReadRoom
+                .Subscribe(room =>
+            {
+                HtmlToXaml.HtmlToXaml.RoomName = room.Room.Name;
+            });
+
+            HtmlToXaml.HtmlToXaml.ImageTapped += (sender, args) =>
+            {
+                var image = sender as Image;
+                var bitmapImage = image.Source as BitmapImage;
+
+                ViewModelLocator.FullImage.Source = bitmapImage.UriSource.OriginalString;
+                _navigationService.NavigateTo("FullImage");
+            };
 
 
             if (IsInDesignMode)
