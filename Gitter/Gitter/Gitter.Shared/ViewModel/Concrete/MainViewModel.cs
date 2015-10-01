@@ -365,7 +365,13 @@ namespace Gitter.ViewModel.Concrete
                 IsRefreshing = true;
 
                 if (CurrentUser == null)
+                {
                     CurrentUser = await _gitterApiService.GetCurrentUserAsync();
+
+                    // Save Gitter User ID
+                    _applicationStorageService.Save("User", CurrentUser.Id);
+                }
+
                 await RefreshRoomsAsync();
             }
             catch (Exception ex)

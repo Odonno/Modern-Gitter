@@ -96,7 +96,8 @@ namespace Gitter.Tasks
             if (CanNotify(id, room.UnreadMentions))
             {
                 // TODO : Retrieve mentions content to know who mentioned you
-                var unreadItems = await _gitterApiService.RetrieveUnreadChatMessagesAsync("", room.Id);
+                string userId = _applicationStorageService.Retrieve("User") as string;
+                var unreadItems = await _gitterApiService.RetrieveUnreadChatMessagesAsync(userId, room.Id);
 
                 string notificationContent = "Someone mentioned you";
                 _localNotificationService.SendNotification(room.Name, notificationContent, id);
