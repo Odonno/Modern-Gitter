@@ -13,7 +13,7 @@ namespace Gitter.Tasks
         #region Fields
 
         private BackgroundTaskDeferral _deferral;
-        
+
         #endregion
 
 
@@ -64,20 +64,9 @@ namespace Gitter.Tasks
                 // Add notifications for unread messages
                 foreach (var room in notifyableRooms)
                 {
-                    if (_applicationStorageService.Exists(room.Name))
-                    {
-                        // Detect if there is no new notification to launch (no unread messages)
-                        if (room.UnreadItems == 0)
-                            _applicationStorageService.Remove(room.Name);
-
-                        if (room.UnreadMentions == 0)
-                            _applicationStorageService.Remove($"{room.Name}_mention");
-                    }
-                    else
-                    {
-                        // Show notifications (if possible)
-                        CreateNotifications(room);
-                    }
+                    // Show notifications (if possible)
+                    CreateUnreadItemsNotification(room);
+                    CreateUnreadMentionsNotification(room);
                 }
             }
             finally
@@ -86,22 +75,44 @@ namespace Gitter.Tasks
             }
         }
 
-        private void CreateNotifications(Room room)
+        private void CreateUnreadItemsNotification(Room room)
         {
+            string id = room.Name;
+
+            // Detect if there is no new notification to launch (no unread messages)
+            if (_applicationStorageService.Exists(id))
+            {
+                if (room.UnreadItems == 0)
+                    _applicationStorageService.Remove(id); // Reset notification id for the future
+                return;
+            }
+
+            // Show notifications (toast notifications)
             if (room.UnreadItems > 0)
             {
-                // Show notifications (toast notifications)
-                string id = room.Name;
                 string notificationContent = $"You have {room.UnreadItems} unread messages";
                 _localNotificationService.SendNotification(room.Name, notificationContent, id);
 
                 _applicationStorageService.Save(id, room.UnreadItems);
             }
+        }
 
+        private void CreateUnreadMentionsNotification(Room room)
+        {
+            string id = $"{room.Name}_mention";
+
+            // Detect if there is no new notification to launch (no unread messages)
+            if (_applicationStorageService.Exists(id))
+            {
+                if (room.UnreadMentions == 0)
+                    _applicationStorageService.Remove(id); // Reset notification id for the future
+                return;
+            }
+
+            // Show notifications (toast notifications)
             if (room.UnreadMentions > 0)
             {
                 // TODO : Retrieve mentions content to know who mentioned you
-                string id = $"{room.Name}_mention";
                 string notificationContent = $"Someone mentioned you";
                 _localNotificationService.SendNotification(room.Name, notificationContent, id);
 
