@@ -69,6 +69,9 @@ namespace Gitter.Tasks
                         // Detect if there is no new notification to launch (no unread messages)
                         if (room.UnreadItems == 0)
                             _applicationStorageService.Remove(room.Name);
+
+                        if (room.UnreadMentions == 0)
+                            _applicationStorageService.Remove($"{room.Name}_mention");
                     }
                     else
                     {
@@ -88,10 +91,21 @@ namespace Gitter.Tasks
             if (room.UnreadItems > 0)
             {
                 // Show notifications (toast notifications)
+                string id = room.Name;
                 string notificationContent = $"You have {room.UnreadItems} unread messages";
-                _localNotificationService.SendNotification(room.Name, notificationContent, room.Name);
+                _localNotificationService.SendNotification(room.Name, notificationContent, id);
 
-                _applicationStorageService.Save(room.Name, room.UnreadItems);
+                _applicationStorageService.Save(id, room.UnreadItems);
+            }
+
+            if (room.UnreadMentions > 0)
+            {
+                // TODO : Retrieve mentions content to know who mentioned you
+                string id = $"{room.Name}_mention";
+                string notificationContent = $"Someone mentioned you";
+                _localNotificationService.SendNotification(room.Name, notificationContent, id);
+
+                _applicationStorageService.Save(id, room.UnreadMentions);
             }
         }
 
