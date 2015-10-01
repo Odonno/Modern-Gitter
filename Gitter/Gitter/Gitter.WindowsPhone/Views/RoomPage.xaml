@@ -28,13 +28,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-
-        <!-- Advertisement -->
-        <WindowsPhone81:AdMediatorControl x:Name="AdMediator_576F10"
-                                          Canvas.ZIndex="1" Margin="-12 0"
-                                          Id="AdMediator-Id-2CCEED31-AE6A-40CE-946B-36235B99163B" 
-                                          HorizontalAlignment="Left" VerticalAlignment="Top" />
-
+        
         <!-- Title -->
         <StackPanel Grid.Row="0">
             <TextBlock Text="{Binding Room.Name}" 
