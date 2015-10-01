@@ -66,7 +66,7 @@ namespace Gitter.Tasks
                 {
                     // Show notifications (if possible)
                     CreateUnreadItemsNotification(room);
-                    CreateUnreadMentionsNotification(room);
+                    await CreateUnreadMentionsNotificationAsync(room);
                 }
             }
             finally
@@ -88,7 +88,7 @@ namespace Gitter.Tasks
             }
         }
 
-        private void CreateUnreadMentionsNotification(Room room)
+        private async Task CreateUnreadMentionsNotificationAsync(Room room)
         {
             string id = $"{room.Name}_mention";
 
@@ -96,6 +96,8 @@ namespace Gitter.Tasks
             if (CanNotify(id, room.UnreadMentions))
             {
                 // TODO : Retrieve mentions content to know who mentioned you
+                var unreadItems = await _gitterApiService.RetrieveUnreadChatMessagesAsync("", room.Id);
+
                 string notificationContent = "Someone mentioned you";
                 _localNotificationService.SendNotification(room.Name, notificationContent, id);
                 _applicationStorageService.Save(id, room.UnreadMentions);

@@ -477,7 +477,7 @@ namespace Gitter.ViewModel.Concrete
             try
             {
                 // Update server to tell user read messages
-                await _gitterApiService.ReadChatMessagesAsync(
+                await _gitterApiService.MarkReadChatMessagesAsync(
                     CurrentUser.Id,
                     SelectedRoom.Room.Id,
                     unreadMessages.Select(m => m.Id));
