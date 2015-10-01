@@ -30,7 +30,7 @@
 
         <!-- Title -->
         <StackPanel Grid.Row="0">
-            <HyperlinkButton NavigateUri="{Binding Room.Url}"
+            <HyperlinkButton NavigateUri="{Binding GitHubUrl}"
                              Content="{Binding Room.Name}"
                              Margin="0 12 0 0"
                              FontSize="17.333"
