@@ -4,6 +4,7 @@ using Windows.ApplicationModel.Background;
 using Gitter.Services.Abstract;
 using Gitter.Services.Concrete;
 using GitterSharp.Services;
+using GitterSharp.Model;
 
 namespace Gitter.Tasks
 {
@@ -69,19 +70,28 @@ namespace Gitter.Tasks
                         if (room.UnreadItems == 0)
                             _applicationStorageService.Remove(room.Name);
                     }
-                    else if (room.UnreadItems > 0)
+                    else
                     {
-                        // Show notifications (toast notifications)
-                        string notificationContent = $"You have {room.UnreadItems} unread messages";
-                        _localNotificationService.SendNotification(room.Name, notificationContent, room.Name);
-
-                        _applicationStorageService.Save(room.Name, room.UnreadItems);
+                        // Show notifications (if possible)
+                        CreateNotifications(room);
                     }
                 }
             }
             finally
             {
                 _deferral.Complete();
+            }
+        }
+
+        private void CreateNotifications(Room room)
+        {
+            if (room.UnreadItems > 0)
+            {
+                // Show notifications (toast notifications)
+                string notificationContent = $"You have {room.UnreadItems} unread messages";
+                _localNotificationService.SendNotification(room.Name, notificationContent, room.Name);
+
+                _applicationStorageService.Save(room.Name, room.UnreadItems);
             }
         }
 
