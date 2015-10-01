@@ -6,7 +6,6 @@
     xmlns:userControls="using:Gitter.UserControls"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
-    xmlns:WindowsPhone81="using:Microsoft.AdMediator.WindowsPhone81"
     x:Class="Gitter.Views.RoomPage"
     mc:Ignorable="d"
     NavigationCacheMode="Required"
@@ -28,11 +27,11 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        
+
         <!-- Title -->
         <StackPanel Grid.Row="0">
-            <TextBlock Text="{Binding Room.Name}" 
-                       Style="{ThemeResource TitleTextBlockStyle}" 
+            <TextBlock Text="{Binding Room.Name}"
+                       Style="{ThemeResource TitleTextBlockStyle}"
                        Margin="0 12 0 0" />
         </StackPanel>
 
@@ -70,8 +69,8 @@
                                 Padding="{TemplateBinding Padding}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 Background="{TemplateBinding Background}">
-                            <ScrollViewer x:Name="ScrollViewer" 
-                                          ZoomMode="Disabled" 
+                            <ScrollViewer x:Name="ScrollViewer"
+                                          ZoomMode="Disabled"
                                           RenderTransformOrigin="0.5,0.5">
                                 <ScrollViewer.RenderTransform>
                                     <CompositeTransform Rotation="180" ScaleX="-1" />
@@ -97,7 +96,7 @@
 
             </ListView>
 
-            <TextBox Grid.Row="1" 
+            <TextBox Grid.Row="1"
                      Visibility="{Binding Main.SelectedRoom, Converter={StaticResource NullToVisibilityConverter}, Source={StaticResource Locator}}"
                      Text="{Binding TextMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      x:Uid="/UIResources/typeMessageHere" PlaceholderText="type your message here"
@@ -114,7 +113,7 @@
             </TextBox>
         </Grid>
     </Grid>
-    
+
 
     <Page.BottomAppBar>
         <CommandBar>
