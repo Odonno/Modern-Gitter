@@ -154,7 +154,7 @@
     </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.4.8.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\HtmlAgilityPack.1.4.9\lib\NetCore45\HtmlAgilityPack.dll</HintPath>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.ApplicationInsights, Version=0.16.1.418, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.ApplicationInsights.0.16.1-build00418\lib\portable-win81+wpa81\Microsoft.ApplicationInsights.dll</HintPath>
