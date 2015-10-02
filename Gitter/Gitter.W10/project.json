@@ -10,7 +10,6 @@
     "modernhttpclient": "2.4.0",
     "MvvmLight": "5.1.1",
     "Newtonsoft.Json": "6.0.8",
-    "reactiveui": "6.5.0",
     "Rx-Main": "2.2.5",
     "Splat": "1.6.2"
   },

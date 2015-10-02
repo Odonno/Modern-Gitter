@@ -180,10 +180,6 @@
       <HintPath>..\..\packages\Newtonsoft.Json.6.0.8\lib\netcore45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ReactiveUI, Version=6.5.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\reactiveui-core.6.5.0\lib\Win8\ReactiveUI.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Splat, Version=1.6.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Splat.1.6.2\lib\NetCore45\Splat.dll</HintPath>
       <Private>True</Private>

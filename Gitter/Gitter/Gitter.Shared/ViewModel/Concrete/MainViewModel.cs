@@ -13,14 +13,14 @@ using Gitter.ViewModel.Abstract;
 using Gitter.Services.Abstract;
 using GitterSharp.Model;
 using GitterSharp.Services;
-using ReactiveUI;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 using Gitter.Configuration;
+using GalaSoft.MvvmLight;
 
 namespace Gitter.ViewModel.Concrete
 {
-    public sealed class MainViewModel : ReactiveViewModelBase, IMainViewModel
+    public sealed class MainViewModel : ViewModelBase, IMainViewModel
     {
         #region Fields
 
@@ -57,7 +57,7 @@ namespace Gitter.ViewModel.Concrete
             private set
             {
                 _currentDateTime = value;
-                this.RaisePropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -71,7 +71,7 @@ namespace Gitter.ViewModel.Concrete
             private set
             {
                 _currentUser = value;
-                this.RaisePropertyChanged();
+                RaisePropertyChanged();
                 ((RelayCommand)(ChatWithUsCommand)).RaiseCanExecuteChanged();
             }
         }
@@ -88,7 +88,7 @@ namespace Gitter.ViewModel.Concrete
             set
             {
                 _selectedRoom = value;
-                this.RaisePropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -103,7 +103,9 @@ namespace Gitter.ViewModel.Concrete
             }
             set
             {
-                this.RaiseAndSetIfChanged(ref _searchedRoomText, value);
+                _searchedRoomText = value;
+                RaisePropertyChanged();
+                ExecuteSearch();
             }
         }
 
@@ -114,7 +116,7 @@ namespace Gitter.ViewModel.Concrete
             set
             {
                 _isRefreshing = value;
-                this.RaisePropertyChanged();
+                RaisePropertyChanged();
                 ((RelayCommand)(RefreshCommand)).RaiseCanExecuteChanged();
             }
         }
@@ -128,13 +130,6 @@ namespace Gitter.ViewModel.Concrete
         public ICommand ChatWithUsCommand { get; }
         public ICommand RefreshCommand { get; }
         public ICommand ToggleSearchCommand { get; }
-
-        #endregion
-
-
-        #region Private Commands
-
-        private ReactiveCommand<IEnumerable<IRoomViewModel>> _search;
 
         #endregion
 
@@ -278,9 +273,6 @@ namespace Gitter.ViewModel.Concrete
             {
                 // Code runs "for real"
 
-                // Create Rx commands
-                CreateSearchCommand();
-
                 // Retrieve access token to use in the app
                 string token = _passwordStorageService.Retrieve("token");
                 _gitterApiService.TryAuthenticate(token);
@@ -301,14 +293,13 @@ namespace Gitter.ViewModel.Concrete
 
         private void SelectRoom(IRoomViewModel room)
         {
-            // Select the Room
-            if (SelectedRoom != room)
-            {
-                SelectedRoom = room;
+            SelectedRoom = room;
 
-                App.TelemetryClient.TrackEvent("SelectRoom",
-                    new Dictionary<string, string> { { "Room", room.Room.Name } });
-            }
+            if (SelectedRoom == null)
+                return;
+
+            App.TelemetryClient.TrackEvent("SelectRoom",
+                new Dictionary<string, string> { { "Room", SelectedRoom.Room.Name } });
 
             if (!SelectedRoom.IsLoaded)
             {
@@ -394,41 +385,6 @@ namespace Gitter.ViewModel.Concrete
 
         #endregion
 
-        #region Rx Command Methods
-
-        private void CreateSearchCommand()
-        {
-            // Execute search when user finished to type the search text
-            _search = ReactiveCommand.CreateAsyncTask(
-                Observable.Return(true),
-                _ => Task.FromResult(ExecuteSearch()));
-
-            // Execute Search when user stopped to type > 0.5s
-            this.WhenAnyValue(x => x.SearchedRoomText)
-                .Throttle(TimeSpan.FromSeconds(0.5), RxApp.MainThreadScheduler)
-                .InvokeCommand(this, x => x._search);
-
-            // Update UI when we executed the search
-            _search.Subscribe(rooms =>
-            {
-                SearchedRooms.Clear();
-                foreach (var room in rooms)
-                    SearchedRooms.Add(room);
-            });
-        }
-
-        private IEnumerable<IRoomViewModel> ExecuteSearch()
-        {
-            if (string.IsNullOrWhiteSpace(SearchedRoomText))
-                return Rooms;
-
-            string lowerSearch = SearchedRoomText.ToLower();
-            return Rooms.Where(room => room.Room.Name.ToLower().Contains(lowerSearch) ||
-                                        room.Room.Url.ToLower().Contains(lowerSearch));
-        }
-
-        #endregion
-
 
         #region Methods
 
@@ -451,7 +407,7 @@ namespace Gitter.ViewModel.Concrete
                 Rooms.Add(new RoomViewModel(room));
 
             // Execute search each time we refresh rooms
-            await _search.ExecuteAsync();
+            ExecuteSearch();
 
             _eventService.RefreshRooms.OnNext(true);
         }
@@ -513,6 +469,26 @@ namespace Gitter.ViewModel.Concrete
                 App.TelemetryClient.TrackException(ex);
                 _localNotificationService.SendNotification("Error", "Can't validate reading new messages");
             }
+        }
+
+        private void ExecuteSearch()
+        {
+            IEnumerable<IRoomViewModel> rooms;
+
+            if (string.IsNullOrWhiteSpace(SearchedRoomText))
+            {
+                rooms = Rooms;
+            }
+            else
+            {
+                string lowerSearch = SearchedRoomText.ToLower();
+                rooms = Rooms.Where(room => room.Room.Name.ToLower().Contains(lowerSearch) ||
+                                            room.Room.Url.ToLower().Contains(lowerSearch));
+            }
+
+            SearchedRooms.Clear();
+            foreach (var room in rooms)
+                SearchedRooms.Add(room);
         }
 
         #endregion

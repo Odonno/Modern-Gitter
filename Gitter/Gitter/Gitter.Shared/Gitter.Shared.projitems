@@ -50,7 +50,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Abstract\IRoomViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Abstract\ILoginViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Abstract\IMainViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Abstract\ReactiveViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Concrete\FullImageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Concrete\MessageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Concrete\RoomViewModel.cs" />

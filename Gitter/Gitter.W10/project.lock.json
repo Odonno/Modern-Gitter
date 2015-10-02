@@ -318,25 +318,6 @@
           "lib/netcore45/Newtonsoft.Json.dll": {}
         }
       },
-      "reactiveui/6.5.0": {
-        "dependencies": {
-          "reactiveui-core": "[6.5.0, 6.5.0]"
-        }
-      },
-      "reactiveui-core/6.5.0": {
-        "dependencies": {
-          "Rx-Main": "[2.2.5, )",
-          "Rx-WinRT": "[2.2.5, )",
-          "Rx-Xaml": "[2.2.5, )",
-          "Splat": "[1.0.0, 2.0.0)"
-        },
-        "compile": {
-          "lib/Win8/ReactiveUI.dll": {}
-        },
-        "runtime": {
-          "lib/Win8/ReactiveUI.dll": {}
-        }
-      },
       "Rx-Core/2.2.5": {
         "dependencies": {
           "Rx-Interfaces": "[2.2.5, )"
@@ -386,28 +367,6 @@
         },
         "runtime": {
           "lib/windows8/System.Reactive.PlatformServices.dll": {}
-        }
-      },
-      "Rx-WinRT/2.2.5": {
-        "dependencies": {
-          "Rx-Main": "[2.2.5, )"
-        },
-        "compile": {
-          "lib/windows8/System.Reactive.WindowsRuntime.dll": {}
-        },
-        "runtime": {
-          "lib/windows8/System.Reactive.WindowsRuntime.dll": {}
-        }
-      },
-      "Rx-Xaml/2.2.5": {
-        "dependencies": {
-          "Rx-Main": "[2.2.5, )"
-        },
-        "compile": {
-          "lib/windows8/System.Reactive.Windows.Threading.dll": {}
-        },
-        "runtime": {
-          "lib/windows8/System.Reactive.Windows.Threading.dll": {}
         }
       },
       "Splat/1.6.2": {
@@ -2113,25 +2072,6 @@
           "lib/netcore45/Newtonsoft.Json.dll": {}
         }
       },
-      "reactiveui/6.5.0": {
-        "dependencies": {
-          "reactiveui-core": "[6.5.0, 6.5.0]"
-        }
-      },
-      "reactiveui-core/6.5.0": {
-        "dependencies": {
-          "Rx-Main": "[2.2.5, )",
-          "Rx-WinRT": "[2.2.5, )",
-          "Rx-Xaml": "[2.2.5, )",
-          "Splat": "[1.0.0, 2.0.0)"
-        },
-        "compile": {
-          "lib/Win8/ReactiveUI.dll": {}
-        },
-        "runtime": {
-          "lib/Win8/ReactiveUI.dll": {}
-        }
-      },
       "Rx-Core/2.2.5": {
         "dependencies": {
           "Rx-Interfaces": "[2.2.5, )"
@@ -2181,28 +2121,6 @@
         },
         "runtime": {
           "lib/windows8/System.Reactive.PlatformServices.dll": {}
-        }
-      },
-      "Rx-WinRT/2.2.5": {
-        "dependencies": {
-          "Rx-Main": "[2.2.5, )"
-        },
-        "compile": {
-          "lib/windows8/System.Reactive.WindowsRuntime.dll": {}
-        },
-        "runtime": {
-          "lib/windows8/System.Reactive.WindowsRuntime.dll": {}
-        }
-      },
-      "Rx-Xaml/2.2.5": {
-        "dependencies": {
-          "Rx-Main": "[2.2.5, )"
-        },
-        "compile": {
-          "lib/windows8/System.Reactive.Windows.Threading.dll": {}
-        },
-        "runtime": {
-          "lib/windows8/System.Reactive.Windows.Threading.dll": {}
         }
       },
       "Splat/1.6.2": {
@@ -3941,25 +3859,6 @@
           "lib/netcore45/Newtonsoft.Json.dll": {}
         }
       },
-      "reactiveui/6.5.0": {
-        "dependencies": {
-          "reactiveui-core": "[6.5.0, 6.5.0]"
-        }
-      },
-      "reactiveui-core/6.5.0": {
-        "dependencies": {
-          "Rx-Main": "[2.2.5, )",
-          "Rx-WinRT": "[2.2.5, )",
-          "Rx-Xaml": "[2.2.5, )",
-          "Splat": "[1.0.0, 2.0.0)"
-        },
-        "compile": {
-          "lib/Win8/ReactiveUI.dll": {}
-        },
-        "runtime": {
-          "lib/Win8/ReactiveUI.dll": {}
-        }
-      },
       "Rx-Core/2.2.5": {
         "dependencies": {
           "Rx-Interfaces": "[2.2.5, )"
@@ -4009,28 +3908,6 @@
         },
         "runtime": {
           "lib/windows8/System.Reactive.PlatformServices.dll": {}
-        }
-      },
-      "Rx-WinRT/2.2.5": {
-        "dependencies": {
-          "Rx-Main": "[2.2.5, )"
-        },
-        "compile": {
-          "lib/windows8/System.Reactive.WindowsRuntime.dll": {}
-        },
-        "runtime": {
-          "lib/windows8/System.Reactive.WindowsRuntime.dll": {}
-        }
-      },
-      "Rx-Xaml/2.2.5": {
-        "dependencies": {
-          "Rx-Main": "[2.2.5, )"
-        },
-        "compile": {
-          "lib/windows8/System.Reactive.Windows.Threading.dll": {}
-        },
-        "runtime": {
-          "lib/windows8/System.Reactive.Windows.Threading.dll": {}
         }
       },
       "Splat/1.6.2": {
@@ -5774,25 +5651,6 @@
           "lib/netcore45/Newtonsoft.Json.dll": {}
         }
       },
-      "reactiveui/6.5.0": {
-        "dependencies": {
-          "reactiveui-core": "[6.5.0, 6.5.0]"
-        }
-      },
-      "reactiveui-core/6.5.0": {
-        "dependencies": {
-          "Rx-Main": "[2.2.5, )",
-          "Rx-WinRT": "[2.2.5, )",
-          "Rx-Xaml": "[2.2.5, )",
-          "Splat": "[1.0.0, 2.0.0)"
-        },
-        "compile": {
-          "lib/Win8/ReactiveUI.dll": {}
-        },
-        "runtime": {
-          "lib/Win8/ReactiveUI.dll": {}
-        }
-      },
       "Rx-Core/2.2.5": {
         "dependencies": {
           "Rx-Interfaces": "[2.2.5, )"
@@ -5842,28 +5700,6 @@
         },
         "runtime": {
           "lib/windows8/System.Reactive.PlatformServices.dll": {}
-        }
-      },
-      "Rx-WinRT/2.2.5": {
-        "dependencies": {
-          "Rx-Main": "[2.2.5, )"
-        },
-        "compile": {
-          "lib/windows8/System.Reactive.WindowsRuntime.dll": {}
-        },
-        "runtime": {
-          "lib/windows8/System.Reactive.WindowsRuntime.dll": {}
-        }
-      },
-      "Rx-Xaml/2.2.5": {
-        "dependencies": {
-          "Rx-Main": "[2.2.5, )"
-        },
-        "compile": {
-          "lib/windows8/System.Reactive.Windows.Threading.dll": {}
-        },
-        "runtime": {
-          "lib/windows8/System.Reactive.Windows.Threading.dll": {}
         }
       },
       "Splat/1.6.2": {
@@ -7602,25 +7438,6 @@
           "lib/netcore45/Newtonsoft.Json.dll": {}
         }
       },
-      "reactiveui/6.5.0": {
-        "dependencies": {
-          "reactiveui-core": "[6.5.0, 6.5.0]"
-        }
-      },
-      "reactiveui-core/6.5.0": {
-        "dependencies": {
-          "Rx-Main": "[2.2.5, )",
-          "Rx-WinRT": "[2.2.5, )",
-          "Rx-Xaml": "[2.2.5, )",
-          "Splat": "[1.0.0, 2.0.0)"
-        },
-        "compile": {
-          "lib/Win8/ReactiveUI.dll": {}
-        },
-        "runtime": {
-          "lib/Win8/ReactiveUI.dll": {}
-        }
-      },
       "Rx-Core/2.2.5": {
         "dependencies": {
           "Rx-Interfaces": "[2.2.5, )"
@@ -7670,28 +7487,6 @@
         },
         "runtime": {
           "lib/windows8/System.Reactive.PlatformServices.dll": {}
-        }
-      },
-      "Rx-WinRT/2.2.5": {
-        "dependencies": {
-          "Rx-Main": "[2.2.5, )"
-        },
-        "compile": {
-          "lib/windows8/System.Reactive.WindowsRuntime.dll": {}
-        },
-        "runtime": {
-          "lib/windows8/System.Reactive.WindowsRuntime.dll": {}
-        }
-      },
-      "Rx-Xaml/2.2.5": {
-        "dependencies": {
-          "Rx-Main": "[2.2.5, )"
-        },
-        "compile": {
-          "lib/windows8/System.Reactive.Windows.Threading.dll": {}
-        },
-        "runtime": {
-          "lib/windows8/System.Reactive.Windows.Threading.dll": {}
         }
       },
       "Splat/1.6.2": {
@@ -9435,25 +9230,6 @@
           "lib/netcore45/Newtonsoft.Json.dll": {}
         }
       },
-      "reactiveui/6.5.0": {
-        "dependencies": {
-          "reactiveui-core": "[6.5.0, 6.5.0]"
-        }
-      },
-      "reactiveui-core/6.5.0": {
-        "dependencies": {
-          "Rx-Main": "[2.2.5, )",
-          "Rx-WinRT": "[2.2.5, )",
-          "Rx-Xaml": "[2.2.5, )",
-          "Splat": "[1.0.0, 2.0.0)"
-        },
-        "compile": {
-          "lib/Win8/ReactiveUI.dll": {}
-        },
-        "runtime": {
-          "lib/Win8/ReactiveUI.dll": {}
-        }
-      },
       "Rx-Core/2.2.5": {
         "dependencies": {
           "Rx-Interfaces": "[2.2.5, )"
@@ -9503,28 +9279,6 @@
         },
         "runtime": {
           "lib/windows8/System.Reactive.PlatformServices.dll": {}
-        }
-      },
-      "Rx-WinRT/2.2.5": {
-        "dependencies": {
-          "Rx-Main": "[2.2.5, )"
-        },
-        "compile": {
-          "lib/windows8/System.Reactive.WindowsRuntime.dll": {}
-        },
-        "runtime": {
-          "lib/windows8/System.Reactive.WindowsRuntime.dll": {}
-        }
-      },
-      "Rx-Xaml/2.2.5": {
-        "dependencies": {
-          "Rx-Main": "[2.2.5, )"
-        },
-        "compile": {
-          "lib/windows8/System.Reactive.Windows.Threading.dll": {}
-        },
-        "runtime": {
-          "lib/windows8/System.Reactive.Windows.Threading.dll": {}
         }
       },
       "Splat/1.6.2": {
@@ -11263,25 +11017,6 @@
           "lib/netcore45/Newtonsoft.Json.dll": {}
         }
       },
-      "reactiveui/6.5.0": {
-        "dependencies": {
-          "reactiveui-core": "[6.5.0, 6.5.0]"
-        }
-      },
-      "reactiveui-core/6.5.0": {
-        "dependencies": {
-          "Rx-Main": "[2.2.5, )",
-          "Rx-WinRT": "[2.2.5, )",
-          "Rx-Xaml": "[2.2.5, )",
-          "Splat": "[1.0.0, 2.0.0)"
-        },
-        "compile": {
-          "lib/Win8/ReactiveUI.dll": {}
-        },
-        "runtime": {
-          "lib/Win8/ReactiveUI.dll": {}
-        }
-      },
       "Rx-Core/2.2.5": {
         "dependencies": {
           "Rx-Interfaces": "[2.2.5, )"
@@ -11331,28 +11066,6 @@
         },
         "runtime": {
           "lib/windows8/System.Reactive.PlatformServices.dll": {}
-        }
-      },
-      "Rx-WinRT/2.2.5": {
-        "dependencies": {
-          "Rx-Main": "[2.2.5, )"
-        },
-        "compile": {
-          "lib/windows8/System.Reactive.WindowsRuntime.dll": {}
-        },
-        "runtime": {
-          "lib/windows8/System.Reactive.WindowsRuntime.dll": {}
-        }
-      },
-      "Rx-Xaml/2.2.5": {
-        "dependencies": {
-          "Rx-Main": "[2.2.5, )"
-        },
-        "compile": {
-          "lib/windows8/System.Reactive.Windows.Threading.dll": {}
-        },
-        "runtime": {
-          "lib/windows8/System.Reactive.Windows.Threading.dll": {}
         }
       },
       "Splat/1.6.2": {
@@ -13872,56 +13585,6 @@
         "tools/install.ps1"
       ]
     },
-    "reactiveui/6.5.0": {
-      "sha512": "ur5Z7oNa8B3OL1Hh/4Fk8+Va0pHxzD4YXZu+3uw7mSvNQG6RT1NAjGn9SuL8iXH/D3a2LiqU0S/3ZPuw4QCFhw==",
-      "type": "Package",
-      "files": [
-        "[Content_Types].xml",
-        "_rels/.rels",
-        "package/services/metadata/core-properties/e8299ae2e16749b7a90e0d4ddfee95a6.psmdcp",
-        "reactiveui.nuspec"
-      ]
-    },
-    "reactiveui-core/6.5.0": {
-      "sha512": "6zmfsHKP2WDQaJQcny2jalPIZg3yYosVxt4zQH5KqcsKiIBlyr1pLcsS/l+eE0giTL8ziuG9EE/QmBOalze+Ag==",
-      "type": "Package",
-      "files": [
-        "[Content_Types].xml",
-        "_rels/.rels",
-        "lib/MonoAndroid/ReactiveUI.dll",
-        "lib/MonoAndroid/ReactiveUI.dll.mdb",
-        "lib/MonoAndroid/ReactiveUI.xml",
-        "lib/MonoMac/ReactiveUI.dll",
-        "lib/MonoMac/ReactiveUI.dll.mdb",
-        "lib/MonoMac/ReactiveUI.xml",
-        "lib/Monotouch/ReactiveUI.dll",
-        "lib/Monotouch/ReactiveUI.dll.mdb",
-        "lib/Monotouch/ReactiveUI.xml",
-        "lib/Net45/ReactiveUI.dll",
-        "lib/Net45/ReactiveUI.xml",
-        "lib/Portable-Net45+Win8+WP8+WPA81/ReactiveUI.dll",
-        "lib/Portable-Net45+Win8+WP8+WPA81/ReactiveUI.XML",
-        "lib/Portable-Win81+WPA81/ReactiveUI.dll",
-        "lib/Portable-Win81+WPA81/ReactiveUI.pri",
-        "lib/Portable-Win81+WPA81/ReactiveUI.xml",
-        "lib/Portable-Win81+WPA81/ReactiveUI/ReactiveUI.xr.xml",
-        "lib/Portable-Win81+WPA81/ReactiveUI/Themes/generic-winrt.xbf",
-        "lib/Win8/ReactiveUI.dll",
-        "lib/Win8/ReactiveUI.pri",
-        "lib/Win8/ReactiveUI.xml",
-        "lib/Win8/ReactiveUI/Themes/generic-winrt.xaml",
-        "lib/WP8/ReactiveUI.dll",
-        "lib/WP8/ReactiveUI.xml",
-        "lib/Xamarin.iOS10/ReactiveUI.dll",
-        "lib/Xamarin.iOS10/ReactiveUI.dll.mdb",
-        "lib/Xamarin.iOS10/ReactiveUI.xml",
-        "lib/Xamarin.Mac10/ReactiveUI.dll",
-        "lib/Xamarin.Mac10/ReactiveUI.dll.mdb",
-        "lib/Xamarin.Mac10/ReactiveUI.xml",
-        "package/services/metadata/core-properties/2481ef13a213498ea7051ba23cebedc0.psmdcp",
-        "reactiveui-core.nuspec"
-      ]
-    },
     "Rx-Core/2.2.5": {
       "sha512": "DfWVTfW6tvRkkqpnRHKxPIvaRZyDJGADuqrE6J2nwejOQbLRWi0rNUwXkViDWz++25BGDy3iRE5OE6Dv8mJxYQ==",
       "type": "Package",
@@ -14050,46 +13713,6 @@
         "lib/windowsphone8/System.Reactive.PlatformServices.XML",
         "package/services/metadata/core-properties/5087526007294f7d8e78a6a4a61c494a.psmdcp",
         "Rx-PlatformServices.nuspec"
-      ]
-    },
-    "Rx-WinRT/2.2.5": {
-      "sha512": "gk0X1s8+XZhPEeYwSI4m5rjL0OQHCssG/Efa0nr4vfon+61p4+d4n1249n5WWSZE35/NXc0cOzvIlVw7bD+mJw==",
-      "type": "Package",
-      "files": [
-        "[Content_Types].xml",
-        "_rels/.rels",
-        "lib/portable-win81+wpa81/System.Reactive.WindowsRuntime.dll",
-        "lib/portable-win81+wpa81/System.Reactive.WindowsRuntime.XML",
-        "lib/windows8/System.Reactive.WindowsRuntime.dll",
-        "lib/windows8/System.Reactive.WindowsRuntime.XML",
-        "lib/windowsphone8/System.Reactive.WindowsRuntime.dll",
-        "lib/windowsphone8/System.Reactive.WindowsRuntime.XML",
-        "package/services/metadata/core-properties/47975bc9e17849b0b77ffd43897d7f7f.psmdcp",
-        "Rx-WinRT.nuspec"
-      ]
-    },
-    "Rx-Xaml/2.2.5": {
-      "sha512": "RzA/HcKP1U44i7ZchRdR3v3GdepNmr/93ydyixV+LwZs++Yxo13fsODRTqGIyz11ERSIKgnnSs6tbJUys4qRSw==",
-      "type": "Package",
-      "files": [
-        "[Content_Types].xml",
-        "_rels/.rels",
-        "lib/net40/System.Reactive.Windows.Threading.dll",
-        "lib/net40/System.Reactive.Windows.Threading.XML",
-        "lib/net45/System.Reactive.Windows.Threading.dll",
-        "lib/net45/System.Reactive.Windows.Threading.XML",
-        "lib/portable-win81+wpa81/System.Reactive.Windows.Threading.dll",
-        "lib/portable-win81+wpa81/System.Reactive.Windows.Threading.XML",
-        "lib/sl5/System.Reactive.Windows.Threading.dll",
-        "lib/sl5/System.Reactive.Windows.Threading.XML",
-        "lib/windows8/System.Reactive.Windows.Threading.dll",
-        "lib/windows8/System.Reactive.Windows.Threading.XML",
-        "lib/windowsphone71/System.Reactive.Windows.Threading.dll",
-        "lib/windowsphone71/System.Reactive.Windows.Threading.XML",
-        "lib/windowsphone8/System.Reactive.Windows.Threading.dll",
-        "lib/windowsphone8/System.Reactive.Windows.Threading.XML",
-        "package/services/metadata/core-properties/b5441fe1cc3e4525b27d164c5a5518ce.psmdcp",
-        "Rx-XAML.nuspec"
       ]
     },
     "Splat/1.6.2": {
@@ -16832,7 +16455,6 @@
       "modernhttpclient >= 2.4.0",
       "MvvmLight >= 5.1.1",
       "Newtonsoft.Json >= 6.0.8",
-      "reactiveui >= 6.5.0",
       "Rx-Main >= 2.2.5",
       "Splat >= 1.6.2"
     ],
