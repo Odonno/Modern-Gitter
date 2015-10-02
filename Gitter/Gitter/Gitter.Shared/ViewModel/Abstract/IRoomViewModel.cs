@@ -20,5 +20,8 @@ namespace Gitter.ViewModel.Abstract
         ICommand ViewProfileCommand { get; }
         ICommand TalkCommand { get; }
         ICommand RefreshCommand { get; }
+
+        void OpenRealtimeStream();
+        void CloseRealtimeStream();
     }
 }

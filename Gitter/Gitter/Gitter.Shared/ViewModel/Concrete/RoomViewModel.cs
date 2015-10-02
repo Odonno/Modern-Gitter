@@ -31,6 +31,13 @@ namespace Gitter.ViewModel.Concrete
         #endregion
 
 
+        #region Fields
+
+        private IDisposable _streamingMessages;
+
+        #endregion
+
+
         #region Properties
 
         public bool IsLoaded { get; set; }
@@ -221,10 +228,7 @@ namespace Gitter.ViewModel.Concrete
                 // Code runs "for real"
 
                 Messages = new MessagesIncrementalLoadingCollection(Room.Id);
-
-                // Use the stream API to add new messages when they comes
-                _gitterApiService.GetRealtimeMessages(Room.Id)
-                    .Subscribe(async message => await NotifyNewMessageAsync(message));
+                OpenRealtimeStream();
             }
 
             // Update count of unread messages
@@ -332,6 +336,18 @@ namespace Gitter.ViewModel.Concrete
 
 
         #region Methods
+
+        public void OpenRealtimeStream()
+        {
+            // Use the stream API to add new messages when they comes
+            _streamingMessages = _gitterApiService.GetRealtimeMessages(Room.Id)
+                .Subscribe(async message => await NotifyNewMessageAsync(message));
+        }
+
+        public void CloseRealtimeStream()
+        {
+            _streamingMessages.Dispose();
+        }
 
         private async Task NotifyNewMessageAsync(Message message)
         {
