@@ -335,19 +335,18 @@ namespace Gitter.ViewModel.Concrete
 
         private async Task NotifyNewMessageAsync(Message message)
         {
-            var messageVM = new MessageViewModel(message);
-
             // Do not add an existing messages to the chat
-            if (Messages.Any(m => m.Id == messageVM.Id))
+            if (Messages.Any(m => m.Id == message.Id))
                 return;
 
             // Add message to the room
-            _eventService.PushMessage.OnNext(new Tuple<string, IMessageViewModel>(Room.Id, messageVM));
+            _eventService.PushMessage
+                .OnNext(new Tuple<string, IMessageViewModel>(Room.Id, new MessageViewModel(message)));
 
-            // If the message was not read, update unread notifications when user is not reading (except for the current selected room)
-            if (!messageVM.Read)
+            // If the message was not read, update unread notifications when user is not reading 
+            if (message.UnreadByCurrent)
             {
-                // Add in-app notification (unread count)
+                // Add in-app notification (unread count), except for the current selected room
                 if (ViewModelLocator.Main.SelectedRoom != this)
                 {
                     var dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
