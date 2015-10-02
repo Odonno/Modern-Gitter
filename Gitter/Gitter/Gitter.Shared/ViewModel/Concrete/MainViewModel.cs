@@ -350,7 +350,7 @@ namespace Gitter.ViewModel.Concrete
         private void GoToAboutPage()
         {
 #if WINDOWS_PHONE_APP
-            // Go to dedicated room
+            // Go to about page
             _navigationService.NavigateTo("About");
 #endif
         }

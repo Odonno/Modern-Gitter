@@ -10,72 +10,81 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     DataContext="{Binding About, Source={StaticResource Locator}}">
 
-    <!--LayoutRoot is the root grid where all page content is placed-->
-    <Grid x:Name="LayoutRoot" Background="Transparent">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+    <Hub Margin="0 24 0 0">
+        <HubSection x:Uid="/UIResources/aboutTitle" Header="about" HeaderTemplate="{StaticResource HeaderTemplate}">
+            <DataTemplate>
+                <ScrollViewer>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
 
-        <!--ContentPanel - place additional content here-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <Hub Header="About">
-                <HubSection Header="Information">
-                    <DataTemplate>
-                        <ScrollViewer>
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-
-                                <StackPanel Margin="0 0 0 24">
-                                    <TextBlock Text="{Binding ApplicationTitle}"
-                                           Style="{ThemeResource SubheaderTextBlockStyle}"/>
-                                    <TextBlock Text="{Binding ApplicationVersion}"
+                        <StackPanel Margin="0 0 0 24">
+                            <TextBlock x:Uid="/UIResources/applicationTitle"
+                                               Text="Modern Gitter"
+                                               Style="{ThemeResource SubheaderTextBlockStyle}"/>
+                            <TextBlock Text="{Binding ApplicationVersion}"
                                            Style="{ThemeResource TitleTextBlockStyle}"/>
-                                </StackPanel>
+                        </StackPanel>
 
-                                <TextBlock Grid.Row="1"
-                                       Text="{Binding ApplicationDescription}"
-                                       Style="{ThemeResource TitleTextBlockStyle}"
-                                       TextWrapping="Wrap" />
-                                <HyperlinkButton Grid.Row="2"
-                                             Content="Having Problems? Click to raise an issue"
-                                             Margin="0,12,0,0"
-                                             HorizontalAlignment="Left"
-                                             FontSize="17.333"
-                                             FontWeight="Bold"
-                                             FontFamily="Segoe WP"
-                                             NavigateUri="https://github.com/Odonno/Modern-Gitter/issues/new"/>
-                                <StackPanel Grid.Row="4" Margin="12,0,12,30">
-                                    <Image Source="../Assets/Gitter.white.png"
+                        <TextBlock Grid.Row="1"
+                                           x:Uid="/UIResources/applicationDescription"
+                                           Text="A Gitter client application for Windows Phone 8"
+                                           Style="{ThemeResource TitleTextBlockStyle}"
+                                           TextWrapping="Wrap" />
+                        <HyperlinkButton Grid.Row="2"
+                                                 x:Uid="/UIResources/raiseIssue"
+                                                 Content="Having Problems? Click to raise an issue"
+                                                 Margin="0,12,0,0"
+                                                 HorizontalAlignment="Left"
+                                                 FontSize="17.333"
+                                                 FontWeight="Bold"
+                                                 FontFamily="Segoe WP"
+                                                 NavigateUri="https://github.com/Odonno/Modern-Gitter/issues/"/>
+                        <StackPanel Grid.Row="4" Margin="12,0,12,30">
+                            <Image Source="../Assets/Gitter.white.png"
                                        Height="100"
                                        HorizontalAlignment="Left"/>
-                                    <TextBlock Text="{Binding ApplicationPublisher}"
-                                           Style="{ThemeResource TitleTextBlockStyle}"/>
-                                </StackPanel>
-                            </Grid>
-                        </ScrollViewer>
-                    </DataTemplate>
-                </HubSection>
-                <HubSection Header="History">
-                    <DataTemplate>
-                        <ScrollViewer>
-                            <StackPanel>
-                                <TextBlock Style="{ThemeResource SubheaderTextBlockStyle}">Version 1.2.7</TextBlock>
-                                <TextBlock Style="{ThemeResource TitleTextBlockStyle}" TextWrapping="Wrap">- Minor Bug Fixes</TextBlock>
+                            <TextBlock x:Uid="/UIResources/applicationPublisher"
+                                               Text="David BOTTIAU"
+                                               Style="{ThemeResource TitleTextBlockStyle}"/>
+                        </StackPanel>
+                    </Grid>
+                </ScrollViewer>
+            </DataTemplate>
+        </HubSection>
+        <HubSection x:Uid="/UIResources/historyTitle" Header="history" HeaderTemplate="{StaticResource HeaderTemplate}">
+            <DataTemplate>
+                <ScrollViewer>
+                    <StackPanel>
+                        <!--<TextBlock Style="{ThemeResource SubheaderTextBlockStyle}">Version 1.3</TextBlock>
+                                <TextBlock Style="{ThemeResource TitleTextBlockStyle}" TextWrapping="Wrap">- fix bug on realtime messages</TextBlock>
+                                <TextBlock Style="{ThemeResource TitleTextBlockStyle}" TextWrapping="Wrap">- fix bug on toast notification</TextBlock>
+                                <TextBlock Style="{ThemeResource TitleTextBlockStyle}" TextWrapping="Wrap">- parse effectively all the HTML sent (title, links, image, quote, formatted code)</TextBlock>
+                                <TextBlock Style="{ThemeResource TitleTextBlockStyle}" TextWrapping="Wrap">- search rooms by name</TextBlock>
+                                <TextBlock Style="{ThemeResource TitleTextBlockStyle}" TextWrapping="Wrap">- toast notifications (mention)</TextBlock>
+                                <TextBlock Style="{ThemeResource TitleTextBlockStyle}" TextWrapping="Wrap">- about page</TextBlock>-->
 
-                                <TextBlock Style="{ThemeResource SubheaderTextBlockStyle}">Version 1.2.6</TextBlock>
-                                <TextBlock Style="{ThemeResource TitleTextBlockStyle}" TextWrapping="Wrap">- Minor Bug Fixes</TextBlock>
-                            </StackPanel>
-                        </ScrollViewer>
-                    </DataTemplate>
-                </HubSection>
-            </Hub>
-        </Grid>
-    </Grid>
+                        <TextBlock Style="{ThemeResource SubheaderTextBlockStyle}">Version 1.2</TextBlock>
+                        <TextBlock Style="{ThemeResource TitleTextBlockStyle}" TextWrapping="Wrap">- copy/update/remove message (holding on a message)</TextBlock>
+                        <TextBlock Style="{ThemeResource TitleTextBlockStyle}" TextWrapping="Wrap">- toast notifications (unread messages)</TextBlock>
+                        <TextBlock Style="{ThemeResource TitleTextBlockStyle}" TextWrapping="Wrap">- toast notifications (realtime messages)</TextBlock>
+                        <TextBlock Style="{ThemeResource TitleTextBlockStyle}" TextWrapping="Wrap">- in-app notification as badge (unread count)</TextBlock>
+                        <TextBlock Style="{ThemeResource TitleTextBlockStyle}" TextWrapping="Wrap">- 'respond to' a chat user (tap on a chat avatar)</TextBlock>
+                        <TextBlock Style="{ThemeResource TitleTextBlockStyle}" TextWrapping="Wrap">- microphone enabled</TextBlock>
+
+                        <TextBlock Style="{ThemeResource SubheaderTextBlockStyle}">Version 1.1</TextBlock>
+                        <TextBlock Style="{ThemeResource TitleTextBlockStyle}" TextWrapping="Wrap">- main page (v1)</TextBlock>
+                        <TextBlock Style="{ThemeResource TitleTextBlockStyle}" TextWrapping="Wrap">- room page (v1)</TextBlock>
+                        <TextBlock Style="{ThemeResource TitleTextBlockStyle}" TextWrapping="Wrap">- push a message</TextBlock>
+                        <TextBlock Style="{ThemeResource TitleTextBlockStyle}" TextWrapping="Wrap">- add a link to this chat room (chat with us)</TextBlock>
+                    </StackPanel>
+                </ScrollViewer>
+            </DataTemplate>
+        </HubSection>
+    </Hub>
 </Page>
