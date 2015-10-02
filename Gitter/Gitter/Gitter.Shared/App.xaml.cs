@@ -131,7 +131,10 @@ namespace Gitter
         private async void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
+
+            // Save data from the Suspension Manager
             await SuspensionManager.SaveAsync();
+
             deferral.Complete();
         }
 

@@ -20,5 +20,7 @@ namespace Gitter.ViewModel.Abstract
         ICommand ToggleSearchCommand { get; }
 
         void SelectRoom(string roomName);
+        void OpenRealtimeStreams();
+        void CloseRealtimeStreams();
     }
 }

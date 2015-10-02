@@ -490,6 +490,18 @@ namespace Gitter.ViewModel.Concrete
                 SearchedRooms.Add(room);
         }
 
+        public void OpenRealtimeStreams()
+        {
+            foreach (var room in Rooms)
+                room.OpenRealtimeStream();
+        }
+
+        public void CloseRealtimeStreams()
+        {
+            foreach (var room in Rooms)
+                room.CloseRealtimeStream();
+        }
+
         #endregion
     }
 }
