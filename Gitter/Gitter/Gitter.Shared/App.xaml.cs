@@ -54,6 +54,8 @@ namespace Gitter
         public App()
         {
             InitializeComponent();
+
+            Resuming += OnResuming;
             Suspending += OnSuspending;
         }
 
@@ -124,6 +126,18 @@ namespace Gitter
 #endif
 
         /// <summary>
+        /// Called when the app is resumed
+        /// </summary>
+        /// <param name="sender">Source of the resuming request</param>
+        /// <param name="e">Details of the resuming request</param>
+        private void OnResuming(object sender, object e)
+        {
+            // Re-open all realtime streams
+            if (ServiceLocator.Current != null)
+                ViewModelLocator.Main.OpenRealtimeStreams();
+        }
+
+        /// <summary>
         /// Called when the app is suspended
         /// </summary>
         /// <param name="sender">Source of the suspension request</param>
@@ -134,6 +148,10 @@ namespace Gitter
 
             // Save data from the Suspension Manager
             await SuspensionManager.SaveAsync();
+
+            // Close all realtime streams
+            if (ServiceLocator.Current != null)
+                ViewModelLocator.Main.CloseRealtimeStreams();
 
             deferral.Complete();
         }

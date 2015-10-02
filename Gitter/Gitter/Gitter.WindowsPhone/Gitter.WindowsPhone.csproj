@@ -17,7 +17,7 @@
     <SynthesizeLinkMetadata>true</SynthesizeLinkMetadata>
     <NuGetPackageImportStamp>8d149546</NuGetPackageImportStamp>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
-    <AppxBundlePlatforms>arm</AppxBundlePlatforms>
+    <AppxBundlePlatforms>neutral</AppxBundlePlatforms>
     <AppxBundle>Always</AppxBundle>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">

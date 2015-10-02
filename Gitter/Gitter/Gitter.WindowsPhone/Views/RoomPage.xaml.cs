@@ -107,7 +107,7 @@ namespace Gitter.Views
         {
             _navigationHelper.OnNavigatedTo(e);
 
-            if (e.NavigationMode == NavigationMode.New || e.NavigationMode == NavigationMode.New)
+            if (e.NavigationMode == NavigationMode.New)
                 _eventService.ReadRoom.OnNext(ViewModelLocator.Main.SelectedRoom);
         }
 
