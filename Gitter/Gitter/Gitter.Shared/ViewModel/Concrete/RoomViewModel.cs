@@ -83,6 +83,7 @@ namespace Gitter.ViewModel.Concrete
         public ICommand RemoveMessageCommand { get; private set; }
         public ICommand CopyMessageCommand { get; private set; }
         public ICommand RespondToCommand { get; private set; }
+        public ICommand ViewProfileCommand { get; private set; }
         public ICommand TalkCommand { get; private set; }
         public ICommand RefreshCommand { get; private set; }
 
@@ -102,6 +103,7 @@ namespace Gitter.ViewModel.Concrete
             RemoveMessageCommand = new RelayCommand<IMessageViewModel>(RemoveMessage, CanRemoveMessage);
             CopyMessageCommand = new RelayCommand<IMessageViewModel>(CopyMessage);
             RespondToCommand = new RelayCommand<User>(RespondTo);
+            ViewProfileCommand = new RelayCommand<User>(ViewProfile);
             TalkCommand = new RelayCommand(Talk);
             RefreshCommand = new RelayCommand(Refresh);
 
@@ -317,6 +319,11 @@ namespace Gitter.ViewModel.Concrete
         private void RespondTo(User user)
         {
             TextMessage += $"@{user.Username} ";
+        }
+
+        private async void ViewProfile(User user)
+        {
+            await Windows.System.Launcher.LaunchUriAsync(new Uri(user.GitHubUrl));
         }
 
         private async void Talk()

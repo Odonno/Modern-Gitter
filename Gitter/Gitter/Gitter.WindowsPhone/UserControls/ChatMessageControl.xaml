@@ -36,6 +36,9 @@
 
             <FlyoutBase.AttachedFlyout>
                 <MenuFlyout>
+                    <MenuFlyoutItem x:Uid="/UIResources/viewGitHubProfile" Text="view GitHub profile" 
+                                    Command="{Binding Path=Main.SelectedRoom.ViewProfileCommand, Source={StaticResource Locator}}"
+                                    CommandParameter="{Binding Path=User}" />
                     <MenuFlyoutItem x:Uid="/UIResources/respondTo" Text="respond to" 
                                     Command="{Binding Path=Main.SelectedRoom.RespondToCommand, Source={StaticResource Locator}}"
                                     CommandParameter="{Binding Path=User}" />
