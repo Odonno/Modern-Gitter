@@ -12,6 +12,7 @@ using Gitter.ViewModel.Abstract;
 using GitterSharp.Model;
 using GitterSharp.Services;
 using Microsoft.Practices.ServiceLocation;
+using System.Threading.Tasks;
 #if WINDOWS_PHONE_APP
 using Windows.Media.SpeechRecognition;
 #endif
@@ -222,35 +223,8 @@ namespace Gitter.ViewModel.Concrete
                 Messages = new MessagesIncrementalLoadingCollection(Room.Id);
 
                 // Use the stream API to add new messages when they comes
-                _gitterApiService.GetRealtimeMessages(Room.Id).Subscribe(async message =>
-                {
-                    var messageVM = new MessageViewModel(message);
-
-                    // Do not add an existing messages to the chat
-                    if (Messages.Any(m => m.Id == messageVM.Id))
-                        return;
-
-                    // Add message to the room
-                    _eventService.PushMessage.OnNext(new Tuple<string, IMessageViewModel>(Room.Id, messageVM));
-
-                    // If the message was not read, update unread notifications when user is not reading (except for the current selected room)
-                    if (!messageVM.Read)
-                    {
-                        // Add in-app notification (count) when necesary
-                        if (ViewModelLocator.Main.SelectedRoom != this)
-                        {
-                            var dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
-                            await dispatcher.RunAsync(CoreDispatcherPriority.High, () => UnreadMessagesCount++);
-                        }
-
-                        // Send notification (new message)
-                        if (!Room.DisabledNotifications && ViewModelLocator.Main.CurrentUser.Id != message.User.Id)
-                        {
-                            string id = $"{Room.Name}_message_{Room.Id}";
-                            _localNotificationService.SendNotification(Room.Name, message.Text, id);
-                        }
-                    }
-                });
+                _gitterApiService.GetRealtimeMessages(Room.Id)
+                    .Subscribe(async message => await NotifyNewMessageAsync(message));
             }
 
             // Update count of unread messages
@@ -352,6 +326,41 @@ namespace Gitter.ViewModel.Concrete
 
             App.TelemetryClient.TrackEvent("RefreshRoom",
                 new Dictionary<string, string> { { "Room", Room.Name } });
+        }
+
+        #endregion
+
+
+        #region Methods
+
+        private async Task NotifyNewMessageAsync(Message message)
+        {
+            var messageVM = new MessageViewModel(message);
+
+            // Do not add an existing messages to the chat
+            if (Messages.Any(m => m.Id == messageVM.Id))
+                return;
+
+            // Add message to the room
+            _eventService.PushMessage.OnNext(new Tuple<string, IMessageViewModel>(Room.Id, messageVM));
+
+            // If the message was not read, update unread notifications when user is not reading (except for the current selected room)
+            if (!messageVM.Read)
+            {
+                // Add in-app notification (unread count)
+                if (ViewModelLocator.Main.SelectedRoom != this)
+                {
+                    var dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
+                    await dispatcher.RunAsync(CoreDispatcherPriority.High, () => UnreadMessagesCount++);
+                }
+
+                // Send notification (new message)
+                if (!Room.DisabledNotifications && ViewModelLocator.Main.CurrentUser.Id != message.User.Id)
+                {
+                    string id = $"{Room.Name}_message_{Room.Id}";
+                    _localNotificationService.SendNotification(Room.Name, message.Text, id);
+                }
+            }
         }
 
         #endregion
