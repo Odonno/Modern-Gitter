@@ -153,4 +153,7 @@
   <data name="typeMessageHere.PlaceholderText" xml:space="preserve">
     <value>type your message here</value>
   </data>
+  <data name="viewGitHubProfile.Text" xml:space="preserve">
+    <value>view GitHub profile</value>
+  </data>
 </root>
