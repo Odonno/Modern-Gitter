@@ -245,7 +245,10 @@ namespace Gitter.ViewModel.Concrete
 
                         // Send notification (new message)
                         if (!Room.DisabledNotifications && ViewModelLocator.Main.CurrentUser.Id != message.User.Id)
-                            _localNotificationService.SendNotification(Room.Name, message.Text, Room.Name);
+                        {
+                            string id = $"{Room.Name}_message_{Room.Id}";
+                            _localNotificationService.SendNotification(Room.Name, message.Text, id);
+                        }
                     }
                 });
             }

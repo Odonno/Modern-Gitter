@@ -14,7 +14,6 @@ using Gitter.Services.Abstract;
 using GitterSharp.Model;
 using GitterSharp.Services;
 using ReactiveUI;
-using Gitter.HtmlToXaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 using Gitter.Configuration;
