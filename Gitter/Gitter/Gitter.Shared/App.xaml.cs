@@ -23,6 +23,8 @@ using Newtonsoft.Json;
 using Gitter.Views;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.Practices.ServiceLocation;
+using Gitter.ViewModel;
 #if WINDOWS_PHONE_APP
 using GitHub.Services;
 #endif
@@ -51,7 +53,7 @@ namespace Gitter
         public static TelemetryClient TelemetryClient;
 
         /// <summary>
-        /// Selected Room Name when the app is launched (from Toast Notification)
+        /// Selected Room Name when the app is launched (from toast notification)
         /// </summary>
         public static string RoomName;
 
@@ -95,6 +97,17 @@ namespace Gitter
 
             // Ensure the current window is active
             Window.Current.Activate();
+
+            // Execute Toast Notification when the app is already launched
+            if (ServiceLocator.Current != null)
+            {
+                // Select room if there is a value in the app launcher
+                if (!string.IsNullOrWhiteSpace(RoomName))
+                {
+                    ViewModelLocator.Main.SelectRoom(RoomName);
+                    RoomName = string.Empty;
+                }
+            }
         }
 
         private Frame CreateRootFrame()
