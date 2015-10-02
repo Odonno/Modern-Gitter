@@ -9,7 +9,6 @@ namespace Gitter.ViewModel.Abstract
         bool IsLoaded { get; set; }
         Room Room { get; }
         MessagesIncrementalLoadingCollection Messages { get; }
-        string GitHubUrl { get; }
         string TextMessage { get; set; }
         int UnreadMessagesCount { get; set; }
 

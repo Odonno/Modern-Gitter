@@ -54,7 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="GitterSharp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\gitter-api-pcl.0.2.4\lib\portable-netcore451+wpa81\GitterSharp.dll</HintPath>
+      <HintPath>..\packages\gitter-api-pcl.0.2.6\lib\portable-netcore451+wpa81\GitterSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

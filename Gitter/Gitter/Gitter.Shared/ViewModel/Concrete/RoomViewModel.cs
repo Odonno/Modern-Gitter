@@ -38,8 +38,6 @@ namespace Gitter.ViewModel.Concrete
 
         public MessagesIncrementalLoadingCollection Messages { get; }
 
-        public string GitHubUrl { get { return $"http://github.com{Room.Url}"; } }
-
         private string _textMessage;
         public string TextMessage
         {
