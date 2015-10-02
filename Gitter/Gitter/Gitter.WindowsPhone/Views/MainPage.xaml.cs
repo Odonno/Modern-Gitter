@@ -123,11 +123,7 @@ namespace Gitter
             }
 
             // Select room if there is a value in the app launcher
-            if (!string.IsNullOrWhiteSpace(App.RoomName))
-            {
-                ViewModelLocator.Main.SelectRoom(App.RoomName);
-                App.RoomName = string.Empty;
-            }
+            App.SelectRoom();
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)

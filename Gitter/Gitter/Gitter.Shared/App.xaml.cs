@@ -101,12 +101,7 @@ namespace Gitter
             // Execute Toast Notification when the app is already launched
             if (ServiceLocator.Current != null)
             {
-                // Select room if there is a value in the app launcher
-                if (!string.IsNullOrWhiteSpace(RoomName))
-                {
-                    ViewModelLocator.Main.SelectRoom(RoomName);
-                    RoomName = string.Empty;
-                }
+                SelectRoom();
             }
         }
 
@@ -211,6 +206,16 @@ namespace Gitter
                 rootFrame.ContentTransitions = _transitions ?? new TransitionCollection { new NavigationThemeTransition() };
         }
 #endif
+
+        public static void SelectRoom()
+        {
+            // Select room if there is a value in the app launcher
+            if (!string.IsNullOrWhiteSpace(RoomName))
+            {
+                ViewModelLocator.Main.SelectRoom(RoomName);
+                RoomName = string.Empty;
+            }
+        }
 
         #endregion
 
