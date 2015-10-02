@@ -159,25 +159,8 @@ namespace Gitter.ViewModel.Concrete
             RefreshCommand = new RelayCommand(Refresh, () => !IsRefreshing);
             ToggleSearchCommand = new RelayCommand<bool>(ToggleSearch);
 
-            // ViewModel properties
+            // Properties
             CurrentDateTime = DateTime.Now;
-
-            // Events
-            _eventService.ReadRoom
-                .Subscribe(room =>
-            {
-                HtmlToXaml.HtmlToXaml.RoomName = room.Room.Name;
-            });
-
-            HtmlToXaml.HtmlToXaml.ImageTapped += (sender, args) =>
-            {
-                var image = sender as Image;
-                var bitmapImage = image.Source as BitmapImage;
-
-                ViewModelLocator.FullImage.Source = bitmapImage.UriSource.OriginalString;
-                _navigationService.NavigateTo("FullImage");
-            };
-
 
             if (IsInDesignMode)
             {
@@ -272,6 +255,22 @@ namespace Gitter.ViewModel.Concrete
             else
             {
                 // Code runs "for real"
+
+                // Events
+                _eventService.ReadRoom
+                    .Subscribe(room =>
+                    {
+                        HtmlToXaml.HtmlToXaml.RoomName = room.Room.Name;
+                    });
+
+                HtmlToXaml.HtmlToXaml.ImageTapped += (sender, args) =>
+                {
+                    var image = sender as Image;
+                    var bitmapImage = image.Source as BitmapImage;
+
+                    ViewModelLocator.FullImage.Source = bitmapImage.UriSource.OriginalString;
+                    _navigationService.NavigateTo("FullImage");
+                };
 
                 // Retrieve access token to use in the app
                 string token = _passwordStorageService.Retrieve("token");
