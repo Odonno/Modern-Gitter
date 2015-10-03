@@ -84,10 +84,6 @@ namespace Gitter
 
             // Ensure the current window is active
             Window.Current.Activate();
-
-            // Execute Toast Notification when the app is already launched
-            if (ServiceLocator.Current != null)
-                SelectRoom();
         }
 
 #if WINDOWS_PHONE_APP
@@ -118,10 +114,6 @@ namespace Gitter
             }
 
             Window.Current.Activate();
-
-            // Execute Toast Notification when the app is already launched
-            if (ServiceLocator.Current != null)
-                SelectRoom();
         }
 #endif
 
@@ -226,19 +218,6 @@ namespace Gitter
                 };
         }
 #endif
-
-        /// <summary>
-        /// Navigate instantly to the selected room
-        /// </summary>
-        public static void SelectRoom()
-        {
-            // Select room if there is a value in the app launcher
-            if (!string.IsNullOrWhiteSpace(RoomName))
-            {
-                ViewModelLocator.Main.SelectRoom(RoomName);
-                RoomName = string.Empty;
-            }
-        }
 
         #endregion
 

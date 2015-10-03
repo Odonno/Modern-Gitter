@@ -22,6 +22,7 @@ using GitHub.Common;
 using Gitter.Services.Abstract;
 using Gitter.ViewModel;
 using Microsoft.Practices.ServiceLocation;
+using System.Threading.Tasks;
 
 namespace Gitter
 {
@@ -122,8 +123,15 @@ namespace Gitter
 #endif
             }
 
+            // Wait that MainPage is loaded to continue navigation
+            await Task.Delay(500);
+
             // Select room if there is a value in the app launcher
-            App.SelectRoom();
+            if (!string.IsNullOrWhiteSpace(App.RoomName))
+            {
+                ViewModelLocator.Main.SelectRoom(App.RoomName);
+                App.RoomName = string.Empty;
+            }
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
