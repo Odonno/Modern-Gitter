@@ -39,6 +39,7 @@
     <TargetPlatform Include="WindowsPhoneApp, Version=8.1" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\BaseNotificationService.cs" />
     <Compile Include="Abstract\IApplicationStorageService.cs" />
     <Compile Include="Abstract\IBackgroundTaskService.cs" />
     <Compile Include="Abstract\ILocalNotificationService.cs" />

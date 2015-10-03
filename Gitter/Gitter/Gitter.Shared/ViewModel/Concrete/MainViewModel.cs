@@ -310,6 +310,8 @@ namespace Gitter.ViewModel.Concrete
 #if WINDOWS_PHONE_APP
             // Go to dedicated room
             _navigationService.NavigateTo("Room");
+
+            _localNotificationService.ClearNotificationGroup(SelectedRoom.Room.Name);
 #endif
         }
 

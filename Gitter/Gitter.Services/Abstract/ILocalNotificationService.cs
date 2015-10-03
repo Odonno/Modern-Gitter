@@ -1,9 +1,11 @@
-﻿namespace Gitter.Services.Abstract
+﻿using System.Threading.Tasks;
+
+namespace Gitter.Services.Abstract
 {
     public interface ILocalNotificationService
     {
         void SendNotification(string title, string content, string id = null);
 
-        void ClearNotificationGroup(string id);
+        Task ClearNotificationGroup(string id);
     }
 }
