@@ -183,6 +183,14 @@ namespace Gitter
         /// <returns></returns>
         private async Task RestoreStatusAsync(ApplicationExecutionState previousExecutionState)
         {
+            if (previousExecutionState == ApplicationExecutionState.Running ||
+                previousExecutionState == ApplicationExecutionState.Suspended)
+            {
+                // Re-open all realtime streams
+                if (ServiceLocator.Current != null)
+                    ViewModelLocator.Main.OpenRealtimeStreams();
+            }
+
             // Do not repeat app initialization when the Window already has content
             if (previousExecutionState == ApplicationExecutionState.Terminated)
             {
