@@ -89,6 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Services\ContinuationManager.cs" />
+    <Compile Include="Services\WindowsPhoneNotificationService.cs" />
     <Compile Include="UserControls\ChatMessageControl.xaml.cs">
       <DependentUpon>ChatMessageControl.xaml</DependentUpon>
     </Compile>
