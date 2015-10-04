@@ -6,6 +6,6 @@ namespace Gitter.Services.Abstract
     {
         void SendNotification(string title, string content, string id = null);
 
-        Task ClearNotificationGroup(string id);
+        Task ClearNotificationGroupAsync(string id);
     }
 }

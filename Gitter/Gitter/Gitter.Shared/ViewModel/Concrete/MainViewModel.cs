@@ -311,7 +311,7 @@ namespace Gitter.ViewModel.Concrete
             // Go to dedicated room
             _navigationService.NavigateTo("Room");
 
-            _localNotificationService.ClearNotificationGroup(SelectedRoom.Room.Name);
+            _localNotificationService.ClearNotificationGroupAsync(SelectedRoom.Room.Name);
 #endif
         }
 
