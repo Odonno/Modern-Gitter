@@ -12,10 +12,9 @@ namespace Gitter.Services.Concrete
         {
             var notification = this.CreateToastNotification(title, content, id);
 
-#if WINDOWS_PHONE_APP
-            notification.Tag = Notifications.NotificationTag;
+            notification.Tag = NotificationConstants.Tag;
             notification.Group = group;
-#endif
+
             this.toastNotifier.Show(notification);
         }
 
@@ -24,7 +23,7 @@ namespace Gitter.Services.Concrete
             // So that action items are not cleared immediately when app is in the foreground, add a small delay before clearing them
             await Task.Delay(TimeSpan.FromSeconds(3));
 
-            ToastNotificationManager.History.Remove(Notifications.NotificationTag, id);
+            ToastNotificationManager.History.Remove(NotificationConstants.Tag, id);
         }
     }
 }
