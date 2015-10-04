@@ -12,7 +12,7 @@ namespace Gitter.Services.Concrete
             this.toastNotifier.Show(notification);
         }
 
-        public override Task ClearNotificationGroupAsync(string id)
+        public override Task ClearNotificationGroupAsync(string group)
         {
             throw new System.NotImplementedException();
         }

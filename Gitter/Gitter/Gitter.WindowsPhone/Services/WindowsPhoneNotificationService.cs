@@ -18,12 +18,12 @@ namespace Gitter.Services.Concrete
             this.toastNotifier.Show(notification);
         }
 
-        public override async Task ClearNotificationGroupAsync(string id)
+        public override async Task ClearNotificationGroupAsync(string group)
         {
             // So that action items are not cleared immediately when app is in the foreground, add a small delay before clearing them
             await Task.Delay(TimeSpan.FromSeconds(3));
 
-            ToastNotificationManager.History.Remove(NotificationConstants.Tag, id);
+            ToastNotificationManager.History.Remove(NotificationConstants.Tag, group);
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Gitter.Services.Abstract
 
         public abstract void SendNotification(string title, string content, string id = null, string group = null);
 
-        public abstract Task ClearNotificationGroupAsync(string id);
+        public abstract Task ClearNotificationGroupAsync(string group);
 
         protected ToastNotification CreateToastNotification(string title, string content, string id = null)
         {

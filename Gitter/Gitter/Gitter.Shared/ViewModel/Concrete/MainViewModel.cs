@@ -311,6 +311,8 @@ namespace Gitter.ViewModel.Concrete
             // Go to dedicated room
             _navigationService.NavigateTo("Room");
 
+            // @Odonno, I am no longer sure what you are going to put in here when calling to clear the notifications
+            // Can you let me know what you would be putting in here, as it will no longer be the id of the room
             _localNotificationService.ClearNotificationGroupAsync(SelectedRoom.Room.Name);
 #endif
         }
