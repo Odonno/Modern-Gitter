@@ -5,7 +5,7 @@ namespace Gitter.Services.Concrete
 {
     public class LocalNotificationService : BaseNotificationService, ILocalNotificationService
     {
-        public override void SendNotification(string title, string content, string id = null)
+        public override void SendNotification(string title, string content, string id = null, string group = null)
         {
             var notification = this.CreateToastNotification(title, content, id);
 

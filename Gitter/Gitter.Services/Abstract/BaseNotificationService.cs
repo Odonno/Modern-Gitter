@@ -8,7 +8,7 @@ namespace Gitter.Services.Abstract
     {
         protected ToastNotifier toastNotifier = ToastNotificationManager.CreateToastNotifier();
 
-        public abstract void SendNotification(string title, string content, string id = null);
+        public abstract void SendNotification(string title, string content, string id = null, string group = null);
 
         public abstract Task ClearNotificationGroupAsync(string id);
 

@@ -8,13 +8,13 @@ namespace Gitter.Services.Concrete
 {
     public class WindowsPhoneNotificationService : BaseNotificationService, ILocalNotificationService
     {
-        public override void SendNotification(string title, string content, string id = null)
+        public override void SendNotification(string title, string content, string id = null, string group = null)
         {
             var notification = this.CreateToastNotification(title, content, id);
 
 #if WINDOWS_PHONE_APP
             notification.Tag = Notifications.NotificationTag;
-            notification.Group = id;
+            notification.Group = group;
 #endif
             this.toastNotifier.Show(notification);
         }
