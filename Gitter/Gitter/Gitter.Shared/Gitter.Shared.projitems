@@ -45,11 +45,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\Concrete\ProgressIndicatorService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Concrete\RatingService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Concrete\SessionService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Abstract\IAboutViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Abstract\IFullImageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Abstract\IMessageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Abstract\IRoomViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Abstract\ILoginViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Abstract\IMainViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Concrete\AboutViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Concrete\FullImageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Concrete\MessageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Concrete\RoomViewModel.cs" />

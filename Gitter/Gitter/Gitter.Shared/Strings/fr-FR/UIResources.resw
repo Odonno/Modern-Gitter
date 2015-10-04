@@ -117,6 +117,21 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="about.Label" xml:space="preserve">
+    <value>à propos</value>
+  </data>
+  <data name="aboutTitle.Header" xml:space="preserve">
+    <value>à propos</value>
+  </data>
+  <data name="applicationDescription.Text" xml:space="preserve">
+    <value>A Gitter client application for Windows Phone 8</value>
+  </data>
+  <data name="applicationPublisher.Text" xml:space="preserve">
+    <value>David BOTTIAU</value>
+  </data>
+  <data name="applicationTitle.Text" xml:space="preserve">
+    <value>Modern Gitter</value>
+  </data>
   <data name="chatWithUs.Label" xml:space="preserve">
     <value>discuter avec nous</value>
   </data>
@@ -125,6 +140,12 @@
   </data>
   <data name="copy.Text" xml:space="preserve">
     <value>copier</value>
+  </data>
+  <data name="historyTitle.Header" xml:space="preserve">
+    <value>historique</value>
+  </data>
+  <data name="raiseIssue.Content" xml:space="preserve">
+    <value>Un bug ? Une suggestion ?</value>
   </data>
   <data name="refresh.Label" xml:space="preserve">
     <value>rafraîchir</value>
