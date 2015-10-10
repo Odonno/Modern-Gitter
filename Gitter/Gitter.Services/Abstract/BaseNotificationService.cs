@@ -1,24 +1,31 @@
-﻿using Windows.Data.Xml.Dom;
+﻿using System.Threading.Tasks;
+using Windows.Data.Xml.Dom;
 using Windows.UI.Notifications;
-using Gitter.Services.Abstract;
 
-namespace Gitter.Services.Concrete
+namespace Gitter.Services.Abstract
 {
-    public class LocalNotificationService : ILocalNotificationService
+    public abstract class BaseNotificationService : ILocalNotificationService
     {
-        public void SendNotification(string title, string content, string id = null)
+        #region Fields
+
+        protected ToastNotifier ToastNotifier = ToastNotificationManager.CreateToastNotifier();
+
+        #endregion
+
+
+        #region Methods
+
+        public void SendNotification(string title, string content, string id = null, string group = null)
         {
-            // Send any notification (Tile, Toast)
-            SendToastNotification(title, content, id);
+            var notification = CreateToastNotification(title, content, id);
+            ToastNotifier.Show(notification);
         }
 
+        public abstract Task ClearNotificationGroupAsync(string group);
 
-        private void SendToastNotification(string title, string content, string id = null)
+        protected virtual ToastNotification CreateToastNotification(string title, string content, string id = null, string group = null)
         {
-            // get toast notifier
-            var toastNotifier = ToastNotificationManager.CreateToastNotifier();
-
-            // create notification form
+            // Create notification form
             XmlDocument toastXml;
 
             if (string.IsNullOrWhiteSpace(title))
@@ -37,18 +44,17 @@ namespace Gitter.Services.Concrete
                 toastTextElements[1].AppendChild(toastXml.CreateTextNode(content));
             }
 
-            // add launch parameter
+            // Add launch parameter
             if (!string.IsNullOrWhiteSpace(id))
             {
                 IXmlNode toastNode = toastXml.SelectSingleNode("/toast");
                 ((XmlElement)toastNode).SetAttribute("launch", "{\"type\":\"toast\", \"id\":\"" + id + "\"}");
             }
 
-            // create the notification from the template before
-            var toastNotification = new ToastNotification(toastXml);
-
-            // show notif
-            toastNotifier.Show(toastNotification);
+            // Return the notification from the template
+            return new ToastNotification(toastXml);
         }
+
+        #endregion
     }
 }
