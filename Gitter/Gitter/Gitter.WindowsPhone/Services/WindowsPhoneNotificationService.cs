@@ -12,7 +12,8 @@ namespace Gitter.Services.Concrete
         {
             // So that action items are not cleared immediately when app is in the foreground,
             // add a small delay before clearing them
-            await Task.Delay(TimeSpan.FromSeconds(3));
+            var delay = TimeSpan.FromSeconds(NotificationConstants.RemoveNotificationDelay);
+            await Task.Delay(delay);
 
             ToastNotificationManager.History.Remove(NotificationConstants.Tag, group);
         }
