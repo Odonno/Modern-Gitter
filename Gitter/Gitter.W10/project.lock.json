@@ -11,7 +11,7 @@
           "lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {}
         }
       },
-      "gitter-api-pcl/0.2.6": {
+      "gitter-api-pcl/0.2.8": {
         "compile": {
           "lib/portable-netcore451+wpa81/GitterSharp.dll": {}
         },
@@ -1722,7 +1722,7 @@
           "lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {}
         }
       },
-      "gitter-api-pcl/0.2.6": {
+      "gitter-api-pcl/0.2.8": {
         "compile": {
           "lib/portable-netcore451+wpa81/GitterSharp.dll": {}
         },
@@ -3523,7 +3523,7 @@
           "lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {}
         }
       },
-      "gitter-api-pcl/0.2.6": {
+      "gitter-api-pcl/0.2.8": {
         "compile": {
           "lib/portable-netcore451+wpa81/GitterSharp.dll": {}
         },
@@ -5296,7 +5296,7 @@
           "lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {}
         }
       },
-      "gitter-api-pcl/0.2.6": {
+      "gitter-api-pcl/0.2.8": {
         "compile": {
           "lib/portable-netcore451+wpa81/GitterSharp.dll": {}
         },
@@ -7102,7 +7102,7 @@
           "lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {}
         }
       },
-      "gitter-api-pcl/0.2.6": {
+      "gitter-api-pcl/0.2.8": {
         "compile": {
           "lib/portable-netcore451+wpa81/GitterSharp.dll": {}
         },
@@ -8875,7 +8875,7 @@
           "lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {}
         }
       },
-      "gitter-api-pcl/0.2.6": {
+      "gitter-api-pcl/0.2.8": {
         "compile": {
           "lib/portable-netcore451+wpa81/GitterSharp.dll": {}
         },
@@ -10681,7 +10681,7 @@
           "lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {}
         }
       },
-      "gitter-api-pcl/0.2.6": {
+      "gitter-api-pcl/0.2.8": {
         "compile": {
           "lib/portable-netcore451+wpa81/GitterSharp.dll": {}
         },
@@ -12462,15 +12462,15 @@
         "package/services/metadata/core-properties/99be0c88b2fd41c8b07c42071005ee47.psmdcp"
       ]
     },
-    "gitter-api-pcl/0.2.6": {
-      "sha512": "FpgU+LCM0148WT/oQN8d9cs2ZUJIfJi1iS73YPUoopqyIJLXyfruISeVQkm4OSaZjZJU2hkyBwalPEmlLBw5UQ==",
+    "gitter-api-pcl/0.2.8": {
+      "sha512": "ot9tXlU2FvxrwgLvIIyo5fQNzSvvK4USEm7Ek23e72eRzSQpa3xkoREwF75fnU9CmiDFsoR8y05mbwHTzAa6mQ==",
       "type": "Package",
       "files": [
         "[Content_Types].xml",
         "_rels/.rels",
         "gitter-api-pcl.nuspec",
         "lib/portable-netcore451+wpa81/GitterSharp.dll",
-        "package/services/metadata/core-properties/acdd595b8e7843938a301ad0dbdd4849.psmdcp"
+        "package/services/metadata/core-properties/076a94478cf24c90a5bcff685ff9e831.psmdcp"
       ]
     },
     "HtmlAgilityPack/1.4.9": {
@@ -16445,7 +16445,7 @@
   },
   "projectFileDependencyGroups": {
     "": [
-      "gitter-api-pcl >= 0.2.6",
+      "gitter-api-pcl >= 0.2.8",
       "HtmlAgilityPack >= 1.4.9",
       "Microsoft.ApplicationInsights >= 1.0.0",
       "Microsoft.ApplicationInsights.PersistenceChannel >= 1.0.0",

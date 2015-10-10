@@ -106,11 +106,11 @@ namespace Gitter.Tasks
             string userId = _applicationStorageService.Retrieve(StorageConstants.UserId) as string;
             var unreadItems = await _gitterApiService.RetrieveUnreadChatMessagesAsync(userId, room.Id);
 
-            // TODO : Retrieve messages that contains mentions
-            var messages = new List<Message>();
-
-            foreach (var message in messages)
+            // Retrieve each message that contains mentions
+            foreach (string mention in unreadItems.Mentions)
             {
+                var message = await _gitterApiService.GetSingleRoomMessageAsync(room.Id, mention);
+
                 string id = $"{room.Name}_mention_{message.Id}";
                 if (!_applicationStorageService.Exists(id))
                 {
