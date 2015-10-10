@@ -22,7 +22,9 @@ namespace Gitter.Services.Concrete
             var notification = base.CreateToastNotification(title, content, id);
 
             notification.Tag = NotificationConstants.Tag;
-            notification.Group = group; // BUG : group could not be null
+
+            if (!string.IsNullOrWhiteSpace(group))
+                notification.Group = group;
 
             return notification;
         }
