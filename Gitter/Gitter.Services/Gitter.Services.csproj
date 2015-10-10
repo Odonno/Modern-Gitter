@@ -46,7 +46,6 @@
     <Compile Include="Abstract\IPasswordStorageService.cs" />
     <Compile Include="Abstract\IRatingService.cs" />
     <Compile Include="Concrete\ApplicationStorageService.cs" />
-    <Compile Include="Concrete\LocalNotificationService.cs" />
     <Compile Include="Concrete\PasswordStorageService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

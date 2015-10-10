@@ -4,17 +4,28 @@ using Windows.UI.Notifications;
 
 namespace Gitter.Services.Abstract
 {
-    public abstract class BaseNotificationService
+    public abstract class BaseNotificationService : ILocalNotificationService
     {
-        protected ToastNotifier toastNotifier = ToastNotificationManager.CreateToastNotifier();
+        #region Fields
 
-        public abstract void SendNotification(string title, string content, string id = null, string group = null);
+        protected ToastNotifier ToastNotifier = ToastNotificationManager.CreateToastNotifier();
+
+        #endregion
+
+
+        #region Methods
+
+        public void SendNotification(string title, string content, string id = null, string group = null)
+        {
+            var notification = CreateToastNotification(title, content, id);
+            ToastNotifier.Show(notification);
+        }
 
         public abstract Task ClearNotificationGroupAsync(string group);
 
-        protected ToastNotification CreateToastNotification(string title, string content, string id = null)
+        protected virtual ToastNotification CreateToastNotification(string title, string content, string id = null, string group = null)
         {
-            // create notification form
+            // Create notification form
             XmlDocument toastXml;
 
             if (string.IsNullOrWhiteSpace(title))
@@ -33,15 +44,17 @@ namespace Gitter.Services.Abstract
                 toastTextElements[1].AppendChild(toastXml.CreateTextNode(content));
             }
 
-            // add launch parameter
+            // Add launch parameter
             if (!string.IsNullOrWhiteSpace(id))
             {
                 IXmlNode toastNode = toastXml.SelectSingleNode("/toast");
                 ((XmlElement)toastNode).SetAttribute("launch", "{\"type\":\"toast\", \"id\":\"" + id + "\"}");
             }
 
-            // return the notification from the template before
+            // Return the notification from the template
             return new ToastNotification(toastXml);
         }
+
+        #endregion
     }
 }
