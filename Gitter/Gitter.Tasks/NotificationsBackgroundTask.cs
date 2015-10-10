@@ -95,7 +95,7 @@ namespace Gitter.Tasks
             {
                 // Show notifications (toast notifications)
                 string notificationContent = $"You have {room.UnreadItems} unread messages";
-                _localNotificationService.SendNotification(room.Name, notificationContent, id);
+                _localNotificationService.SendNotification(room.Name, notificationContent, id, room.Name);
                 _applicationStorageService.Save(id, room.UnreadItems);
             }
         }
@@ -116,7 +116,7 @@ namespace Gitter.Tasks
                 {
                     // Show notifications (toast notifications)
                     string notificationContent = $"{message.User.Username} mentioned you";
-                    _localNotificationService.SendNotification(room.Name, notificationContent, id);
+                    _localNotificationService.SendNotification(room.Name, notificationContent, id, room.Name);
                     _applicationStorageService.Save(id, room.UnreadMentions);
                 }
             }
