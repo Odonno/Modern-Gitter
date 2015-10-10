@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Gitter.Services
+namespace Gitter.Services.Concrete
 {
     public class WindowsNotificationService : BaseNotificationService
     {

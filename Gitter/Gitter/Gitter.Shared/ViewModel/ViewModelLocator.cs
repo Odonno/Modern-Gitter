@@ -65,7 +65,8 @@ namespace Gitter.ViewModel
             SimpleIoc.Default.Register<IPasswordStorageService, PasswordStorageService>();
 #if WINDOWS_PHONE_APP
             SimpleIoc.Default.Register<ILocalNotificationService, WindowsPhoneNotificationService>();
-#else
+#endif
+#if WINDOWS_APP
             SimpleIoc.Default.Register<ILocalNotificationService, WindowsNotificationService>();
 #endif
             SimpleIoc.Default.Register<IRatingService, RatingService>();
