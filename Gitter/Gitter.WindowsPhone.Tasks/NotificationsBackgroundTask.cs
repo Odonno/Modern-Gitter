@@ -6,7 +6,6 @@ using Gitter.Services.Concrete;
 using GitterSharp.Services;
 using GitterSharp.Model;
 using Gitter.Configuration;
-using System.Collections.Generic;
 
 namespace Gitter.Tasks
 {

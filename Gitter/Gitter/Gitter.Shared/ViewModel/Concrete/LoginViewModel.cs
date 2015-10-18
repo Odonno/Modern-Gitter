@@ -13,7 +13,7 @@ namespace Gitter.ViewModel.Concrete
     public sealed class LoginViewModel : ViewModelBase, ILoginViewModel
     {
         #region Services
-        
+
         private readonly INavigationService _navigationService;
         private readonly ISessionService _sessionService;
         private readonly IPasswordStorageService _passwordStorageService;
@@ -49,7 +49,7 @@ namespace Gitter.ViewModel.Concrete
         #endregion
 
 
-        #region Methods
+        #region Public Methods
 
         public async Task LoginAsync()
         {
@@ -62,19 +62,19 @@ namespace Gitter.ViewModel.Concrete
 
                 if (string.IsNullOrWhiteSpace(token))
                 {
-                    var auth = await _sessionService.LoginAsync();
+                    bool? auth = await _sessionService.LoginAsync();
 
 #if !WINDOWS_PHONE_APP
                     if (auth == null)
                         isToShowMessage = true;
 
                     if (auth != null && auth.Value)
-                        await FinalizeLoginAsync();
+                        LoginSuccess();
 #endif
                 }
                 else
                 {
-                    await FinalizeLoginAsync();
+                    LoginSuccess();
                 }
             }
             catch (Exception ex)
@@ -90,20 +90,24 @@ namespace Gitter.ViewModel.Concrete
             }
         }
 
-        private async Task FinalizeLoginAsync()
-        {
-            _navigationService.NavigateTo("Main");
-        }
-
-
 #if WINDOWS_PHONE_APP
         public async Task FinalizeAsync(WebAuthenticationBrokerContinuationEventArgs args)
         {
-            var result = await _sessionService.Finalize(args);
-            if (result)
-                await FinalizeLoginAsync();
+            bool loginSuccess = await _sessionService.FinalizeAsync(args);
+            if (loginSuccess)
+                LoginSuccess();
         }
 #endif
+
+        #endregion
+
+
+        #region Private Methods
+
+        private void LoginSuccess()
+        {
+            _navigationService.NavigateTo("Main");
+        }
 
         #endregion
     }
