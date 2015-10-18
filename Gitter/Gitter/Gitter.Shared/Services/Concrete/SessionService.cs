@@ -93,7 +93,7 @@ namespace Gitter.Services.Concrete
                 var code = GetCode(result.ResponseData);
                 var token = await GetToken(code);
 
-                _gitterApiService.TryAuthenticate(token);
+                _gitterApiService.SetToken(token);
 
                 // Save token in local storage
                 _passwordStorageService.Save("token", token);

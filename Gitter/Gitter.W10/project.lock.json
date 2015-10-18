@@ -11,12 +11,25 @@
           "lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {}
         }
       },
-      "gitter-api-pcl/0.2.8": {
+      "gitter-api-pcl/0.3.4": {
+        "dependencies": {
+          "Microsoft.Net.Http": "(, )"
+        },
         "compile": {
-          "lib/portable-netcore451+wpa81/GitterSharp.dll": {}
+          "lib/win81/GitterSharp.Configuration.dll": {},
+          "lib/win81/GitterSharp.Helpers.dll": {},
+          "lib/win81/GitterSharp.Model.dll": {},
+          "lib/win81/GitterSharp.Services.dll": {},
+          "lib/win81/GitterSharp.UniversalWindows.dll": {},
+          "lib/win81/GitterSharp.Windows81.dll": {}
         },
         "runtime": {
-          "lib/portable-netcore451+wpa81/GitterSharp.dll": {}
+          "lib/win81/GitterSharp.Configuration.dll": {},
+          "lib/win81/GitterSharp.Helpers.dll": {},
+          "lib/win81/GitterSharp.Model.dll": {},
+          "lib/win81/GitterSharp.Services.dll": {},
+          "lib/win81/GitterSharp.UniversalWindows.dll": {},
+          "lib/win81/GitterSharp.Windows81.dll": {}
         }
       },
       "HtmlAgilityPack/1.4.9": {
@@ -1722,12 +1735,25 @@
           "lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {}
         }
       },
-      "gitter-api-pcl/0.2.8": {
+      "gitter-api-pcl/0.3.4": {
+        "dependencies": {
+          "Microsoft.Net.Http": "(, )"
+        },
         "compile": {
-          "lib/portable-netcore451+wpa81/GitterSharp.dll": {}
+          "lib/win81/GitterSharp.Configuration.dll": {},
+          "lib/win81/GitterSharp.Helpers.dll": {},
+          "lib/win81/GitterSharp.Model.dll": {},
+          "lib/win81/GitterSharp.Services.dll": {},
+          "lib/win81/GitterSharp.UniversalWindows.dll": {},
+          "lib/win81/GitterSharp.Windows81.dll": {}
         },
         "runtime": {
-          "lib/portable-netcore451+wpa81/GitterSharp.dll": {}
+          "lib/win81/GitterSharp.Configuration.dll": {},
+          "lib/win81/GitterSharp.Helpers.dll": {},
+          "lib/win81/GitterSharp.Model.dll": {},
+          "lib/win81/GitterSharp.Services.dll": {},
+          "lib/win81/GitterSharp.UniversalWindows.dll": {},
+          "lib/win81/GitterSharp.Windows81.dll": {}
         }
       },
       "HtmlAgilityPack/1.4.9": {
@@ -3523,12 +3549,25 @@
           "lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {}
         }
       },
-      "gitter-api-pcl/0.2.8": {
+      "gitter-api-pcl/0.3.4": {
+        "dependencies": {
+          "Microsoft.Net.Http": "(, )"
+        },
         "compile": {
-          "lib/portable-netcore451+wpa81/GitterSharp.dll": {}
+          "lib/win81/GitterSharp.Configuration.dll": {},
+          "lib/win81/GitterSharp.Helpers.dll": {},
+          "lib/win81/GitterSharp.Model.dll": {},
+          "lib/win81/GitterSharp.Services.dll": {},
+          "lib/win81/GitterSharp.UniversalWindows.dll": {},
+          "lib/win81/GitterSharp.Windows81.dll": {}
         },
         "runtime": {
-          "lib/portable-netcore451+wpa81/GitterSharp.dll": {}
+          "lib/win81/GitterSharp.Configuration.dll": {},
+          "lib/win81/GitterSharp.Helpers.dll": {},
+          "lib/win81/GitterSharp.Model.dll": {},
+          "lib/win81/GitterSharp.Services.dll": {},
+          "lib/win81/GitterSharp.UniversalWindows.dll": {},
+          "lib/win81/GitterSharp.Windows81.dll": {}
         }
       },
       "HtmlAgilityPack/1.4.9": {
@@ -5296,12 +5335,25 @@
           "lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {}
         }
       },
-      "gitter-api-pcl/0.2.8": {
+      "gitter-api-pcl/0.3.4": {
+        "dependencies": {
+          "Microsoft.Net.Http": "(, )"
+        },
         "compile": {
-          "lib/portable-netcore451+wpa81/GitterSharp.dll": {}
+          "lib/win81/GitterSharp.Configuration.dll": {},
+          "lib/win81/GitterSharp.Helpers.dll": {},
+          "lib/win81/GitterSharp.Model.dll": {},
+          "lib/win81/GitterSharp.Services.dll": {},
+          "lib/win81/GitterSharp.UniversalWindows.dll": {},
+          "lib/win81/GitterSharp.Windows81.dll": {}
         },
         "runtime": {
-          "lib/portable-netcore451+wpa81/GitterSharp.dll": {}
+          "lib/win81/GitterSharp.Configuration.dll": {},
+          "lib/win81/GitterSharp.Helpers.dll": {},
+          "lib/win81/GitterSharp.Model.dll": {},
+          "lib/win81/GitterSharp.Services.dll": {},
+          "lib/win81/GitterSharp.UniversalWindows.dll": {},
+          "lib/win81/GitterSharp.Windows81.dll": {}
         }
       },
       "HtmlAgilityPack/1.4.9": {
@@ -7102,12 +7154,25 @@
           "lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {}
         }
       },
-      "gitter-api-pcl/0.2.8": {
+      "gitter-api-pcl/0.3.4": {
+        "dependencies": {
+          "Microsoft.Net.Http": "(, )"
+        },
         "compile": {
-          "lib/portable-netcore451+wpa81/GitterSharp.dll": {}
+          "lib/win81/GitterSharp.Configuration.dll": {},
+          "lib/win81/GitterSharp.Helpers.dll": {},
+          "lib/win81/GitterSharp.Model.dll": {},
+          "lib/win81/GitterSharp.Services.dll": {},
+          "lib/win81/GitterSharp.UniversalWindows.dll": {},
+          "lib/win81/GitterSharp.Windows81.dll": {}
         },
         "runtime": {
-          "lib/portable-netcore451+wpa81/GitterSharp.dll": {}
+          "lib/win81/GitterSharp.Configuration.dll": {},
+          "lib/win81/GitterSharp.Helpers.dll": {},
+          "lib/win81/GitterSharp.Model.dll": {},
+          "lib/win81/GitterSharp.Services.dll": {},
+          "lib/win81/GitterSharp.UniversalWindows.dll": {},
+          "lib/win81/GitterSharp.Windows81.dll": {}
         }
       },
       "HtmlAgilityPack/1.4.9": {
@@ -8875,12 +8940,25 @@
           "lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {}
         }
       },
-      "gitter-api-pcl/0.2.8": {
+      "gitter-api-pcl/0.3.4": {
+        "dependencies": {
+          "Microsoft.Net.Http": "(, )"
+        },
         "compile": {
-          "lib/portable-netcore451+wpa81/GitterSharp.dll": {}
+          "lib/win81/GitterSharp.Configuration.dll": {},
+          "lib/win81/GitterSharp.Helpers.dll": {},
+          "lib/win81/GitterSharp.Model.dll": {},
+          "lib/win81/GitterSharp.Services.dll": {},
+          "lib/win81/GitterSharp.UniversalWindows.dll": {},
+          "lib/win81/GitterSharp.Windows81.dll": {}
         },
         "runtime": {
-          "lib/portable-netcore451+wpa81/GitterSharp.dll": {}
+          "lib/win81/GitterSharp.Configuration.dll": {},
+          "lib/win81/GitterSharp.Helpers.dll": {},
+          "lib/win81/GitterSharp.Model.dll": {},
+          "lib/win81/GitterSharp.Services.dll": {},
+          "lib/win81/GitterSharp.UniversalWindows.dll": {},
+          "lib/win81/GitterSharp.Windows81.dll": {}
         }
       },
       "HtmlAgilityPack/1.4.9": {
@@ -10681,12 +10759,25 @@
           "lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {}
         }
       },
-      "gitter-api-pcl/0.2.8": {
+      "gitter-api-pcl/0.3.4": {
+        "dependencies": {
+          "Microsoft.Net.Http": "(, )"
+        },
         "compile": {
-          "lib/portable-netcore451+wpa81/GitterSharp.dll": {}
+          "lib/win81/GitterSharp.Configuration.dll": {},
+          "lib/win81/GitterSharp.Helpers.dll": {},
+          "lib/win81/GitterSharp.Model.dll": {},
+          "lib/win81/GitterSharp.Services.dll": {},
+          "lib/win81/GitterSharp.UniversalWindows.dll": {},
+          "lib/win81/GitterSharp.Windows81.dll": {}
         },
         "runtime": {
-          "lib/portable-netcore451+wpa81/GitterSharp.dll": {}
+          "lib/win81/GitterSharp.Configuration.dll": {},
+          "lib/win81/GitterSharp.Helpers.dll": {},
+          "lib/win81/GitterSharp.Model.dll": {},
+          "lib/win81/GitterSharp.Services.dll": {},
+          "lib/win81/GitterSharp.UniversalWindows.dll": {},
+          "lib/win81/GitterSharp.Windows81.dll": {}
         }
       },
       "HtmlAgilityPack/1.4.9": {
@@ -12462,15 +12553,41 @@
         "package/services/metadata/core-properties/99be0c88b2fd41c8b07c42071005ee47.psmdcp"
       ]
     },
-    "gitter-api-pcl/0.2.8": {
-      "sha512": "ot9tXlU2FvxrwgLvIIyo5fQNzSvvK4USEm7Ek23e72eRzSQpa3xkoREwF75fnU9CmiDFsoR8y05mbwHTzAa6mQ==",
+    "gitter-api-pcl/0.3.4": {
+      "sha512": "KprBmsnIoCV9KjEucw19gAnAdXB7OvpRka39Ehy0n89nTGBp/JdYTnMa33n4Ly8hNqqFLs90LZQ8E2CUhIi50Q==",
       "type": "Package",
       "files": [
         "[Content_Types].xml",
         "_rels/.rels",
         "gitter-api-pcl.nuspec",
-        "lib/portable-netcore451+wpa81/GitterSharp.dll",
-        "package/services/metadata/core-properties/076a94478cf24c90a5bcff685ff9e831.psmdcp"
+        "lib/monoandroid/GitterSharp.Android.dll",
+        "lib/monoandroid/GitterSharp.Configuration.dll",
+        "lib/monoandroid/GitterSharp.Helpers.dll",
+        "lib/monoandroid/GitterSharp.Model.dll",
+        "lib/monoandroid/GitterSharp.Services.dll",
+        "lib/net45/GitterSharp.Configuration.dll",
+        "lib/net45/GitterSharp.Helpers.dll",
+        "lib/net45/GitterSharp.Model.dll",
+        "lib/net45/GitterSharp.NetFramework.dll",
+        "lib/net45/GitterSharp.Services.dll",
+        "lib/win81/GitterSharp.Configuration.dll",
+        "lib/win81/GitterSharp.Helpers.dll",
+        "lib/win81/GitterSharp.Model.dll",
+        "lib/win81/GitterSharp.Services.dll",
+        "lib/win81/GitterSharp.UniversalWindows.dll",
+        "lib/win81/GitterSharp.Windows81.dll",
+        "lib/wpa81/GitterSharp.Configuration.dll",
+        "lib/wpa81/GitterSharp.Helpers.dll",
+        "lib/wpa81/GitterSharp.Model.dll",
+        "lib/wpa81/GitterSharp.Services.dll",
+        "lib/wpa81/GitterSharp.UniversalWindows.dll",
+        "lib/wpa81/GitterSharp.WindowsPhone81.dll",
+        "lib/xamarin.ios/GitterSharp.Configuration.dll",
+        "lib/xamarin.ios/GitterSharp.Helpers.dll",
+        "lib/xamarin.ios/GitterSharp.iOS.dll",
+        "lib/xamarin.ios/GitterSharp.Model.dll",
+        "lib/xamarin.ios/GitterSharp.Services.dll",
+        "package/services/metadata/core-properties/0fa4f716d44a460b990738bdd347faaa.psmdcp"
       ]
     },
     "HtmlAgilityPack/1.4.9": {
@@ -16445,7 +16562,7 @@
   },
   "projectFileDependencyGroups": {
     "": [
-      "gitter-api-pcl >= 0.2.8",
+      "gitter-api-pcl >= 0.3.4",
       "HtmlAgilityPack >= 1.4.9",
       "Microsoft.ApplicationInsights >= 1.0.0",
       "Microsoft.ApplicationInsights.PersistenceChannel >= 1.0.0",

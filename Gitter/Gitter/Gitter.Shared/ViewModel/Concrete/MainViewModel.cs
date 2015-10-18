@@ -276,7 +276,7 @@ namespace Gitter.ViewModel.Concrete
 
                 // Retrieve access token to use in the app
                 string token = _passwordStorageService.Retrieve("token");
-                _gitterApiService.TryAuthenticate(token);
+                _gitterApiService.SetToken(token);
 
                 // Refresh the main menu by loading rooms
                 Refresh();

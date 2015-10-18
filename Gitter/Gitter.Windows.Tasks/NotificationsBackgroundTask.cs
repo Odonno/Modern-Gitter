@@ -58,7 +58,7 @@ namespace Gitter.Tasks
                 string token = _passwordStorageService.Retrieve("token");
 
                 // You need to be authenticated first to get current notifications
-                _gitterApiService.TryAuthenticate(token);
+                _gitterApiService.SetToken(token);
 
                 // Retrieve rooms that user want notifications
                 var notifyableRooms = (await _gitterApiService.GetRoomsAsync()).Where(room => !room.DisabledNotifications);
