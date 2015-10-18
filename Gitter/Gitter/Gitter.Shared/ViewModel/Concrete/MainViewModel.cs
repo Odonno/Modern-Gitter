@@ -128,6 +128,7 @@ namespace Gitter.ViewModel.Concrete
 
         public ICommand SelectRoomCommand { get; }
         public ICommand ChatWithUsCommand { get; }
+        public ICommand GoToAboutPageCommand { get; }
         public ICommand RefreshCommand { get; }
         public ICommand ToggleSearchCommand { get; }
 
@@ -156,6 +157,7 @@ namespace Gitter.ViewModel.Concrete
             // Commands
             SelectRoomCommand = new RelayCommand<IRoomViewModel>(SelectRoom);
             ChatWithUsCommand = new RelayCommand(ChatWithUs, CanChatWithUs);
+            GoToAboutPageCommand = new RelayCommand(GoToAboutPage);
             RefreshCommand = new RelayCommand(Refresh, () => !IsRefreshing);
             ToggleSearchCommand = new RelayCommand<bool>(ToggleSearch);
 
@@ -274,7 +276,7 @@ namespace Gitter.ViewModel.Concrete
 
                 // Retrieve access token to use in the app
                 string token = _passwordStorageService.Retrieve("token");
-                _gitterApiService.TryAuthenticate(token);
+                _gitterApiService.SetToken(token);
 
                 // Refresh the main menu by loading rooms
                 Refresh();
@@ -347,6 +349,14 @@ namespace Gitter.ViewModel.Concrete
 
             // End async task
             await _progressIndicatorService.HideAsync();
+        }
+
+        private void GoToAboutPage()
+        {
+#if WINDOWS_PHONE_APP
+            // Go to about page
+            _navigationService.NavigateTo("About");
+#endif
         }
 
         private async void Refresh()

@@ -141,9 +141,9 @@
       <Project>{132ab989-3150-4647-bb25-51ea4a253a0b}</Project>
       <Name>Gitter.Services</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Gitter.Tasks\Gitter.Tasks.csproj">
-      <Project>{302b14ae-f1f5-4319-b414-eb01df848bf6}</Project>
-      <Name>Gitter.Tasks</Name>
+    <ProjectReference Include="..\Gitter.Windows.Tasks\Gitter.Windows.Tasks.csproj">
+      <Project>{ccebafb6-7785-4157-bfe8-2c800d28393a}</Project>
+      <Name>Gitter.Windows.Tasks</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -6,7 +6,6 @@ using Gitter.Services.Concrete;
 using GitterSharp.Services;
 using GitterSharp.Model;
 using Gitter.Configuration;
-using System.Collections.Generic;
 
 namespace Gitter.Tasks
 {
@@ -33,7 +32,7 @@ namespace Gitter.Tasks
 
         public NotificationsBackgroundTask()
         {
-            _localNotificationService = new LocalNotificationService();
+            _localNotificationService = new WindowsNotificationService();
             _gitterApiService = new GitterApiService();
             _passwordStorageService = new PasswordStorageService();
             _applicationStorageService = new ApplicationStorageService();
@@ -58,7 +57,7 @@ namespace Gitter.Tasks
                 string token = _passwordStorageService.Retrieve("token");
 
                 // You need to be authenticated first to get current notifications
-                _gitterApiService.TryAuthenticate(token);
+                _gitterApiService.SetToken(token);
 
                 // Retrieve rooms that user want notifications
                 var notifyableRooms = (await _gitterApiService.GetRoomsAsync()).Where(room => !room.DisabledNotifications);
@@ -106,11 +105,11 @@ namespace Gitter.Tasks
             string userId = _applicationStorageService.Retrieve(StorageConstants.UserId) as string;
             var unreadItems = await _gitterApiService.RetrieveUnreadChatMessagesAsync(userId, room.Id);
 
-            // TODO : Retrieve messages that contains mentions
-            var messages = new List<Message>();
-
-            foreach (var message in messages)
+            // Retrieve each message that contains mentions
+            foreach (string mention in unreadItems.Mentions)
             {
+                var message = await _gitterApiService.GetSingleRoomMessageAsync(room.Id, mention);
+
                 string id = $"{room.Name}_mention_{message.Id}";
                 if (!_applicationStorageService.Exists(id))
                 {

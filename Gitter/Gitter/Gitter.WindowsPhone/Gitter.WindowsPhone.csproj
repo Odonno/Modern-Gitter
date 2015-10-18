@@ -88,10 +88,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Services\ContinuationManager.cs" />
-    <Compile Include="Services\WindowsPhoneNotificationService.cs" />
     <Compile Include="UserControls\ChatMessageControl.xaml.cs">
       <DependentUpon>ChatMessageControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AboutPage.xaml.cs">
+      <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\FullImagePage.xaml.cs">
       <DependentUpon>FullImagePage.xaml</DependentUpon>
@@ -127,6 +128,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\AboutPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\FullImagePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -157,8 +162,28 @@
       <HintPath>..\..\packages\MvvmLightLibs.5.1.1.0\lib\wpa81\GalaSoft.MvvmLight.Platform.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="GitterSharp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\gitter-api-pcl.0.2.6\lib\portable-netcore451+wpa81\GitterSharp.dll</HintPath>
+    <Reference Include="GitterSharp.Configuration, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\gitter-api-pcl.0.3.4\lib\wpa81\GitterSharp.Configuration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GitterSharp.Helpers, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\gitter-api-pcl.0.3.4\lib\wpa81\GitterSharp.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GitterSharp.Model, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\gitter-api-pcl.0.3.4\lib\wpa81\GitterSharp.Model.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GitterSharp.Services, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\gitter-api-pcl.0.3.4\lib\wpa81\GitterSharp.Services.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GitterSharp.UniversalWindows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\gitter-api-pcl.0.3.4\lib\wpa81\GitterSharp.UniversalWindows.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GitterSharp.WindowsPhone81, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\gitter-api-pcl.0.3.4\lib\wpa81\GitterSharp.WindowsPhone81.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, processorArchitecture=MSIL">
@@ -231,9 +256,13 @@
       <Project>{132ab989-3150-4647-bb25-51ea4a253a0b}</Project>
       <Name>Gitter.Services</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Gitter.Tasks\Gitter.Tasks.csproj">
-      <Project>{302b14ae-f1f5-4319-b414-eb01df848bf6}</Project>
-      <Name>Gitter.Tasks</Name>
+    <ProjectReference Include="..\..\Gitter.WindowsPhone.Services\Gitter.WindowsPhone.Services.csproj">
+      <Project>{05fc5c32-cd1e-4dc2-ab7c-638a15476acd}</Project>
+      <Name>Gitter.WindowsPhone.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Gitter.WindowsPhone.Tasks\Gitter.WindowsPhone.Tasks.csproj">
+      <Project>{032a6066-f5dd-46e2-8970-680e14878d81}</Project>
+      <Name>Gitter.WindowsPhone.Tasks</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
