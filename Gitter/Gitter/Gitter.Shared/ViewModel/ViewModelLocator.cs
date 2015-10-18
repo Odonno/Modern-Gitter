@@ -66,7 +66,7 @@ namespace Gitter.ViewModel
 #if WINDOWS_PHONE_APP
             SimpleIoc.Default.Register<ILocalNotificationService, WindowsPhoneNotificationService>();
 #endif
-#if WINDOWS_APP
+#if WINDOWS_APP || WINDOWS_UWP
             SimpleIoc.Default.Register<ILocalNotificationService, WindowsNotificationService>();
 #endif
             SimpleIoc.Default.Register<IRatingService, RatingService>();
