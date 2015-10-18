@@ -88,7 +88,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Services\ContinuationManager.cs" />
     <Compile Include="UserControls\ChatMessageControl.xaml.cs">
       <DependentUpon>ChatMessageControl.xaml</DependentUpon>
     </Compile>
@@ -256,6 +255,10 @@
     <ProjectReference Include="..\..\Gitter.Services\Gitter.Services.csproj">
       <Project>{132ab989-3150-4647-bb25-51ea4a253a0b}</Project>
       <Name>Gitter.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Gitter.WindowsPhone.Services\Gitter.WindowsPhone.Services.csproj">
+      <Project>{05fc5c32-cd1e-4dc2-ab7c-638a15476acd}</Project>
+      <Name>Gitter.WindowsPhone.Services</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Gitter.WindowsPhone.Tasks\Gitter.WindowsPhone.Tasks.csproj">
       <Project>{032a6066-f5dd-46e2-8970-680e14878d81}</Project>

@@ -32,7 +32,7 @@ namespace Gitter.Tasks
 
         public NotificationsBackgroundTask()
         {
-            _localNotificationService = new LocalNotificationService();
+            _localNotificationService = new WindowsNotificationService();
             _gitterApiService = new GitterApiService();
             _passwordStorageService = new PasswordStorageService();
             _applicationStorageService = new ApplicationStorageService();
@@ -94,7 +94,7 @@ namespace Gitter.Tasks
             {
                 // Show notifications (toast notifications)
                 string notificationContent = $"You have {room.UnreadItems} unread messages";
-                _localNotificationService.SendNotification(room.Name, notificationContent, id);
+                _localNotificationService.SendNotification(room.Name, notificationContent, id, room.Name);
                 _applicationStorageService.Save(id, room.UnreadItems);
             }
         }
@@ -115,7 +115,7 @@ namespace Gitter.Tasks
                 {
                     // Show notifications (toast notifications)
                     string notificationContent = $"{message.User.Username} mentioned you";
-                    _localNotificationService.SendNotification(room.Name, notificationContent, id);
+                    _localNotificationService.SendNotification(room.Name, notificationContent, id, room.Name);
                     _applicationStorageService.Save(id, room.UnreadMentions);
                 }
             }

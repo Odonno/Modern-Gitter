@@ -63,7 +63,12 @@ namespace Gitter.ViewModel
             SimpleIoc.Default.Register<ISessionService, SessionService>();
             SimpleIoc.Default.Register<IApplicationStorageService, ApplicationStorageService>();
             SimpleIoc.Default.Register<IPasswordStorageService, PasswordStorageService>();
-            SimpleIoc.Default.Register<ILocalNotificationService, LocalNotificationService>();
+#if WINDOWS_PHONE_APP
+            SimpleIoc.Default.Register<ILocalNotificationService, WindowsPhoneNotificationService>();
+#endif
+#if WINDOWS_APP
+            SimpleIoc.Default.Register<ILocalNotificationService, WindowsNotificationService>();
+#endif
             SimpleIoc.Default.Register<IRatingService, RatingService>();
             SimpleIoc.Default.Register<IBackgroundTaskService, BackgroundTaskService>();
             SimpleIoc.Default.Register<IProgressIndicatorService, ProgressIndicatorService>();

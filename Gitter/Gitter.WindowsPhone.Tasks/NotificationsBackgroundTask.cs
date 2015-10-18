@@ -32,7 +32,7 @@ namespace Gitter.Tasks
 
         public NotificationsBackgroundTask()
         {
-            _localNotificationService = new LocalNotificationService();
+            _localNotificationService = new WindowsPhoneNotificationService();
             _gitterApiService = new GitterApiService();
             _passwordStorageService = new PasswordStorageService();
             _applicationStorageService = new ApplicationStorageService();
