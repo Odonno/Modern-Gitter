@@ -114,8 +114,13 @@ namespace Gitter
                 // Remove Splashscreen
                 Frame.BackStack.Remove(Frame.BackStack.LastOrDefault());
 
+                var backgroundTaskService = ServiceLocator.Current.GetInstance<IBackgroundTaskService>();
+
+                // Unregister background tasks
+                backgroundTaskService.UnregisterTasks("NotificationsBackgroundTask");
+
                 // Register background tasks
-                await ServiceLocator.Current.GetInstance<IBackgroundTaskService>().RegisterTasksAsync();
+                await backgroundTaskService.RegisterTasksAsync();
 
 #if !DEBUG
                 // Ask user to rate the app

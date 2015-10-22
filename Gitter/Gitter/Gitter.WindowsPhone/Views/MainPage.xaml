@@ -34,7 +34,8 @@
         </StackPanel>
 
         <!-- Content - List of Rooms -->
-        <ListView Grid.Row="1" ItemsSource="{Binding SearchedRooms}" Margin="12 0">
+        <ListView Grid.Row="1" ItemsSource="{Binding SearchedRooms}" 
+                  Margin="12 0">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Button Style="{StaticResource TextBlockButtonStyle}"

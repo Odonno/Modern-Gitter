@@ -9,26 +9,58 @@ namespace Gitter.Services.Concrete
 {
     public class BackgroundTaskService : IBackgroundTaskService
     {
+        #region Properties
+
         public Dictionary<string, string> Tasks
         {
             get
             {
+#if WINDOWS_APP || WINDOWS_UWP
                 return new Dictionary<string, string>
                 {
-                    {"NotificationsBackgroundTask", "Gitter.Tasks"}
+                    {"NotificationsBackgroundTask", "Gitter.Windows.Tasks"}
                 };
+#endif
+#if WINDOWS_PHONE_APP
+                return new Dictionary<string, string>
+                {
+                    {"NotificationsBackgroundTask", "Gitter.WindowsPhone.Tasks"}
+                };
+#endif
             }
         }
 
+        #endregion
+
+
+        #region Methods
 
         public async Task RegisterTasksAsync()
         {
             foreach (var kvTask in Tasks)
             {
+                // Do not register again if this task already exists
                 if (BackgroundTaskRegistration.AllTasks.Any(task => task.Value.Name == kvTask.Key))
-                    break;
+                    continue;
 
+                // Register the task
                 await RegisterTaskAsync(kvTask.Key, kvTask.Value);
+            }
+        }
+
+        public void UnregisterTasks(params string[] taskNames)
+        {
+            foreach (string taskName in taskNames)
+            {
+                // Retrieve background tasks already running
+                var existingBackgroundTasks = BackgroundTaskRegistration.AllTasks
+                    .Where(task => task.Value.Name == taskName);
+
+                // Unregister every task that run in background currently
+                foreach (var existingBackgroundTask in existingBackgroundTasks)
+                {
+                    existingBackgroundTask.Value.Unregister(true);
+                }
             }
         }
 
@@ -54,5 +86,7 @@ namespace Gitter.Services.Concrete
                 taskBuilder.Register();
             }
         }
+
+        #endregion
     }
 }

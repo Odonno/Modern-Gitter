@@ -7,7 +7,7 @@ using GitterSharp.Services;
 using GitterSharp.Model;
 using Gitter.Configuration;
 
-namespace Gitter.Tasks
+namespace Gitter.WindowsPhone.Tasks
 {
     public sealed class NotificationsBackgroundTask : IBackgroundTask
     {

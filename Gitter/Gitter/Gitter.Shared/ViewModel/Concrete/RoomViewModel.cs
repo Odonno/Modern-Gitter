@@ -304,7 +304,9 @@ namespace Gitter.ViewModel.Concrete
 
         private async void ViewProfile(User user)
         {
+#if WINDOWS_PHONE_APP
             await Windows.System.Launcher.LaunchUriAsync(new Uri(user.GitHubUrl));
+#endif
         }
 
         private async void Talk()
@@ -332,10 +334,10 @@ namespace Gitter.ViewModel.Concrete
                 new Dictionary<string, string> { { "Room", Room.Name } });
         }
 
-        #endregion
+#endregion
 
 
-        #region Methods
+#region Methods
 
         public void OpenRealtimeStream()
         {
@@ -378,6 +380,6 @@ namespace Gitter.ViewModel.Concrete
             }
         }
 
-        #endregion
+#endregion
     }
 }

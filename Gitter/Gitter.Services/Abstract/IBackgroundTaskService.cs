@@ -8,5 +8,6 @@ namespace Gitter.Services.Abstract
         Dictionary<string, string> Tasks { get; }
 
         Task RegisterTasksAsync();
+        void UnregisterTasks(params string[] taskNames);
     }
 }
