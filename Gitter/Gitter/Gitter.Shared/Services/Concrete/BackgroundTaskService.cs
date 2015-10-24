@@ -16,17 +16,16 @@ namespace Gitter.Services.Concrete
             get
             {
 #if WINDOWS_APP || WINDOWS_UWP
-                return new Dictionary<string, string>
-                {
-                    {"NotificationsBackgroundTask", "Gitter.Windows.Tasks"}
-                };
+                string @namespace = "Gitter.Windows.Tasks";
 #endif
 #if WINDOWS_PHONE_APP
+                string @namespace = "Gitter.WindowsPhone.Tasks";
+#endif
                 return new Dictionary<string, string>
                 {
-                    {"NotificationsBackgroundTask", "Gitter.WindowsPhone.Tasks"}
+                    {"UnreadItemsNotificationsBackgroundTask", @namespace},
+                    {"UnreadMentionsNotificationsBackgroundTask", @namespace}
                 };
-#endif
             }
         }
 

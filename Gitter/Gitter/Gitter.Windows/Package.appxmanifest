@@ -20,7 +20,12 @@
         <m2:SplashScreen Image="Assets\SplashScreen.png" />
       </m2:VisualElements>
       <Extensions>
-        <Extension Category="windows.backgroundTasks" EntryPoint="Gitter.Windows.Tasks.NotificationsBackgroundTask">
+        <Extension Category="windows.backgroundTasks" EntryPoint="Gitter.WindowsPhone.Tasks.UnreadMentionsNotificationsBackgroundTask">
+          <BackgroundTasks>
+            <Task Type="timer" />
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="Gitter.Windows.Tasks.UnreadItemsNotificationsBackgroundTask">
           <BackgroundTasks>
             <Task Type="timer" />
           </BackgroundTasks>
