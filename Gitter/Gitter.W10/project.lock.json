@@ -11,6 +11,17 @@
           "lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {}
         }
       },
+      "gitter-api-auth/0.1.1": {
+        "dependencies": {
+          "gitter-api-pcl": "(, )"
+        },
+        "compile": {
+          "lib/win81/GitterSharp.Windows81.dll": {}
+        },
+        "runtime": {
+          "lib/win81/GitterSharp.Windows81.dll": {}
+        }
+      },
       "gitter-api-pcl/0.3.6": {
         "dependencies": {
           "Microsoft.Net.Http": "(, )"
@@ -1731,6 +1742,17 @@
         },
         "runtime": {
           "lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {}
+        }
+      },
+      "gitter-api-auth/0.1.1": {
+        "dependencies": {
+          "gitter-api-pcl": "(, )"
+        },
+        "compile": {
+          "lib/win81/GitterSharp.Windows81.dll": {}
+        },
+        "runtime": {
+          "lib/win81/GitterSharp.Windows81.dll": {}
         }
       },
       "gitter-api-pcl/0.3.6": {
@@ -3545,6 +3567,17 @@
           "lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {}
         }
       },
+      "gitter-api-auth/0.1.1": {
+        "dependencies": {
+          "gitter-api-pcl": "(, )"
+        },
+        "compile": {
+          "lib/win81/GitterSharp.Windows81.dll": {}
+        },
+        "runtime": {
+          "lib/win81/GitterSharp.Windows81.dll": {}
+        }
+      },
       "gitter-api-pcl/0.3.6": {
         "dependencies": {
           "Microsoft.Net.Http": "(, )"
@@ -5327,6 +5360,17 @@
         },
         "runtime": {
           "lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {}
+        }
+      },
+      "gitter-api-auth/0.1.1": {
+        "dependencies": {
+          "gitter-api-pcl": "(, )"
+        },
+        "compile": {
+          "lib/win81/GitterSharp.Windows81.dll": {}
+        },
+        "runtime": {
+          "lib/win81/GitterSharp.Windows81.dll": {}
         }
       },
       "gitter-api-pcl/0.3.6": {
@@ -7146,6 +7190,17 @@
           "lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {}
         }
       },
+      "gitter-api-auth/0.1.1": {
+        "dependencies": {
+          "gitter-api-pcl": "(, )"
+        },
+        "compile": {
+          "lib/win81/GitterSharp.Windows81.dll": {}
+        },
+        "runtime": {
+          "lib/win81/GitterSharp.Windows81.dll": {}
+        }
+      },
       "gitter-api-pcl/0.3.6": {
         "dependencies": {
           "Microsoft.Net.Http": "(, )"
@@ -8928,6 +8983,17 @@
         },
         "runtime": {
           "lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {}
+        }
+      },
+      "gitter-api-auth/0.1.1": {
+        "dependencies": {
+          "gitter-api-pcl": "(, )"
+        },
+        "compile": {
+          "lib/win81/GitterSharp.Windows81.dll": {}
+        },
+        "runtime": {
+          "lib/win81/GitterSharp.Windows81.dll": {}
         }
       },
       "gitter-api-pcl/0.3.6": {
@@ -10747,6 +10813,17 @@
           "lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {}
         }
       },
+      "gitter-api-auth/0.1.1": {
+        "dependencies": {
+          "gitter-api-pcl": "(, )"
+        },
+        "compile": {
+          "lib/win81/GitterSharp.Windows81.dll": {}
+        },
+        "runtime": {
+          "lib/win81/GitterSharp.Windows81.dll": {}
+        }
+      },
       "gitter-api-pcl/0.3.6": {
         "dependencies": {
           "Microsoft.Net.Http": "(, )"
@@ -12537,6 +12614,18 @@
         "lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.XML",
         "package/services/metadata/core-properties/8a82b9e5a63a439481bfa8d4ec335002.psmdcp",
         "package/services/metadata/core-properties/99be0c88b2fd41c8b07c42071005ee47.psmdcp"
+      ]
+    },
+    "gitter-api-auth/0.1.1": {
+      "sha512": "GtwiK7cLJwuPQHyg0DLIPYCgVeUYePiToxbwxzR65R6rH3blr2kJsHicu4nU24xkL2GPc3JcfbCpE7jn0FM9+g==",
+      "type": "Package",
+      "files": [
+        "[Content_Types].xml",
+        "_rels/.rels",
+        "gitter-api-auth.nuspec",
+        "lib/win81/GitterSharp.Windows81.dll",
+        "lib/wpa81/GitterSharp.WindowsPhone81.dll",
+        "package/services/metadata/core-properties/e51e9f74779142b49bb1b5591eb0306f.psmdcp"
       ]
     },
     "gitter-api-pcl/0.3.6": {
@@ -16541,6 +16630,7 @@
   },
   "projectFileDependencyGroups": {
     "": [
+      "gitter-api-auth >= 0.1.1",
       "gitter-api-pcl >= 0.3.6",
       "HtmlAgilityPack >= 1.4.9",
       "Microsoft.ApplicationInsights >= 1.0.0",

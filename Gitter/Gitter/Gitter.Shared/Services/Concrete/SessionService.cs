@@ -12,6 +12,7 @@ namespace Gitter.Services.Concrete
     {
         #region Services
 
+        private readonly AuthenticationService _authenticationService;
         private readonly IGitterApiService _gitterApiService;
         private readonly IPasswordStorageService _passwordStorageService;
 
@@ -20,8 +21,11 @@ namespace Gitter.Services.Concrete
 
         #region Constructor
 
-        public SessionService(IGitterApiService gitterApiService, IPasswordStorageService passwordStorageService)
+        public SessionService(AuthenticationService authenticationService,
+            IGitterApiService gitterApiService,
+            IPasswordStorageService passwordStorageService)
         {
+            _authenticationService = authenticationService;
             _gitterApiService = gitterApiService;
             _passwordStorageService = passwordStorageService;
         }
@@ -29,12 +33,18 @@ namespace Gitter.Services.Concrete
         #endregion
 
 
-        #region Public Authentication Methods
+        #region Methods
 
         public async Task<bool?> LoginAsync()
         {
-            return null;
-            //return await _gitterApiService.LoginAsync(Credentials.OauthKey, Credentials.OauthSecret);
+            bool? result = await _authenticationService.LoginAsync(Credentials.OauthKey, Credentials.OauthSecret);
+
+#if WINDOWS_APP || WINDOWS_UWP
+            string token = await _authenticationService.RetrieveTokenAsync();
+            result = SetToken(token);
+#endif
+
+            return result;
         }
 
         public void Logout()
@@ -44,9 +54,13 @@ namespace Gitter.Services.Concrete
 #if WINDOWS_PHONE_APP
         public async Task<bool> FinalizeAsync(WebAuthenticationBrokerContinuationEventArgs args)
         {
-            return false;
-            /*string token = await AuthenticationService.RetrieveTokenAsync(args);
+            string token = await _authenticationService.RetrieveTokenAsync(args);
+            return SetToken(token);
+        }
+#endif
 
+        private bool SetToken(string token)
+        {
             if (!string.IsNullOrWhiteSpace(token))
             {
                 // Set token to use it next on API
@@ -58,9 +72,8 @@ namespace Gitter.Services.Concrete
                 return true;
             }
 
-            return false;*/
+            return false;
         }
-#endif
 
         #endregion
     }
