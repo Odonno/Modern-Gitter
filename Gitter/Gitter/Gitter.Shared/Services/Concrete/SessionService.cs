@@ -33,7 +33,8 @@ namespace Gitter.Services.Concrete
 
         public async Task<bool?> LoginAsync()
         {
-            return await _gitterApiService.LoginAsync(Credentials.OauthKey, Credentials.OauthSecret);
+            return null;
+            //return await _gitterApiService.LoginAsync(Credentials.OauthKey, Credentials.OauthSecret);
         }
 
         public void Logout()
@@ -43,7 +44,8 @@ namespace Gitter.Services.Concrete
 #if WINDOWS_PHONE_APP
         public async Task<bool> FinalizeAsync(WebAuthenticationBrokerContinuationEventArgs args)
         {
-            string token = await AuthenticationService.RetrieveTokenAsync(args);
+            return false;
+            /*string token = await AuthenticationService.RetrieveTokenAsync(args);
 
             if (!string.IsNullOrWhiteSpace(token))
             {
@@ -56,7 +58,7 @@ namespace Gitter.Services.Concrete
                 return true;
             }
 
-            return false;
+            return false;*/
         }
 #endif
 

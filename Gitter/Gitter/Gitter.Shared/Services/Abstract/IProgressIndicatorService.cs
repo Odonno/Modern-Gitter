@@ -1,5 +1,7 @@
 ﻿using System.Threading.Tasks;
+#if WINDOWS_PHONE_APP
 using Windows.UI.ViewManagement;
+#endif
 
 namespace Gitter.Services.Abstract
 {

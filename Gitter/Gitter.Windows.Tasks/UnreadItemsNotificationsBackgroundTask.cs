@@ -1,14 +1,14 @@
-﻿using System.Linq;
+﻿using Gitter.Services.Abstract;
+using Gitter.Services.Concrete;
+using GitterSharp.Model;
+using GitterSharp.Services;
+using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Background;
-using Gitter.Services.Abstract;
-using Gitter.Services.Concrete;
-using GitterSharp.Services;
-using GitterSharp.Model;
 
 namespace Gitter.Windows.Tasks
 {
-    public abstract class NotificationsBackgroundTask : IBackgroundTask
+    public sealed class UnreadItemsNotificationsBackgroundTask : IBackgroundTask
     {
         #region Fields
 
@@ -19,17 +19,17 @@ namespace Gitter.Windows.Tasks
 
         #region Services
 
-        protected readonly ILocalNotificationService _localNotificationService;
-        protected readonly IGitterApiService _gitterApiService;
-        protected readonly IPasswordStorageService _passwordStorageService;
-        protected readonly IApplicationStorageService _applicationStorageService;
+        private readonly ILocalNotificationService _localNotificationService;
+        private readonly IGitterApiService _gitterApiService;
+        private readonly IPasswordStorageService _passwordStorageService;
+        private readonly IApplicationStorageService _applicationStorageService;
 
         #endregion
 
 
         #region Constructor
 
-        public NotificationsBackgroundTask()
+        public UnreadItemsNotificationsBackgroundTask()
         {
             _localNotificationService = new WindowsNotificationService();
             _gitterApiService = new GitterApiService();
@@ -74,7 +74,28 @@ namespace Gitter.Windows.Tasks
             }
         }
 
-        protected abstract Task CreateNotificationAsync(Room room);
+        private async Task CreateNotificationAsync(Room room)
+        {
+            string id = room.Name;
+
+            // Detect if there is no new notification to launch (no unread messages)
+            if (_applicationStorageService.Exists(id))
+            {
+                // Reset notification id for the future
+                if (room.UnreadItems == 0)
+                    _applicationStorageService.Remove(id);
+
+                return;
+            }
+
+            if (room.UnreadItems > 0)
+            {
+                // Show notifications (toast notifications)
+                string notificationContent = $"You have {room.UnreadItems} unread messages";
+                _localNotificationService.SendNotification(room.Name, notificationContent, id, room.Name);
+                _applicationStorageService.Save(id, room.UnreadItems);
+            }
+        }
 
         #endregion
     }

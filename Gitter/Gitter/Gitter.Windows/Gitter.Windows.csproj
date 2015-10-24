@@ -149,27 +149,23 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="GitterSharp.Configuration, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\gitter-api-pcl.0.3.4\lib\win81\GitterSharp.Configuration.dll</HintPath>
+      <HintPath>..\..\packages\gitter-api-pcl.0.3.6\lib\portable-win81+wpa81\GitterSharp.Configuration.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="GitterSharp.Helpers, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\gitter-api-pcl.0.3.4\lib\win81\GitterSharp.Helpers.dll</HintPath>
+      <HintPath>..\..\packages\gitter-api-pcl.0.3.6\lib\portable-win81+wpa81\GitterSharp.Helpers.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="GitterSharp.Model, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\gitter-api-pcl.0.3.4\lib\win81\GitterSharp.Model.dll</HintPath>
+      <HintPath>..\..\packages\gitter-api-pcl.0.3.6\lib\portable-win81+wpa81\GitterSharp.Model.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="GitterSharp.Services, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\gitter-api-pcl.0.3.4\lib\win81\GitterSharp.Services.dll</HintPath>
+      <HintPath>..\..\packages\gitter-api-pcl.0.3.6\lib\portable-win81+wpa81\GitterSharp.Services.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="GitterSharp.UniversalWindows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\gitter-api-pcl.0.3.4\lib\win81\GitterSharp.UniversalWindows.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="GitterSharp.Windows81, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\gitter-api-pcl.0.3.4\lib\win81\GitterSharp.Windows81.dll</HintPath>
+      <HintPath>..\..\packages\gitter-api-pcl.0.3.6\lib\portable-win81+wpa81\GitterSharp.UniversalWindows.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.4.8.0, Culture=neutral, processorArchitecture=MSIL">
@@ -250,12 +246,16 @@
       <Project>{132ab989-3150-4647-bb25-51ea4a253a0b}</Project>
       <Name>Gitter.Services</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Gitter.ViewModels\Gitter.ViewModels.csproj">
+      <Project>{fa512b85-8ede-456f-bfb7-d33f3d663fd4}</Project>
+      <Name>Gitter.ViewModels</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Gitter.Windows.Services\Gitter.Windows.Services.csproj">
       <Project>{4b0f4df3-bf07-402c-80bb-e34ce8464877}</Project>
       <Name>Gitter.Windows.Services</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Gitter.Windows.Tasks\Gitter.Windows.Tasks.csproj">
-      <Project>{ccebafb6-7785-4157-bfe8-2c800d28393a}</Project>
+      <Project>{1f0a034c-4651-49aa-9f8a-6c81b1f89eac}</Project>
       <Name>Gitter.Windows.Tasks</Name>
     </ProjectReference>
   </ItemGroup>

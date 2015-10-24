@@ -12,7 +12,6 @@ namespace Gitter.ViewModel.Abstract
         User User { get; }
         bool Read { get; }
 
-
         void UpdateMessage(string text);
         void ReadByCurrent();
     }
