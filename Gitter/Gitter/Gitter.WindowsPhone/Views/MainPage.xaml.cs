@@ -23,6 +23,7 @@ using Gitter.Services.Abstract;
 using Gitter.ViewModel;
 using Microsoft.Practices.ServiceLocation;
 using System.Threading.Tasks;
+using Gitter.ViewModel.Abstract;
 
 namespace Gitter
 {
@@ -117,7 +118,12 @@ namespace Gitter
                 var backgroundTaskService = ServiceLocator.Current.GetInstance<IBackgroundTaskService>();
 
                 // Unregister background tasks
-                backgroundTaskService.UnregisterTasks("NotificationsBackgroundTask");
+                if (ServiceLocator.Current.GetInstance<IAboutViewModel>().ApplicationVersion == "1.2.12")
+                {
+                    backgroundTaskService.UnregisterTasks("NotificationsBackgroundTask",
+                        "UnreadItemsNotificationsBackgroundTask",
+                        "UnreadMentionsNotificationsBackgroundTask");
+                }
 
                 // Register background tasks
                 await backgroundTaskService.RegisterTasksAsync();
