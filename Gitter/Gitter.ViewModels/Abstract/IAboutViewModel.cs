@@ -7,5 +7,6 @@ namespace Gitter.ViewModel.Abstract
     {
         string ApplicationVersion { get; }
         IEnumerable<Version> Versions { get; }
+        IEnumerable<Collaborator> Collaborators { get; }
     }
 }

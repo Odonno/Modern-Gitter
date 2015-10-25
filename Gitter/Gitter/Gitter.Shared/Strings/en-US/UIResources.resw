@@ -138,6 +138,9 @@
   <data name="chatWithUsButton.Content" xml:space="preserve">
     <value>chat with us</value>
   </data>
+  <data name="collaboratorsTitle.Header" xml:space="preserve">
+    <value>collaborators</value>
+  </data>
   <data name="copy.Text" xml:space="preserve">
     <value>copy</value>
   </data>

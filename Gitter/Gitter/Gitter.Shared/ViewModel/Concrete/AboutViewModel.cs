@@ -60,6 +60,41 @@ namespace Gitter.ViewModel.Concrete
         };
         public IEnumerable<Version> Versions { get { return _versions; } }
 
+        private readonly IEnumerable<Collaborator> _collaborators = new List<Collaborator>
+        {
+            new Collaborator
+            {
+                Username = "Odonno",
+                Image = "https://avatars.githubusercontent.com/u/6053067",
+                Contribution = "Owner"
+            },
+            new Collaborator
+            {
+                Username = "CorentinMiq",
+                Image = "https://avatars.githubusercontent.com/u/9827470",
+                Contribution = "UI Designer"
+            },
+            new Collaborator
+            {
+                Username = "gep13",
+                Image = "https://avatars.githubusercontent.com/u/1271146",
+                Contribution = "Contributor"
+            },
+            new Collaborator
+            {
+                Username = "wassim-azirar",
+                Image = "https://avatars.githubusercontent.com/u/670586",
+                Contribution = "Contributor"
+            },
+            new Collaborator
+            {
+                Username = "bobmulder",
+                Image = "https://avatars.githubusercontent.com/u/5465074",
+                Contribution = "Contributor"
+            }
+        };
+        public IEnumerable<Collaborator> Collaborators { get { return _collaborators; } }
+
         #endregion
     }
 }

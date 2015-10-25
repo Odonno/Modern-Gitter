@@ -79,5 +79,34 @@
                 </ListView>
             </DataTemplate>
         </HubSection>
+
+        <HubSection x:Uid="/UIResources/collaboratorsTitle" 
+                    Header="collaborators" 
+                    HeaderTemplate="{StaticResource HeaderTemplate}">
+            <DataTemplate>
+                <ListView ItemsSource="{Binding Path=Collaborators}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="6">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="60" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                
+                                <Image Grid.Column="0" 
+                                       Source="{Binding Path=Image}" />
+
+                                <StackPanel Grid.Column="1" Margin="12 0 0 0">
+                                    <TextBlock Style="{ThemeResource SubheaderTextBlockStyle}"
+                                               Text="{Binding Path=Username}" />
+                                    <TextBlock Style="{ThemeResource TitleTextBlockStyle}" 
+                                               Text="{Binding Path=Contribution}" />
+                                </StackPanel>                                                            
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </DataTemplate>
+        </HubSection>
     </Hub>
 </Page>
