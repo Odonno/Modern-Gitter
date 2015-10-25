@@ -17,8 +17,8 @@ using Windows.UI.Xaml.Navigation;
 
 // Pour en savoir plus sur le modèle d’élément Page vierge, consultez la page http://go.microsoft.com/fwlink/?LinkID=390556
 using GitHub.Common;
-using GitHub.Services;
 using Gitter.ViewModel;
+using Gitter.WindowsPhone.Services;
 
 namespace Gitter.Views
 {

@@ -15,7 +15,7 @@ using Microsoft.Practices.ServiceLocation;
 using Gitter.ViewModel;
 using Windows.Globalization;
 #if WINDOWS_PHONE_APP
-using GitHub.Services;
+using Gitter.WindowsPhone.Services;
 #endif
 
 namespace Gitter

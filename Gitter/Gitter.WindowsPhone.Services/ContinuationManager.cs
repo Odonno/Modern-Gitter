@@ -3,7 +3,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace GitHub.Services
+namespace Gitter.WindowsPhone.Services
 {
     /// <summary>
     /// The continuation manager.
@@ -58,10 +58,10 @@ namespace GitHub.Services
             switch (args.Kind)
             {
                 case ActivationKind.WebAuthenticationBrokerContinuation:
-                    var wabPage = rootFrame.Content as IWebAuthenticationContinuable;
-                    if (wabPage != null)
+                    var webPage = rootFrame.Content as IWebAuthenticationContinuable;
+                    if (webPage != null)
                     {
-                        wabPage.ContinueWebAuthentication(args as WebAuthenticationBrokerContinuationEventArgs);
+                        webPage.ContinueWebAuthentication(args as WebAuthenticationBrokerContinuationEventArgs);
                     }
                     break;
             }
@@ -128,21 +128,5 @@ namespace GitHub.Services
             MarkAsStale();
             return _continuationActivatedEventArgs;
         }
-    }
-
-    /// <summary>
-    /// Implement this interface if your page invokes the web authentication
-    /// broker.
-    /// </summary>
-    public interface IWebAuthenticationContinuable
-    {
-        /// <summary>
-        /// This method is invoked when the web authentication broker returns
-        /// with the authentication result.
-        /// </summary>
-        /// <param name="args">
-        /// Activated event args object that contains returned authentication token.
-        /// </param>
-        void ContinueWebAuthentication(WebAuthenticationBrokerContinuationEventArgs args);
     }
 }
