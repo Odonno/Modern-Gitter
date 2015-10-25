@@ -28,7 +28,7 @@
                         <TextBlock x:Uid="/UIResources/applicationTitle"
                                    Text="Modern Gitter"
                                    Style="{ThemeResource SubheaderTextBlockStyle}"/>
-                        <TextBlock Text="{Binding ApplicationVersion}"
+                        <TextBlock Text="{Binding Path=ApplicationVersion}"
                                    Style="{ThemeResource TitleTextBlockStyle}"/>
                     </StackPanel>
 
@@ -64,31 +64,19 @@
                     Header="history" 
                     HeaderTemplate="{StaticResource HeaderTemplate}">
             <DataTemplate>
-                <ScrollViewer>
-                    <StackPanel>
-                        <!--<TextBlock Style="{ThemeResource SubheaderTextBlockStyle}">Version 1.3</TextBlock>
-                            <TextBlock Style="{ThemeResource TitleTextBlockStyle}" TextWrapping="Wrap">- fix bug on realtime messages</TextBlock>
-                            <TextBlock Style="{ThemeResource TitleTextBlockStyle}" TextWrapping="Wrap">- fix bug on toast notification</TextBlock>
-                            <TextBlock Style="{ThemeResource TitleTextBlockStyle}" TextWrapping="Wrap">- parse effectively all the HTML sent (title, links, image, quote, formatted code)</TextBlock>
-                            <TextBlock Style="{ThemeResource TitleTextBlockStyle}" TextWrapping="Wrap">- search rooms by name</TextBlock>
-                            <TextBlock Style="{ThemeResource TitleTextBlockStyle}" TextWrapping="Wrap">- toast notifications (mention)</TextBlock>
-                            <TextBlock Style="{ThemeResource TitleTextBlockStyle}" TextWrapping="Wrap">- about page</TextBlock>-->
-
-                        <TextBlock Style="{ThemeResource SubheaderTextBlockStyle}">Version 1.2</TextBlock>
-                        <TextBlock Style="{ThemeResource TitleTextBlockStyle}" TextWrapping="Wrap">- copy/update/remove message (holding on a message)</TextBlock>
-                        <TextBlock Style="{ThemeResource TitleTextBlockStyle}" TextWrapping="Wrap">- toast notifications (unread messages)</TextBlock>
-                        <TextBlock Style="{ThemeResource TitleTextBlockStyle}" TextWrapping="Wrap">- toast notifications (realtime messages)</TextBlock>
-                        <TextBlock Style="{ThemeResource TitleTextBlockStyle}" TextWrapping="Wrap">- in-app notification as badge (unread count)</TextBlock>
-                        <TextBlock Style="{ThemeResource TitleTextBlockStyle}" TextWrapping="Wrap">- 'respond to' a chat user (tap on a chat avatar)</TextBlock>
-                        <TextBlock Style="{ThemeResource TitleTextBlockStyle}" TextWrapping="Wrap">- microphone enabled</TextBlock>
-
-                        <TextBlock Style="{ThemeResource SubheaderTextBlockStyle}">Version 1.1</TextBlock>
-                        <TextBlock Style="{ThemeResource TitleTextBlockStyle}" TextWrapping="Wrap">- main page (v1)</TextBlock>
-                        <TextBlock Style="{ThemeResource TitleTextBlockStyle}" TextWrapping="Wrap">- room page (v1)</TextBlock>
-                        <TextBlock Style="{ThemeResource TitleTextBlockStyle}" TextWrapping="Wrap">- push a message</TextBlock>
-                        <TextBlock Style="{ThemeResource TitleTextBlockStyle}" TextWrapping="Wrap">- add a link to this chat room (chat with us)</TextBlock>
-                    </StackPanel>
-                </ScrollViewer>
+                <ListView ItemsSource="{Binding Path=Versions}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="0 0 0 12">
+                                <TextBlock Style="{ThemeResource SubheaderTextBlockStyle}"
+                                           Text="{Binding Path=Name}" />
+                                <TextBlock Style="{ThemeResource TitleTextBlockStyle}" 
+                                           Text="{Binding Features, Converter={StaticResource StringArrayToStringConverter}}"
+                                           FontSize="16" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </DataTemplate>
         </HubSection>
     </Hub>

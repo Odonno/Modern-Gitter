@@ -43,7 +43,6 @@
   <ItemGroup>
     <Compile Include="Abstract\IAboutViewModel.cs" />
     <Compile Include="Abstract\IFullImageViewModel.cs" />
-    <Compile Include="Abstract\ILoginViewModel.cs" />
     <Compile Include="Abstract\IMainViewModel.cs" />
     <Compile Include="Abstract\IMessageViewModel.cs" />
     <Compile Include="Abstract\IRoomViewModel.cs" />

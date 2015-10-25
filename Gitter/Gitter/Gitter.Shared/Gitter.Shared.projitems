@@ -33,6 +33,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\DistinctPreviousAuthorVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\SamePreviousAuthorVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\SectionIndexToVisibilityConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\StringArrayToStringConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\UnreadMessagesCountConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\UnreadMessagesCountToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataObjects\Concrete\MessagesIncrementalLoadingCollection.cs" />
@@ -44,6 +45,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\Concrete\ProgressIndicatorService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Concrete\RatingService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Concrete\SessionService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Abstract\ILoginViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Concrete\AboutViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Concrete\FullImageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Concrete\MessageViewModel.cs" />
