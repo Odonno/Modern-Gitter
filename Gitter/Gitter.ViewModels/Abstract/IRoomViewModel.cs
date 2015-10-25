@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
-using Gitter.DataObjects.Concrete;
 using GitterSharp.Model;
+using Gitter.DataObjects.Abstract;
 
 namespace Gitter.ViewModel.Abstract
 {
@@ -8,7 +8,7 @@ namespace Gitter.ViewModel.Abstract
     {
         bool IsLoaded { get; set; }
         Room Room { get; }
-        MessagesIncrementalLoadingCollection Messages { get; }
+        IncrementalLoadingCollection<IMessageViewModel> Messages { get; }
         string TextMessage { get; set; }
         int UnreadMessagesCount { get; set; }
 

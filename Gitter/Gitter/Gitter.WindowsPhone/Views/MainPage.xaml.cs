@@ -118,7 +118,7 @@ namespace Gitter
                 var backgroundTaskService = ServiceLocator.Current.GetInstance<IBackgroundTaskService>();
 
                 // Unregister background tasks
-                if (ServiceLocator.Current.GetInstance<IAboutViewModel>().ApplicationVersion == "1.2.12")
+                if (ViewModelLocator.About.ApplicationVersion == "1.2.12")
                 {
                     backgroundTaskService.UnregisterTasks("NotificationsBackgroundTask",
                         "UnreadItemsNotificationsBackgroundTask",

@@ -9,24 +9,33 @@ using Windows.Foundation;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
-using GalaSoft.MvvmLight;
 
 namespace Gitter.DataObjects.Abstract
 {
     public abstract class IncrementalLoadingCollection<T> : ObservableCollection<T>, ISupportIncrementalLoading
     {
+        #region Properties
+
         public bool HasMoreItems { get; protected set; }
         public int Page { get; protected set; }
         public int ItemsPerPage { get; protected set; }
         public bool IsBusy { get; protected set; }
         public bool Ascendant { get; protected set; }
 
+        #endregion
+
+
+        #region Constructor
 
         protected IncrementalLoadingCollection()
         {
             HasMoreItems = true;
         }
 
+        #endregion
+
+
+        #region Methods
 
         public IAsyncOperation<LoadMoreItemsResult> LoadMoreItemsAsync(uint count)
         {
@@ -41,9 +50,6 @@ namespace Gitter.DataObjects.Abstract
                 return Task.Run(
                     async () =>
                     {
-                        if (ViewModelBase.IsInDesignModeStatic)
-                            return new LoadMoreItemsResult();
-
                         var items = await LoadMoreItemsAsync();
                         var itemsCount = items.Count();
 
@@ -72,6 +78,7 @@ namespace Gitter.DataObjects.Abstract
                 IsBusy = false;
             }
         }
+
         public async virtual Task AddItemAsync(T item)
         {
             var dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
@@ -83,17 +90,18 @@ namespace Gitter.DataObjects.Abstract
                 OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
             });
         }
+
         protected abstract Task<IEnumerable<T>> LoadMoreItemsAsync();
+
         public async void Reset()
         {
             Clear();
             Page = 0;
             HasMoreItems = true;
-
-            if (ViewModelBase.IsInDesignModeStatic)
-                return;
             
             await LoadMoreItemsAsync((uint)ItemsPerPage);
         }
+
+        #endregion
     }
 }

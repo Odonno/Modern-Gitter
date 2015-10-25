@@ -13,6 +13,7 @@ using GitterSharp.Model;
 using GitterSharp.Services;
 using Microsoft.Practices.ServiceLocation;
 using System.Threading.Tasks;
+using Gitter.DataObjects.Abstract;
 #if WINDOWS_PHONE_APP
 using Windows.Media.SpeechRecognition;
 #endif
@@ -44,7 +45,7 @@ namespace Gitter.ViewModel.Concrete
 
         public Room Room { get; }
 
-        public MessagesIncrementalLoadingCollection Messages { get; }
+        public IncrementalLoadingCollection<IMessageViewModel> Messages { get; }
 
         private string _textMessage;
         public string TextMessage

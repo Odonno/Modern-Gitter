@@ -18,7 +18,6 @@ namespace Gitter.DataObjects.Concrete
         #region Fields
 
         private readonly object _lock = new object();
-
         private readonly List<IMessageViewModel> _cachedMessages = new List<IMessageViewModel>();
 
         #endregion

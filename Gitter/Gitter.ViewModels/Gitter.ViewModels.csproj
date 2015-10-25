@@ -43,9 +43,17 @@
   <ItemGroup>
     <Compile Include="Abstract\IAboutViewModel.cs" />
     <Compile Include="Abstract\IFullImageViewModel.cs" />
+    <Compile Include="Abstract\ILoginViewModel.cs" />
+    <Compile Include="Abstract\IMainViewModel.cs" />
+    <Compile Include="Abstract\IMessageViewModel.cs" />
+    <Compile Include="Abstract\IRoomViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Gitter.DataObjects\Gitter.DataObjects.csproj">
+      <Project>{43fda2a1-18d7-44df-a455-5e438191b8ee}</Project>
+      <Name>Gitter.DataObjects</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Gitter.Services\Gitter.Services.csproj">
       <Project>{132ab989-3150-4647-bb25-51ea4a253a0b}</Project>
       <Name>Gitter.Services</Name>
@@ -55,6 +63,26 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="GitterSharp.Configuration, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\gitter-api-pcl.0.3.6\lib\portable-win81+wpa81\GitterSharp.Configuration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GitterSharp.Helpers, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\gitter-api-pcl.0.3.6\lib\portable-win81+wpa81\GitterSharp.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GitterSharp.Model, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\gitter-api-pcl.0.3.6\lib\portable-win81+wpa81\GitterSharp.Model.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GitterSharp.Services, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\gitter-api-pcl.0.3.6\lib\portable-win81+wpa81\GitterSharp.Services.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GitterSharp.UniversalWindows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\gitter-api-pcl.0.3.6\lib\portable-win81+wpa81\GitterSharp.UniversalWindows.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\portable-net45+wp80+win8+wpa81+aspnetcore50\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
