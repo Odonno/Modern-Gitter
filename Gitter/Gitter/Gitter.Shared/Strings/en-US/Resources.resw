@@ -124,16 +124,16 @@
     <value>Rate the app</value>
   </data>
   <data name="ThanksReview1" xml:space="preserve">
-    <value>Thank you very much to use Modern Gitter.</value>
+    <value>Thank you very much for using Modern Gitter.</value>
   </data>
   <data name="ThanksReview2" xml:space="preserve">
-    <value>We have done some updates from the last version.</value>
+    <value>We have done some updates since the last version.</value>
   </data>
   <data name="ThanksReview3" xml:space="preserve">
-    <value>What do you think about these updates ? :)</value>
+    <value>What do you think of these updates ? :)</value>
   </data>
   <data name="ThanksToUseIt" xml:space="preserve">
-    <value>Thanks to use Modern Gitter, would you rate it ?</value>
+    <value>Thank you for using Modern Gitter, would you rate it ?</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>
