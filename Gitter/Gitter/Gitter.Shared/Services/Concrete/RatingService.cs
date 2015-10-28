@@ -1,6 +1,7 @@
 ﻿using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Resources;
+using Windows.ApplicationModel.Store;
 using Windows.Storage;
 using Windows.System;
 using Windows.UI.Popups;
@@ -74,11 +75,9 @@ namespace Gitter.Services.Concrete
                 // If they say yes, send them to the store
                 md.Commands.Add(new UICommand(_resourceLoader.GetString("Yes"), async command =>
                 {
-                    // Find the FamilyName of the app package
-                    string familyName = Package.Current.Id.FamilyName;
-
                     // Navigate to the store Review Page for the Application
-                    await Launcher.LaunchUriAsync(new Uri(string.Format("ms-windows-store:REVIEW?PFN={0}", familyName)));
+                    // Use the older zune schema, which works for all Windows Phone 8.x application
+                    await Launcher.LaunchUriAsync(new Uri(string.Format("ms-windows-store:reviewapp?appid=app{0}", CurrentApp.AppId)));
 
                     // Change the status to track the fact that they agreed to a review
                     ReviewedBefore = true;
@@ -103,7 +102,7 @@ namespace Gitter.Services.Concrete
             }
         }
 
-        #endregion
+#endregion
 
     }
 }
