@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Windows.Input;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using Gitter.ViewModel.Abstract;
 using Windows.ApplicationModel;
 using Gitter.DataObjects.Concrete;
+using Version = Gitter.DataObjects.Concrete.Version;
 
 namespace Gitter.ViewModel.Concrete
 {
@@ -96,5 +100,31 @@ namespace Gitter.ViewModel.Concrete
         public IEnumerable<Collaborator> Collaborators { get { return _collaborators; } }
 
         #endregion
+
+        #region Commands
+
+        public ICommand ViewProfileCommand { get; private set; }
+
+        #endregion
+
+        #region Constructor
+
+        public AboutViewModel()
+        {
+            ViewProfileCommand = new RelayCommand<string>(ViewProfile);
+        }
+
+        #endregion
+
+        #region Command Methods
+
+        private async void ViewProfile(string userName)
+        {
+#if WINDOWS_PHONE_APP
+            await Windows.System.Launcher.LaunchUriAsync(new Uri($"http://www.github.com/{userName}"));
+#endif
+        }
+
+#endregion
     }
 }

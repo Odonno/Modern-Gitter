@@ -1,5 +1,6 @@
-﻿using Gitter.DataObjects.Concrete;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Windows.Input;
+using Gitter.DataObjects.Concrete;
 
 namespace Gitter.ViewModel.Abstract
 {
@@ -8,5 +9,7 @@ namespace Gitter.ViewModel.Abstract
         string ApplicationVersion { get; }
         IEnumerable<Version> Versions { get; }
         IEnumerable<Collaborator> Collaborators { get; }
+
+        ICommand ViewProfileCommand { get; }
     }
 }

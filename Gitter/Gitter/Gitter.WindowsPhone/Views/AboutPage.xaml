@@ -4,6 +4,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:behaviors="using:Gitter.Behaviors"
     mc:Ignorable="d"
     NavigationCacheMode="Required"
     RequestedTheme="Light"
@@ -11,7 +14,7 @@
     DataContext="{Binding About, Source={StaticResource Locator}}">
 
     <Hub Margin="0 24 0 0">
-        <HubSection x:Uid="/UIResources/aboutTitle" 
+        <HubSection x:Uid="/UIResources/aboutTitle"
                     Header="about"
                     HeaderTemplate="{StaticResource HeaderTemplate}">
             <DataTemplate>
@@ -59,9 +62,9 @@
                 </Grid>
             </DataTemplate>
         </HubSection>
-        
-        <HubSection x:Uid="/UIResources/historyTitle" 
-                    Header="history" 
+
+        <HubSection x:Uid="/UIResources/historyTitle"
+                    Header="history"
                     HeaderTemplate="{StaticResource HeaderTemplate}">
             <DataTemplate>
                 <ListView ItemsSource="{Binding Path=Versions}">
@@ -70,7 +73,7 @@
                             <StackPanel Margin="0 0 0 12">
                                 <TextBlock Style="{ThemeResource SubheaderTextBlockStyle}"
                                            Text="{Binding Path=Name}" />
-                                <TextBlock Style="{ThemeResource TitleTextBlockStyle}" 
+                                <TextBlock Style="{ThemeResource TitleTextBlockStyle}"
                                            Text="{Binding Features, Converter={StaticResource StringArrayToStringConverter}}"
                                            FontSize="16" />
                             </StackPanel>
@@ -80,8 +83,8 @@
             </DataTemplate>
         </HubSection>
 
-        <HubSection x:Uid="/UIResources/collaboratorsTitle" 
-                    Header="collaborators" 
+        <HubSection x:Uid="/UIResources/collaboratorsTitle"
+                    Header="collaborators"
                     HeaderTemplate="{StaticResource HeaderTemplate}">
             <DataTemplate>
                 <ListView ItemsSource="{Binding Path=Collaborators}">
@@ -92,16 +95,32 @@
                                     <ColumnDefinition Width="60" />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                
-                                <Image Grid.Column="0" 
-                                       Source="{Binding Path=Image}" />
+
+                                <Grid Grid.Column="0" RequestedTheme="Dark">
+                                    <Image Source="{Binding Path=Image}"/>
+
+                                    <interactivity:Interaction.Behaviors>
+                                        <core:EventTriggerBehavior EventName="Tapped">
+                                            <behaviors:OpenMenuFlyoutAction />
+                                        </core:EventTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
+
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem x:Uid="/UIResources/viewGitHubProfile" Text="view GitHub profile"
+                                                        Command="{Binding Source={StaticResource Locator}, Path=About.ViewProfileCommand}"
+                                                        CommandParameter="{Binding Path=Username}" />
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
+                                </Grid>
+
 
                                 <StackPanel Grid.Column="1" Margin="12 0 0 0">
                                     <TextBlock Style="{ThemeResource SubheaderTextBlockStyle}"
                                                Text="{Binding Path=Username}" />
-                                    <TextBlock Style="{ThemeResource TitleTextBlockStyle}" 
+                                    <TextBlock Style="{ThemeResource TitleTextBlockStyle}"
                                                Text="{Binding Path=Contribution}" />
-                                </StackPanel>                                                            
+                                </StackPanel>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
