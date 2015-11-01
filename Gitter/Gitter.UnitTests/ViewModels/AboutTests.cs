@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using Gitter.ViewModel.Concrete;
 using Xunit;
 
 namespace Gitter.UnitTests.ViewModels
@@ -6,20 +8,16 @@ namespace Gitter.UnitTests.ViewModels
     public class AboutTests
     {
         [Fact]
-        public void PassingTest()
+        public void ApplicationVersion_Should_ContainsThreePoints()
         {
-            Assert.Equal(4, Add(2, 2));
-        }
+            // Arrange
+            var aboutViewModel = new AboutViewModel();
 
-        [Fact]
-        public void FailingTest()
-        {
-            Assert.Equal(5, Add(2, 2));
-        }
+            // Act
+            int result = aboutViewModel.ApplicationVersion.Count(c => c == '.');
 
-        int Add(int x, int y)
-        {
-            return x + y;
+            // Assert
+            Assert.Equal(3, result);
         }
     }
 }

@@ -7,6 +7,7 @@ using Gitter.ViewModel.Abstract;
 using Windows.ApplicationModel;
 using Gitter.DataObjects.Concrete;
 using Version = Gitter.DataObjects.Concrete.Version;
+using Windows.System;
 
 namespace Gitter.ViewModel.Concrete
 {
@@ -131,7 +132,7 @@ namespace Gitter.ViewModel.Concrete
         private async void ViewProfile(string userName)
         {
 #if WINDOWS_PHONE_APP
-            await Windows.System.Launcher.LaunchUriAsync(new Uri($"http://www.github.com/{userName}"));
+            await Launcher.LaunchUriAsync(new Uri($"http://www.github.com/{userName}"));
 #endif
         }
 
