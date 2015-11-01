@@ -26,12 +26,11 @@ namespace Gitter.ViewModel.Concrete
         {
             new Version
             {
-                Name = "Version 1.3 (soon)",
+                Name = "Version 1.3",
                 Features = new List<string>
                 {
-                    "- fix bug on realtime messages",
                     "- fix bug on toast notification",
-                    "- parse effectively all the HTML sent",
+                    "- parse effectively the HTML sent (except list)",
                     "- search rooms by name",
                     "- toast notifications (mention)",
                     "- about page"

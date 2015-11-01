@@ -90,37 +90,37 @@
                 <ListView ItemsSource="{Binding Path=Collaborators}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <Grid Margin="6">
+                            <Grid Margin="6" RequestedTheme="Dark">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="60" />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
 
-                                <Grid Grid.Column="0" RequestedTheme="Dark">
-                                    <Image Source="{Binding Path=Image}"/>
-
-                                    <interactivity:Interaction.Behaviors>
-                                        <core:EventTriggerBehavior EventName="Tapped">
-                                            <behaviors:OpenMenuFlyoutAction />
-                                        </core:EventTriggerBehavior>
-                                    </interactivity:Interaction.Behaviors>
-
-                                    <FlyoutBase.AttachedFlyout>
-                                        <MenuFlyout>
-                                            <MenuFlyoutItem x:Uid="/UIResources/viewGitHubProfile" Text="view GitHub profile"
-                                                        Command="{Binding Source={StaticResource Locator}, Path=About.ViewProfileCommand}"
-                                                        CommandParameter="{Binding Path=Username}" />
-                                        </MenuFlyout>
-                                    </FlyoutBase.AttachedFlyout>
-                                </Grid>
-
+                                <Image Grid.Column="0" Source="{Binding Path=Image}"/>
 
                                 <StackPanel Grid.Column="1" Margin="12 0 0 0">
                                     <TextBlock Style="{ThemeResource SubheaderTextBlockStyle}"
-                                               Text="{Binding Path=Username}" />
+                                               Text="{Binding Path=Username}"
+                                               Foreground="Black" />
                                     <TextBlock Style="{ThemeResource TitleTextBlockStyle}"
-                                               Text="{Binding Path=Contribution}" />
+                                               Text="{Binding Path=Contribution}"
+                                               Foreground="Black" />
                                 </StackPanel>
+                                
+                                <interactivity:Interaction.Behaviors>
+                                    <core:EventTriggerBehavior EventName="Tapped">
+                                        <behaviors:OpenMenuFlyoutAction />
+                                    </core:EventTriggerBehavior>
+                                </interactivity:Interaction.Behaviors>
+
+                                <FlyoutBase.AttachedFlyout>
+                                    <MenuFlyout>
+                                        <MenuFlyoutItem x:Uid="/UIResources/viewGitHubProfile" 
+                                                        Text="view GitHub profile"
+                                                        Command="{Binding Source={StaticResource Locator}, Path=About.ViewProfileCommand}"
+                                                        CommandParameter="{Binding Path=Username}" />
+                                    </MenuFlyout>
+                                </FlyoutBase.AttachedFlyout>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>

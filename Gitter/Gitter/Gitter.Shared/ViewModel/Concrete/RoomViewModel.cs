@@ -335,10 +335,10 @@ namespace Gitter.ViewModel.Concrete
                 new Dictionary<string, string> { { "Room", Room.Name } });
         }
 
-#endregion
+        #endregion
 
 
-#region Methods
+        #region Methods
 
         public void OpenRealtimeStream()
         {
@@ -381,6 +381,6 @@ namespace Gitter.ViewModel.Concrete
             }
         }
 
-#endregion
+        #endregion
     }
 }
