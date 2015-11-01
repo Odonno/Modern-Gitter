@@ -18,7 +18,7 @@ namespace Gitter.ViewModel.Concrete
         {
             get
             {
-                return $"{Package.Current.Id.Version.Major}.{Package.Current.Id.Version.Minor}.{Package.Current.Id.Version.Build}";
+                return $"{Package.Current.Id.Version.Major}.{Package.Current.Id.Version.Minor}.{Package.Current.Id.Version.Build}.{Package.Current.Id.Version.Revision}";
             }
         }
 
@@ -125,6 +125,6 @@ namespace Gitter.ViewModel.Concrete
 #endif
         }
 
-#endregion
+        #endregion
     }
 }
