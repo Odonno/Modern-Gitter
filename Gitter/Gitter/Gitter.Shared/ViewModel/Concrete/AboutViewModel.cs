@@ -26,6 +26,17 @@ namespace Gitter.ViewModel.Concrete
         {
             new Version
             {
+                Name = "Version 1.4 (soon)",
+                Features = new List<string>
+                {
+                    "- improve quality with tests",
+                    "- parse all HTML sent (including list)",
+                    "- improve image quality (in chat)",
+                    "- support Windows 10"
+                }
+            },
+            new Version
+            {
                 Name = "Version 1.3",
                 Features = new List<string>
                 {
