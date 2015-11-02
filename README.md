@@ -19,3 +19,15 @@ Modern Gitter contains a small set of features that directly target Gitter API. 
 * Use microphone to send messages
 * Receive realtime notifications (in-app notifications)
 * Receive delayed notifications (toasts notifications : unread items and mentions)
+
+## Frameworks
+
+This project use several frameworks like : 
+
+* MVVMLight
+* Rx (.NET)
+* JSON.NET
+* HtmlAgilityPack
+* Microsoft Application Insights
+* Gitter#
+* Gitter# Auth
