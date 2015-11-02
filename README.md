@@ -22,12 +22,12 @@ Modern Gitter contains a small set of features that directly target Gitter API. 
 
 ## Frameworks
 
-This project use several frameworks like : 
+This project makes use of several frameworks like : 
 
-* MVVMLight
-* Rx (.NET)
-* JSON.NET
-* HtmlAgilityPack
-* Microsoft Application Insights
-* Gitter#
-* Gitter# Auth
+* [MVVMLight](http://www.mvvmlight.net/)
+* [Rx (.NET)](https://rx.codeplex.com/)
+* [JSON.NET](http://www.newtonsoft.com/json)
+* [HtmlAgilityPack](https://htmlagilitypack.codeplex.com/)
+* [Microsoft Application Insights](https://github.com/Microsoft/ApplicationInsights-dotnet)
+* [Gitter#](https://github.com/Odonno/gitter-api-pcl)
+* [Gitter# Auth](https://github.com/Odonno/gitter-api-auth)
