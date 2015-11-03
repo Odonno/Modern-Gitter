@@ -18,6 +18,7 @@ namespace Gitter.ViewModel.Concrete
         private readonly ISessionService _sessionService;
         private readonly IPasswordStorageService _passwordStorageService;
         private readonly ILocalNotificationService _localNotificationService;
+        private readonly ITelemetryService _telemetryService;
 
         #endregion
 
@@ -27,13 +28,15 @@ namespace Gitter.ViewModel.Concrete
         public LoginViewModel(INavigationService navigationService,
             ISessionService sessionService,
             IPasswordStorageService passwordStorageService,
-            ILocalNotificationService localNotificationService)
+            ILocalNotificationService localNotificationService,
+            ITelemetryService telemetryService)
         {
             // Inject Services
             _navigationService = navigationService;
             _sessionService = sessionService;
             _passwordStorageService = passwordStorageService;
             _localNotificationService = localNotificationService;
+            _telemetryService = telemetryService;
 
 
             if (IsInDesignMode)
@@ -79,7 +82,7 @@ namespace Gitter.ViewModel.Concrete
             }
             catch (Exception ex)
             {
-                App.TelemetryClient.TrackException(ex); // TODO : Create a TelemetryService
+                _telemetryService.Client.TrackException(ex);
                 isToShowMessage = true;
             }
 

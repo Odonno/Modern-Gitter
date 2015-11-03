@@ -4,6 +4,8 @@ using Xunit;
 using System.Threading.Tasks;
 using Gitter.UnitTests.Fakes;
 using Gitter.ViewModel.Abstract;
+using Gitter.Services.Abstract;
+using Gitter.Services.Concrete;
 
 namespace Gitter.UnitTests.ViewModels
 {
@@ -15,6 +17,7 @@ namespace Gitter.UnitTests.ViewModels
         private FakeSessionService _sessionService;
         private FakePasswordStorageService _passwordStorageService;
         private FakeLocalNotificationService _localNotificationService;
+        private ITelemetryService _telemetryService;
 
         private ILoginViewModel _loginViewModel;
 
@@ -29,12 +32,16 @@ namespace Gitter.UnitTests.ViewModels
             _sessionService = new FakeSessionService();
             _passwordStorageService = new FakePasswordStorageService();
             _localNotificationService = new FakeLocalNotificationService();
+            _telemetryService = new TelemetryService();
+
+            _telemetryService.Create();
 
             _loginViewModel = new LoginViewModel(
                 _navigationService,
                 _sessionService,
                 _passwordStorageService,
-                _localNotificationService);
+                _localNotificationService,
+                _telemetryService);
         }
 
 
@@ -68,7 +75,6 @@ namespace Gitter.UnitTests.ViewModels
             await _loginViewModel.LoginAsync();
 
             // Assert
-            // TODO : Test the telemetry tracking
             Assert.Equal(true, _localNotificationService.NotificationSent);
         }
 

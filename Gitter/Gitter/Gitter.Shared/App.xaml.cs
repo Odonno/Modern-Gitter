@@ -14,6 +14,7 @@ using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.Practices.ServiceLocation;
 using Gitter.ViewModel;
 using Windows.Globalization;
+using Gitter.Services.Abstract;
 #if WINDOWS_PHONE_APP
 using Gitter.WindowsPhone.Services;
 #endif
@@ -240,6 +241,8 @@ namespace Gitter
 #else
             TelemetryClient = new TelemetryClient();
 #endif
+
+            ServiceLocator.Current.GetInstance<ITelemetryService>().Create();
         }
 
         #endregion
