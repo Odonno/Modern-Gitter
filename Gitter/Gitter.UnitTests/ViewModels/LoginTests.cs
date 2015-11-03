@@ -3,6 +3,7 @@ using Gitter.ViewModel.Concrete;
 using Xunit;
 using System.Threading.Tasks;
 using Gitter.UnitTests.Fakes;
+using Gitter.ViewModel.Abstract;
 
 namespace Gitter.UnitTests.ViewModels
 {
@@ -15,6 +16,28 @@ namespace Gitter.UnitTests.ViewModels
         private FakePasswordStorageService _passwordStorageService;
         private FakeLocalNotificationService _localNotificationService;
 
+        private ILoginViewModel _loginViewModel;
+
+        #endregion
+
+
+        #region Initialize
+
+        private void TestInitialize()
+        {
+            _navigationService = new FakeNavigationService();
+            _sessionService = new FakeSessionService();
+            _passwordStorageService = new FakePasswordStorageService();
+            _localNotificationService = new FakeLocalNotificationService();
+
+            _loginViewModel = new LoginViewModel(
+                _navigationService,
+                _sessionService,
+                _passwordStorageService,
+                _localNotificationService);
+        }
+
+
         #endregion
 
 
@@ -24,21 +47,12 @@ namespace Gitter.UnitTests.ViewModels
         public async Task LoginWithExistingStoredToken_Should_Success()
         {
             // Arrange
-            _navigationService = new FakeNavigationService();
-            _sessionService = new FakeSessionService();
-            _passwordStorageService = new FakePasswordStorageService();
-            _localNotificationService = new FakeLocalNotificationService();
+            TestInitialize();
 
             _passwordStorageService.Content = "123456";
 
-            var loginViewModel = new LoginViewModel(
-                _navigationService,
-                _sessionService,
-                _passwordStorageService,
-                _localNotificationService);
-
             // Act
-            await loginViewModel.LoginAsync();
+            await _loginViewModel.LoginAsync();
 
             // Assert
             Assert.Equal("Main", _navigationService.CurrentPageKey);
@@ -48,21 +62,13 @@ namespace Gitter.UnitTests.ViewModels
         public async Task LoginWithFailedAuthentication_Should_ShowError()
         {
             // Arrange
-            _navigationService = new FakeNavigationService();
-            _sessionService = new FakeSessionService();
-            _passwordStorageService = new FakePasswordStorageService();
-            _localNotificationService = new FakeLocalNotificationService();
-
-            var loginViewModel = new LoginViewModel(
-                _navigationService,
-                _sessionService,
-                _passwordStorageService,
-                _localNotificationService);
+            TestInitialize();
 
             // Act
-            await loginViewModel.LoginAsync();
+            await _loginViewModel.LoginAsync();
 
             // Assert
+            // TODO : Test the telemetry tracking
             Assert.Equal(true, _localNotificationService.NotificationSent);
         }
 

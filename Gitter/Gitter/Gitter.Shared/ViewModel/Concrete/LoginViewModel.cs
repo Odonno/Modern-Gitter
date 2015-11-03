@@ -79,7 +79,7 @@ namespace Gitter.ViewModel.Concrete
             }
             catch (Exception ex)
             {
-                App.TelemetryClient.TrackException(ex);
+                App.TelemetryClient.TrackException(ex); // TODO : Create a TelemetryService
                 isToShowMessage = true;
             }
 
