@@ -5,9 +5,11 @@ namespace Gitter.UnitTests.Fakes
 {
     public class FakePasswordStorageService : IPasswordStorageService
     {
+        public string Content { get; set; }
+
         public string Retrieve(string key)
         {
-            return "123456";
+            return Content;
         }
 
         public void Save(string key, string password)

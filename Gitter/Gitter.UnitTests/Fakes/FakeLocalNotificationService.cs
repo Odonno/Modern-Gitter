@@ -6,6 +6,8 @@ namespace Gitter.UnitTests.Fakes
 {
     public class FakeLocalNotificationService : ILocalNotificationService
     {
+        public bool NotificationSent { get; private set; }
+
         public Task ClearNotificationGroupAsync(string group)
         {
             throw new NotImplementedException();
@@ -13,7 +15,7 @@ namespace Gitter.UnitTests.Fakes
 
         public void SendNotification(string title, string content, string id = null, string group = null)
         {
-            throw new NotImplementedException();
+            NotificationSent = true;
         }
     }
 }
