@@ -113,6 +113,24 @@ namespace Gitter.UnitTests.ViewModels
             Assert.Null(_navigationService.CurrentPageKey);
         }
 
+        [Fact]
+        public async Task LoginWithCorrectAuthentication_Should_Success()
+        {
+            // Arrange
+            var sessionService = new FakeSessionServiceWithResult();
+            sessionService.Result = true;
+
+            TestInitialize(sessionService);
+
+            // Act
+            await _loginViewModel.LoginAsync();
+
+            // Assert
+            Assert.Equal(0, _telemetryService.ExceptionsTracked);
+            Assert.False(_localNotificationService.NotificationSent);
+            Assert.Equal("Main", _navigationService.CurrentPageKey);
+        }
+
         #endregion
     }
 }
