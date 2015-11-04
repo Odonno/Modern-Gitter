@@ -1,4 +1,5 @@
-﻿using Gitter.Services.Abstract;
+﻿using System;
+using Gitter.Services.Abstract;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Extensibility;
 
@@ -6,9 +7,9 @@ namespace Gitter.Services.Concrete
 {
     public class TelemetryService : ITelemetryService
     {
-        #region Properties
+        #region Fields
 
-        public TelemetryClient Client { get; set; }
+        private TelemetryClient _client { get; set; }
 
         #endregion
 
@@ -18,10 +19,15 @@ namespace Gitter.Services.Concrete
         public void Initialize()
         {
 #if DEBUG
-            Client = new TelemetryClient(new TelemetryConfiguration { DisableTelemetry = true });
+            _client = new TelemetryClient(new TelemetryConfiguration { DisableTelemetry = true });
 #else
-            Client = new TelemetryClient();
+            _client = new TelemetryClient();
 #endif
+        }
+
+        public void TrackException(Exception ex)
+        {
+            _client.TrackException(ex);
         }
 
         #endregion

@@ -1,11 +1,10 @@
-﻿using Microsoft.ApplicationInsights;
+﻿using System;
 
 namespace Gitter.Services.Abstract
 {
     public interface ITelemetryService
     {
-        TelemetryClient Client { get; set; }
-
         void Initialize();
+        void TrackException(Exception ex);
     }
 }

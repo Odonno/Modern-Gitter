@@ -118,6 +118,7 @@
     <Compile Include="Fakes\FakeNavigationService.cs" />
     <Compile Include="Fakes\FakePasswordStorageService.cs" />
     <Compile Include="Fakes\FakeSessionService.cs" />
+    <Compile Include="Fakes\FakeTelemetryService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\AboutTests.cs" />
     <Compile Include="ViewModels\FullImageTests.cs" />
