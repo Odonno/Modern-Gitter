@@ -6,7 +6,7 @@ namespace Gitter.UnitTests.Fakes
 {
     public class FakeProgressIndicatorService : IProgressIndicatorService
     {
-        #region Properties
+        #region Fake Properties
 
         public bool IsShowing { get; private set; }
 

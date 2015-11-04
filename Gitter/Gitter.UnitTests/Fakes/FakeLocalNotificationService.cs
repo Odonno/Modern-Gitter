@@ -6,7 +6,7 @@ namespace Gitter.UnitTests.Fakes
 {
     public class FakeLocalNotificationService : ILocalNotificationService
     {
-        #region Properties
+        #region Fake Properties
 
         public bool NotificationSent { get; private set; }
 

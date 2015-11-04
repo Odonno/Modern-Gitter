@@ -6,7 +6,7 @@ namespace Gitter.UnitTests.Fakes
 {
     public class FakeSessionServiceWithResult : ISessionService
     {
-        #region Properties
+        #region Fake Properties
 
         public bool? Result { get; set; }
 

@@ -8,7 +8,7 @@ namespace Gitter.UnitTests.Fakes
 {
     public class FakeGitterApiServiceWithException : IGitterApiService
     {
-        #region Fields
+        #region Fake Fields
 
         private string _token;
 

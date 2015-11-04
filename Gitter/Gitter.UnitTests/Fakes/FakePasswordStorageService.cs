@@ -5,7 +5,14 @@ namespace Gitter.UnitTests.Fakes
 {
     public class FakePasswordStorageService : IPasswordStorageService
     {
+        #region Fake Properties
+
         public string Content { get; set; }
+
+        #endregion
+
+
+        #region Methods
 
         public string Retrieve(string key)
         {
@@ -16,5 +23,7 @@ namespace Gitter.UnitTests.Fakes
         {
             throw new NotImplementedException();
         }
+
+        #endregion
     }
 }

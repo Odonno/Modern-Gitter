@@ -5,7 +5,7 @@ namespace Gitter.UnitTests.Fakes
 {
     public class FakeTelemetryService : ITelemetryService
     {
-        #region Properties
+        #region Fake Properties
 
         public int ExceptionsTracked { get; private set; }
 

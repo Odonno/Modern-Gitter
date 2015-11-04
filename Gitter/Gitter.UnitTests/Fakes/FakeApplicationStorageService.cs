@@ -6,7 +6,7 @@ namespace Gitter.UnitTests.Fakes
 {
     public class FakeApplicationStorageService : IApplicationStorageService
     {
-        #region Properties
+        #region Fake Properties
 
         public Dictionary<string, object> Results { get; } = new Dictionary<string, object>();
 

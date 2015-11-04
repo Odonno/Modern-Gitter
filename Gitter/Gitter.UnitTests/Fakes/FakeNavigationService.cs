@@ -5,8 +5,15 @@ namespace Gitter.UnitTests.Fakes
 {
     public class FakeNavigationService : INavigationService
     {
+        #region Fake Properties
+
         private string _currentPageKey;
         public string CurrentPageKey { get { return _currentPageKey; } }
+
+        #endregion
+
+
+        #region Methods
 
         public void GoBack()
         {
@@ -22,5 +29,7 @@ namespace Gitter.UnitTests.Fakes
         {
             throw new NotImplementedException();
         }
+
+        #endregion
     }
 }
