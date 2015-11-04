@@ -114,9 +114,12 @@
     <AppxPackageIncludePrivateSymbols>true</AppxPackageIncludePrivateSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Fakes\FakeApplicationStorageService.cs" />
+    <Compile Include="Fakes\FakeGitterApiService.cs" />
     <Compile Include="Fakes\FakeLocalNotificationService.cs" />
     <Compile Include="Fakes\FakeNavigationService.cs" />
     <Compile Include="Fakes\FakePasswordStorageService.cs" />
+    <Compile Include="Fakes\FakeProgressIndicatorService.cs" />
     <Compile Include="Fakes\FakeSessionServiceWithException.cs" />
     <Compile Include="Fakes\FakeSessionServiceWithResult.cs" />
     <Compile Include="Fakes\FakeTelemetryService.cs" />
@@ -124,6 +127,7 @@
     <Compile Include="ViewModels\AboutTests.cs" />
     <Compile Include="ViewModels\FullImageTests.cs" />
     <Compile Include="ViewModels\LoginTests.cs" />
+    <Compile Include="ViewModels\MainTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -157,6 +161,26 @@
     </Reference>
     <Reference Include="GalaSoft.MvvmLight.Platform, Version=5.1.1.35051, Culture=neutral, PublicKeyToken=7a953f43091b5a17, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.1.1.0\lib\windows81\GalaSoft.MvvmLight.Platform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GitterSharp.Configuration, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\gitter-api-pcl.0.3.6\lib\portable-win81+wpa81\GitterSharp.Configuration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GitterSharp.Helpers, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\gitter-api-pcl.0.3.6\lib\portable-win81+wpa81\GitterSharp.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GitterSharp.Model, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\gitter-api-pcl.0.3.6\lib\portable-win81+wpa81\GitterSharp.Model.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GitterSharp.Services, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\gitter-api-pcl.0.3.6\lib\portable-win81+wpa81\GitterSharp.Services.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GitterSharp.UniversalWindows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\gitter-api-pcl.0.3.6\lib\portable-win81+wpa81\GitterSharp.UniversalWindows.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
