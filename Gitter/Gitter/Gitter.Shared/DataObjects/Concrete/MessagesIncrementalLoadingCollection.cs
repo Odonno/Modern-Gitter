@@ -42,14 +42,16 @@ namespace Gitter.DataObjects.Concrete
         #region Constructor
 
 
-        public MessagesIncrementalLoadingCollection(string roomId)
+        public MessagesIncrementalLoadingCollection(string roomId,
+            IGitterApiService gitterApiService,
+            IEventService eventService)
         {
             RoomId = roomId;
             ItemsPerPage = 20;
             Ascendant = true;
 
-            _gitterApiService = ServiceLocator.Current.GetInstance<IGitterApiService>();
-            _eventService = ServiceLocator.Current.GetInstance<IEventService>();
+            _gitterApiService = gitterApiService;
+            _eventService = eventService;
 
             _eventService.ReadRoom.Subscribe(async room =>
             {

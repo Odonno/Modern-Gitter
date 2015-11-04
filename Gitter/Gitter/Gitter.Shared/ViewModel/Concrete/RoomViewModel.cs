@@ -101,7 +101,11 @@ namespace Gitter.ViewModel.Concrete
 
         #region Constructor
 
-        public RoomViewModel(Room room)
+        public RoomViewModel(Room room,
+            IGitterApiService gitterApiService,
+            ILocalNotificationService localNotificationService,
+            IProgressIndicatorService progressIndicatorService,
+            IEventService eventService)
         {
             // Properties
             Room = room;
@@ -117,10 +121,10 @@ namespace Gitter.ViewModel.Concrete
             RefreshCommand = new RelayCommand(Refresh);
 
             // Inject Services
-            _gitterApiService = ServiceLocator.Current.GetInstance<IGitterApiService>();
-            _localNotificationService = ServiceLocator.Current.GetInstance<ILocalNotificationService>();
-            _progressIndicatorService = ServiceLocator.Current.GetInstance<IProgressIndicatorService>();
-            _eventService = ServiceLocator.Current.GetInstance<IEventService>();
+            _gitterApiService = gitterApiService;
+            _localNotificationService = localNotificationService;
+            _progressIndicatorService = progressIndicatorService;
+            _eventService = eventService;
 
 
             if (IsInDesignMode)
@@ -148,7 +152,7 @@ namespace Gitter.ViewModel.Concrete
                 };
 
 
-                Messages = new MessagesIncrementalLoadingCollection("123456")
+                Messages = new MessagesIncrementalLoadingCollection("123456", gitterApiService, eventService)
                 {
                     new MessageViewModel(new Message
                     {
@@ -228,7 +232,7 @@ namespace Gitter.ViewModel.Concrete
             {
                 // Code runs "for real"
 
-                Messages = new MessagesIncrementalLoadingCollection(Room.Id);
+                Messages = new MessagesIncrementalLoadingCollection(Room.Id, gitterApiService, eventService);
                 OpenRealtimeStream();
             }
 

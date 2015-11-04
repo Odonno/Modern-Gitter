@@ -199,7 +199,7 @@ namespace Gitter.ViewModel.Concrete
                     UnreadMentions = 0,
                     DisabledNotifications = false,
                     Type = "ONETOONE"
-                }));
+                }, gitterApiService, localNotificationService, progressIndicatorService, eventService));
 
                 Rooms.Add(new RoomViewModel(new Room
                 {
@@ -215,7 +215,7 @@ namespace Gitter.ViewModel.Concrete
                     DisabledNotifications = false,
                     Type = "ORG",
                     Version = 1
-                }));
+                }, gitterApiService, localNotificationService, progressIndicatorService, eventService));
 
                 Rooms.Add(new RoomViewModel(new Room
                 {
@@ -231,7 +231,7 @@ namespace Gitter.ViewModel.Concrete
                     DisabledNotifications = false,
                     Type = "ORG_CHANNEL",
                     Version = 1
-                }));
+                }, gitterApiService, localNotificationService, progressIndicatorService, eventService));
 
                 Rooms.Add(new RoomViewModel(new Room
                 {
@@ -247,7 +247,7 @@ namespace Gitter.ViewModel.Concrete
                     DisabledNotifications = false,
                     Type = "REPO",
                     Version = 1
-                }));
+                }, gitterApiService, localNotificationService, progressIndicatorService, eventService));
 
                 SelectedRoom = Rooms.FirstOrDefault();
 
@@ -333,7 +333,7 @@ namespace Gitter.ViewModel.Concrete
             if (alreadyJoinedRoom == null)
             {
                 var room = await _gitterApiService.JoinRoomAsync(OwnChatRoomName);
-                alreadyJoinedRoom = new RoomViewModel(room);
+                alreadyJoinedRoom = new RoomViewModel(room, _gitterApiService, _localNotificationService, _progressIndicatorService, _eventService);
                 Rooms.Add(alreadyJoinedRoom);
 
                 App.TelemetryClient.TrackEvent("ChatWithUs",
@@ -399,7 +399,7 @@ namespace Gitter.ViewModel.Concrete
         #endregion
 
 
-        #region Methods
+        #region Private Methods
 
         private async Task RefreshRoomsAsync()
         {
@@ -417,30 +417,12 @@ namespace Gitter.ViewModel.Concrete
 
             // Add ordered rooms to UI list
             foreach (var room in orderedRooms)
-                Rooms.Add(new RoomViewModel(room));
+                Rooms.Add(new RoomViewModel(room, _gitterApiService, _localNotificationService, _progressIndicatorService, _eventService));
 
             // Execute search each time we refresh rooms
             ExecuteSearch();
 
             _eventService.RefreshRooms.OnNext(true);
-        }
-
-        public void SelectRoom(string roomName)
-        {
-            if (Rooms.Any())
-            {
-                var room = Rooms.FirstOrDefault(r => r.Room.Name == roomName);
-                SelectRoom(room);
-            }
-            else
-            {
-                _refreshRooms = _eventService.RefreshRooms.Subscribe(_ =>
-                {
-                    var room = Rooms.FirstOrDefault(r => r.Room.Name == roomName);
-                    SelectRoom(room);
-                    _refreshRooms.Dispose();
-                });
-            }
         }
 
         private async Task NotifyReadMessages(IEnumerable<IMessageViewModel> unreadMessages)
@@ -502,6 +484,29 @@ namespace Gitter.ViewModel.Concrete
             SearchedRooms.Clear();
             foreach (var room in rooms)
                 SearchedRooms.Add(room);
+        }
+
+        #endregion
+
+
+        #region Public Methods
+
+        public void SelectRoom(string roomName)
+        {
+            if (Rooms.Any())
+            {
+                var room = Rooms.FirstOrDefault(r => r.Room.Name == roomName);
+                SelectRoom(room);
+            }
+            else
+            {
+                _refreshRooms = _eventService.RefreshRooms.Subscribe(_ =>
+                {
+                    var room = Rooms.FirstOrDefault(r => r.Room.Name == roomName);
+                    SelectRoom(room);
+                    _refreshRooms.Dispose();
+                });
+            }
         }
 
         public void OpenRealtimeStreams()

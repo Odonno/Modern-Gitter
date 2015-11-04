@@ -1,10 +1,20 @@
 ﻿using Gitter.Services.Abstract;
 using System;
+using System.Collections.Generic;
 
 namespace Gitter.UnitTests.Fakes
 {
     public class FakeApplicationStorageService : IApplicationStorageService
     {
+        #region Properties
+
+        public Dictionary<string, object> Results { get; } = new Dictionary<string, object>();
+
+        #endregion
+
+
+        #region Methods
+
         public bool Exists(string key)
         {
             throw new NotImplementedException();
@@ -22,7 +32,9 @@ namespace Gitter.UnitTests.Fakes
 
         public void Save(string key, object value)
         {
-            throw new NotImplementedException();
+            Results.Add(key, value);
         }
+
+        #endregion
     }
 }

@@ -115,7 +115,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Fakes\FakeApplicationStorageService.cs" />
-    <Compile Include="Fakes\FakeGitterApiService.cs" />
+    <Compile Include="Fakes\FakeGitterApiServiceWithException.cs" />
+    <Compile Include="Fakes\FakeGitterApiServiceWithResult.cs" />
     <Compile Include="Fakes\FakeLocalNotificationService.cs" />
     <Compile Include="Fakes\FakeNavigationService.cs" />
     <Compile Include="Fakes\FakePasswordStorageService.cs" />

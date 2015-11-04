@@ -6,7 +6,7 @@ using GitterSharp.Model;
 
 namespace Gitter.UnitTests.Fakes
 {
-    public class FakeGitterApiService : IGitterApiService
+    public class FakeGitterApiServiceWithException : IGitterApiService
     {
         #region Fields
 
