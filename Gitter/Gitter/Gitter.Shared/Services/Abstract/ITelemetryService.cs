@@ -6,6 +6,6 @@ namespace Gitter.Services.Abstract
     {
         TelemetryClient Client { get; set; }
 
-        void Create();
+        void Initialize();
     }
 }

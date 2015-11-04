@@ -15,7 +15,7 @@ namespace Gitter.Services.Concrete
 
         #region Methods
 
-        public void Create()
+        public void Initialize()
         {
 #if DEBUG
             Client = new TelemetryClient(new TelemetryConfiguration { DisableTelemetry = true });

@@ -34,7 +34,7 @@ namespace Gitter.UnitTests.ViewModels
             _localNotificationService = new FakeLocalNotificationService();
             _telemetryService = new TelemetryService();
 
-            _telemetryService.Create();
+            _telemetryService.Initialize();
 
             _loginViewModel = new LoginViewModel(
                 _navigationService,
@@ -43,7 +43,6 @@ namespace Gitter.UnitTests.ViewModels
                 _localNotificationService,
                 _telemetryService);
         }
-
 
         #endregion
 

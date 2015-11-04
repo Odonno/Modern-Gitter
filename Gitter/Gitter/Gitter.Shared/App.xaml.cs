@@ -242,7 +242,7 @@ namespace Gitter
             TelemetryClient = new TelemetryClient();
 #endif
 
-            ServiceLocator.Current.GetInstance<ITelemetryService>().Create();
+            ServiceLocator.Current.GetInstance<ITelemetryService>().Initialize();
         }
 
         #endregion
