@@ -3,6 +3,7 @@ using Xunit;
 using System.Threading.Tasks;
 using Gitter.UnitTests.Fakes;
 using Gitter.ViewModel.Abstract;
+using Gitter.Services.Abstract;
 
 namespace Gitter.UnitTests.ViewModels
 {
@@ -11,7 +12,7 @@ namespace Gitter.UnitTests.ViewModels
         #region Fields
 
         private FakeNavigationService _navigationService;
-        private FakeSessionService _sessionService;
+        private ISessionService _sessionService;
         private FakePasswordStorageService _passwordStorageService;
         private FakeLocalNotificationService _localNotificationService;
         private FakeTelemetryService _telemetryService;
@@ -23,10 +24,10 @@ namespace Gitter.UnitTests.ViewModels
 
         #region Initialize
 
-        private void TestInitialize()
+        private void TestInitialize(ISessionService sessionService)
         {
             _navigationService = new FakeNavigationService();
-            _sessionService = new FakeSessionService();
+            _sessionService = sessionService;
             _passwordStorageService = new FakePasswordStorageService();
             _localNotificationService = new FakeLocalNotificationService();
             _telemetryService = new FakeTelemetryService();
@@ -50,7 +51,8 @@ namespace Gitter.UnitTests.ViewModels
         public async Task LoginWithExistingStoredToken_Should_Success()
         {
             // Arrange
-            TestInitialize();
+            var sessionService = new FakeSessionServiceWithException();
+            TestInitialize(sessionService);
 
             _passwordStorageService.Content = "123456";
 
@@ -65,13 +67,31 @@ namespace Gitter.UnitTests.ViewModels
         public async Task LoginWithFailedAuthentication_Should_ShowError()
         {
             // Arrange
-            TestInitialize();
+            var sessionService = new FakeSessionServiceWithException();
+            TestInitialize(sessionService);
 
             // Act
             await _loginViewModel.LoginAsync();
 
             // Assert
             Assert.Equal(1, _telemetryService.ExceptionsTracked);
+            Assert.Equal(true, _localNotificationService.NotificationSent);
+        }
+
+        [Fact]
+        public async Task LoginWithoutAuthentication_Should_ShowError()
+        {
+            // Arrange
+            var sessionService = new FakeSessionServiceWithResult();
+            sessionService.Result = null;
+
+            TestInitialize(sessionService);
+
+            // Act
+            await _loginViewModel.LoginAsync();
+
+            // Assert
+            Assert.Equal(0, _telemetryService.ExceptionsTracked);
             Assert.Equal(true, _localNotificationService.NotificationSent);
         }
 

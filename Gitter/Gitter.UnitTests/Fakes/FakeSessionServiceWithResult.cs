@@ -4,16 +4,27 @@ using System.Threading.Tasks;
 
 namespace Gitter.UnitTests.Fakes
 {
-    public class FakeSessionService : ISessionService
+    public class FakeSessionServiceWithResult : ISessionService
     {
+        #region Properties
+
+        public bool? Result { get; set; }
+
+        #endregion
+
+
+        #region Methods
+
         public Task<bool?> LoginAsync()
         {
-            throw new NotImplementedException();
+            return Task.FromResult(Result);
         }
 
         public void Logout()
         {
             throw new NotImplementedException();
         }
+
+        #endregion
     }
 }
