@@ -75,7 +75,7 @@ namespace Gitter.UnitTests.ViewModels
 
             // Assert
             Assert.Equal(1, _telemetryService.ExceptionsTracked);
-            Assert.Equal(true, _localNotificationService.NotificationSent);
+            Assert.True(_localNotificationService.NotificationSent);
         }
 
         [Fact]
@@ -92,7 +92,25 @@ namespace Gitter.UnitTests.ViewModels
 
             // Assert
             Assert.Equal(0, _telemetryService.ExceptionsTracked);
-            Assert.Equal(true, _localNotificationService.NotificationSent);
+            Assert.True(_localNotificationService.NotificationSent);
+        }
+
+        [Fact]
+        public async Task LoginWithWrongAuthentication_Should_DoNothing()
+        {
+            // Arrange
+            var sessionService = new FakeSessionServiceWithResult();
+            sessionService.Result = false;
+
+            TestInitialize(sessionService);
+
+            // Act
+            await _loginViewModel.LoginAsync();
+
+            // Assert
+            Assert.Equal(0, _telemetryService.ExceptionsTracked);
+            Assert.False(_localNotificationService.NotificationSent);
+            Assert.Null(_navigationService.CurrentPageKey);
         }
 
         #endregion
