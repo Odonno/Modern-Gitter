@@ -3,6 +3,7 @@ using Gitter.Services.Concrete;
 using Gitter.UnitTests.Fakes;
 using Gitter.ViewModel.Concrete;
 using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Gitter.UnitTests.ViewModels
@@ -25,7 +26,7 @@ namespace Gitter.UnitTests.ViewModels
         #region Methods
 
         [Fact]
-        public void CreateSimpleMain_Should_SetDefaultProperties()
+        public async Task CreateSimpleMain_Should_SetDefaultProperties()
         {
             // Arrange
              _gitterApiService = new FakeGitterApiService();
@@ -46,10 +47,11 @@ namespace Gitter.UnitTests.ViewModels
                 _navigationService);
 
             // Act
+            await Task.Delay(1000);
 
             // Assert
-            Assert.Equal(DateTime.Now.ToString(), mainViewModel.CurrentDateTime.ToString());
-            Assert.Equal(false, _localNotificationService.NotificationSent);
+            Assert.Equal(DateTime.Now.Subtract(TimeSpan.FromSeconds(1)).ToString(), mainViewModel.CurrentDateTime.ToString());
+            Assert.True(_localNotificationService.NotificationSent);
             Assert.Null(mainViewModel.CurrentUser);
         }
 

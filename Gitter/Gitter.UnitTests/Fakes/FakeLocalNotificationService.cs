@@ -6,7 +6,14 @@ namespace Gitter.UnitTests.Fakes
 {
     public class FakeLocalNotificationService : ILocalNotificationService
     {
+        #region Properties
+
         public bool NotificationSent { get; private set; }
+
+        #endregion
+
+
+        #region Methods
 
         public Task ClearNotificationGroupAsync(string group)
         {
@@ -17,5 +24,7 @@ namespace Gitter.UnitTests.Fakes
         {
             NotificationSent = true;
         }
+
+        #endregion
     }
 }
