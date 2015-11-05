@@ -1,5 +1,6 @@
 ﻿using Gitter.Services.Concrete;
 using Gitter.UnitTests.Fakes;
+using Gitter.ViewModel.Abstract;
 using Gitter.ViewModel.Concrete;
 using GitterSharp.Model;
 using System;
@@ -10,6 +11,56 @@ namespace Gitter.UnitTests.ViewModels
     public class RoomTests
     {
         // TODO : Test property IsLoaded
+
+        #region Fields
+
+        private FakeGitterApiServiceWithResult _gitterApiService;
+        private FakeLocalNotificationService _localNotificationService;
+        private FakeProgressIndicatorService _progressIndicatorService;
+        private EventService _eventService;
+        private FakeApplicationStorageService _applicationStorageService;
+        private FakePasswordStorageService _passwordStorageService;
+        private FakeNavigationService _navigationService;
+
+        private IMainViewModel _mainViewModel;
+        private IRoomViewModel _roomViewModel;
+
+        #endregion
+
+
+        #region Initialize
+
+        public void TestInitialize(Room room)
+        {
+            _gitterApiService = new FakeGitterApiServiceWithResult();
+            _localNotificationService = new FakeLocalNotificationService();
+            _progressIndicatorService = new FakeProgressIndicatorService();
+            _eventService = new EventService();
+            _applicationStorageService = new FakeApplicationStorageService();
+            _passwordStorageService = new FakePasswordStorageService();
+            _navigationService = new FakeNavigationService();
+
+            _mainViewModel = new MainViewModel(
+                _gitterApiService,
+                _localNotificationService,
+                _applicationStorageService,
+                _progressIndicatorService,
+                _passwordStorageService,
+                _eventService,
+                _navigationService);
+
+            _roomViewModel = new RoomViewModel(room,
+                _gitterApiService,
+                _localNotificationService,
+                _progressIndicatorService,
+                _eventService,
+                _mainViewModel);
+        }
+
+        #endregion
+
+
+        #region Methods
 
         [Fact]
         public void CreateRoom_Should_SetDefaultProperties()
@@ -22,37 +73,15 @@ namespace Gitter.UnitTests.ViewModels
                 UnreadItems = 14
             };
 
-            var gitterApiService = new FakeGitterApiServiceWithResult();
-            var localNotificationService = new FakeLocalNotificationService();
-            var progressIndicatorService = new FakeProgressIndicatorService();
-            var eventService = new EventService();
-            var applicationStorageService = new FakeApplicationStorageService();
-            var passwordStorageService = new FakePasswordStorageService();
-            var navigationService = new FakeNavigationService();
-
-            var mainViewModel = new MainViewModel(
-                gitterApiService,
-                localNotificationService,
-                applicationStorageService,
-                progressIndicatorService,
-                passwordStorageService,
-                eventService,
-                navigationService);
-
-            var roomViewModel = new RoomViewModel(room,
-                gitterApiService,
-                localNotificationService,
-                progressIndicatorService,
-                eventService,
-                mainViewModel);
+            TestInitialize(room);
 
             // Act
 
             // Assert
-            Assert.Same(room, roomViewModel.Room);
-            Assert.NotNull(roomViewModel.Messages);
-            Assert.Equal(0, roomViewModel.Messages.Count);
-            Assert.Equal(14, roomViewModel.UnreadMessagesCount);
+            Assert.Same(room, _roomViewModel.Room);
+            Assert.NotNull(_roomViewModel.Messages);
+            Assert.Equal(0, _roomViewModel.Messages.Count);
+            Assert.Equal(14, _roomViewModel.UnreadMessagesCount);
         }
 
         [Fact]
@@ -66,29 +95,7 @@ namespace Gitter.UnitTests.ViewModels
                 UnreadItems = 14
             };
 
-            var gitterApiService = new FakeGitterApiServiceWithResult();
-            var localNotificationService = new FakeLocalNotificationService();
-            var progressIndicatorService = new FakeProgressIndicatorService();
-            var eventService = new EventService();
-            var applicationStorageService = new FakeApplicationStorageService();
-            var passwordStorageService = new FakePasswordStorageService();
-            var navigationService = new FakeNavigationService();
-
-            var mainViewModel = new MainViewModel(
-                gitterApiService,
-                localNotificationService,
-                applicationStorageService,
-                progressIndicatorService,
-                passwordStorageService,
-                eventService,
-                navigationService);
-
-            var roomViewModel = new RoomViewModel(room,
-                gitterApiService,
-                localNotificationService,
-                progressIndicatorService,
-                eventService,
-                mainViewModel);
+            TestInitialize(room);
 
             // Act
             var message = new Message
@@ -101,11 +108,11 @@ namespace Gitter.UnitTests.ViewModels
                     Username = "Odonno"
                 }
             };
-            gitterApiService.StreamingMessages.OnNext(message);
+            _gitterApiService.StreamingMessages.OnNext(message);
 
             // Assert
-            Assert.Equal(15, roomViewModel.UnreadMessagesCount);
-            Assert.True(localNotificationService.NotificationSent);
+            Assert.Equal(15, _roomViewModel.UnreadMessagesCount);
+            Assert.True(_localNotificationService.NotificationSent);
         }
 
         [Fact]
@@ -125,5 +132,7 @@ namespace Gitter.UnitTests.ViewModels
         {
             // TODO
         }
+
+        #endregion
     }
 }
