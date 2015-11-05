@@ -11,7 +11,6 @@ using Gitter.Services.Abstract;
 using Gitter.ViewModel.Abstract;
 using GitterSharp.Model;
 using GitterSharp.Services;
-using Microsoft.Practices.ServiceLocation;
 using System.Threading.Tasks;
 using Gitter.DataObjects.Abstract;
 #if WINDOWS_PHONE_APP

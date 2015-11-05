@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GitterSharp.Model;
+using System.Reactive.Subjects;
 
 namespace Gitter.UnitTests.Fakes
 {
@@ -38,7 +39,7 @@ namespace Gitter.UnitTests.Fakes
 
         public IObservable<Message> GetRealtimeMessages(string roomId)
         {
-            throw new NotImplementedException();
+            return new Subject<Message>();
         }
 
         public Task<IEnumerable<Repository>> GetRepositoriesAsync(string userId)
