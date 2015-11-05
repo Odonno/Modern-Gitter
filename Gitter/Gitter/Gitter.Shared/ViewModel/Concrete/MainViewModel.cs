@@ -452,7 +452,7 @@ namespace Gitter.ViewModel.Concrete
 
                         foreach (var message in unreadMessages)
                         {
-                            message.ReadByCurrent();
+                            message.MarkAsRead();
                             unreadCount++;
                         }
 

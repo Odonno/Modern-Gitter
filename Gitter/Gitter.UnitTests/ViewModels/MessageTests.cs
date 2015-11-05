@@ -102,5 +102,25 @@ namespace Gitter.UnitTests.ViewModels
             Assert.Equal("my updated message", messageViewModel.Text);
             Assert.Equal("my updated message", message.Text);
         }
+
+        [Fact]
+        public void ReadMessage_Should_MarkMessageAsRead()
+        {
+            // Arrange
+            var message = new Message
+            {
+                Id = "123456",
+                Text = "my first message",
+                UnreadByCurrent = true
+            };
+            var messageViewModel = new MessageViewModel(message);
+
+            // Act
+            messageViewModel.MarkAsRead();
+
+            // Assert
+            Assert.True(messageViewModel.Read);
+            Assert.False(message.UnreadByCurrent);
+        }
     }
 }

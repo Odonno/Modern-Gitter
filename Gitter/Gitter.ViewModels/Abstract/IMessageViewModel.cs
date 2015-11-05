@@ -13,6 +13,6 @@ namespace Gitter.ViewModel.Abstract
         bool Read { get; }
 
         void UpdateMessage(string text);
-        void ReadByCurrent();
+        void MarkAsRead();
     }
 }

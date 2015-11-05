@@ -118,7 +118,7 @@ namespace Gitter.ViewModel.Concrete
             Message.Text = text;
         }
 
-        public void ReadByCurrent()
+        public void MarkAsRead()
         {
             Read = true;
             Message.UnreadByCurrent = !Read;
