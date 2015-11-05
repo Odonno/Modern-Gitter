@@ -83,5 +83,24 @@ namespace Gitter.UnitTests.ViewModels
             // Assert
             Assert.False(messageViewModel.Read);
         }
+
+        [Fact]
+        public void UpdateMessage_Should_UpdateTextContent()
+        {
+            // Arrange
+            var message = new Message
+            {
+                Id = "123456",
+                Text = "my first message"
+            };
+            var messageViewModel = new MessageViewModel(message);
+
+            // Act
+            messageViewModel.UpdateMessage("my updated message");
+
+            // Assert
+            Assert.Equal("my updated message", messageViewModel.Text);
+            Assert.Equal("my updated message", message.Text);
+        }
     }
 }
