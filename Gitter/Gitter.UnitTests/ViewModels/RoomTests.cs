@@ -146,7 +146,32 @@ namespace Gitter.UnitTests.ViewModels
         [Fact]
         public void SendingMessageAlreadyReadFromApi_Should_NotShowMessageNotification()
         {
-            // TODO
+            // Arrange
+            var room = new Room
+            {
+                Id = "123456",
+                Name = "Room",
+                UnreadItems = 14
+            };
+
+            TestInitialize(room);
+
+            // Act
+            var message = new Message
+            {
+                Id = "a1d4gv",
+                UnreadByCurrent = false,
+                User = new User
+                {
+                    Id = "abcdef",
+                    Username = "Odonno"
+                }
+            };
+            _gitterApiService.StreamingMessages.OnNext(message);
+
+            // Assert
+            Assert.Equal(14, _roomViewModel.UnreadMessagesCount);
+            Assert.False(_localNotificationService.NotificationSent);
         }
 
         [Fact]
