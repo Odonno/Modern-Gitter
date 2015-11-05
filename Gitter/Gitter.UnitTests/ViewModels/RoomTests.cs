@@ -4,6 +4,7 @@ using Gitter.ViewModel.Abstract;
 using Gitter.ViewModel.Concrete;
 using GitterSharp.Model;
 using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Gitter.UnitTests.ViewModels
@@ -116,7 +117,34 @@ namespace Gitter.UnitTests.ViewModels
         }
 
         [Fact]
-        public void SendingMessageOurselfFromApi_Should_NotShowMessageNotification()
+        public async Task SendingMessageOurselfFromApi_Should_NotShowMessageNotification()
+        {
+            // Arrange
+            var room = new Room
+            {
+                Id = "123456",
+                Name = "Room",
+                UnreadItems = 14
+            };
+
+            TestInitialize(room);
+
+            // Act
+            var message = new Message
+            {
+                Id = "a1d4gv",
+                UnreadByCurrent = true,
+                User = await _gitterApiService.GetCurrentUserAsync()
+            };
+            _gitterApiService.StreamingMessages.OnNext(message);
+
+            // Assert
+            Assert.Equal(15, _roomViewModel.UnreadMessagesCount);
+            Assert.False(_localNotificationService.NotificationSent);
+        }
+
+        [Fact]
+        public void SendingMessageAlreadyReadFromApi_Should_NotShowMessageNotification()
         {
             // TODO
         }
