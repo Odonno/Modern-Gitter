@@ -44,5 +44,27 @@ namespace Gitter.UnitTests.ViewModels
             Assert.Null(messageViewModel.User);
             Assert.True(messageViewModel.Read);
         }
+
+        [Fact]
+        public void Message_Should_HaveAuthor()
+        {
+            // Arrange
+            var user = new User
+            {
+                Id = "abcdef",
+                Username = "Odonno"
+            };
+            var message = new Message
+            {
+                User = user
+            };
+            var messageViewModel = new MessageViewModel(message);
+
+            // Act
+
+            // Assert
+            Assert.NotNull(messageViewModel.User);
+            Assert.Same(user, messageViewModel.User);
+        }
     }
 }
