@@ -211,7 +211,34 @@ namespace Gitter.UnitTests.ViewModels
         [Fact]
         public void ClosingStream_Should_RemoveMessageNotification()
         {
-            // TODO
+            // Arrange
+            var room = new Room
+            {
+                Id = "123456",
+                Name = "Room",
+                UnreadItems = 14
+            };
+
+            TestInitialize(room);
+
+            // Act
+            _roomViewModel.CloseRealtimeStream();
+
+            var message = new Message
+            {
+                Id = "a1d4gv",
+                UnreadByCurrent = true,
+                User = new User
+                {
+                    Id = "abcdef",
+                    Username = "Odonno"
+                }
+            };
+            _gitterApiService.StreamingMessages.OnNext(message);
+
+            // Assert
+            Assert.Equal(14, _roomViewModel.UnreadMessagesCount);
+            Assert.Equal(0, _localNotificationService.NotificationsSent);
         }
 
         [Fact]
