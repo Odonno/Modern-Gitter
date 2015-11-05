@@ -16,6 +16,13 @@ namespace Gitter.UnitTests.Fakes
         #endregion
 
 
+        #region Fake Properties
+
+        public Subject<Message> StreamingMessages { get; } = new Subject<Message>();
+
+        #endregion
+
+
         #region Methods
 
         public Task<User> GetCurrentUserAsync()
@@ -39,7 +46,7 @@ namespace Gitter.UnitTests.Fakes
 
         public IObservable<Message> GetRealtimeMessages(string roomId)
         {
-            return new Subject<Message>();
+            return StreamingMessages;
         }
 
         public Task<IEnumerable<Repository>> GetRepositoriesAsync(string userId)

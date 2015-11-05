@@ -33,6 +33,8 @@ namespace Gitter.ViewModel.Concrete
 
         #region Fields
 
+        private readonly IMainViewModel _mainViewModel;
+
         private IDisposable _streamingMessages;
 
         #endregion
@@ -104,10 +106,14 @@ namespace Gitter.ViewModel.Concrete
             IGitterApiService gitterApiService,
             ILocalNotificationService localNotificationService,
             IProgressIndicatorService progressIndicatorService,
-            IEventService eventService)
+            IEventService eventService,
+            IMainViewModel mainViewModel)
         {
             // Properties
             Room = room;
+
+            // View Models
+            _mainViewModel = mainViewModel;
 
             // Commands
             SendMessageCommand = new RelayCommand(SendMessage, CanSendMessage);
@@ -151,7 +157,7 @@ namespace Gitter.ViewModel.Concrete
                 };
 
 
-                Messages = new MessagesIncrementalLoadingCollection("123456", gitterApiService, eventService)
+                Messages = new MessagesIncrementalLoadingCollection("123456", gitterApiService, eventService, mainViewModel)
                 {
                     new MessageViewModel(new Message
                     {
@@ -231,7 +237,7 @@ namespace Gitter.ViewModel.Concrete
             {
                 // Code runs "for real"
 
-                Messages = new MessagesIncrementalLoadingCollection(Room.Id, gitterApiService, eventService);
+                Messages = new MessagesIncrementalLoadingCollection(Room.Id, gitterApiService, eventService, mainViewModel);
                 OpenRealtimeStream();
             }
 
@@ -369,14 +375,14 @@ namespace Gitter.ViewModel.Concrete
             if (message.UnreadByCurrent)
             {
                 // Add in-app notification (unread count), except for the current selected room
-                if (ViewModelLocator.Main.SelectedRoom != this)
+                if (_mainViewModel.SelectedRoom != this)
                 {
                     var dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
                     await dispatcher.RunAsync(CoreDispatcherPriority.High, () => UnreadMessagesCount++);
                 }
 
                 // Send notification (new message)
-                if (!Room.DisabledNotifications && ViewModelLocator.Main.CurrentUser.Id != message.User.Id)
+                if (!Room.DisabledNotifications && _mainViewModel.CurrentUser.Id != message.User.Id)
                 {
                     string id = $"{Room.Name}_message_{Room.Id}";
                     _localNotificationService.SendNotification(Room.Name, message.Text, id, Room.Name);

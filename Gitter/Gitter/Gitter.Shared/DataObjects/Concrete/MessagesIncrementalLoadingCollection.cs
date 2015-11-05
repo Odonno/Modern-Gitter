@@ -9,7 +9,6 @@ using Gitter.ViewModel;
 using Gitter.ViewModel.Abstract;
 using Gitter.ViewModel.Concrete;
 using GitterSharp.Services;
-using Microsoft.Practices.ServiceLocation;
 
 namespace Gitter.DataObjects.Concrete
 {
@@ -19,6 +18,8 @@ namespace Gitter.DataObjects.Concrete
 
         private readonly object _lock = new object();
         private readonly List<IMessageViewModel> _cachedMessages = new List<IMessageViewModel>();
+
+        private readonly IMainViewModel _mainViewModel;
 
         #endregion
 
@@ -44,15 +45,22 @@ namespace Gitter.DataObjects.Concrete
 
         public MessagesIncrementalLoadingCollection(string roomId,
             IGitterApiService gitterApiService,
-            IEventService eventService)
+            IEventService eventService,
+            IMainViewModel mainViewModel)
         {
+            // Properties
             RoomId = roomId;
             ItemsPerPage = 20;
             Ascendant = true;
 
+            // View Models
+            _mainViewModel = mainViewModel;
+
+            // Services
             _gitterApiService = gitterApiService;
             _eventService = eventService;
 
+            // Events
             _eventService.ReadRoom.Subscribe(async room =>
             {
                 if (room.Room.Id == roomId)
@@ -72,7 +80,7 @@ namespace Gitter.DataObjects.Concrete
 
                 if (id == roomId)
                 {
-                    if (ViewModelLocator.Main.SelectedRoom != null)
+                    if (_mainViewModel.SelectedRoom != null)
                     {
                         // Add message in UI
                         await AddItemAsync(message);
@@ -123,7 +131,7 @@ namespace Gitter.DataObjects.Concrete
         {
             await base.AddItemAsync(item);
 
-            if (!item.Read && ViewModelLocator.Main.CurrentUser.Id != item.User.Id)
+            if (!item.Read && _mainViewModel.CurrentUser.Id != item.User.Id)
                 _eventService.NotifyUnreadMessages.OnNext(new[] { item });
         }
 
