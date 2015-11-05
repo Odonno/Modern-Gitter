@@ -66,5 +66,22 @@ namespace Gitter.UnitTests.ViewModels
             Assert.NotNull(messageViewModel.User);
             Assert.Same(user, messageViewModel.User);
         }
+
+        [Fact]
+        public void MessageReadByCurrent_Should_NotBeMarkedRead()
+        {
+            // Arrange
+            var message = new Message
+            {
+                Id = "123456",
+                UnreadByCurrent = true
+            };
+            var messageViewModel = new MessageViewModel(message);
+
+            // Act
+
+            // Assert
+            Assert.False(messageViewModel.Read);
+        }
     }
 }
