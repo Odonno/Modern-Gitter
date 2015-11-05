@@ -129,6 +129,7 @@
     <Compile Include="ViewModels\FullImageTests.cs" />
     <Compile Include="ViewModels\LoginTests.cs" />
     <Compile Include="ViewModels\MainTests.cs" />
+    <Compile Include="ViewModels\MessageTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
