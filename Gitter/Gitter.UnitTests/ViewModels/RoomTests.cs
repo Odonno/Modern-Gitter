@@ -175,6 +175,38 @@ namespace Gitter.UnitTests.ViewModels
         }
 
         [Fact]
+        public void SendingMessageFromApiOnDisabledRoom_Should_NotShowMessageNotification()
+        {
+            // Arrange
+            var room = new Room
+            {
+                Id = "123456",
+                Name = "Room",
+                UnreadItems = 14,
+                DisabledNotifications = true
+            };
+
+            TestInitialize(room);
+
+            // Act
+            var message = new Message
+            {
+                Id = "a1d4gv",
+                UnreadByCurrent = true,
+                User = new User
+                {
+                    Id = "abcdef",
+                    Username = "Odonno"
+                }
+            };
+            _gitterApiService.StreamingMessages.OnNext(message);
+
+            // Assert
+            Assert.Equal(15, _roomViewModel.UnreadMessagesCount);
+            Assert.False(_localNotificationService.NotificationSent);
+        }
+
+        [Fact]
         public void ClosingStream_Should_RemoveMessageNotification()
         {
             // TODO
