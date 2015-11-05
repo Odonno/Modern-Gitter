@@ -244,7 +244,35 @@ namespace Gitter.UnitTests.ViewModels
         [Fact]
         public void ReopeningStream_Should_EnableMessageNotification()
         {
-            // TODO
+            // Arrange
+            var room = new Room
+            {
+                Id = "123456",
+                Name = "Room",
+                UnreadItems = 14
+            };
+
+            TestInitialize(room);
+
+            // Act
+            _roomViewModel.CloseRealtimeStream();
+            _roomViewModel.OpenRealtimeStream();
+
+            var message = new Message
+            {
+                Id = "a1d4gv",
+                UnreadByCurrent = true,
+                User = new User
+                {
+                    Id = "abcdef",
+                    Username = "Odonno"
+                }
+            };
+            _gitterApiService.StreamingMessages.OnNext(message);
+
+            // Assert
+            Assert.Equal(15, _roomViewModel.UnreadMessagesCount);
+            Assert.Equal(1, _localNotificationService.NotificationsSent);
         }
 
         #endregion
