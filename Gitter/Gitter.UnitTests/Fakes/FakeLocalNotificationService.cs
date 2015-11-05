@@ -8,7 +8,17 @@ namespace Gitter.UnitTests.Fakes
     {
         #region Fake Properties
 
-        public bool NotificationSent { get; private set; }
+        public int NotificationsSent { get; private set; }
+
+        #endregion
+
+
+        #region Fake Methods
+
+        public void Reset()
+        {
+            NotificationsSent = 0;
+        }
 
         #endregion
 
@@ -22,7 +32,7 @@ namespace Gitter.UnitTests.Fakes
 
         public void SendNotification(string title, string content, string id = null, string group = null)
         {
-            NotificationSent = true;
+            NotificationsSent++;
         }
 
         #endregion

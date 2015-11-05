@@ -52,7 +52,7 @@ namespace Gitter.UnitTests.ViewModels
 
             // Assert
             Assert.Equal(DateTime.Now.Subtract(TimeSpan.FromSeconds(1)).ToString(), mainViewModel.CurrentDateTime.ToString());
-            Assert.True(_localNotificationService.NotificationSent);
+            Assert.Equal(1, _localNotificationService.NotificationsSent);
             Assert.Null(mainViewModel.CurrentUser);
         }
 
@@ -82,7 +82,7 @@ namespace Gitter.UnitTests.ViewModels
 
             // Assert
             Assert.Equal(DateTime.Now.Subtract(TimeSpan.FromSeconds(1)).ToString(), mainViewModel.CurrentDateTime.ToString());
-            Assert.False(_localNotificationService.NotificationSent);
+            Assert.Equal(0, _localNotificationService.NotificationsSent);
             Assert.NotNull(mainViewModel.CurrentUser);
         }
 

@@ -56,6 +56,8 @@ namespace Gitter.UnitTests.ViewModels
                 _progressIndicatorService,
                 _eventService,
                 _mainViewModel);
+
+            _localNotificationService.Reset();
         }
 
         #endregion
@@ -113,7 +115,7 @@ namespace Gitter.UnitTests.ViewModels
 
             // Assert
             Assert.Equal(15, _roomViewModel.UnreadMessagesCount);
-            Assert.True(_localNotificationService.NotificationSent);
+            Assert.Equal(1, _localNotificationService.NotificationsSent);
         }
 
         [Fact]
@@ -140,7 +142,7 @@ namespace Gitter.UnitTests.ViewModels
 
             // Assert
             Assert.Equal(15, _roomViewModel.UnreadMessagesCount);
-            Assert.False(_localNotificationService.NotificationSent);
+            Assert.Equal(0, _localNotificationService.NotificationsSent);
         }
 
         [Fact]
@@ -171,7 +173,7 @@ namespace Gitter.UnitTests.ViewModels
 
             // Assert
             Assert.Equal(14, _roomViewModel.UnreadMessagesCount);
-            Assert.False(_localNotificationService.NotificationSent);
+            Assert.Equal(0, _localNotificationService.NotificationsSent);
         }
 
         [Fact]
@@ -203,7 +205,7 @@ namespace Gitter.UnitTests.ViewModels
 
             // Assert
             Assert.Equal(15, _roomViewModel.UnreadMessagesCount);
-            Assert.False(_localNotificationService.NotificationSent);
+            Assert.Equal(0, _localNotificationService.NotificationsSent);
         }
 
         [Fact]

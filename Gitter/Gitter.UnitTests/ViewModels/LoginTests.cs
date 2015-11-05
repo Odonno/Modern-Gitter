@@ -75,7 +75,7 @@ namespace Gitter.UnitTests.ViewModels
 
             // Assert
             Assert.Equal(1, _telemetryService.ExceptionsTracked);
-            Assert.True(_localNotificationService.NotificationSent);
+            Assert.Equal(1, _localNotificationService.NotificationsSent);
         }
 
         [Fact]
@@ -92,7 +92,7 @@ namespace Gitter.UnitTests.ViewModels
 
             // Assert
             Assert.Equal(0, _telemetryService.ExceptionsTracked);
-            Assert.True(_localNotificationService.NotificationSent);
+            Assert.Equal(1, _localNotificationService.NotificationsSent);
         }
 
         [Fact]
@@ -109,7 +109,7 @@ namespace Gitter.UnitTests.ViewModels
 
             // Assert
             Assert.Equal(0, _telemetryService.ExceptionsTracked);
-            Assert.False(_localNotificationService.NotificationSent);
+            Assert.Equal(0, _localNotificationService.NotificationsSent);
             Assert.Null(_navigationService.CurrentPageKey);
         }
 
@@ -127,7 +127,7 @@ namespace Gitter.UnitTests.ViewModels
 
             // Assert
             Assert.Equal(0, _telemetryService.ExceptionsTracked);
-            Assert.False(_localNotificationService.NotificationSent);
+            Assert.Equal(0, _localNotificationService.NotificationsSent);
             Assert.Equal("Main", _navigationService.CurrentPageKey);
         }
 
