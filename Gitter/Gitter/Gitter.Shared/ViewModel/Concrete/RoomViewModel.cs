@@ -60,17 +60,6 @@ namespace Gitter.ViewModel.Concrete
             }
         }
 
-        private int _unreadMessagesCount;
-        public int UnreadMessagesCount
-        {
-            get { return _unreadMessagesCount; }
-            set
-            {
-                _unreadMessagesCount = value;
-                RaisePropertyChanged();
-            }
-        }
-
         private bool _isSendingMessage;
         public bool IsSendingMessage
         {
@@ -80,6 +69,17 @@ namespace Gitter.ViewModel.Concrete
                 _isSendingMessage = value;
                 RaisePropertyChanged();
                 ((RelayCommand)(SendMessageCommand)).RaiseCanExecuteChanged();
+            }
+        }
+
+        private int _unreadMessagesCount;
+        public int UnreadMessagesCount
+        {
+            get { return _unreadMessagesCount; }
+            set
+            {
+                _unreadMessagesCount = value;
+                RaisePropertyChanged();
             }
         }
 
@@ -252,7 +252,7 @@ namespace Gitter.ViewModel.Concrete
 
         private bool CanSendMessage()
         {
-            return Room != null && !string.IsNullOrWhiteSpace(TextMessage) && !IsSendingMessage;
+            return !string.IsNullOrWhiteSpace(TextMessage) && !IsSendingMessage;
         }
         private async void SendMessage()
         {

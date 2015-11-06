@@ -87,6 +87,35 @@ namespace Gitter.UnitTests.ViewModels
             Assert.Equal(14, _roomViewModel.UnreadMessagesCount);
         }
 
+        [Theory]
+        [InlineData(null, false)]
+        [InlineData("", false)]
+        [InlineData("    ", false)]
+        [InlineData(null, true)]
+        [InlineData("", true)]
+        [InlineData("    ", true)]
+        [InlineData("a new message", true)]
+        public void ValuesOfTextMessageAndIsSending_Should_NotEnableSendMessage(string textMessage, bool isSendingMessage)
+        {
+            // Arrange
+            var room = new Room
+            {
+                Id = "123456",
+                Name = "Room",
+                UnreadItems = 14
+            };
+
+            TestInitialize(room);
+
+            // Act
+            _roomViewModel.TextMessage = textMessage;
+            _roomViewModel.IsSendingMessage = isSendingMessage;
+            bool result = _roomViewModel.SendMessageCommand.CanExecute(null);
+
+            // Assert
+            Assert.False(result);
+        }
+
         [Fact]
         public void ReceivingMessageFromApi_Should_ShowMessageNotification()
         {
