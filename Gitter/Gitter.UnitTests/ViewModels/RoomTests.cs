@@ -88,7 +88,7 @@ namespace Gitter.UnitTests.ViewModels
         }
 
         [Fact]
-        public void SendingMessageFromApi_Should_ShowMessageNotification()
+        public void ReceivingMessageFromApi_Should_ShowMessageNotification()
         {
             // Arrange
             var room = new Room
@@ -119,7 +119,7 @@ namespace Gitter.UnitTests.ViewModels
         }
 
         [Fact]
-        public async Task SendingMessageOurselfFromApi_Should_NotShowMessageNotification()
+        public async Task ReceivingOurOwnMessageFromApi_Should_NotShowMessageNotification()
         {
             // Arrange
             var room = new Room
@@ -146,7 +146,7 @@ namespace Gitter.UnitTests.ViewModels
         }
 
         [Fact]
-        public void SendingMessageAlreadyReadFromApi_Should_NotShowMessageNotification()
+        public void ReceivingMessageAlreadyReadFromApi_Should_NotShowMessageNotification()
         {
             // Arrange
             var room = new Room
@@ -177,7 +177,7 @@ namespace Gitter.UnitTests.ViewModels
         }
 
         [Fact]
-        public void SendingMessageFromApiOnDisabledRoom_Should_NotShowMessageNotification()
+        public void ReceivingMessageFromApiOnDisabledRoom_Should_NotShowMessageNotification()
         {
             // Arrange
             var room = new Room
