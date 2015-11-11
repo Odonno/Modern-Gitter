@@ -426,6 +426,28 @@ namespace Gitter.UnitTests.ViewModels
         }
 
         [Fact]
+        public async Task RefreshRoom_Should_PutLastMessages()
+        {
+            // Arrange
+            var room = new Room
+            {
+                Id = "123456",
+                Name = "Room",
+                UnreadItems = 14
+            };
+
+            TestInitialize(room);
+
+            // Act
+            _roomViewModel.RefreshCommand.Execute(null);
+            await Task.Delay(100);
+
+            // Assert
+            Assert.Equal(2, _roomViewModel.Messages.Count);
+            Assert.Equal(1, _telemetryService.EventsTracked);
+        }
+
+        [Fact]
         public async Task ReceivingMessageFromApi_Should_ShowMessageNotification()
         {
             // Arrange

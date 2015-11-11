@@ -104,6 +104,7 @@ namespace Gitter.DataObjects.Concrete
             if (ViewModelBase.IsInDesignModeStatic)
                 return new List<IMessageViewModel>();
 
+            // TODO : Use Semaphore
             lock (_lock)
             {
                 if (Page++ == 0)

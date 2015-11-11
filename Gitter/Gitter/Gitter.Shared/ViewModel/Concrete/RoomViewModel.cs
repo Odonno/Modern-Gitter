@@ -344,7 +344,7 @@ namespace Gitter.ViewModel.Concrete
         {
             Messages.Reset();
 
-            App.TelemetryClient.TrackEvent("RefreshRoom",
+            _telemetryService.TrackEvent("RefreshRoom",
                 new Dictionary<string, string> { { "Room", Room.Name } });
         }
 

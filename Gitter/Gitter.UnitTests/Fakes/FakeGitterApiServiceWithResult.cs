@@ -58,7 +58,33 @@ namespace Gitter.UnitTests.Fakes
 
         public Task<IEnumerable<Message>> GetRoomMessagesAsync(string roomId, int limit = 50, string beforeId = null, string afterId = null, int skip = 0)
         {
-            throw new NotImplementedException();
+            var suprememoocow = new User
+            {
+                Id = "53307831c3599d1de448e19a",
+                Username = "suprememoocow",
+                DisplayName = "Andrew Newdigate",
+                Url = "/suprememoocow,",
+                SmallAvatarUrl = "https://avatars.githubusercontent.com/u/594566?",
+                MediumAvatarUrl = "https://avatars.githubusercontent.com/u/594566?"
+            };
+
+            var messages = new List<Message>
+            {
+                new Message
+                {
+                    Id = "1",
+                    User = suprememoocow,
+                    Text = "first message"
+                },
+                new Message
+                {
+                    Id = "2",
+                    User = suprememoocow,
+                    Text = "second message"
+                }
+            };
+
+            return Task.FromResult<IEnumerable<Message>>(messages);
         }
 
         public Task<IEnumerable<Room>> GetRoomsAsync()
