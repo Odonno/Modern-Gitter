@@ -286,10 +286,10 @@ namespace Gitter.ViewModel.Concrete
             if (message == null)
                 return false;
 
-            var currentDate = new DateTimeOffset(ViewModelLocator.Main.CurrentDateTime);
+            var currentDate = new DateTimeOffset(_mainViewModel.CurrentDateTime);
 
-            return message.User.Id == ViewModelLocator.Main.CurrentUser.Id &&
-                   currentDate.Subtract(message.SentDate).TotalMinutes < 10;
+            return (message.User.Id == _mainViewModel.CurrentUser.Id &&
+                   currentDate.Subtract(message.SentDate).TotalMinutes < 10);
         }
         private async void RemoveMessage(IMessageViewModel message)
         {

@@ -221,6 +221,26 @@ namespace Gitter.UnitTests.ViewModels
         }
 
         [Fact]
+        public void NullMessageViewModel_Should_NotEnableRemoveMessage()
+        {
+            // Arrange
+            var room = new Room
+            {
+                Id = "123456",
+                Name = "Room",
+                UnreadItems = 14
+            };
+
+            TestInitialize(room);
+
+            // Act
+            bool result = _roomViewModel.RemoveMessageCommand.CanExecute(null);
+
+            // Assert
+            Assert.False(result);
+        }
+
+        [Fact]
         public void ReceivingMessageFromApi_Should_ShowMessageNotification()
         {
             // Arrange
