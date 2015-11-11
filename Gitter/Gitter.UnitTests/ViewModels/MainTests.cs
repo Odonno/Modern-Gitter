@@ -2,7 +2,6 @@
 using Gitter.Services.Concrete;
 using Gitter.UnitTests.Fakes;
 using Gitter.ViewModel.Concrete;
-using GitterSharp.Services;
 using System;
 using System.Threading.Tasks;
 using Xunit;
@@ -13,7 +12,7 @@ namespace Gitter.UnitTests.ViewModels
     {
         #region Fields
 
-        private IGitterApiService _gitterApiService;
+        private FakeGitterApiServiceWithResult _gitterApiService;
         private FakeLocalNotificationService _localNotificationService;
         private FakeApplicationStorageService _applicationStorageService;
         private FakeProgressIndicatorService _progressIndicatorService;
@@ -28,39 +27,7 @@ namespace Gitter.UnitTests.ViewModels
         #region Methods
 
         [Fact]
-        public async Task CreateSimpleMainWithFailedApi_Should_SetDefaultProperties()
-        {
-            // Arrange
-             _gitterApiService = new FakeGitterApiServiceWithException();
-            _localNotificationService = new FakeLocalNotificationService();
-            _applicationStorageService = new FakeApplicationStorageService();
-            _progressIndicatorService = new FakeProgressIndicatorService();
-            _passwordStorageService = new FakePasswordStorageService();
-            _eventService = new EventService();
-            _telemetryService = new FakeTelemetryService();
-            _navigationService = new FakeNavigationService();
-
-            var mainViewModel = new MainViewModel(
-                _gitterApiService,
-                _localNotificationService,
-                _applicationStorageService,
-                _progressIndicatorService,
-                _passwordStorageService,
-                _eventService,
-                _telemetryService,
-                _navigationService);
-
-            // Act
-            await Task.Delay(1000);
-
-            // Assert
-            Assert.Equal(DateTime.Now.Subtract(TimeSpan.FromSeconds(1)).ToString(), mainViewModel.CurrentDateTime.ToString());
-            Assert.Equal(1, _localNotificationService.NotificationsSent);
-            Assert.Null(mainViewModel.CurrentUser);
-        }
-
-        [Fact]
-        public async Task CreateSimpleMainWithSuccessApi_Should_SetDefaultProperties()
+        public void CreateSimpleMain_Should_SetDefaultProperties()
         {
             // Arrange
             _gitterApiService = new FakeGitterApiServiceWithResult();
@@ -69,8 +36,10 @@ namespace Gitter.UnitTests.ViewModels
             _progressIndicatorService = new FakeProgressIndicatorService();
             _passwordStorageService = new FakePasswordStorageService();
             _eventService = new EventService();
+            _telemetryService = new FakeTelemetryService();
             _navigationService = new FakeNavigationService();
 
+            // Act
             var mainViewModel = new MainViewModel(
                 _gitterApiService,
                 _localNotificationService,
@@ -81,13 +50,9 @@ namespace Gitter.UnitTests.ViewModels
                 _telemetryService,
                 _navigationService);
 
-            // Act
-            await Task.Delay(1000);
-
             // Assert
-            Assert.Equal(DateTime.Now.Subtract(TimeSpan.FromSeconds(1)).ToString(), mainViewModel.CurrentDateTime.ToString());
-            Assert.Equal(0, _localNotificationService.NotificationsSent);
-            Assert.NotNull(mainViewModel.CurrentUser);
+            Assert.Equal(DateTime.Now.ToString(), mainViewModel.CurrentDateTime.ToString());
+            Assert.Null(mainViewModel.CurrentUser);
         }
 
         #endregion
