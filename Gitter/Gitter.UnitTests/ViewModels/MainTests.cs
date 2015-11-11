@@ -247,6 +247,24 @@ namespace Gitter.UnitTests.ViewModels
             Assert.Equal(string.Empty, _mainViewModel.SearchedRoomText);
         }
 
+        [Fact]
+        public async Task Refreshing_Should_SetCurrentUser()
+        {
+            // Arrange
+            TestInitialize();
+
+            // Assert (before)
+            Assert.Null(_mainViewModel.CurrentUser);
+
+            // Act
+            await _mainViewModel.RefreshAsync();
+
+            // Assert (after)
+            Assert.False(_mainViewModel.IsRefreshing);
+            Assert.NotNull(_mainViewModel.CurrentUser);
+            Assert.Equal("malditogeek", _mainViewModel.CurrentUser.Username);
+        }
+
         #endregion
     }
 }
