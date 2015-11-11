@@ -280,6 +280,38 @@ namespace Gitter.UnitTests.ViewModels
             Assert.False(result);
         }
 
+        [Theory]
+        [InlineData("53307734c3599d1de448e192", 0)]
+        [InlineData("53307734c3599d1de448e192", 5)]
+        public void CorrectValuesOfMessageViewModel_Should_EnableRemoveMessage(string userId, int minutesLeft)
+        {
+            // Arrange
+            var room = new Room
+            {
+                Id = "123456",
+                Name = "Room",
+                UnreadItems = 14
+            };
+
+            TestInitialize(room);
+
+            // Act
+            var message = new Message
+            {
+                Id = "123456",
+                User = new User
+                {
+                    Id = userId
+                },
+                SentDate = _mainViewModel.CurrentDateTime.Subtract(TimeSpan.FromMinutes(minutesLeft))
+            };
+            var messageViewModel = new MessageViewModel(message);
+            bool result = _roomViewModel.RemoveMessageCommand.CanExecute(messageViewModel);
+
+            // Assert
+            Assert.True(result);
+        }
+
         [Fact]
         public async Task ReceivingMessageFromApi_Should_ShowMessageNotification()
         {
