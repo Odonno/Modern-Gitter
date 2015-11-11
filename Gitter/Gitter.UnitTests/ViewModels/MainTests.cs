@@ -265,6 +265,20 @@ namespace Gitter.UnitTests.ViewModels
             Assert.Equal("malditogeek", _mainViewModel.CurrentUser.Username);
         }
 
+        [Fact]
+        public async Task Refreshing_Should_RefreshRooms()
+        {
+            // Arrange
+            TestInitialize();
+
+            // Act
+            await _mainViewModel.RefreshAsync();
+
+            // Assert
+            Assert.False(_mainViewModel.IsRefreshing);
+            Assert.Equal(4, _mainViewModel.Rooms.Count);
+        }
+
         #endregion
     }
 }
