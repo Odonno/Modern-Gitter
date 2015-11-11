@@ -114,12 +114,6 @@
     <AppxPackageIncludePrivateSymbols>true</AppxPackageIncludePrivateSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Fakes\FakeApplicationStorageService.cs" />
-    <Compile Include="Fakes\FakeGitterApiServiceWithException.cs" />
-    <Compile Include="Fakes\FakeGitterApiServiceWithResult.cs" />
-    <Compile Include="Fakes\FakeLocalNotificationService.cs" />
-    <Compile Include="Fakes\FakeNavigationService.cs" />
-    <Compile Include="Fakes\FakePasswordStorageService.cs" />
     <Compile Include="Fakes\FakeProgressIndicatorService.cs" />
     <Compile Include="Fakes\FakeSessionServiceWithException.cs" />
     <Compile Include="Fakes\FakeSessionServiceWithResult.cs" />
@@ -239,6 +233,10 @@
     <ProjectReference Include="..\Gitter.DataObjects\Gitter.DataObjects.csproj">
       <Project>{43fda2a1-18d7-44df-a455-5e438191b8ee}</Project>
       <Name>Gitter.DataObjects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Gitter.Fakes\Gitter.Fakes.csproj">
+      <Project>{f176518c-75b8-489f-be24-21137f2dee63}</Project>
+      <Name>Gitter.Fakes</Name>
     </ProjectReference>
     <ProjectReference Include="..\Gitter.HtmlToXaml\Gitter.HtmlToXaml.csproj">
       <Project>{131bc38b-4afc-4282-9bfa-159e3e87c843}</Project>

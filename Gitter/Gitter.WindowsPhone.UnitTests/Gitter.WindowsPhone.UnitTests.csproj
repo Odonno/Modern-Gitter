@@ -76,6 +76,10 @@
     <SDKReference Include="TestPlatform, Version=14.0" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Fakes\FakeProgressIndicatorService.cs" />
+    <Compile Include="Fakes\FakeSessionServiceWithException.cs" />
+    <Compile Include="Fakes\FakeSessionServiceWithResult.cs" />
+    <Compile Include="Fakes\FakeTelemetryService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -93,6 +97,10 @@
     <ProjectReference Include="..\Gitter.DataObjects\Gitter.DataObjects.csproj">
       <Project>{43fda2a1-18d7-44df-a455-5e438191b8ee}</Project>
       <Name>Gitter.DataObjects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Gitter.Fakes\Gitter.Fakes.csproj">
+      <Project>{f176518c-75b8-489f-be24-21137f2dee63}</Project>
+      <Name>Gitter.Fakes</Name>
     </ProjectReference>
     <ProjectReference Include="..\Gitter.HtmlToXaml\Gitter.HtmlToXaml.csproj">
       <Project>{131bc38b-4afc-4282-9bfa-159e3e87c843}</Project>

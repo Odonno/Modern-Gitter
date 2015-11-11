@@ -43,6 +43,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gitter.UnitTests", "Gitter.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gitter.WindowsPhone.UnitTests", "Gitter.WindowsPhone.UnitTests\Gitter.WindowsPhone.UnitTests.csproj", "{173A2C5B-92CF-46FF-BBAF-E32B4D2FAEE3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gitter.Fakes", "Gitter.Fakes\Gitter.Fakes.csproj", "{F176518C-75B8-489F-BE24-21137F2DEE63}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Gitter\Gitter.Shared\Gitter.Shared.projitems*{7c96bd4b-08a6-452c-ac11-f1a22c11be81}*SharedItemsImports = 13
@@ -303,6 +305,22 @@ Global
 		{173A2C5B-92CF-46FF-BBAF-E32B4D2FAEE3}.Release|x86.ActiveCfg = Release|x86
 		{173A2C5B-92CF-46FF-BBAF-E32B4D2FAEE3}.Release|x86.Build.0 = Release|x86
 		{173A2C5B-92CF-46FF-BBAF-E32B4D2FAEE3}.Release|x86.Deploy.0 = Release|x86
+		{F176518C-75B8-489F-BE24-21137F2DEE63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F176518C-75B8-489F-BE24-21137F2DEE63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F176518C-75B8-489F-BE24-21137F2DEE63}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{F176518C-75B8-489F-BE24-21137F2DEE63}.Debug|ARM.Build.0 = Debug|Any CPU
+		{F176518C-75B8-489F-BE24-21137F2DEE63}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F176518C-75B8-489F-BE24-21137F2DEE63}.Debug|x64.Build.0 = Debug|Any CPU
+		{F176518C-75B8-489F-BE24-21137F2DEE63}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F176518C-75B8-489F-BE24-21137F2DEE63}.Debug|x86.Build.0 = Debug|Any CPU
+		{F176518C-75B8-489F-BE24-21137F2DEE63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F176518C-75B8-489F-BE24-21137F2DEE63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F176518C-75B8-489F-BE24-21137F2DEE63}.Release|ARM.ActiveCfg = Release|Any CPU
+		{F176518C-75B8-489F-BE24-21137F2DEE63}.Release|ARM.Build.0 = Release|Any CPU
+		{F176518C-75B8-489F-BE24-21137F2DEE63}.Release|x64.ActiveCfg = Release|Any CPU
+		{F176518C-75B8-489F-BE24-21137F2DEE63}.Release|x64.Build.0 = Release|Any CPU
+		{F176518C-75B8-489F-BE24-21137F2DEE63}.Release|x86.ActiveCfg = Release|Any CPU
+		{F176518C-75B8-489F-BE24-21137F2DEE63}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -323,5 +341,6 @@ Global
 		{43FDA2A1-18D7-44DF-A455-5E438191B8EE} = {7EF7C8B1-7424-4491-94CD-811BE371C77F}
 		{290743CA-6581-4068-924C-01CD37E32483} = {DB5EB6D4-450F-45C4-A6EB-B97C86887154}
 		{173A2C5B-92CF-46FF-BBAF-E32B4D2FAEE3} = {DB5EB6D4-450F-45C4-A6EB-B97C86887154}
+		{F176518C-75B8-489F-BE24-21137F2DEE63} = {DB5EB6D4-450F-45C4-A6EB-B97C86887154}
 	EndGlobalSection
 EndGlobal
