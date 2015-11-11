@@ -331,24 +331,20 @@ namespace Gitter.ViewModel.Concrete
             // Start async task
             await _progressIndicatorService.ShowAsync();
 
-            var alreadyJoinedRoom = Rooms.FirstOrDefault(r => r.Room.Name == OwnChatRoomName);
+            // Retrieve joined room if it already exists
+            var joinedRoom = Rooms.FirstOrDefault(r => r.Room.Name == OwnChatRoomName);
+            bool alreadyJoinedRoom = (joinedRoom != null);
 
-            if (alreadyJoinedRoom == null)
+            if (!alreadyJoinedRoom)
             {
-                var room = await _gitterApiService.JoinRoomAsync(OwnChatRoomName);
-                alreadyJoinedRoom = new RoomViewModel(room, _gitterApiService, _localNotificationService, _progressIndicatorService, _eventService, _telemetryService, this);
-                Rooms.Add(alreadyJoinedRoom);
-
-                App.TelemetryClient.TrackEvent("ChatWithUs",
-                    new Dictionary<string, string> { { "AlreadyJoined", "false" } });
-            }
-            else
-            {
-                App.TelemetryClient.TrackEvent("ChatWithUs",
-                    new Dictionary<string, string> { { "AlreadyJoined", "true" } });
+                // Join and add room if not already done
+                joinedRoom = await JoinRoom(OwnChatRoomName);
             }
 
-            SelectRoom(alreadyJoinedRoom);
+            _telemetryService.TrackEvent("ChatWithUs",
+                    new Dictionary<string, string> { { "AlreadyJoined", alreadyJoinedRoom.ToString() } });
+
+            SelectRoom(joinedRoom);
 
             // End async task
             await _progressIndicatorService.HideAsync();
@@ -376,6 +372,18 @@ namespace Gitter.ViewModel.Concrete
 
 
         #region Private Methods
+
+        private async Task<IRoomViewModel> JoinRoom(string roomName)
+        {
+            // Join room through API
+            var room = await _gitterApiService.JoinRoomAsync(roomName);
+
+            // Add the room to the existing list
+            var roomViewModel = new RoomViewModel(room, _gitterApiService, _localNotificationService, _progressIndicatorService, _eventService, _telemetryService, this);
+            Rooms.Add(roomViewModel);
+
+            return roomViewModel;
+        }
 
         private async Task RefreshRoomsAsync()
         {
