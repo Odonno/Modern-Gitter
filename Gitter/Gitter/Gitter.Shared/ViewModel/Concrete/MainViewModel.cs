@@ -299,7 +299,7 @@ namespace Gitter.ViewModel.Concrete
             if (SelectedRoom == null)
                 return;
 
-            App.TelemetryClient.TrackEvent("SelectRoom",
+            _telemetryService.TrackEvent("SelectRoom",
                 new Dictionary<string, string> { { "Room", SelectedRoom.Room.Name } });
 
             if (!SelectedRoom.IsLoaded)
