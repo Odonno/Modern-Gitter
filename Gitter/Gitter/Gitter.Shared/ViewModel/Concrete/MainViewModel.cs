@@ -41,6 +41,7 @@ namespace Gitter.ViewModel.Concrete
         private readonly IPasswordStorageService _passwordStorageService;
         private readonly IEventService _eventService;
         private readonly INavigationService _navigationService;
+        private readonly ITelemetryService _telemetryService;
 
         #endregion
 
@@ -143,6 +144,7 @@ namespace Gitter.ViewModel.Concrete
             IProgressIndicatorService progressIndicatorService,
             IPasswordStorageService passwordStorageService,
             IEventService eventService,
+            ITelemetryService telemetryService,
             INavigationService navigationService)
         {
             // Services
@@ -153,6 +155,7 @@ namespace Gitter.ViewModel.Concrete
             _passwordStorageService = passwordStorageService;
             _eventService = eventService;
             _navigationService = navigationService;
+            _telemetryService = telemetryService;
 
             // Commands
             SelectRoomCommand = new RelayCommand<IRoomViewModel>(SelectRoom);
@@ -199,7 +202,7 @@ namespace Gitter.ViewModel.Concrete
                     UnreadMentions = 0,
                     DisabledNotifications = false,
                     Type = "ONETOONE"
-                }, gitterApiService, localNotificationService, progressIndicatorService, eventService, this));
+                }, gitterApiService, localNotificationService, progressIndicatorService, eventService, telemetryService, this));
 
                 Rooms.Add(new RoomViewModel(new Room
                 {
@@ -215,7 +218,7 @@ namespace Gitter.ViewModel.Concrete
                     DisabledNotifications = false,
                     Type = "ORG",
                     Version = 1
-                }, gitterApiService, localNotificationService, progressIndicatorService, eventService, this));
+                }, gitterApiService, localNotificationService, progressIndicatorService, eventService, telemetryService, this));
 
                 Rooms.Add(new RoomViewModel(new Room
                 {
@@ -231,7 +234,7 @@ namespace Gitter.ViewModel.Concrete
                     DisabledNotifications = false,
                     Type = "ORG_CHANNEL",
                     Version = 1
-                }, gitterApiService, localNotificationService, progressIndicatorService, eventService, this));
+                }, gitterApiService, localNotificationService, progressIndicatorService, eventService, telemetryService, this));
 
                 Rooms.Add(new RoomViewModel(new Room
                 {
@@ -247,7 +250,7 @@ namespace Gitter.ViewModel.Concrete
                     DisabledNotifications = false,
                     Type = "REPO",
                     Version = 1
-                }, gitterApiService, localNotificationService, progressIndicatorService, eventService, this));
+                }, gitterApiService, localNotificationService, progressIndicatorService, eventService, telemetryService, this));
 
                 SelectedRoom = Rooms.FirstOrDefault();
 
@@ -333,7 +336,7 @@ namespace Gitter.ViewModel.Concrete
             if (alreadyJoinedRoom == null)
             {
                 var room = await _gitterApiService.JoinRoomAsync(OwnChatRoomName);
-                alreadyJoinedRoom = new RoomViewModel(room, _gitterApiService, _localNotificationService, _progressIndicatorService, _eventService, this);
+                alreadyJoinedRoom = new RoomViewModel(room, _gitterApiService, _localNotificationService, _progressIndicatorService, _eventService, _telemetryService, this);
                 Rooms.Add(alreadyJoinedRoom);
 
                 App.TelemetryClient.TrackEvent("ChatWithUs",
@@ -417,7 +420,7 @@ namespace Gitter.ViewModel.Concrete
 
             // Add ordered rooms to UI list
             foreach (var room in orderedRooms)
-                Rooms.Add(new RoomViewModel(room, _gitterApiService, _localNotificationService, _progressIndicatorService, _eventService, this));
+                Rooms.Add(new RoomViewModel(room, _gitterApiService, _localNotificationService, _progressIndicatorService, _eventService, _telemetryService, this));
 
             // Execute search each time we refresh rooms
             ExecuteSearch();

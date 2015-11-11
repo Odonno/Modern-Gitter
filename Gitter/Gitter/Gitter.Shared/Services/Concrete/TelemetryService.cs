@@ -2,6 +2,7 @@
 using Gitter.Services.Abstract;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Extensibility;
+using System.Collections.Generic;
 
 namespace Gitter.Services.Concrete
 {
@@ -25,9 +26,14 @@ namespace Gitter.Services.Concrete
 #endif
         }
 
-        public void TrackException(Exception ex)
+        public void TrackException(Exception ex, Dictionary<string, string> properties = null, Dictionary<string, double> metrics = null)
         {
-            _client.TrackException(ex);
+            _client.TrackException(ex, properties, metrics);
+        }
+
+        public void TrackEvent(string eventName, Dictionary<string, string> properties = null, Dictionary<string, double> metrics = null)
+        {
+            _client.TrackEvent(eventName, properties, metrics);
         }
 
         #endregion

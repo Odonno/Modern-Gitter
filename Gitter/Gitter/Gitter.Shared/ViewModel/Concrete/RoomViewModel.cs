@@ -27,6 +27,7 @@ namespace Gitter.ViewModel.Concrete
         private readonly ILocalNotificationService _localNotificationService;
         private readonly IProgressIndicatorService _progressIndicatorService;
         private readonly IEventService _eventService;
+        private readonly ITelemetryService _telemetryService;
 
         #endregion
 
@@ -107,6 +108,7 @@ namespace Gitter.ViewModel.Concrete
             ILocalNotificationService localNotificationService,
             IProgressIndicatorService progressIndicatorService,
             IEventService eventService,
+            ITelemetryService telemetryService,
             IMainViewModel mainViewModel)
         {
             // Properties
@@ -130,6 +132,7 @@ namespace Gitter.ViewModel.Concrete
             _localNotificationService = localNotificationService;
             _progressIndicatorService = progressIndicatorService;
             _eventService = eventService;
+            _telemetryService = telemetryService;
 
 
             if (IsInDesignMode)
@@ -262,7 +265,7 @@ namespace Gitter.ViewModel.Concrete
 
             await _gitterApiService.SendMessageAsync(Room.Id, TextMessage);
 
-            App.TelemetryClient.TrackEvent("SendMessage",
+            _telemetryService.TrackEvent("SendMessage",
                 new Dictionary<string, string> { { "Room", Room.Name } },
                 new Dictionary<string, double> { { "MessageLength", TextMessage.Length } });
             TextMessage = string.Empty;

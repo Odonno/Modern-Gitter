@@ -21,6 +21,7 @@ namespace Gitter.UnitTests.ViewModels
         private EventService _eventService;
         private FakeApplicationStorageService _applicationStorageService;
         private FakePasswordStorageService _passwordStorageService;
+        private FakeTelemetryService _telemetryService;
         private FakeNavigationService _navigationService;
 
         private IMainViewModel _mainViewModel;
@@ -39,6 +40,7 @@ namespace Gitter.UnitTests.ViewModels
             _eventService = new EventService();
             _applicationStorageService = new FakeApplicationStorageService();
             _passwordStorageService = new FakePasswordStorageService();
+            _telemetryService = new FakeTelemetryService();
             _navigationService = new FakeNavigationService();
 
             _mainViewModel = new MainViewModel(
@@ -48,6 +50,7 @@ namespace Gitter.UnitTests.ViewModels
                 _progressIndicatorService,
                 _passwordStorageService,
                 _eventService,
+                _telemetryService,
                 _navigationService);
 
             _roomViewModel = new RoomViewModel(room,
@@ -55,6 +58,7 @@ namespace Gitter.UnitTests.ViewModels
                 _localNotificationService,
                 _progressIndicatorService,
                 _eventService,
+                _telemetryService,
                 _mainViewModel);
 
             _localNotificationService.Reset();
@@ -95,7 +99,7 @@ namespace Gitter.UnitTests.ViewModels
         [InlineData("", true)]
         [InlineData("    ", true)]
         [InlineData("a new message", true)]
-        public void ValuesOfTextMessageAndIsSending_Should_NotEnableSendMessage(string textMessage, bool isSendingMessage)
+        public void IncorrectValuesOfTextMessageAndIsSending_Should_NotEnableSendMessage(string textMessage, bool isSendingMessage)
         {
             // Arrange
             var room = new Room
@@ -114,6 +118,53 @@ namespace Gitter.UnitTests.ViewModels
 
             // Assert
             Assert.False(result);
+        }
+
+        [Theory]
+        [InlineData("a new message", false)]
+        public void CorrectValuesOfTextMessageAndIsSending_Should_EnableSendMessage(string textMessage, bool isSendingMessage)
+        {
+            // Arrange
+            var room = new Room
+            {
+                Id = "123456",
+                Name = "Room",
+                UnreadItems = 14
+            };
+
+            TestInitialize(room);
+
+            // Act
+            _roomViewModel.TextMessage = textMessage;
+            _roomViewModel.IsSendingMessage = isSendingMessage;
+            bool result = _roomViewModel.SendMessageCommand.CanExecute(null);
+
+            // Assert
+            Assert.True(result);
+        }
+        
+        [Fact]
+        public void Should_CorrectlySendNewMessage()
+        {
+            // Arrange
+            var room = new Room
+            {
+                Id = "123456",
+                Name = "Room",
+                UnreadItems = 14
+            };
+
+            TestInitialize(room);
+
+            // Act
+            _roomViewModel.TextMessage = "A new message";
+            _roomViewModel.IsSendingMessage = false;
+            _roomViewModel.SendMessageCommand.Execute(null);
+
+            // Assert
+            Assert.False(_roomViewModel.IsSendingMessage);
+            Assert.Equal(1, _gitterApiService.MessagesSent);
+            Assert.Equal(string.Empty, _roomViewModel.TextMessage);
         }
 
         [Fact]

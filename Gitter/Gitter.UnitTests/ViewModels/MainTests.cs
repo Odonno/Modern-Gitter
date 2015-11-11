@@ -19,6 +19,7 @@ namespace Gitter.UnitTests.ViewModels
         private FakeProgressIndicatorService _progressIndicatorService;
         private FakePasswordStorageService _passwordStorageService;
         private IEventService _eventService;
+        private FakeTelemetryService _telemetryService;
         private FakeNavigationService _navigationService;
 
         #endregion
@@ -36,6 +37,7 @@ namespace Gitter.UnitTests.ViewModels
             _progressIndicatorService = new FakeProgressIndicatorService();
             _passwordStorageService = new FakePasswordStorageService();
             _eventService = new EventService();
+            _telemetryService = new FakeTelemetryService();
             _navigationService = new FakeNavigationService();
 
             var mainViewModel = new MainViewModel(
@@ -45,6 +47,7 @@ namespace Gitter.UnitTests.ViewModels
                 _progressIndicatorService,
                 _passwordStorageService,
                 _eventService,
+                _telemetryService,
                 _navigationService);
 
             // Act
@@ -75,6 +78,7 @@ namespace Gitter.UnitTests.ViewModels
                 _progressIndicatorService,
                 _passwordStorageService,
                 _eventService,
+                _telemetryService,
                 _navigationService);
 
             // Act

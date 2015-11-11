@@ -1,5 +1,4 @@
 ﻿using Gitter.Services.Abstract;
-using System;
 using System.Threading.Tasks;
 
 namespace Gitter.UnitTests.Fakes

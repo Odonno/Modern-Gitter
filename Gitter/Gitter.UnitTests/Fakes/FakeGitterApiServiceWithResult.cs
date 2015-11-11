@@ -19,6 +19,7 @@ namespace Gitter.UnitTests.Fakes
         #region Fake Properties
 
         public Subject<Message> StreamingMessages { get; } = new Subject<Message>();
+        public int MessagesSent { get; set; }
 
         #endregion
 
@@ -156,7 +157,15 @@ namespace Gitter.UnitTests.Fakes
 
         public Task<Message> SendMessageAsync(string roomId, string message)
         {
-            throw new NotImplementedException();
+            MessagesSent++;
+            var m = new Message
+            {
+                Id = string.Format("xadg41w{0}", MessagesSent),
+                SentDate = DateTime.Now,
+                Text = message
+            };
+
+            return Task.FromResult(m);
         }
 
         public void SetToken(string token)

@@ -1,5 +1,6 @@
 ﻿using Gitter.Services.Abstract;
 using System;
+using System.Collections.Generic;
 
 namespace Gitter.UnitTests.Fakes
 {
@@ -8,6 +9,7 @@ namespace Gitter.UnitTests.Fakes
         #region Fake Properties
 
         public int ExceptionsTracked { get; private set; }
+        public int EventsTracked { get; private set; }
 
         #endregion
 
@@ -17,11 +19,17 @@ namespace Gitter.UnitTests.Fakes
         public void Initialize()
         {
             ExceptionsTracked = 0;
+            EventsTracked = 0;
         }
 
-        public void TrackException(Exception ex)
+        public void TrackException(Exception ex, Dictionary<string, string> properties = null, Dictionary<string, double> metrics = null)
         {
             ExceptionsTracked++;
+        }
+
+        public void TrackEvent(string eventName, Dictionary<string, string> properties = null, Dictionary<string, double> metrics = null)
+        {
+            EventsTracked++;
         }
 
         #endregion
