@@ -157,6 +157,26 @@ namespace Gitter.UnitTests.ViewModels
             Assert.Equal(1, _telemetryService.EventsTracked);
         }
 
+        [Fact]
+        public void NoCurrentUser_Should_NotEnableChatWithUs()
+        {
+            // Arrange
+            TestInitialize();
+
+            var room = new Room
+            {
+                Id = "123456",
+                Name = "Room",
+                UnreadItems = 14
+            };
+
+            // Act
+            bool result = _mainViewModel.ChatWithUsCommand.CanExecute(null);
+
+            // Assert
+            Assert.False(result);
+        }
+
         #endregion
     }
 }
