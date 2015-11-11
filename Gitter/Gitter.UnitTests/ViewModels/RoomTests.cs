@@ -395,6 +395,36 @@ namespace Gitter.UnitTests.ViewModels
             Assert.Equal(1, _telemetryService.EventsTracked);
         }
 
+        [Theory]
+        [InlineData(null, null)]
+        [InlineData("Odonno", null)]
+        [InlineData(null, "My message")]
+        [InlineData("Odonno", "My message")]
+        public void Should_RespondToUser(string username, string existingMessage)
+        {
+            // Arrange
+            var room = new Room
+            {
+                Id = "123456",
+                Name = "Room",
+                UnreadItems = 14
+            };
+
+            TestInitialize(room);
+
+            var user = new User
+            {
+                Username = username
+            };
+
+            // Act
+            _roomViewModel.TextMessage = existingMessage;
+            _roomViewModel.RespondToCommand.Execute(user);
+            
+            // Assert
+            Assert.Equal($"{existingMessage}@{user.Username} ", _roomViewModel.TextMessage);
+        }
+
         [Fact]
         public async Task ReceivingMessageFromApi_Should_ShowMessageNotification()
         {
