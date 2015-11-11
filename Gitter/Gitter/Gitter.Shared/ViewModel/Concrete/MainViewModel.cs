@@ -512,15 +512,7 @@ namespace Gitter.ViewModel.Concrete
             {
                 var room = Rooms.FirstOrDefault(r => r.Room.Name == roomName);
                 SelectRoom(room);
-                return;
             }
-
-            _refreshRooms = _eventService.RefreshRooms.Subscribe(_ =>
-            {
-                var room = Rooms.FirstOrDefault(r => r.Room.Name == roomName);
-                SelectRoom(room);
-                _refreshRooms.Dispose();
-            });
         }
 
         public void UnselectRoom()

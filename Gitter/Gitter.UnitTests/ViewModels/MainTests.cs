@@ -280,6 +280,19 @@ namespace Gitter.UnitTests.ViewModels
         }
 
         [Fact]
+        public void SelectRoomWithoutLoadedRoom_Should_DoNothing()
+        {
+            // Arrange
+            TestInitialize();
+
+            // Act
+            _mainViewModel.SelectRoom("gitterHQ");
+
+            // Assert
+            Assert.Null(_mainViewModel.SelectedRoom);
+        }
+
+        [Fact]
         public async Task SelectExistingRoom_Should_SelectRoomCorrectly()
         {
             // Arrange
