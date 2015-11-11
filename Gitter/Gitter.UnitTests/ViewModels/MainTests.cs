@@ -306,6 +306,22 @@ namespace Gitter.UnitTests.ViewModels
             Assert.NotNull(_mainViewModel.SelectedRoom);
         }
 
+        [Fact]
+        public async Task UnselectRoomWithExistingSelectedRoom_Should_UnselectRoom()
+        {
+            // Arrange
+            TestInitialize();
+
+            await _mainViewModel.RefreshAsync();
+            _mainViewModel.SelectRoom("gitterHQ");
+
+            // Act
+            _mainViewModel.UnselectRoom();
+
+            // Assert
+            Assert.Null(_mainViewModel.SelectedRoom);
+        }
+
         #endregion
     }
 }
