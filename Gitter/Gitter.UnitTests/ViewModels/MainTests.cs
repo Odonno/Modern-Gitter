@@ -203,6 +203,32 @@ namespace Gitter.UnitTests.ViewModels
             Assert.Equal("Odonno/Modern-Gitter", _mainViewModel.SelectedRoom.Room.Name);
         }
 
+        [Fact]
+        public async Task ChatWithUsOnAlreadyJoinedRoom_Should_SelectRoom()
+        {
+            // Arrange
+            TestInitialize();
+            _mainViewModel.CurrentUser = await _gitterApiService.GetCurrentUserAsync();
+
+            var room = new Room
+            {
+                Id = "1",
+                Name = "Odonno/Modern-Gitter"
+            };
+            var roomViewModel = CreateRoomViewModel(room);
+            _mainViewModel.Rooms.Add(roomViewModel);
+
+            // Act
+            _mainViewModel.ChatWithUsCommand.Execute(null);
+            await Task.Delay(100);
+
+            // Assert
+            Assert.Equal(0, _gitterApiService.JoinedRooms);
+            Assert.Equal(2, _telemetryService.EventsTracked);
+            Assert.NotNull(_mainViewModel.SelectedRoom);
+            Assert.Equal("Odonno/Modern-Gitter", _mainViewModel.SelectedRoom.Room.Name);
+        }
+
         #endregion
     }
 }
