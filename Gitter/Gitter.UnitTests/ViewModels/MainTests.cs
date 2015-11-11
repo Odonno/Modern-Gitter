@@ -229,6 +229,24 @@ namespace Gitter.UnitTests.ViewModels
             Assert.Equal("Odonno/Modern-Gitter", _mainViewModel.SelectedRoom.Room.Name);
         }
 
+        [Theory]
+        [InlineData(true, null)]
+        [InlineData(false, null)]
+        [InlineData(true, "Mo")]
+        [InlineData(false, "Mo")]
+        public void ToggleSearch_Should_ResetSearchedText(bool toggleValue, string searchedValue)
+        {
+            // Arrange
+            TestInitialize();
+
+            // Act
+            _mainViewModel.SearchedRoomText = searchedValue;
+            _mainViewModel.ToggleSearchCommand.Execute(toggleValue);
+
+            // Assert
+            Assert.Equal(string.Empty, _mainViewModel.SearchedRoomText);
+        }
+
         #endregion
     }
 }
