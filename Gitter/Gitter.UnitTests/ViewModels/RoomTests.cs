@@ -142,7 +142,7 @@ namespace Gitter.UnitTests.ViewModels
             // Assert
             Assert.True(result);
         }
-        
+
         [Fact]
         public void Should_CorrectlySendNewMessage()
         {
@@ -165,6 +165,31 @@ namespace Gitter.UnitTests.ViewModels
             Assert.False(_roomViewModel.IsSendingMessage);
             Assert.Equal(1, _gitterApiService.MessagesSent);
             Assert.Equal(string.Empty, _roomViewModel.TextMessage);
+            Assert.Equal(1, _telemetryService.EventsTracked);
+        }
+
+        [Fact]
+        public void SendingMessageWithoutEnterKeyPressedParam_Should_DoNothing()
+        {
+            // Arrange
+            var room = new Room
+            {
+                Id = "123456",
+                Name = "Room",
+                UnreadItems = 14
+            };
+
+            TestInitialize(room);
+
+            // Act
+            _roomViewModel.TextMessage = "A new message";
+            _roomViewModel.IsSendingMessage = false;
+            _roomViewModel.SendMessageWithParamCommand.Execute(false);
+
+            // Assert
+            Assert.Equal(0, _gitterApiService.MessagesSent);
+            Assert.Equal("A new message", _roomViewModel.TextMessage);
+            Assert.Equal(0, _telemetryService.EventsTracked);
         }
 
         [Fact]
