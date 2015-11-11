@@ -116,7 +116,7 @@ namespace Gitter.Views
             _navigationHelper.OnNavigatedFrom(e);
 
             if (e.NavigationMode == NavigationMode.Back)
-                ViewModelLocator.Main.SelectedRoom = null;
+                ViewModelLocator.Main.UnselectRoom();
         }
 
         #endregion

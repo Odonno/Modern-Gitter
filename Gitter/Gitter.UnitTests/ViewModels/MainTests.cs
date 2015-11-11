@@ -133,6 +133,30 @@ namespace Gitter.UnitTests.ViewModels
             Assert.True(roomViewModel.IsLoaded);
         }
 
+        [Fact]
+        public void SelectingRoomAndThenUnselectIt_Should_UnselectRoom()
+        {
+            // Arrange
+            TestInitialize();
+
+            var room = new Room
+            {
+                Id = "123456",
+                Name = "Room",
+                UnreadItems = 14
+            };
+
+            var roomViewModel = CreateRoomViewModel(room);
+            _mainViewModel.SelectRoomCommand.Execute(roomViewModel);
+
+            // Act
+            _mainViewModel.SelectRoomCommand.Execute(null);
+
+            // Assert
+            Assert.Null(_mainViewModel.SelectedRoom);
+            Assert.Equal(1, _telemetryService.EventsTracked);
+        }
+
         #endregion
     }
 }

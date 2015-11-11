@@ -11,7 +11,7 @@ namespace Gitter.ViewModel.Abstract
         DateTime CurrentDateTime { get; }
         User CurrentUser { get; set; }
         ObservableCollection<IRoomViewModel> Rooms { get; }
-        IRoomViewModel SelectedRoom { get; set; }
+        IRoomViewModel SelectedRoom { get; }
         ObservableCollection<IRoomViewModel> SearchedRooms { get; }
         string SearchedRoomText { get; set; }
 
@@ -23,6 +23,7 @@ namespace Gitter.ViewModel.Abstract
 
         Task RefreshAsync();
         void SelectRoom(string roomName);
+        void UnselectRoom();
         void OpenRealtimeStreams();
         void CloseRealtimeStreams();
     }

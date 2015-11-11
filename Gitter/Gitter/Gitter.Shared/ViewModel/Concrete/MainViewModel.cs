@@ -86,7 +86,7 @@ namespace Gitter.ViewModel.Concrete
             {
                 return _selectedRoom;
             }
-            set
+            private set
             {
                 _selectedRoom = value;
                 RaisePropertyChanged();
@@ -294,10 +294,13 @@ namespace Gitter.ViewModel.Concrete
 
         private void SelectRoom(IRoomViewModel room)
         {
-            SelectedRoom = room;
-
-            if (SelectedRoom == null)
+            if (room == null)
+            {
+                UnselectRoom();
                 return;
+            }
+
+            SelectedRoom = room;
 
             _telemetryService.TrackEvent("SelectRoom",
                 new Dictionary<string, string> { { "Room", SelectedRoom.Room.Name } });
@@ -512,6 +515,11 @@ namespace Gitter.ViewModel.Concrete
                     _refreshRooms.Dispose();
                 });
             }
+        }
+
+        public void UnselectRoom()
+        {
+            SelectedRoom = null;
         }
 
         public void OpenRealtimeStreams()
