@@ -146,8 +146,8 @@ namespace Gitter.UnitTests.ViewModels
                 Name = "Room",
                 UnreadItems = 14
             };
-
             var roomViewModel = CreateRoomViewModel(room);
+
             _mainViewModel.SelectRoomCommand.Execute(roomViewModel);
 
             // Act
@@ -164,13 +164,6 @@ namespace Gitter.UnitTests.ViewModels
             // Arrange
             TestInitialize();
 
-            var room = new Room
-            {
-                Id = "123456",
-                Name = "Room",
-                UnreadItems = 14
-            };
-
             // Act
             bool result = _mainViewModel.ChatWithUsCommand.CanExecute(null);
 
@@ -184,19 +177,30 @@ namespace Gitter.UnitTests.ViewModels
             // Arrange
             TestInitialize();
 
-            var room = new Room
-            {
-                Id = "123456",
-                Name = "Room",
-                UnreadItems = 14
-            };
-
             // Act
             _mainViewModel.CurrentUser = await _gitterApiService.GetCurrentUserAsync();
             bool result = _mainViewModel.ChatWithUsCommand.CanExecute(null);
 
             // Assert
             Assert.True(result);
+        }
+
+        [Fact]
+        public async Task ChatWithUsOnNonAlreadyJoinedRoom_Should_SelectRoom()
+        {
+            // Arrange
+            TestInitialize();
+            _mainViewModel.CurrentUser = await _gitterApiService.GetCurrentUserAsync();
+
+            // Act
+            _mainViewModel.ChatWithUsCommand.Execute(null);
+            await Task.Delay(100);
+
+            // Assert
+            Assert.Equal(1, _gitterApiService.JoinedRooms);
+            Assert.Equal(2, _telemetryService.EventsTracked);
+            Assert.NotNull(_mainViewModel.SelectedRoom);
+            Assert.Equal("Odonno/Modern-Gitter", _mainViewModel.SelectedRoom.Room.Name);
         }
 
         #endregion

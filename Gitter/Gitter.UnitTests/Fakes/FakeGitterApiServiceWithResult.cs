@@ -21,6 +21,7 @@ namespace Gitter.UnitTests.Fakes
         public Subject<Message> StreamingMessages { get; } = new Subject<Message>();
         public int MessagesSent { get; set; }
         public int UpdatedMessages { get; set; }
+        public int JoinedRooms { get; set; }
 
         #endregion
 
@@ -169,7 +170,13 @@ namespace Gitter.UnitTests.Fakes
 
         public Task<Room> JoinRoomAsync(string roomName)
         {
-            throw new NotImplementedException();
+            JoinedRooms++;
+            var room = new Room
+            {
+                Name = roomName
+            };
+
+            return Task.FromResult(room);
         }
 
         public Task MarkUnreadChatMessagesAsync(string userId, string roomId, IEnumerable<string> messageIds)

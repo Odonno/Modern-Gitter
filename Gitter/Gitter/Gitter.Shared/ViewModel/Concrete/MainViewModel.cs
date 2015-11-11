@@ -335,15 +335,14 @@ namespace Gitter.ViewModel.Concrete
             var joinedRoom = Rooms.FirstOrDefault(r => r.Room.Name == OwnChatRoomName);
             bool alreadyJoinedRoom = (joinedRoom != null);
 
+            // Join and add room if not already done
             if (!alreadyJoinedRoom)
-            {
-                // Join and add room if not already done
-                joinedRoom = await JoinRoom(OwnChatRoomName);
-            }
+                joinedRoom = await JoinRoomAsync(OwnChatRoomName);
 
             _telemetryService.TrackEvent("ChatWithUs",
                     new Dictionary<string, string> { { "AlreadyJoined", alreadyJoinedRoom.ToString() } });
 
+            // Automatically select the room to chat
             SelectRoom(joinedRoom);
 
             // End async task
@@ -373,7 +372,7 @@ namespace Gitter.ViewModel.Concrete
 
         #region Private Methods
 
-        private async Task<IRoomViewModel> JoinRoom(string roomName)
+        private async Task<IRoomViewModel> JoinRoomAsync(string roomName)
         {
             // Join room through API
             var room = await _gitterApiService.JoinRoomAsync(roomName);
@@ -445,7 +444,7 @@ namespace Gitter.ViewModel.Concrete
             }
             catch (Exception ex)
             {
-                App.TelemetryClient.TrackException(ex);
+                _telemetryService.TrackException(ex);
                 _localNotificationService.SendNotification("Error", "Can't validate reading new messages");
             }
         }
