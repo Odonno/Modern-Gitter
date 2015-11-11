@@ -313,6 +313,56 @@ namespace Gitter.UnitTests.ViewModels
         }
 
         [Fact]
+        public void Should_RemoveExistingMessage()
+        {
+            // Arrange
+            var room = new Room
+            {
+                Id = "123456",
+                Name = "Room",
+                UnreadItems = 14
+            };
+
+            TestInitialize(room);
+
+            // Act
+            var message1 = new Message
+            {
+                Id = "123456",
+                Text = "A message",
+                User = new User
+                {
+                    Id = "53307734c3599d1de448e192"
+                },
+                SentDate = _mainViewModel.CurrentDateTime.Subtract(TimeSpan.FromMinutes(1))
+            };
+            var message1ViewModel = new MessageViewModel(message1);
+
+            var message2 = new Message
+            {
+                Id = "654321",
+                Text = "Another message",
+                User = new User
+                {
+                    Id = "44444444444444444"
+                },
+                SentDate = _mainViewModel.CurrentDateTime.Subtract(TimeSpan.FromMinutes(1))
+            };
+            var message2ViewModel = new MessageViewModel(message2);
+
+            _roomViewModel.Messages.Add(message1ViewModel);
+            _roomViewModel.Messages.Add(message2ViewModel);
+
+            _roomViewModel.RemoveMessageCommand.Execute(message1ViewModel);
+
+            // Assert
+            Assert.Equal(1, _gitterApiService.UpdatedMessages);
+            Assert.Equal(string.Empty, message1.Text);
+            Assert.Equal(1, _telemetryService.EventsTracked);
+            Assert.Equal(1, _roomViewModel.Messages.Count);
+        }
+
+        [Fact]
         public async Task ReceivingMessageFromApi_Should_ShowMessageNotification()
         {
             // Arrange

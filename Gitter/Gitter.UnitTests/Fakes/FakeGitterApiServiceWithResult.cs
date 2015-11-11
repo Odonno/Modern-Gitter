@@ -20,6 +20,7 @@ namespace Gitter.UnitTests.Fakes
 
         public Subject<Message> StreamingMessages { get; } = new Subject<Message>();
         public int MessagesSent { get; set; }
+        public int UpdatedMessages { get; set; }
 
         #endregion
 
@@ -175,7 +176,15 @@ namespace Gitter.UnitTests.Fakes
 
         public Task<Message> UpdateMessageAsync(string roomId, string messageId, string message)
         {
-            throw new NotImplementedException();
+            UpdatedMessages++;
+            var m = new Message
+            {
+                Id = messageId,
+                EditedDate = DateTime.Now,
+                Text = message
+            };
+
+            return Task.FromResult(m);
         }
 
         #endregion

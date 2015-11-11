@@ -297,9 +297,10 @@ namespace Gitter.ViewModel.Concrete
             message.UpdateMessage(updatedMessage.Text);
             Messages.Remove(message);
 
-            App.TelemetryClient.TrackEvent("RemoveMessage",
+            double minutesLeft = _mainViewModel.CurrentDateTime.Subtract(message.SentDate).TotalMinutes;
+            _telemetryService.TrackEvent("RemoveMessage",
                 new Dictionary<string, string> { { "Room", Room.Name } },
-                new Dictionary<string, double> { { "SecondsAgo", ViewModelLocator.Main.CurrentDateTime.Subtract(message.SentDate).TotalSeconds } });
+                new Dictionary<string, double> { { "MinutesAgo", minutesLeft } });
         }
 
         private void CopyMessage(IMessageViewModel message)
