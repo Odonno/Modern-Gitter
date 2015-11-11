@@ -69,7 +69,7 @@ namespace Gitter.ViewModel.Concrete
             {
                 return _currentUser;
             }
-            private set
+            set
             {
                 _currentUser = value;
                 RaisePropertyChanged();
@@ -281,9 +281,6 @@ namespace Gitter.ViewModel.Concrete
                 string token = _passwordStorageService.Retrieve("token");
                 _gitterApiService.SetToken(token);
 
-                // Refresh the main menu by loading rooms
-                Refresh();
-
                 // Add event that will update READ new messages
                 _currentSelectedRoomUnreadMessages = _eventService.NotifyUnreadMessages
                     .Subscribe(async unreadMessages => await NotifyReadMessages(unreadMessages));
@@ -364,34 +361,7 @@ namespace Gitter.ViewModel.Concrete
 
         private async void Refresh()
         {
-            // Start async task
-            await _progressIndicatorService.ShowAsync();
-
-            try
-            {
-                IsRefreshing = true;
-
-                if (CurrentUser == null)
-                {
-                    CurrentUser = await _gitterApiService.GetCurrentUserAsync();
-
-                    // Save Gitter User ID
-                    _applicationStorageService.Save(StorageConstants.UserId, CurrentUser.Id);
-                }
-
-                await RefreshRoomsAsync();
-            }
-            catch (Exception ex)
-            {
-                _localNotificationService.SendNotification("Network failure", "This app requires a network connection");
-            }
-            finally
-            {
-                IsRefreshing = false;
-            }
-
-            // End async task
-            await _progressIndicatorService.HideAsync();
+            await RefreshAsync();
         }
 
         private void ToggleSearch(bool toggle)
@@ -493,6 +463,38 @@ namespace Gitter.ViewModel.Concrete
 
 
         #region Public Methods
+
+        public async Task RefreshAsync()
+        {
+            // Start async task
+            await _progressIndicatorService.ShowAsync();
+
+            try
+            {
+                IsRefreshing = true;
+
+                if (CurrentUser == null)
+                {
+                    CurrentUser = await _gitterApiService.GetCurrentUserAsync();
+
+                    // Save Gitter User ID
+                    _applicationStorageService.Save(StorageConstants.UserId, CurrentUser.Id);
+                }
+
+                await RefreshRoomsAsync();
+            }
+            catch (Exception ex)
+            {
+                _localNotificationService.SendNotification("Network failure", "This app requires a network connection");
+            }
+            finally
+            {
+                IsRefreshing = false;
+            }
+
+            // End async task
+            await _progressIndicatorService.HideAsync();
+        }
 
         public void SelectRoom(string roomName)
         {

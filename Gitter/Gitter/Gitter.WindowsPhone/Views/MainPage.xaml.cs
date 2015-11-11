@@ -124,6 +124,9 @@ namespace Gitter
                 // Ask user to rate the app
                 ServiceLocator.Current.GetInstance<IRatingService>().AskForRating();
 #endif
+
+                // Refresh the main menu by loading rooms
+                await ViewModelLocator.Main.RefreshAsync();
             }
 
             // Wait that MainPage is loaded to continue navigation

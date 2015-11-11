@@ -53,6 +53,8 @@ namespace Gitter.UnitTests.ViewModels
                 _telemetryService,
                 _navigationService);
 
+            _mainViewModel.CurrentUser = _gitterApiService.GetCurrentUserAsync().Result;
+
             _roomViewModel = new RoomViewModel(room,
                 _gitterApiService,
                 _localNotificationService,
@@ -60,8 +62,6 @@ namespace Gitter.UnitTests.ViewModels
                 _eventService,
                 _telemetryService,
                 _mainViewModel);
-
-            _localNotificationService.Reset();
         }
 
         #endregion
@@ -241,7 +241,7 @@ namespace Gitter.UnitTests.ViewModels
         }
 
         [Fact]
-        public void ReceivingMessageFromApi_Should_ShowMessageNotification()
+        public async Task ReceivingMessageFromApi_Should_ShowMessageNotification()
         {
             // Arrange
             var room = new Room
@@ -265,6 +265,8 @@ namespace Gitter.UnitTests.ViewModels
                 }
             };
             _gitterApiService.StreamingMessages.OnNext(message);
+
+            await Task.Delay(100);
 
             // Assert
             Assert.Equal(15, _roomViewModel.UnreadMessagesCount);
@@ -293,13 +295,15 @@ namespace Gitter.UnitTests.ViewModels
             };
             _gitterApiService.StreamingMessages.OnNext(message);
 
+            await Task.Delay(100);
+
             // Assert
             Assert.Equal(15, _roomViewModel.UnreadMessagesCount);
             Assert.Equal(0, _localNotificationService.NotificationsSent);
         }
 
         [Fact]
-        public void ReceivingMessageAlreadyReadFromApi_Should_NotShowMessageNotification()
+        public async Task ReceivingMessageAlreadyReadFromApi_Should_NotShowMessageNotification()
         {
             // Arrange
             var room = new Room
@@ -324,13 +328,15 @@ namespace Gitter.UnitTests.ViewModels
             };
             _gitterApiService.StreamingMessages.OnNext(message);
 
+            await Task.Delay(100);
+
             // Assert
             Assert.Equal(14, _roomViewModel.UnreadMessagesCount);
             Assert.Equal(0, _localNotificationService.NotificationsSent);
         }
 
         [Fact]
-        public void ReceivingMessageFromApiOnDisabledRoom_Should_NotShowMessageNotification()
+        public async Task ReceivingMessageFromApiOnDisabledRoom_Should_NotShowMessageNotification()
         {
             // Arrange
             var room = new Room
@@ -356,13 +362,15 @@ namespace Gitter.UnitTests.ViewModels
             };
             _gitterApiService.StreamingMessages.OnNext(message);
 
+            await Task.Delay(100);
+
             // Assert
             Assert.Equal(15, _roomViewModel.UnreadMessagesCount);
             Assert.Equal(0, _localNotificationService.NotificationsSent);
         }
 
         [Fact]
-        public void ClosingStream_Should_RemoveMessageNotification()
+        public async Task ClosingStream_Should_RemoveMessageNotification()
         {
             // Arrange
             var room = new Room
@@ -389,13 +397,15 @@ namespace Gitter.UnitTests.ViewModels
             };
             _gitterApiService.StreamingMessages.OnNext(message);
 
+            await Task.Delay(100);
+
             // Assert
             Assert.Equal(14, _roomViewModel.UnreadMessagesCount);
             Assert.Equal(0, _localNotificationService.NotificationsSent);
         }
 
         [Fact]
-        public void ReopeningStream_Should_EnableMessageNotification()
+        public async Task ReopeningStream_Should_EnableMessageNotification()
         {
             // Arrange
             var room = new Room
@@ -422,6 +432,8 @@ namespace Gitter.UnitTests.ViewModels
                 }
             };
             _gitterApiService.StreamingMessages.OnNext(message);
+
+            await Task.Delay(100);
 
             // Assert
             Assert.Equal(15, _roomViewModel.UnreadMessagesCount);
