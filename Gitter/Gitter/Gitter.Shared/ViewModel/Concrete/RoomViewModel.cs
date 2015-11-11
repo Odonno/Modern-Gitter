@@ -307,7 +307,7 @@ namespace Gitter.ViewModel.Concrete
         {
             TextMessage += $"{message.Text} ";
 
-            App.TelemetryClient.TrackEvent("CopyMessage",
+            _telemetryService.TrackEvent("CopyMessage",
                 new Dictionary<string, string> { { "Room", Room.Name } });
         }
 

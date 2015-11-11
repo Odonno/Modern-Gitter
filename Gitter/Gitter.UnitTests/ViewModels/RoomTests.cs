@@ -363,6 +363,39 @@ namespace Gitter.UnitTests.ViewModels
         }
 
         [Fact]
+        public void Should_CopyMessage()
+        {
+            // Arrange
+            var room = new Room
+            {
+                Id = "123456",
+                Name = "Room",
+                UnreadItems = 14
+            };
+
+            TestInitialize(room);
+
+            // Act
+            var message = new Message
+            {
+                Id = "123456",
+                Text = "A message",
+                User = new User
+                {
+                    Id = "53307734c3599d1de448e192"
+                },
+                SentDate = _mainViewModel.CurrentDateTime.Subtract(TimeSpan.FromMinutes(1))
+            };
+            var messageViewModel = new MessageViewModel(message);
+
+            _roomViewModel.CopyMessageCommand.Execute(messageViewModel);
+
+            // Assert
+            Assert.Equal("A message ", _roomViewModel.TextMessage);
+            Assert.Equal(1, _telemetryService.EventsTracked);
+        }
+
+        [Fact]
         public async Task ReceivingMessageFromApi_Should_ShowMessageNotification()
         {
             // Arrange
