@@ -4,6 +4,7 @@ using Gitter.UnitTests.Fakes;
 using Gitter.ViewModel.Concrete;
 using GitterSharp.Model;
 using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Gitter.UnitTests.ViewModels
@@ -175,6 +176,27 @@ namespace Gitter.UnitTests.ViewModels
 
             // Assert
             Assert.False(result);
+        }
+
+        [Fact]
+        public async Task ExistingCurrentUser_Should_EnableChatWithUs()
+        {
+            // Arrange
+            TestInitialize();
+
+            var room = new Room
+            {
+                Id = "123456",
+                Name = "Room",
+                UnreadItems = 14
+            };
+
+            // Act
+            _mainViewModel.CurrentUser = await _gitterApiService.GetCurrentUserAsync();
+            bool result = _mainViewModel.ChatWithUsCommand.CanExecute(null);
+
+            // Assert
+            Assert.True(result);
         }
 
         #endregion
