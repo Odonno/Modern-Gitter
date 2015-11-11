@@ -144,7 +144,7 @@ namespace Gitter.UnitTests.ViewModels
         }
 
         [Fact]
-        public void Should_CorrectlySendNewMessage()
+        public async Task Should_CorrectlySendNewMessage()
         {
             // Arrange
             var room = new Room
@@ -160,6 +160,8 @@ namespace Gitter.UnitTests.ViewModels
             _roomViewModel.TextMessage = "A new message";
             _roomViewModel.IsSendingMessage = false;
             _roomViewModel.SendMessageCommand.Execute(null);
+
+            await Task.Delay(200);
 
             // Assert
             Assert.False(_roomViewModel.IsSendingMessage);
@@ -190,6 +192,32 @@ namespace Gitter.UnitTests.ViewModels
             Assert.Equal(0, _gitterApiService.MessagesSent);
             Assert.Equal("A new message", _roomViewModel.TextMessage);
             Assert.Equal(0, _telemetryService.EventsTracked);
+        }
+
+        [Fact]
+        public async Task SendingMessageWithEnterKeyPressedParam_Should_SendMessageCorrectly()
+        {
+            // Arrange
+            var room = new Room
+            {
+                Id = "123456",
+                Name = "Room",
+                UnreadItems = 14
+            };
+
+            TestInitialize(room);
+
+            // Act
+            _roomViewModel.TextMessage = "A new message";
+            _roomViewModel.IsSendingMessage = false;
+            _roomViewModel.SendMessageWithParamCommand.Execute(true);
+
+            await Task.Delay(200);
+
+            // Assert
+            Assert.Equal(1, _gitterApiService.MessagesSent);
+            Assert.Equal(string.Empty, _roomViewModel.TextMessage);
+            Assert.Equal(1, _telemetryService.EventsTracked);
         }
 
         [Fact]
