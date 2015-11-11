@@ -279,6 +279,20 @@ namespace Gitter.UnitTests.ViewModels
             Assert.Equal(4, _mainViewModel.Rooms.Count);
         }
 
+        [Fact]
+        public async Task SelectExistingRoom_Should_SelectRoomCorrectly()
+        {
+            // Arrange
+            TestInitialize();
+            await _mainViewModel.RefreshAsync();
+
+            // Act
+            _mainViewModel.SelectRoom("gitterHQ");
+
+            // Assert
+            Assert.NotNull(_mainViewModel.SelectedRoom);
+        }
+
         #endregion
     }
 }
