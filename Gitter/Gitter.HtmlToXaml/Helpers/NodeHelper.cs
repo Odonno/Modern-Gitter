@@ -176,9 +176,17 @@ namespace Gitter.HtmlToXaml.Helpers
 
                 if (@class.Contains("mention"))
                     content.FontStyle = FontStyle.Italic;
+            }
 
-                if (@class.Contains("issue"))
+            if (node.Attributes["data-link-type"] != null)
+            {
+                string linkType = node.Attributes["data-link-type"].Value;
+
+                if (linkType == "issue")
                     return GenerateIssueLink(node);
+
+                if (linkType == "pull")
+                    return GeneratePullLink(node);
             }
 
             return content;
@@ -220,6 +228,16 @@ namespace Gitter.HtmlToXaml.Helpers
             string roomName = node.InnerText.Split(new[] { '#' })[0];
 
             string link = Path.Combine("http://github.com/", roomName, "issues/", issueNumber);
+
+            return GenerateHyperlink(node, link);
+        }
+
+        private static Inline GeneratePullLink(HtmlNode node)
+        {
+            string pullNumber = node.Attributes["data-pull"].Value;
+            string roomName = node.InnerText.Split(new[] { '#' })[0];
+
+            string link = Path.Combine("http://github.com/", roomName, "pull/", pullNumber);
 
             return GenerateHyperlink(node, link);
         }
