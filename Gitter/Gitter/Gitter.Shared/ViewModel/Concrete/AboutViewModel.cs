@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -7,7 +6,11 @@ using Gitter.ViewModel.Abstract;
 using Windows.ApplicationModel;
 using Gitter.DataObjects.Concrete;
 using Version = Gitter.DataObjects.Concrete.Version;
+#if WINDOWS_PHONE_APP
+using System;
 using Windows.System;
+using System.IO;
+#endif
 
 namespace Gitter.ViewModel.Concrete
 {
@@ -132,7 +135,8 @@ namespace Gitter.ViewModel.Concrete
         private async void ViewProfile(string userName)
         {
 #if WINDOWS_PHONE_APP
-            await Launcher.LaunchUriAsync(new Uri($"http://www.github.com/{userName}"));
+            string url = Path.Combine("http://www.github.com/", userName);
+            await Launcher.LaunchUriAsync(new Uri(url));
 #endif
         }
 

@@ -10,6 +10,7 @@ using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using HtmlAgilityPack;
+using System.IO;
 
 namespace Gitter.HtmlToXaml.Helpers
 {
@@ -217,7 +218,7 @@ namespace Gitter.HtmlToXaml.Helpers
         {
             string issueNumber = node.Attributes["data-issue"].Value;
             string roomName = HtmlToXaml.RoomName;
-            string link = $"http://github.com/{roomName}/issues/{issueNumber}";
+            string link = Path.Combine("http://github.com/", roomName, "issues/", issueNumber);
 
             return GenerateHyperlink(node, link);
         }
