@@ -217,7 +217,8 @@ namespace Gitter.HtmlToXaml.Helpers
         private static Inline GenerateIssueLink(HtmlNode node)
         {
             string issueNumber = node.Attributes["data-issue"].Value;
-            string roomName = HtmlToXaml.RoomName;
+            string roomName = node.InnerText.Split(new[] { '#' })[0];
+
             string link = Path.Combine("http://github.com/", roomName, "issues/", issueNumber);
 
             return GenerateHyperlink(node, link);
