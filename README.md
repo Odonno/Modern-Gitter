@@ -31,3 +31,20 @@ This project makes use of several frameworks like :
 * [Microsoft Application Insights](https://github.com/Microsoft/ApplicationInsights-dotnet)
 * [Gitter#](https://github.com/Odonno/gitter-api-pcl)
 * [Gitter# Auth](https://github.com/Odonno/gitter-api-auth)
+
+## Contribute
+
+You can contribute to this project. There is several rules to follow :
+
+* Use the angular git commit convention (https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#-git-commit-guidelines)
+* Create Pull Request with an understandable title and a short message that explains your contribution
+* Be free to innovate !
+
+### List of contributors
+
+I apologies contributors to help me on this project.
+
+* @gep13
+* @bobmulder
+* @wassim-azirar
+* @NPadrutt
