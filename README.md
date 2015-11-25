@@ -36,15 +36,37 @@ This project makes use of several frameworks like :
 
 You can contribute to this project. There is several rules to follow :
 
-* Use the angular git commit convention (https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#-git-commit-guidelines)
+* Use the angular git commit convention
 * Create Pull Request with an understandable title and a short message that explains your contribution
 * Be free to innovate !
 
+### Commit convention
+
+We follow the angular git commit convention (https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#-git-commit-guidelines).
+Here is some examples that can help you to visualise how to make meaningful commits.
+
+When fixing a bug with the notifications
+
+    fix(notifications): remove call that push twice the same notification
+
+When adding a new feature related to notifications
+
+    feat(notifications): add push notifications when someone mentions user
+
+When fixing an issue with the build / improving the build system
+
+    chore(app): improve build system
+
+When adding some documentation
+
+    docs(readme): add a contribute section
+
 ### List of contributors
 
-I apologies contributors to help me on this project.
+I thank contributors to help me on this project.
 
 * @gep13
 * @bobmulder
 * @wassim-azirar
 * @NPadrutt
+* @corentinMiq
