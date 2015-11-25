@@ -43,7 +43,7 @@ You can contribute to this project. There is several rules to follow :
 ### Commit convention
 
 We follow the angular git commit convention (https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#-git-commit-guidelines).
-Here is some examples that can help you to visualise how to make meaningful commits.
+Here are some examples that can help you to visualise how to make meaningful commits.
 
 When fixing a bug with the notifications
 
@@ -63,7 +63,7 @@ When adding some documentation
 
 ### List of contributors
 
-I thank contributors to help me on this project.
+I want to thank the following contributors who have helped me this project.
 
 * @gep13
 * @bobmulder
