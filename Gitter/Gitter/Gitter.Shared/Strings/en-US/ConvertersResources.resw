@@ -129,6 +129,9 @@
   <data name="MinutesAgo" xml:space="preserve">
     <value>{0} minute{1} ago</value>
   </data>
+  <data name="PluralChar" xml:space="preserve">
+    <value>s</value>
+  </data>
   <data name="SecondsAgo" xml:space="preserve">
     <value>{0} second{1} ago</value>
   </data>

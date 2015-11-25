@@ -118,21 +118,21 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="DaysAgo" xml:space="preserve">
-    <value>il y a {0} jour{1}</value>
+    <value>{0} Tage{1} her</value>
   </data>
   <data name="FewSecondsAgo" xml:space="preserve">
-    <value>il y a quelques secondes</value>
+    <value>vor einigen Sekunden.</value>
   </data>
   <data name="HoursAgo" xml:space="preserve">
-    <value>il y a {0} heure{1}</value>
+    <value>{0} Stunde{1} ago</value>
   </data>
   <data name="MinutesAgo" xml:space="preserve">
-    <value>il y a {0} minute{1}</value>
+    <value>{0} Minute{1} ago</value>
   </data>
   <data name="PluralChar" xml:space="preserve">
-    <value>s</value>
+    <value>n</value>
   </data>
   <data name="SecondsAgo" xml:space="preserve">
-    <value>il y a {0} seconde{1}</value>
+    <value>{0} Sekunde{1} ago</value>
   </data>
 </root>

@@ -117,22 +117,67 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DaysAgo" xml:space="preserve">
-    <value>il y a {0} jour{1}</value>
+  <data name="about.Label" xml:space="preserve">
+    <value>Über</value>
   </data>
-  <data name="FewSecondsAgo" xml:space="preserve">
-    <value>il y a quelques secondes</value>
+  <data name="aboutTitle.Header" xml:space="preserve">
+    <value>Über</value>
   </data>
-  <data name="HoursAgo" xml:space="preserve">
-    <value>il y a {0} heure{1}</value>
+  <data name="applicationDescription.Text" xml:space="preserve">
+    <value>Ein Gitter Client für Windows Phone 8</value>
   </data>
-  <data name="MinutesAgo" xml:space="preserve">
-    <value>il y a {0} minute{1}</value>
+  <data name="applicationPublisher.Text" xml:space="preserve">
+    <value>David BOTTIAU</value>
   </data>
-  <data name="PluralChar" xml:space="preserve">
-    <value>s</value>
+  <data name="applicationTitle.Text" xml:space="preserve">
+    <value>Modern Gitter</value>
   </data>
-  <data name="SecondsAgo" xml:space="preserve">
-    <value>il y a {0} seconde{1}</value>
+  <data name="chatWithUs.Label" xml:space="preserve">
+    <value>Chatte mit uns</value>
+  </data>
+  <data name="chatWithUsButton.Content" xml:space="preserve">
+    <value>Chatte mit uns</value>
+  </data>
+  <data name="collaboratorsTitle.Header" xml:space="preserve">
+    <value>Mitarbeiter</value>
+  </data>
+  <data name="copy.Text" xml:space="preserve">
+    <value>Kopieren</value>
+  </data>
+  <data name="historyTitle.Header" xml:space="preserve">
+    <value>Verlauf</value>
+  </data>
+  <data name="raiseIssue.Content" xml:space="preserve">
+    <value>Ist ein Problem aufgetreten? Hier klicken um ein Ticket zu erfassen.</value>
+  </data>
+  <data name="refresh.Label" xml:space="preserve">
+    <value>Aktualisieren</value>
+  </data>
+  <data name="refreshContent.Content" xml:space="preserve">
+    <value>Aktualisieren</value>
+  </data>
+  <data name="remove.Text" xml:space="preserve">
+    <value>Entfernen</value>
+  </data>
+  <data name="respondTo.Text" xml:space="preserve">
+    <value>Antworten</value>
+  </data>
+  <data name="search.Label" xml:space="preserve">
+    <value>Suchen</value>
+  </data>
+  <data name="searchText.PlaceholderText" xml:space="preserve">
+    <value>Raum suchen</value>
+  </data>
+  <data name="send.Label" xml:space="preserve">
+    <value>Senden</value>
+  </data>
+  <data name="talk.Label" xml:space="preserve">
+    <value>Reden</value>
+  </data>
+  <data name="typeMessageHere.PlaceholderText" xml:space="preserve">
+    <value>Gib deine Nachricht hier ein</value>
+  </data>
+  <data name="viewGitHubProfile.Text" xml:space="preserve">
+    <value>GitHuborofile anschauen</value>
   </data>
 </root>

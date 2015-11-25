@@ -117,22 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DaysAgo" xml:space="preserve">
-    <value>il y a {0} jour{1}</value>
+  <data name="Later" xml:space="preserve">
+    <value>Später</value>
   </data>
-  <data name="FewSecondsAgo" xml:space="preserve">
-    <value>il y a quelques secondes</value>
+  <data name="MarkTheApp" xml:space="preserve">
+    <value>Bewerte dieses App</value>
   </data>
-  <data name="HoursAgo" xml:space="preserve">
-    <value>il y a {0} heure{1}</value>
+  <data name="ThanksReview1" xml:space="preserve">
+    <value>Vielen Dank dass du Modern Gitter nutzen.</value>
   </data>
-  <data name="MinutesAgo" xml:space="preserve">
-    <value>il y a {0} minute{1}</value>
+  <data name="ThanksReview2" xml:space="preserve">
+    <value>Wir haben einige Aktualisierungen gemacht seit der letzten Version.</value>
   </data>
-  <data name="PluralChar" xml:space="preserve">
-    <value>s</value>
+  <data name="ThanksReview3" xml:space="preserve">
+    <value>Was denkst du über diese Updates?</value>
   </data>
-  <data name="SecondsAgo" xml:space="preserve">
-    <value>il y a {0} seconde{1}</value>
+  <data name="ThanksToUseIt" xml:space="preserve">
+    <value>Vielen Dank dass du Modern Gitter nutzen. Würdest du es bewerten?</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Ja</value>
   </data>
 </root>
