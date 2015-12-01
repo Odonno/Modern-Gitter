@@ -109,6 +109,12 @@ namespace Gitter.ViewModel.Concrete
                 Username = "bobmulder",
                 Image = "https://avatars.githubusercontent.com/u/5465074",
                 Contribution = "Contributor"
+            },
+            new Collaborator
+            {
+                Username = "NPadrutt",
+                Image = "https://avatars.githubusercontent.com/u/1764367",
+                Contribution = "Contributor"
             }
         };
         public IEnumerable<Collaborator> Collaborators { get { return _collaborators; } }
