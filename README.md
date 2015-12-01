@@ -63,10 +63,10 @@ When adding some documentation
 
 ### List of contributors
 
-I want to thank the following contributors who have helped me this project.
+I want to thank the following contributors who have helped me with this project.
 
-* @gep13
-* @bobmulder
-* @wassim-azirar
-* @NPadrutt
-* @corentinMiq
+* [gep13](https://github.com/gep13)
+* [bobmulder](https://github.com/bobmulder)
+* [wassim-azirar](https://github.com/wassim-azirar)
+* [NPadrutt](https://github.com/NPadrutt)
+* [corentinMiq](https://github.com/corentinMiq)
